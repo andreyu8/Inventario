@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+        <property name="hibernate.connection.driver_class">org.mariadb.jdbc.Driver</property>
+        <property name="hibernate.connection.password">admin</property>
+        <property name="hibernate.connection.url">jdbc:mariadb://localhost:3306/bd_inventario</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="hibernate.search.autoregister_listeners">true</property>
+        <property name="hibernate.validator.apply_to_ddl">false</property>
+        <mapping resource="com/seidor/inventario/model/Salida.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/EstatusProyecto.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/Etapa.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/Categoria.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/Ubicacion.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/Proyecto.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/Perfil.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/PerfilUsuario.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/Empleado.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/TipoTrabajo.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/Producto.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/Area.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/Cliente.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/MovimientosStock.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/OrdenCompra.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/Entrada.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/Usuario.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/Almacen.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/TipoOrdenCompra.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/UnidadMedida.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/Factura.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/Proveedor.hbm.xml" />
+    </session-factory>
+</hibernate-configuration>

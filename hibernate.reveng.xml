@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+  <table-filter match-catalog="bd_inventario" match-name="almacen"/>
+  <table-filter match-catalog="bd_inventario" match-name="area"/>
+  <table-filter match-catalog="bd_inventario" match-name="categoria"/>
+  <table-filter match-catalog="bd_inventario" match-name="cliente"/>
+  <table-filter match-catalog="bd_inventario" match-name="empleado"/>
+  <table-filter match-catalog="bd_inventario" match-name="entrada"/>
+  <table-filter match-catalog="bd_inventario" match-name="etapa"/>
+  <table-filter match-catalog="bd_inventario" match-name="factura"/>
+  <table-filter match-catalog="bd_inventario" match-name="orden_compra"/>
+  <table-filter match-catalog="bd_inventario" match-name="perfil"/>
+  <table-filter match-catalog="bd_inventario" match-name="perfil_usuario"/>
+  <table-filter match-catalog="bd_inventario" match-name="producto"/>
+  <table-filter match-catalog="bd_inventario" match-name="proveedor"/>
+  <table-filter match-catalog="bd_inventario" match-name="salida"/>
+  <table-filter match-catalog="bd_inventario" match-name="tipo_orden_compra"/>
+  <table-filter match-catalog="bd_inventario" match-name="tipo_trabajo"/>
+  <table-filter match-catalog="bd_inventario" match-name="ubicacion"/>
+  <table-filter match-catalog="bd_inventario" match-name="unidad_medida"/>
+  <table-filter match-catalog="bd_inventario" match-name="usuario"/>
+  <table-filter match-catalog="bd_inventario" match-name="proyecto"/>
+  <table-filter match-catalog="bd_inventario" match-name="estatus_proyecto"/>
+  <table-filter match-catalog="bd_inventario" match-name="movimientos_stock"/>
+</hibernate-reverse-engineering>

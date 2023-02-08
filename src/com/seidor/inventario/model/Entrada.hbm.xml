@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25 ene. 2023 18:48:44 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="com.seidor.inventario.model.Entrada" table="entrada" catalog="bd_inventario" optimistic-lock="version">
+        <id name="idEntrada" type="java.lang.Integer">
+            <column name="id_entrada" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="almacen" class="com.seidor.inventario.model.Almacen" fetch="select">
+            <column name="id_almacen" />
+        </many-to-one>
+        <many-to-one name="empleado" class="com.seidor.inventario.model.Empleado" fetch="select">
+            <column name="id_empleado" />
+        </many-to-one>
+        <many-to-one name="factura" class="com.seidor.inventario.model.Factura" fetch="select">
+            <column name="id_factura" />
+        </many-to-one>
+        <many-to-one name="ordenCompra" class="com.seidor.inventario.model.OrdenCompra" fetch="select">
+            <column name="id_orden_compra" />
+        </many-to-one>
+        <many-to-one name="producto" class="com.seidor.inventario.model.Producto" fetch="select">
+            <column name="id_producto" not-null="true" />
+        </many-to-one>
+        <many-to-one name="proyecto" class="com.seidor.inventario.model.Proyecto" fetch="select">
+            <column name="id_proyecto" />
+        </many-to-one>
+        <many-to-one name="ubicacion" class="com.seidor.inventario.model.Ubicacion" fetch="select">
+            <column name="id_ubicacion" />
+        </many-to-one>
+        <many-to-one name="unidadMedida" class="com.seidor.inventario.model.UnidadMedida" fetch="select">
+            <column name="id_unidad_medida" />
+        </many-to-one>
+        <property name="fecha" type="timestamp">
+            <column name="fecha" length="19" />
+        </property>
+        <property name="cantidad" type="java.lang.Integer">
+            <column name="cantidad" />
+        </property>
+        <property name="precioUnitario" type="big_decimal">
+            <column name="precio_unitario" precision="20" scale="6" />
+        </property>
+        <property name="estatus" type="java.lang.Integer">
+            <column name="estatus">
+                <comment>1 NORMAL 2 DEVOLUCION</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

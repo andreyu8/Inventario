@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
+	
+	<zscript>
+		import com.seidor.inventario.adapter.PurcharseAdapter;
+		import com.seidor.inventario.navigation.*;
+		
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		
+		PurcharseAdapter ocSave = purchaseOrderController.readForNew();
+		
+		public void cancel(){
+			navigationControl.changeToPrevious(win);
+		}
+		
+		public void save(){
+			fcv.validate(win);
+			purchaseOrderController.save(ocSave, state, win);
+		}
+	</zscript>
+	
+	<div class="row sectionBoxAlt animated aniFadeIn">
+		<div class="row">
+			<div class="col-md-8">
+				<h:span style="padding-top: 5px; display: block;" />
+				<div align="left" style="float: left;" >
+					<label value="@bind(projectSave.proyecto.nombre)" sclass="sectionTitle" />
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div align="right" style="float: right;" >
+					<button label="cancelar" sclass="btn btn-warning" onClick="cancel();" iconSclass="z-icon-times" />
+					<button label="guardar" sclass="btn btn-success" onClick="save();" iconSclass="z-icon-check" />
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<!-- 
+	
+proyecto combo
+descripción
+fecha
+cliente combo   +
+etapa  combo
+area	 combo
+empleado  combo   sea el del almacen
+factura		combo  +
+	
+	 -->
+	
+	<div class="row subBoxAlt animated aniFadeIn" >
+		<div class="col-md-12">
+			<label value="Datos de la Familia" />
+		</div>
+	</div>
+	<div class="container animated aniFadeIn" >
+		<div class="row editBox">
+			<div class="col-md-4">
+				<label value="Nombre*" sclass="editField" />
+				<h:p> <textbox value="@bind(projectSave.proyecto.nombre)" constraint="${tmv}" /> </h:p>
+			</div>
+			<div class="col-md-4">
+				<label value="Fecha Inicio*" sclass="editField" />
+				<h:p> <datebox id="db1" cols="12" format="short" value="@bind(projectSave.proyecto.fechaInicio)" constraint="${dmv}" /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Fecha Termino" sclass="editField" />
+				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(projectSave.proyecto.fechaFinal)"  /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Estatus*" sclass="editField" />
+				<h:p> <combobox value="@bind(projectSave.proyecto.estatusProyecto.descripcion)"
+							 		onCreate="projectController.loadEstatus(self);" 
+						 			id="escb" constraint="${cmv}"/> </h:p>
+			</div>	
+		</div>
+	</div>
+	
+		
+</window>
+</zk>

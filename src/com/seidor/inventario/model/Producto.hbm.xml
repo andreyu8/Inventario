@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25 ene. 2023 18:48:44 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="com.seidor.inventario.model.Producto" table="producto" catalog="bd_inventario" optimistic-lock="version">
+        <id name="idProducto" type="java.lang.Integer">
+            <column name="id_producto" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="almacen" class="com.seidor.inventario.model.Almacen" fetch="select">
+            <column name="id_almacen" />
+        </many-to-one>
+        <many-to-one name="categoria" class="com.seidor.inventario.model.Categoria" fetch="select">
+            <column name="id_categoria" not-null="true" />
+        </many-to-one>
+        <many-to-one name="unidadMedida" class="com.seidor.inventario.model.UnidadMedida" fetch="select">
+            <column name="id_unidad_medida" not-null="true" />
+        </many-to-one>
+        <property name="codigo" type="string">
+            <column name="codigo" length="50" not-null="true" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="nombre" length="300" not-null="true" />
+        </property>
+        <property name="cantidad" type="int">
+            <column name="cantidad" not-null="true" />
+        </property>
+        <property name="precioCompra" type="big_decimal">
+            <column name="precio_compra" precision="25" />
+        </property>
+        <property name="precioVenta" type="big_decimal">
+            <column name="precio_venta" precision="25" />
+        </property>
+        <property name="urlImagen" type="string">
+            <column name="url_imagen" length="150" />
+        </property>
+        <property name="minimo" type="java.lang.Integer">
+            <column name="minimo" />
+        </property>
+        <property name="maximo" type="java.lang.Integer">
+            <column name="maximo" />
+        </property>
+        <property name="fecha" type="timestamp">
+            <column name="fecha" length="19" />
+        </property>
+        <property name="observaciones" type="string">
+            <column name="observaciones" length="200" />
+        </property>
+        <property name="stock" type="java.lang.Integer">
+            <column name="stock" />
+        </property>
+        <set name="movimientosStocks" table="movimientos_stock" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_producto" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.MovimientosStock" />
+        </set>
+        <set name="entradas" table="entrada" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_producto" not-null="true" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.Entrada" />
+        </set>
+        <set name="salidas" table="salida" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_producto" not-null="true" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.Salida" />
+        </set>
+    </class>
+</hibernate-mapping>

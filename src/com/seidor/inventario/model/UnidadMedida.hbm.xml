@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25 ene. 2023 18:48:44 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="com.seidor.inventario.model.UnidadMedida" table="unidad_medida" catalog="bd_inventario" optimistic-lock="version">
+        <id name="idUnidadMedida" type="java.lang.Integer">
+            <column name="id_unidad_medida" />
+            <generator class="identity" />
+        </id>
+        <property name="unidadMedida" type="string">
+            <column name="unidad_medida" length="50" not-null="true" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="150" not-null="true" />
+        </property>
+        <property name="activo" type="int">
+            <column name="activo" not-null="true" />
+        </property>
+        <set name="entradas" table="entrada" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_unidad_medida" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.Entrada" />
+        </set>
+        <set name="productos" table="producto" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_unidad_medida" not-null="true" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.Producto" />
+        </set>
+        <set name="salidas" table="salida" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_unidad_medida" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.Salida" />
+        </set>
+    </class>
+</hibernate-mapping>

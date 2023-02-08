@@ -1,0 +1,127 @@
+<!DOCTYPE xml>
+<language-addon>
+	
+	<addon-name>officereserv-addon</addon-name> 
+	<language-name>xul/html</language-name>
+	
+	<component>
+		<extends>decimalbox</extends>
+		<component-name>decimalbox</component-name>
+		<property>
+			<property-name>locale</property-name>
+     		<property-value>en</property-value>
+    	</property>
+    	<property>
+      		<property-name>format</property-name>
+     		<property-value>###############.##</property-value>
+    	</property>
+    	<property>
+			<property-name>sclass</property-name>
+			<property-value>form-control</property-value>
+		</property>
+	</component>
+	
+	<component>
+		<extends>doublebox</extends>
+		<component-name>doublebox</component-name>
+		<property>
+      		<property-name>locale</property-name>
+     		<property-value>en</property-value>
+    	</property>
+    	<property>
+			<property-name>sclass</property-name>
+			<property-value>form-control</property-value>
+		</property>
+	</component>
+	
+	<component>
+		<extends>intbox</extends>
+		<component-name>intbox</component-name>
+		<property>
+			<property-name>sclass</property-name>
+			<property-value>form-control</property-value>
+		</property>
+	</component>
+	
+	<component>
+		<extends>longbox</extends>
+		<component-name>longbox</component-name>
+		<property>
+			<property-name>sclass</property-name>
+			<property-value>form-control</property-value>
+		</property>
+	</component>
+	
+	<component>
+		<extends>textbox</extends>
+		<component-name>textbox</component-name>
+		<property>
+			<property-name>maxlength</property-name> 
+			<property-value>255</property-value> 
+		</property>
+		<property>
+			<property-name>sclass</property-name>
+			<property-value>form-control</property-value>
+		</property>
+	</component>
+	
+	<component>
+		<extends>listbox</extends>
+		<component-name>listbox</component-name>
+		<property>
+			<property-name>emptyMessage</property-name>
+			<property-value>No se encontraron registros</property-value>
+		</property>
+		<property>
+			<property-name>style</property-name>
+			<property-value>background: white; min-height: 250px;</property-value>
+		</property>
+		<property>
+			<property-name>sclass</property-name>
+			<property-value>mediumShadow mediumMargin</property-value>
+		</property>
+		<property>
+			<property-name>mold</property-name>
+			<property-value>paging</property-value>
+		</property>
+		<property>
+			<property-name>pageSize</property-name>
+			<property-value>10</property-value>
+		</property>
+	</component>
+	
+	<component>
+		<extends>label</extends> 
+		<component-name>label</component-name>
+		<property>
+			<property-name>multiline</property-name>
+			<property-value>true</property-value>
+			<property-name>pre</property-name>
+			<property-value>true</property-value>
+		</property>
+	</component>
+	
+	<component>
+		<extends>button</extends> 
+		<component-name>button</component-name> 
+		<property>
+			<property-name>autodisable</property-name>
+			<property-value>self</property-value>
+		</property>
+		<property>
+			<property-name>sclass</property-name>
+			<property-value>btn btn-default</property-value>
+		</property>
+	</component>
+	
+	<component>
+		<extends>menuitem</extends> 
+		<component-name>menuitem</component-name> 
+		<property>
+			<property-name>autodisable</property-name>
+			<property-value>self</property-value>
+		</property>
+	</component>
+	
+	
+</language-addon>

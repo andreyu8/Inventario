@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="headerwin" border="none" >
+	<zscript><![CDATA[
+		import com.seidor.inventario.adapter.UserAdapter;
+		import com.seidor.inventario.navigation.*;
+		import com.seidor.inventario.util.*;
+		
+		UserAdapter userDetail = userController.read(SessionUtil.getLoggedUserId());
+		String welcome = userDetail.getUsuario().getEmpleado().getNombre();
+		
+		
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		
+		void home(){
+			navigationControl.showHome(headerwin);
+		}
+		
+		void profile(){
+			state.setDetailIdentifier(userDetail.getUser().getId());
+			state.setUri("/WEB-INF/zul/user/detail.zul");
+			state.startBreadCrumbsPathFromHome("Mi Perfil");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+		void users(){
+			state.setUri("/WEB-INF/zul/user/main.zul");
+			state.startBreadCrumbsPathFromHome("Usuarios");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+		void category(){
+			state.setUri("/WEB-INF/zul/category/main.zul");
+			state.startBreadCrumbsPathFromHome("Familias");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+		void mesure (){
+			state.setUri("/WEB-INF/zul/mesure/main.zul");
+			state.startBreadCrumbsPathFromHome("Unidad de medida");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+		void report (){
+			state.setUri("/WEB-INF/zul/reports/main.zul");
+			state.startBreadCrumbsPathFromHome("Reporte Detalle Costo Inventario");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+		void reportci (){
+			state.setUri("/WEB-INF/zul/reports/mainci.zul");
+			state.startBreadCrumbsPathFromHome("Reporte General Costo Inventario");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+		void reportES (){
+			state.setUri("/WEB-INF/zul/reports/esproduct.zul");
+			state.startBreadCrumbsPathFromHome("Reportes E/S");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+		void reportProveedores (){
+			state.setUri("/WEB-INF/zul/reports/provReport.zul");
+			state.startBreadCrumbsPathFromHome("Reporte de proveedores");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+		void reportProducts () {
+			state.setUri("/WEB-INF/zul/reports/mainProduct.zul");
+			state.startBreadCrumbsPathFromHome("Reporte de Productos");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+		void products () {
+			state.setUri("/WEB-INF/zul/product/main.zul");
+			state.startBreadCrumbsPathFromHome("Productos");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+		void project () {
+			state.setUri("/WEB-INF/zul/project/main.zul");
+			state.startBreadCrumbsPathFromHome("Proyectos");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+		void productStock() {
+			state.setUri("/WEB-INF/zul/stock/main.zul");
+			state.startBreadCrumbsPathFromHome("Productos stock");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+		void closeProjecto (){
+			state.setUri("/WEB-INF/zul/project/closeProject.zul");
+			state.startBreadCrumbsPathFromHome("Devoluciones");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+		void closeProjectoReport(){
+			state.setUri("/WEB-INF/zul/reports/cierreProyecto.zul");
+			state.startBreadCrumbsPathFromHome("Cierre de Proyectos");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+		void ordenesCompra (){
+			state.setUri("/WEB-INF/zul/oc/main.zul");
+			state.startBreadCrumbsPathFromHome("Ordenes de compra");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+		void facturas (){
+			state.setUri("/WEB-INF/zul/invoice/main.zul");
+			state.startBreadCrumbsPathFromHome("Facturas");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+		void proveedores (){
+			state.setUri("/WEB-INF/zul/provider/main.zul");
+			state.startBreadCrumbsPathFromHome("Proveedores");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+		void logout(){
+			navigationControl.hideApplication(headerwin);
+		}
+		
+		void redirectSeidor() {
+			//navigationControl.openNewBrowser("https://www.seidor.com.mx");
+		}
+		
+		void changeProduct (){
+			state.setUri("/WEB-INF/zul/product/changeProduct.zul");
+			state.startBreadCrumbsPathFromHome("Reasignación de productos");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+	]]></zscript>
+	
+	<style src="${stylesUrl}styles/header.css" />
+	
+	<div class="row headerPattern" style="margin: 0px; padding: 0px;" >
+	
+		<div class="col-md-2">
+			<div sclass="logo" style="min-height: 75px;" onClick="redirectSeidor();" />
+		</div>
+	
+		<div class="col-md-10" >
+			<menubar   >
+				<menuitem label="${welcome}" onClick="profile();" iconSclass="z-icon-user" />
+				<menu id="invmenucat" label="Catálogos" iconSclass="fas fa-list-ul" >
+					<menupopup width="190px" >
+						<menuitem label="U. de medida" onClick="mesure();" iconSclass="fas fa-ruler" >
+							<custom-attributes roleList="ADMIN" />
+						</menuitem>
+						<menuseparator/>
+						<menuitem label="Familias" onClick="category();" iconSclass="fas fa-puzzle-piece"/>
+						<menuseparator/>
+						<menuitem label="Proyectos" onClick="project();" iconSclass="fas fa-industry"/>
+						<menuseparator/>
+						
+						<menuitem label="Ordenes de compra" onClick="ordenesCompra();" iconSclass="fas fa-industry"/>
+						<menuseparator/>
+						<menuitem label="Facturas" onClick="facturas();" iconSclass="fas fa-industry"/>
+						<menuseparator/>
+						<menuitem label="Proveedores" onClick="proveedores();" iconSclass="fas fa-industry"/>
+						<menuseparator/>
+					</menupopup>
+				</menu>
+				
+				<menu id="invmenu" label="Procesos" iconSclass="fas fa-boxes" >
+					<menupopup width="190px" >
+						<menuitem label="Productos" onClick="products();" iconSclass="fab fa-product-hunt" >
+							<custom-attributes roleList="ADMIN" />
+						</menuitem>
+						<menuseparator/>
+						<menuitem label="Productos stock" onClick="productStock();" iconSclass="fas fa-warehouse" >
+							<custom-attributes roleList="ADMIN" />
+						</menuitem>
+						<menuseparator >
+							<custom-attributes roleList="ADMIN" />
+						</menuseparator>
+						
+						<menuitem label="Reasignación" onClick="changeProduct();" iconSclass="fas fa-undo" >
+							<custom-attributes roleList="ADMIN" />
+						</menuitem>
+						<menuseparator/> 
+						
+						<menuitem label="Cierre proyectos" onClick="closeProjectoReport();" iconSclass="fas fa-door-closed" >
+							<custom-attributes roleList="ADMIN" />
+						</menuitem>
+						<menuseparator >
+							<custom-attributes roleList="ADMIN" />
+						</menuseparator>
+						
+						
+					</menupopup>
+				</menu>
+				
+				
+				<menu id="inrepmenu" label="Reportes" iconSclass="fas fa-file-contract" >
+					<menupopup width="190px" >
+						<menuitem label="Productos" onClick="reportProducts();" iconSclass="fas fa-file-contract" >
+							<custom-attributes roleList="ADMIN" />
+						</menuitem>
+						<menuseparator/>
+						
+						<menuitem label="Reporte CI Gral." onClick="reportci();" iconSclass="fas fa-file-contract" >
+							<custom-attributes roleList="ADMIN" />
+						</menuitem>
+						<menuseparator >
+							<custom-attributes roleList="ADMIN" />
+						</menuseparator>
+						
+						
+						<menuitem label="Reporte CI Det." onClick="report();" iconSclass="fas fa-file-contract" >
+							<custom-attributes roleList="ADMIN" />
+						</menuitem>
+						<menuseparator >
+							<custom-attributes roleList="ADMIN" />
+						</menuseparator>
+						
+						<menuitem label="Reportes E/S" onClick="reportES();" iconSclass="fas fa-file-contract" >
+							<custom-attributes roleList="ADMIN" />
+						</menuitem>
+						<menuseparator >
+							<custom-attributes roleList="ADMIN" />
+						</menuseparator>
+						
+						<menuitem label="Reporte proveedores" onClick="reportProveedores();" iconSclass="fas fa-file-contract" >
+							<custom-attributes roleList="ADMIN" />
+						</menuitem>
+						<menuseparator >
+							<custom-attributes roleList="ADMIN" />
+						</menuseparator>
+						
+						
+					</menupopup>
+				</menu>
+				
+				<menu id="usrmenu" label="Configuración" iconSclass="z-icon-cogs"  > <!-- onCreate="roleController.checkRoles(self);" -->
+					<menupopup width="190px" >
+						<menuitem label="Inicio" onClick="home();" iconSclass="z-icon-home"/>
+						<menuseparator/>
+						<menuitem label="Empleados" onClick="employee();" iconSclass="z-icon-group" >
+							<custom-attributes roleList="ADMIN" />
+						</menuitem>
+						<menuseparator >
+							<custom-attributes roleList="ADMIN" />
+						</menuseparator>	
+						<menuitem label="Usuarios" onClick="users();" iconSclass="z-icon-group" >
+							<custom-attributes roleList="ADMIN" />
+						</menuitem>
+						<menuseparator >
+							<custom-attributes roleList="ADMIN" />
+						</menuseparator>						
+						<menuitem label="Salir" onClick="logout();" iconSclass="z-icon-sign-out" />
+					</menupopup>
+				</menu>
+			</menubar>
+		</div>
+		
+	</div>
+	
+</window>
+</zk>

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25 ene. 2023 18:48:44 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="com.seidor.inventario.model.Proyecto" table="proyecto" catalog="bd_inventario" optimistic-lock="version">
+        <id name="idProyecto" type="java.lang.Integer">
+            <column name="id_proyecto" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="estatusProyecto" class="com.seidor.inventario.model.EstatusProyecto" fetch="select">
+            <column name="id_estatus_proyecto" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="200" not-null="true" />
+        </property>
+        <property name="fechaInicio" type="timestamp">
+            <column name="fecha_inicio" length="19" />
+        </property>
+        <property name="fechaFinal" type="timestamp">
+            <column name="fecha_final" length="19" />
+        </property>
+        <set name="salidas" table="salida" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_proyecto" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.Salida" />
+        </set>
+        <set name="entradas" table="entrada" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_proyecto" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.Entrada" />
+        </set>
+        <set name="movimientosStocks" table="movimientos_stock" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_proyecto" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.MovimientosStock" />
+        </set>
+        <set name="ordenCompras" table="orden_compra" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_proyecto" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.OrdenCompra" />
+        </set>
+    </class>
+</hibernate-mapping>

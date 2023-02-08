@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25 ene. 2023 18:48:44 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="com.seidor.inventario.model.Usuario" table="usuario" catalog="bd_inventario" optimistic-lock="version">
+        <id name="idUsuario" type="java.lang.Integer">
+            <column name="id_usuario" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="empleado" class="com.seidor.inventario.model.Empleado" fetch="select">
+            <column name="id_empleado" not-null="true" />
+        </many-to-one>
+        <property name="usuario" type="string">
+            <column name="usuario" length="50" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="50" />
+        </property>
+        <property name="fecha" type="timestamp">
+            <column name="fecha" length="19" not-null="true" />
+        </property>
+        <property name="activo" type="int">
+            <column name="activo" not-null="true" />
+        </property>
+        <set name="perfilUsuarios" table="perfil_usuario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_usuario" not-null="true" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.PerfilUsuario" />
+        </set>
+    </class>
+</hibernate-mapping>

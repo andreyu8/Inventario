@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25 ene. 2023 18:48:44 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="com.seidor.inventario.model.Empleado" table="empleado" catalog="bd_inventario" optimistic-lock="version">
+        <id name="idEmpleado" type="java.lang.Integer">
+            <column name="id_empleado" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="almacen" class="com.seidor.inventario.model.Almacen" fetch="select">
+            <column name="id_almacen" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="50" />
+        </property>
+        <property name="APaterno" type="string">
+            <column name="a_paterno" length="50" />
+        </property>
+        <property name="AMaterno" type="string">
+            <column name="a_materno" length="50" />
+        </property>
+        <property name="curp" type="string">
+            <column name="curp" length="18" />
+        </property>
+        <property name="rfc" type="string">
+            <column name="rfc" length="14" />
+        </property>
+        <property name="numeroEmpleado" type="string">
+            <column name="numero_empleado" length="50" />
+        </property>
+        <property name="telefono" type="string">
+            <column name="telefono" length="50" />
+        </property>
+        <property name="extension" type="string">
+            <column name="extension" length="50" />
+        </property>
+        <property name="celular" type="string">
+            <column name="celular" length="50" />
+        </property>
+        <property name="EMail" type="string">
+            <column name="e_mail" length="50" />
+        </property>
+        <property name="numeroSegSocial" type="string">
+            <column name="numero_seg_social" length="50" />
+        </property>
+        <property name="fechaRegistro" type="timestamp">
+            <column name="fecha_registro" length="19" not-null="true" />
+        </property>
+        <property name="activo" type="int">
+            <column name="activo" not-null="true" />
+        </property>
+        <set name="ordenCompras" table="orden_compra" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_empleado" not-null="true" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.OrdenCompra" />
+        </set>
+        <set name="entradas" table="entrada" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_empleado" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.Entrada" />
+        </set>
+        <set name="salidas" table="salida" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_empleado" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.Salida" />
+        </set>
+        <set name="usuarios" table="usuario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_empleado" not-null="true" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.Usuario" />
+        </set>
+    </class>
+</hibernate-mapping>

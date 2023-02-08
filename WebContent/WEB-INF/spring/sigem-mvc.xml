@@ -1,0 +1,59 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:zksp="http://www.zkoss.org/2008/zkspring/core"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.zkoss.org/2008/zkspring/core http://www.zkoss.org/2008/zkspring/core/zkspring-core.xsd">
+	
+	<bean id="userDao" class="com.seidor.inventario.dao.UserDAO" autowire="byName" />
+	<bean id="categoryDao" class="com.seidor.inventario.dao.CategoryDAO" autowire="byName" />
+	<bean id="productDao" class="com.seidor.inventario.dao.ProductDAO" autowire="byName" />
+	<bean id="unitMeasureDao" class="com.seidor.inventario.dao.UnitMeasureDAO" autowire="byName" />
+	<bean id="locationDao" class="com.seidor.inventario.dao.LocationDAO" autowire="byName" />
+	<bean id="warehouseDao" class="com.seidor.inventario.dao.WarehouseDAO" autowire="byName" />
+	<bean id="purchaseOrderDao" class="com.seidor.inventario.dao.PurchaseOrderDAO" autowire="byName" />
+	<bean id="employeeDao" class="com.seidor.inventario.dao.EmployeeDAO" autowire="byName" />
+	<bean id="invoiceDao" class="com.seidor.inventario.dao.InvoiceDAO" autowire="byName" />
+	<bean id="entryDao" class="com.seidor.inventario.dao.EntryDAO" autowire="byName" />
+	<bean id="outputDao" class="com.seidor.inventario.dao.OutputDAO" autowire="byName" />
+	<bean id="typeWorkDao" class="com.seidor.inventario.dao.TypeWorkDAO" autowire="byName" />
+	<bean id="projectDao" class="com.seidor.inventario.dao.ProjectDAO" autowire="byName" />
+	<bean id="stockDao" class="com.seidor.inventario.dao.StockDAO" autowire="byName" />
+	<bean id="providerDao" class="com.seidor.inventario.dao.ProviderDAO" autowire="byName" />
+
+	
+	
+	<bean id="userManager" class="com.seidor.inventario.manager.UserManager" autowire="byName" />
+	<bean id="categoryManager" class="com.seidor.inventario.manager.CategoryManager" autowire="byName" />
+	<bean id="productManager" class="com.seidor.inventario.manager.ProductManager" autowire="byName" />
+	<bean id="unitMeasureManager" class="com.seidor.inventario.manager.UnitMeasureManager" autowire="byName" />
+	<bean id="locationManager" class="com.seidor.inventario.manager.LocationManager" autowire="byName" />
+	<bean id="warehouseManager" class="com.seidor.inventario.manager.WarehouseManager" autowire="byName" />
+	<bean id="purchaseOrderManager" class="com.seidor.inventario.manager.PurchaseOrderManager" autowire="byName" />
+	<bean id="employeeManager" class="com.seidor.inventario.manager.EmployeeManager" autowire="byName" />
+	<bean id="invoiceManager" class="com.seidor.inventario.manager.InvoiceManager" autowire="byName" />
+	<bean id="entryManager" class="com.seidor.inventario.manager.EntryManager" autowire="byName" />
+	<bean id="outputManager" class="com.seidor.inventario.manager.OutputManager" autowire="byName" />
+	<bean id="typeWorkManager" class="com.seidor.inventario.manager.TypeWorkManager" autowire="byName" />
+	<bean id="projectManager" class="com.seidor.inventario.manager.ProjectManager" autowire="byName" />
+	<bean id="stockManager" class="com.seidor.inventario.manager.StockManager" autowire="byName" />
+	<bean id="providerManager" class="com.seidor.inventario.manager.ProviderManager" autowire="byName" />
+		
+	
+	<bean id="userController" class="com.seidor.inventario.controller.UserController" autowire="byName" />
+	<bean id="categoryController" class="com.seidor.inventario.controller.CategoryController" autowire="byName" />
+	<bean id="productController" class="com.seidor.inventario.controller.ProductController" autowire="byName" />
+	<bean id="unitMeasureController" class="com.seidor.inventario.controller.UnitMeasureController" autowire="byName" />
+	<bean id="locationController" class="com.seidor.inventario.controller.LocationController" autowire="byName" />
+	<bean id="warehouseController" class="com.seidor.inventario.controller.WarehouseController" autowire="byName" />
+	<bean id="purchaseOrderController" class="com.seidor.inventario.controller.PurchaseOrderController" autowire="byName" />
+	<bean id="employeeController" class="com.seidor.inventario.controller.EmployeeController" autowire="byName" />
+	<bean id="invoiceController" class="com.seidor.inventario.controller.InvoiceController" autowire="byName" />
+	<bean id="entryController" class="com.seidor.inventario.controller.EntryController" autowire="byName" />
+	<bean id="outputController" class="com.seidor.inventario.controller.OutputController" autowire="byName" />
+	<bean id="typeWorkController" class="com.seidor.inventario.controller.TypeWorkController" autowire="byName" />
+	<bean id="projectController" class="com.seidor.inventario.controller.ProjectController" autowire="byName" />
+	<bean id="closeProjectController" class="com.seidor.inventario.controller.CloseProjectController" autowire="byName" />
+	<bean id="stockController" class="com.seidor.inventario.controller.StockController" autowire="byName" />
+	<bean id="providerController" class="com.seidor.inventario.controller.ProviderController" autowire="byName" />
+	
+</beans>

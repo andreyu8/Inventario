@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25 ene. 2023 18:48:44 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="com.seidor.inventario.model.Factura" table="factura" catalog="bd_inventario" optimistic-lock="version">
+        <id name="idFactura" type="java.lang.Integer">
+            <column name="id_factura" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="proveedor" class="com.seidor.inventario.model.Proveedor" fetch="select">
+            <column name="id_proveedor" not-null="true" />
+        </many-to-one>
+        <property name="numeroFactura" type="string">
+            <column name="numero_factura" length="200" />
+        </property>
+        <property name="fecha" type="timestamp">
+            <column name="fecha" length="19" />
+        </property>
+        <property name="subtotal" type="big_decimal">
+            <column name="subtotal" precision="20" scale="6" />
+        </property>
+        <property name="iva" type="java.lang.Double">
+            <column name="iva" precision="20" scale="6" />
+        </property>
+        <property name="total" type="big_decimal">
+            <column name="total" precision="20" scale="6" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="50" />
+        </property>
+        <set name="entradas" table="entrada" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_factura" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.Entrada" />
+        </set>
+        <set name="ordenCompras" table="orden_compra" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_factura" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.OrdenCompra" />
+        </set>
+    </class>
+</hibernate-mapping>

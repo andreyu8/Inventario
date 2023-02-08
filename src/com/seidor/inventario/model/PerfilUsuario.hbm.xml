@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25 ene. 2023 18:48:44 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="com.seidor.inventario.model.PerfilUsuario" table="perfil_usuario" catalog="bd_inventario" optimistic-lock="version">
+        <id name="idPerfilUsuario" type="java.lang.Integer">
+            <column name="id_perfil_usuario" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="perfil" class="com.seidor.inventario.model.Perfil" fetch="select">
+            <column name="id_perfil" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usuario" class="com.seidor.inventario.model.Usuario" fetch="select">
+            <column name="id_usuario" not-null="true" />
+        </many-to-one>
+        <property name="activo" type="int">
+            <column name="activo" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

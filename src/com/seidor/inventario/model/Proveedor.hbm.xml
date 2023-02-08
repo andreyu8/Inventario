@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25 ene. 2023 18:48:44 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="com.seidor.inventario.model.Proveedor" table="proveedor" catalog="bd_inventario" optimistic-lock="version">
+        <id name="idProveedor" type="java.lang.Integer">
+            <column name="id_proveedor" />
+            <generator class="identity" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" length="100" not-null="true" />
+        </property>
+        <property name="rfc" type="string">
+            <column name="rfc" length="14" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="direccion" length="50" />
+        </property>
+        <property name="telefono" type="string">
+            <column name="telefono" length="50" />
+        </property>
+        <property name="extension" type="string">
+            <column name="extension" length="50" />
+        </property>
+        <property name="EMail" type="string">
+            <column name="e_mail" length="50" />
+        </property>
+        <property name="activo" type="int">
+            <column name="activo" not-null="true" />
+        </property>
+        <set name="facturas" table="factura" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_proveedor" not-null="true" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.Factura" />
+        </set>
+    </class>
+</hibernate-mapping>

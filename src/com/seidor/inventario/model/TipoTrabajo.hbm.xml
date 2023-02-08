@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25 ene. 2023 18:48:44 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="com.seidor.inventario.model.TipoTrabajo" table="tipo_trabajo" catalog="bd_inventario" optimistic-lock="version">
+        <id name="idTipoTrabajo" type="java.lang.Integer">
+            <column name="id_tipo_trabajo" />
+            <generator class="identity" />
+        </id>
+        <property name="tipoTrabajo" type="string">
+            <column name="tipo_trabajo" length="50" not-null="true" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="150" />
+        </property>
+        <property name="activo" type="int">
+            <column name="activo" not-null="true" />
+        </property>
+        <set name="salidas" table="salida" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_tipo_trabajo" not-null="true" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.Salida" />
+        </set>
+    </class>
+</hibernate-mapping>
