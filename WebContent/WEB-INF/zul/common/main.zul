@@ -36,7 +36,13 @@
 	        <tab label="Reportes" />
 	    </tabs>
 	    <tabpanels>
-	        <tabpanel id="roomstab" onCreate="loadRoomTab();" />
+	        <tabpanel id="roomstab" onCreate="loadRoomTab();">
+	        	
+	        	 <!--  <button label="Below" image="/widgets/input/button/img/ArrowDown-16x16.png"
+                        hoverImage="/widgets/input/button/img/ArrowDownGreen-16x16.png"
+                        width="125px" orient="vertical" dir="reverse" /> -->
+	        
+	        </tabpanel>
 	        <tabpanel id="seatstab" onCreate="loadSeatTab();" />
 	    </tabpanels>
 	</tabbox>

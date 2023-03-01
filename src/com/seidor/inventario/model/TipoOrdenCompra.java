@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 25 ene. 2023 18:48:44 by Hibernate Tools 4.3.5.Final
+// Generated 22 feb. 2023 19:54:18 by Hibernate Tools 4.3.5.Final
 
 import java.util.HashSet;
 import java.util.Set;

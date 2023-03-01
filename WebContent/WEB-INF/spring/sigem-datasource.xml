@@ -57,9 +57,12 @@
 				<prop key="hibernate.current_session_context_class">thread</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.max_fetch_depth">3</prop>
+				<prop key="hibernate.c3p0.privilegeSpawnedThreads">true</prop>
+				<prop key="hibernate.c3p0.contextClassLoaderSource">library</prop>
 				<prop key="cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
 				<prop key="cache.use_query_cache">false</prop>
 				<prop key="cache.use_minimal_puts">false</prop>
+				
 				
 			</props>
 		</property>

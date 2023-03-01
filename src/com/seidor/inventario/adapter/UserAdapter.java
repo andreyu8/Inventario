@@ -11,6 +11,7 @@ import com.seidor.inventario.model.PerfilUsuario;
 public class UserAdapter {
 	
 	private Usuario usuario;
+	private String nameComplete;
 	private ArrayList<PerfilUsuario> profiles = new ArrayList<PerfilUsuario>();
 //	
 //	private ArrayList<Profile> allProfiles = new ArrayList<Profile>();
@@ -32,6 +33,24 @@ public class UserAdapter {
 		this.usuario = usuario;
 	}
 
+	public String getNameComplete() {
+		return nameComplete;
+	}
+
+	public void setNameComplete(String nameComplete) {
+		this.nameComplete = nameComplete;
+	}
+
+	public ArrayList<PerfilUsuario> getProfiles() {
+		return profiles;
+	}
+
+	public void setProfiles(ArrayList<PerfilUsuario> profiles) {
+		this.profiles = profiles;
+	}
+
+	
+	
 		
 //	public ArrayList<UserProfile> getProfiles() {
 //		return profiles;

@@ -24,6 +24,7 @@ import com.seidor.inventario.adapter.beans.CierreBean;
 import com.seidor.inventario.adapter.beans.CloseBean;
 import com.seidor.inventario.adapter.beans.EntradasProyectoBean;
 import com.seidor.inventario.adapter.beans.ProveedoresBean;
+import com.seidor.inventario.adapter.beans.ReasignedBean;
 import com.seidor.inventario.adapter.beans.ReportCostoInventario;
 import com.seidor.inventario.adapter.beans.ReportCostoInventarioGBean;
 import com.seidor.inventario.adapter.beans.SalidaProyectoBean;
@@ -100,11 +101,13 @@ public class ProductDAO extends HibernateDaoSupport{
 		
 		criteria.setFetchMode("categoria", FetchMode.JOIN);
 		criteria.setFetchMode("unidadMedida", FetchMode.JOIN);
+		criteria.setFetchMode("almacen", FetchMode.JOIN);
 		
 		if (psa.getNombre() != null && psa.getNombre().trim().length() > 0){
 			criteria.add(Restrictions.ilike("nombre", psa.getNombre().trim(), MatchMode.ANYWHERE));
 		}
 		
+		criteria.add(Restrictions.eq("almacen.idAlmacen", psa.getIdAlmacen()));
 		
 		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		
@@ -326,6 +329,92 @@ public class ProductDAO extends HibernateDaoSupport{
 		return result;
 	}
 	
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<ReasignedBean> getReasignedProyecto (Integer projectId) {
+		
+		
+		ArrayList<ReasignedBean> result = new ArrayList<ReasignedBean>();
+		ReasignedBean reasignedBean = new ReasignedBean();
+		
+		List<Object[]> rows = new ArrayList<Object[]>();
+		
+		StringBuilder sb = new  StringBuilder(); 
+		sb.append("SELECT  " );
+		sb.append("a.Familia AS Familia, a.id_producto, a.codigo,a.nombre, a.unidad_medida, a.sum_entra , ");
+		sb.append("b.Familia AS Familia_s , b.id_producto AS id_producto_s, b.codigo AS codigo_s, b.nombre AS nombre_s, b.unidad_medida AS unidad_medida_s ,b.sum_salida,   ");
+		sb.append("nvl ((a.sum_entra-b.sum_salida),a.sum_entra)  as diferencia ");
+		sb.append(" FROM ( ");
+		sb.append(" SELECT c.categoria AS Familia, p.id_producto, p.codigo,p.nombre, u.unidad_medida,SUM(e.cantidad) AS sum_entra  ");
+		sb.append("FROM entrada e , producto p, unidad_medida u, categoria c ");
+		sb.append("WHERE e.id_proyecto = :project  ");
+		sb.append("AND e.id_producto = p.id_producto  ");
+		sb.append("AND e.id_unidad_medida = u.id_unidad_medida ");
+		sb.append("AND p.id_categoria = c.id_categoria ");
+		sb.append("GROUP BY c.categoria, p.id_producto, p.codigo,p.nombre, u.unidad_medida  ");
+		sb.append(") a  ");
+		sb.append("LEFT JOIN ( ");
+		sb.append("SELECT c.categoria AS Familia, p.id_producto, p.codigo,p.nombre, u.unidad_medida, SUM(s.cantidad) AS sum_salida   ");
+		sb.append("FROM salida s , producto p, unidad_medida u, categoria c ");
+		sb.append("WHERE s.id_proyecto = :project  ");
+		sb.append("AND s.id_producto = p.id_producto  ");
+		sb.append("AND s.id_unidad_medida = u.id_unidad_medida  ");
+		sb.append( "AND p.id_categoria = c.id_categoria  ");
+		sb.append("GROUP BY  c.categoria, p.id_producto, p.codigo,p.nombre, u.unidad_medida  ");
+		sb.append(") b  ");
+		sb.append("ON  a.codigo =  b.codigo");
+		
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		
+		SQLQuery query = session.createSQLQuery(sb.toString());
+		query.addScalar("Familia", StringType.INSTANCE);
+		query.addScalar("id_producto", IntegerType.INSTANCE);
+		query.addScalar("codigo", StringType.INSTANCE);
+		query.addScalar("nombre", StringType.INSTANCE);
+		query.addScalar("unidad_medida", StringType.INSTANCE);
+		query.addScalar("sum_entra", IntegerType.INSTANCE);
+		
+		query.addScalar("Familia_s", StringType.INSTANCE);
+		query.addScalar("id_producto_s", IntegerType.INSTANCE);
+		query.addScalar("codigo_s", StringType.INSTANCE);
+		query.addScalar("nombre_s", StringType.INSTANCE);
+		query.addScalar("unidad_medida_s", StringType.INSTANCE);
+		query.addScalar("sum_salida", IntegerType.INSTANCE);
+		query.addScalar("diferencia", IntegerType.INSTANCE);
+		
+		query.setParameter("project", projectId);
+		
+		rows = query.list();
+		
+		for (Object[] cp : rows) {
+			
+			reasignedBean = new ReasignedBean();
+				
+			reasignedBean.setFamilia(cp[0] == null ? "" : (String) cp[0]);
+			reasignedBean.setIdProducto((int) cp[1]);
+			reasignedBean.setCodigo(cp[2] == null ? "" : (String) cp[2]);
+			reasignedBean.setProducto(cp[3] == null ? "" : (String) cp[3]);
+			reasignedBean.setUnidadMedida(cp[4] == null ? "" : (String) cp[4]);
+			reasignedBean.setCantidadEntrada((int) cp[5]);
+			
+			reasignedBean.setFamilia_s(cp[6] == null ? "" : (String) cp[6]);
+			reasignedBean.setIdProducto_s(cp[7] == null ? 0 : (int) cp[7]);
+			reasignedBean.setCodigo_s(cp[8] == null ? "" : (String) cp[8]);
+			reasignedBean.setProducto_s(cp[9] == null ? "" : (String) cp[9]);
+			reasignedBean.setUnidadMedida_s(cp[10] == null ? "" : (String) cp[10]);
+			reasignedBean.setCantidadSalida(cp[11] == null ? 0 : (int) cp[11] );
+			
+			reasignedBean.setDiferencia((int) cp[12]);
+						
+			result.add(reasignedBean);
+		}	
+		
+		session.flush();
+		session.close();
+		
+		
+		return result;
+	}
 	
 	@SuppressWarnings("unchecked")
 	public ArrayList<ReportCostoInventarioGBean> getReportInventarioCI () {

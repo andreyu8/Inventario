@@ -19,7 +19,7 @@
 		}
 		
 		void profile(){
-			state.setDetailIdentifier(userDetail.getUser().getId());
+			state.setDetailIdentifier(userDetail.getUsuario().getIdUsuario());
 			state.setUri("/WEB-INF/zul/user/detail.zul");
 			state.startBreadCrumbsPathFromHome("Mi Perfil");
 			navigationControl.changeView(headerwin, state);

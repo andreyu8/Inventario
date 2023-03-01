@@ -107,8 +107,9 @@ public class UserController {
 	public UserAdapter read(Integer userId){
 		UserAdapter ua = new UserAdapter();
 	
-		
 		Usuario user = this.userManager.get(userId);
+		ua.setNameComplete(user.getEmpleado().getNombre()+" "+user.getEmpleado().getAPaterno()+" "+user.getEmpleado().getAMaterno());
+		
 		ua.setUsuario(user);
 		
 		return ua;

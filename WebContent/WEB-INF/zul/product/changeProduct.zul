@@ -4,7 +4,7 @@
 <?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
-<window id="win" border="none" onOK="search();" apply="org.zkoss.bind.BindComposer" >
+<window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
 	
 	<zscript>
 		import com.seidor.inventario.navigation.*;
@@ -44,7 +44,7 @@
 		}
 		
 		public void viewOutput () {
-			closeProjectController.loadInOutputProject (cplb, rProjectAdapter, win); 
+			closeProjectController.loadInOutputProjectR (rplb, rProjectAdapter, win); 
 		}
 		
 		
@@ -101,7 +101,7 @@
 						<div class="col-md-4">
 							<label value="Proyecto destino*" sclass="editField" />
 							<h:p> <combobox value="@bind(rProjectAdapter.proyectoDestino.nombre)"
-										 		onCreate="projectController.loadOpenProjects(self);" 
+										 		onCreate="projectController.loadOpenProjectsEnd(self);" 
 									 			id="prcbd" /> </h:p>
 						</div>
 					
@@ -111,7 +111,7 @@
 				</div>
 					
 				<div class="animated aniFadeIn" >	
-					<listbox id="cplb" emptyMessage="No se encontrarón productos para mostrar" width="90%">
+					<listbox id="rplb" emptyMessage="No se encontrarón productos para mostrar" width="90%">
 					 	<auxhead>
 			            	<auxheader colspan="5" align="center" style=" background: green;">Entradas</auxheader>
 			            	<auxheader colspan="5" align="center" style=" background: red;">Salidas</auxheader>

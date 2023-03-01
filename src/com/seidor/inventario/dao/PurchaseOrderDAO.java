@@ -26,6 +26,7 @@ public class PurchaseOrderDAO extends HibernateDaoSupport{
 		criteria.setFetchMode("etapa", FetchMode.JOIN);
 		criteria.setFetchMode("tipoOrdenCompra", FetchMode.JOIN);
 		criteria.setFetchMode("area", FetchMode.JOIN);
+		criteria.setFetchMode("factura", FetchMode.JOIN);
 		criteria.setFetchMode("proyecto", FetchMode.JOIN);
 		
 		criteria.add(Restrictions.eq("idOrdenCompra", id));

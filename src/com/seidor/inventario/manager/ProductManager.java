@@ -6,6 +6,7 @@ import com.seidor.inventario.adapter.beans.CierreBean;
 import com.seidor.inventario.adapter.beans.CloseBean;
 import com.seidor.inventario.adapter.beans.EntradasProyectoBean;
 import com.seidor.inventario.adapter.beans.ProveedoresBean;
+import com.seidor.inventario.adapter.beans.ReasignedBean;
 import com.seidor.inventario.adapter.beans.ReportCostoInventario;
 import com.seidor.inventario.adapter.beans.ReportCostoInventarioGBean;
 import com.seidor.inventario.adapter.beans.SalidaProyectoBean;
@@ -77,6 +78,10 @@ public class ProductManager {
 	
 	public ArrayList<CloseBean> getCloseProyecto (Integer projectId) {
 		return this.productDao.getCloseProyecto (projectId);
+	}
+	
+	public ArrayList<ReasignedBean> getReasignedProyecto (Integer projectId) {
+		return this.productDao.getReasignedProyecto (projectId);
 	}
 	
 	public ArrayList<EntradasProyectoBean> getEntradaProyecto (int idProyecto) {

@@ -6,7 +6,6 @@ import org.zkoss.spring.SpringUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zul.Combobox;
-import org.zkoss.zul.Datebox;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 
@@ -173,6 +172,15 @@ public class ProjectController {
 	}
 	
 	public void loadOpenProjects(Combobox combo) {
+		ArrayList<Proyecto> projects = this.projectManager.getAllOpen();
+		if (projects != null) {
+			ListModelList<Proyecto> model = new ListModelList<Proyecto>(projects);
+			combo.setItemRenderer(new ProjectComboitemRenderer());
+			combo.setModel(model);
+		}
+	}
+	
+	public void loadOpenProjectsEnd(Combobox combo) {
 		ArrayList<Proyecto> projects = this.projectManager.getAllOpen();
 		if (projects != null) {
 			ListModelList<Proyecto> model = new ListModelList<Proyecto>(projects);

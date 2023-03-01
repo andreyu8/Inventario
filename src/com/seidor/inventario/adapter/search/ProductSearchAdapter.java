@@ -6,6 +6,7 @@ public class ProductSearchAdapter {
 	private String codigo;
 	private String familia;
 	private Integer idCategoria;
+	private Integer idAlmacen;
 	
 
 	public String getNombre() {
@@ -40,4 +41,14 @@ public class ProductSearchAdapter {
 		this.idCategoria = idCategoria;
 	}
 
+	public Integer getIdAlmacen() {
+		return idAlmacen;
+	}
+
+	public void setIdAlmacen(Integer idAlmacen) {
+		this.idAlmacen = idAlmacen;
+	}
+
+	
+	
 }

@@ -4,7 +4,7 @@
 <?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
-<window id="win" border="none" onOK="search();" apply="org.zkoss.bind.BindComposer" >
+<window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
 	
 	<zscript>
 		import com.seidor.inventario.navigation.*;

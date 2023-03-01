@@ -19,9 +19,12 @@
 	<bean id="projectDao" class="com.seidor.inventario.dao.ProjectDAO" autowire="byName" />
 	<bean id="stockDao" class="com.seidor.inventario.dao.StockDAO" autowire="byName" />
 	<bean id="providerDao" class="com.seidor.inventario.dao.ProviderDAO" autowire="byName" />
-
+	<bean id="clientDao" class="com.seidor.inventario.dao.ClientDAO" autowire="byName" />
+	<bean id="phaseDao" class="com.seidor.inventario.dao.PhaseDAO" autowire="byName" />
+	<bean id="areaDao" class="com.seidor.inventario.dao.AreaDAO" autowire="byName" />
+	<bean id="typeOrderDao" class="com.seidor.inventario.dao.TypeOrderDAO" autowire="byName" />
 	
-	
+		
 	<bean id="userManager" class="com.seidor.inventario.manager.UserManager" autowire="byName" />
 	<bean id="categoryManager" class="com.seidor.inventario.manager.CategoryManager" autowire="byName" />
 	<bean id="productManager" class="com.seidor.inventario.manager.ProductManager" autowire="byName" />
@@ -37,6 +40,10 @@
 	<bean id="projectManager" class="com.seidor.inventario.manager.ProjectManager" autowire="byName" />
 	<bean id="stockManager" class="com.seidor.inventario.manager.StockManager" autowire="byName" />
 	<bean id="providerManager" class="com.seidor.inventario.manager.ProviderManager" autowire="byName" />
+	<bean id="clientManager" class="com.seidor.inventario.manager.ClientManager" autowire="byName" />
+	<bean id="phaseManager" class="com.seidor.inventario.manager.PhaseManager" autowire="byName" />
+	<bean id="areaManager" class="com.seidor.inventario.manager.AreaManager" autowire="byName" />
+	<bean id="typeOrderManager" class="com.seidor.inventario.manager.TypeOrderManager" autowire="byName" />
 		
 	
 	<bean id="userController" class="com.seidor.inventario.controller.UserController" autowire="byName" />
@@ -55,5 +62,9 @@
 	<bean id="closeProjectController" class="com.seidor.inventario.controller.CloseProjectController" autowire="byName" />
 	<bean id="stockController" class="com.seidor.inventario.controller.StockController" autowire="byName" />
 	<bean id="providerController" class="com.seidor.inventario.controller.ProviderController" autowire="byName" />
+	<bean id="clientController" class="com.seidor.inventario.controller.ClientController" autowire="byName" />
+	<bean id="phaseController" class="com.seidor.inventario.controller.PhaseController" autowire="byName" />
+	<bean id="areaController" class="com.seidor.inventario.controller.AreaController" autowire="byName" />
+	<bean id="typeOrderController" class="com.seidor.inventario.controller.TypeOrderController" autowire="byName" />
 	
 </beans>
