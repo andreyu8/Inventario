@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="confwin" border="normal" position="center" onCreate="setMsg();" zclass="none" >
+	
+	<zscript>
+		import ieci.tdw.ispac.navigation.Action;
+		
+		Action action = Executions.getCurrent().getArg().get("action");
+		String msg = Executions.getCurrent().getArg().get("message");
+		
+		void setMsg(){
+			if (msg != null){
+				message.setValue(msg);
+			}
+		}
+	</zscript>
+	
+	<div class="container">
+		<div class="row">
+			<h:div class="col-md-4" />
+			
+			<div class="col-md-4" >
+				<div class="row sysBox" >
+					<div class="row editHeader">
+						<div class="col-md-12" >
+							<a sclass="confirmIcon" iconSclass="z-icon-question-circle" />
+							<label value="CONFIRMAR" sclass="sysTitle" />
+							<button id="closebtn" label="X" onClick="confwin.detach();" style="padding-top: 2px; padding-bottom: 2px; float: right;" focus="true" />
+						</div>
+					</div>
+					
+					<h:div class="row gridCard">
+						<h:div class="col-md-12 sysInnerBox" style="text-align: center;" >
+							<h:span style="padding-top: 10px; display: block;" />
+							<label id="message" value="¿Realmente desea borrar el elemento seleccionado? " sclass="sysField" />
+							<h:span style="padding-bottom: 10px; display: block;" />
+						</h:div>
+					</h:div>
+					
+					<h:div class="row gridCard">
+						<h:div class="col-md-12" style="text-align: center;" >
+							<h:span style="padding-top: 5px; display: block;" />
+							<button label="no" sclass="btn btn-warning" iconSclass="z-icon-thumbs-o-down" onClick='confwin.detach();' />
+							<button label="sí" sclass="btn btn-primary" iconSclass="z-icon-thumbs-o-up" onClick='action.execute(); confwin.detach();' />
+						</h:div>
+					</h:div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</window>
+</zk>

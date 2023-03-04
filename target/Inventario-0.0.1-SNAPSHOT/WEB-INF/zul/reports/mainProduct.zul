@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="win" border="none" onOK="search();" onCreate="productController.searchProductReport(prodlb, productSearch, state, win); prepareSearchFields();" apply="org.zkoss.bind.BindComposer" >
+
+	
+	<zscript>
+		import com.seidor.inventario.adapter.search.ProductSearchAdapter;
+		import com.seidor.inventario.navigation.*;
+		import com.seidor.inventario.model.Categoria;
+		import org.zkoss.zul.Combobox;
+						
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		
+		ProductSearchAdapter productSearch = state.getSearchCriteria();
+		
+		if (productSearch == null) {
+			productSearch = new ProductSearchAdapter();
+			state.setSearchCriteria(productSearch);
+		}
+		
+		public void prepareSearchFields(){
+			BreadCrumb bc = state.getLastBreadCrumbs();
+			bc.setBookmark(navigationStates.getLastBookmark());
+			
+			pagingControl.loadPaging(state, prodlb);
+		}
+		
+		public void getIdCategory (Combobox cbCategory) {
+			if (cbCategory.getSelectedItem()!=null )
+				productSearch.setIdCategoria(((Categoria) cbCategory.getSelectedItem().getValue()).getIdCategoria());
+			
+		}
+		
+		public void search(){
+			pagingControl.resetActivePage(state);
+			navigationControl.changeView(win, state);
+		}
+		
+		
+		
+	</zscript>
+	
+	<div class="row sectionBox animated aniFadeIn">
+		<div class="row">
+			<div class="col-md-8" align="left" >
+				<span style="padding-top: 5px; display: block;" />
+				<label value="Buscador" sclass="sectionTitle" />
+			</div>
+			<div class="col-md-4">
+				<div align="right" sclass="btn-group" style="float: right;" >
+				</div>
+				
+				<div align="right" style="float: right;" >
+					<button label="buscar" onClick="search();" iconSclass="z-icon-search" style="margin-right: 20px;" />
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container animated aniFadeIn" >
+		<div class="editBox">
+			<div class="row">
+				
+				<div sclass="col-md-4" >
+					<label value="Familia" sclass="editField" />
+					<h:p> <combobox value="@bind(productSearch.familia)"
+							 		onCreate="categoryController.loadCategory(self);" 
+						 			id="cbfm" onChange="getIdCategory (self)"/> </h:p>
+				</div>
+				
+				<div sclass="col-md-4" >
+					<label value="Productos" sclass="editField" />
+					<h:p> <textbox value="@bind(productSearch.nombre)" /> </h:p>
+				</div>
+				<div sclass="col-md-4" >
+					<label value="Codigo" sclass="editField" />
+					<h:p> <textbox value="@bind(productSearch.codigo)" /> </h:p>
+				</div>
+				
+				
+			</div>
+			
+			<div class="row">
+				
+			</div>
+		</div>
+	</div>
+	
+	<div class="animated aniFadeIn" >	
+		<listbox id="prodlb" emptyMessage="No se encontrarón productos para mostrar" >
+			<listhead>
+				<listheader label="Código" hflex="3" sort="auto(lower(codigo))" />
+				<listheader label="Nombre" hflex="3" sort="auto(lower(nombre))" />
+				<listheader label="Categoría" hflex="3" sort="auto(lower(categoria.categoria))" />
+				<listheader label="U.Medida" hflex="3" />
+				<listheader label="Cantidad" hflex="3" />
+				<listheader label="Minimo" hflex="3" />
+				<listheader label="Maximo" hflex="3" />
+			</listhead>
+			<template name="model" >
+				<listitem >
+					<listcell label="${each.codigo}" />
+					<listcell label="${each.nombre}" />
+					<listcell label="${each.categoria.categoria}" />
+					<listcell label="${each.unidadMedida.unidadMedida}" />
+					<listcell label="${each.cantidad}" />
+					<listcell label="${each.minimo}" />
+					<listcell label="${each.maximo}" />
+				</listitem>
+			</template>
+		</listbox>
+		<pagingsize />
+	</div>
+	
+	<separator spacing="10px" />
+		
+</window>
+</zk>

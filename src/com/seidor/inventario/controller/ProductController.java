@@ -64,6 +64,7 @@ public class ProductController {
 	
 		psa.setCodigo(null);
 		psa.setIdCategoria(0);
+		psa.setIdAlmacen(SessionUtil.getSucursalId());
 		
 		ArrayList<Producto> products = this.productManager.search(psa);
 		

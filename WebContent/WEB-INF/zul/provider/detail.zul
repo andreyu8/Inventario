@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="winPro" border="none" apply="org.zkoss.bind.BindComposer" >
+	
+	<zscript>
+		import com.seidor.inventario.adapter.ProviderAdapter;
+		import com.seidor.inventario.navigation.*;
+		
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		
+		ProviderAdapter providerDetail = providerController.read(state.getDetailIdentifier());
+		
+		
+		public void modify(){
+			state.setUri("/WEB-INF/zul/provider/edit.zul");
+			state.appendBreadCrumbsPath("Editar");
+			state.setDetailIndex(null);
+			state.setDetailList(null);
+			state.setDetailLabels(null);
+			navigationControl.changeView(winPro, state);
+		}
+	</zscript>
+	
+	<div class="row sectionBox animated aniFadeIn">
+		<div class="col-md-6" align="left" >
+			<h:span style="padding-top: 5px; display: block;" />
+			<label value="Detalle del proveedor" sclass="sectionTitle" />
+			<label value="(${providerDetail.proveedor.idProveedor})" style="font-size: 12px;" />
+		</div>
+		<div class="col-md-6" align="right" >
+			<button label="modificar" onClick="modify();" iconSclass="z-icon-pencil" />
+		</div>
+	</div>
+	
+	<div class="row subBox animated aniFadeIn">
+		<div class="col-md-12">
+			<label value="Datos generales" />
+		</div>
+	</div>
+	<div class="row container animated aniFadeIn" >
+		<div class="col-md-3">
+			<label value="Id del proveedor" sclass="detailField" />
+			<h:p> <label value="${providerDetail.proveedor.idProveedor}" sclass="detailData" /> </h:p>
+		</div>
+		<div class="col-md-3">
+			<label value="Nombre" sclass="detailField" />
+			<h:p> <label value="${providerDetail.proveedor.nombre}" sclass="detailData" /> </h:p>
+		</div>
+		<div class="col-md-3">
+			<label value="RFC" sclass="detailField" />
+			<h:p> <label value="${providerDetail.proveedor.rfc}" sclass="detailData" /> </h:p>
+		</div>
+		<div class="col-md-3">
+			<label value="Dirección" sclass="detailField" />
+			<h:p> <label value="${providerDetail.proveedor.direccion}" sclass="detailData" /> </h:p>
+		</div>
+		<div class="col-md-3">
+			<label value="Telefono" sclass="detailField" />
+			<h:p> <label value="${providerDetail.proveedor.telefono}" sclass="detailData" /> </h:p>
+		</div>
+		<div class="col-md-3">
+			<label value="Extensión" sclass="detailField" />
+			<h:p> <label value="${providerDetail.proveedor.extension}" sclass="detailData" /> </h:p>
+		</div>
+		<div class="col-md-3">
+			<label value="Email" sclass="detailField" />
+			<h:p> <label value="${providerDetail.proveedor.EMail}" sclass="detailData" /> </h:p>
+		</div>
+		<div class="col-md-3">
+            <label value="Activo" sclass="editField" />
+            <h:p>  
+            	<checkbox mold="switch" checked="${providerDetail.falgActive}" disabled="true"/>
+            </h:p>	
+         </div>
+		
+		
+	</div>
+	
+	<separator spacing="10px" />
+	
+</window>
+</zk>

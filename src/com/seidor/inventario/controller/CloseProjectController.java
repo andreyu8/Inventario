@@ -22,13 +22,17 @@ import com.seidor.inventario.adapter.beans.CierreBean;
 import com.seidor.inventario.adapter.beans.CloseBean;
 import com.seidor.inventario.adapter.beans.EntradasProyectoBean;
 import com.seidor.inventario.adapter.beans.OutBean;
+import com.seidor.inventario.adapter.beans.ReasignedBean;
 import com.seidor.inventario.adapter.beans.ReportCostoInventario;
 import com.seidor.inventario.adapter.beans.SalidaProyectoBean;
 import com.seidor.inventario.adapter.listitem.CloseitemAdapter;
 import com.seidor.inventario.adapter.listitem.OutputitemAdapter;
+import com.seidor.inventario.adapter.listitem.ReasigneditemAdapter;
 import com.seidor.inventario.adapter.render.CloseListitemRenderer;
 import com.seidor.inventario.adapter.render.OutputListitemRenderer;
+import com.seidor.inventario.adapter.render.ReasignedListitemRenderer;
 import com.seidor.inventario.constants.SystemConstants;
+import com.seidor.inventario.inroweditablecomps.EditableListitem;
 import com.seidor.inventario.inroweditablecomps.IREditableCheckbox;
 import com.seidor.inventario.inroweditablecomps.IREditableIntbox;
 import com.seidor.inventario.manager.EntryManager;
@@ -169,7 +173,7 @@ public class CloseProjectController {
 		
 		Combobox prcb = (Combobox) win.getFellowIfAny("prcb");
 		if (prcb != null && prcb.getSelectedItem()!=null ) 
-			ca.setProyecto((Proyecto) prcb.getSelectedItem().getValue());
+			ca.getProyecto().setIdProyecto(( (Proyecto) prcb.getSelectedItem().getValue()).getIdProyecto());
 
 		ListModelList<CloseitemAdapter> model = 
 				new ListModelList<CloseitemAdapter>(CloseitemAdapter.getArray(this.productManager.getCloseProyecto(ca.getProyecto().getIdProyecto())));
@@ -181,26 +185,6 @@ public class CloseProjectController {
 		SessionUtil.setSessionAttribute("listDevoluciones", listDevoluciones);	
 				
 	}
-	
-	
-	//seagignacion de proyecto entradas y salidas
-	public void loadInOutputProject (Listbox lb, ResignProyectAdapter ca, Component win) {
-		
-		Combobox prcb = (Combobox) win.getFellowIfAny("prcb");
-		if (prcb != null && prcb.getSelectedItem()!=null ) 
-			ca.setProyecto((Proyecto) prcb.getSelectedItem().getValue());
-
-		ListModelList<CloseitemAdapter> model = 
-				new ListModelList<CloseitemAdapter>(CloseitemAdapter.getArray(this.productManager.getCloseProyecto(ca.getProyecto().getIdProyecto())));
-		lb.setModel(model);
-		lb.setItemRenderer(new CloseListitemRenderer());
-		
-		//almancenar las devoluciones
-		ArrayList<CloseBean> listDevoluciones = new ArrayList<CloseBean>();
-		SessionUtil.setSessionAttribute("listDevoluciones", listDevoluciones);	
-				
-	}
-
 	
 	
 
@@ -442,104 +426,7 @@ public class CloseProjectController {
 	}
 	
 	
-	//reasignacion de proyecto
-	@SuppressWarnings("unchecked")
-	public void saveReasign (ResignProyectAdapter rpa, NavigationState state, Component win) {
 		
-		
-		Listbox lb = (Listbox) win.getFellowIfAny("oplb");
-		ListModelList<CloseitemAdapter> lml = (ListModelList) lb.getModel();
-		
-		Combobox pDestino = (Combobox) win.getFellowIfAny("prcbd");
-		if (pDestino != null && pDestino.getSelectedItem()!=null )
-			rpa.setProyectoDestino((Proyecto) pDestino.getSelectedItem().getValue());
-		else 
-			throw new WrongValueException(pDestino, "Debe de seleccionar el proyecto destino");
-		
-		
-		for (int i=0; i< lb.getItemCount(); i++ ) {
-			CloseitemAdapter ouia= (CloseitemAdapter) lml.getElementAt(i);
-			
-			if (ouia.getCloseBean().getDevoluciones()  > 0) {
-				System.out.println("id_producto:"+ouia.getCloseBean().getIdProducto());
-				System.out.println("cantidad modificada:"+ouia.getCloseBean().getDevoluciones());
-				System.out.println("cantidad entrada: "+ouia.getCloseBean().getCantidadEntrada());
-				System.out.println("cantidad salida: "+ouia.getCloseBean().getCantidadSalida());
-			}	
-			
-		}
-		
-		
-		System.out.println("-------------------- ");
-		
-		ArrayList<CloseBean> listDevoluciones = (ArrayList<CloseBean>) SessionUtil.getSessionAttribute("listDevoluciones");
-			
-		
-		int stockdefault = 0;
-		int sobranteProyecto = 0;
-		int stock = 0;
-		int cantidad = 0;
-		
-		for (CloseBean ob : listDevoluciones ) {
-			System.out.println("id_producto:"+ob.getIdProducto());
-			System.out.println("Cantidad: "+ob.getCantidadSalida());
-			System.out.println("Devolucion: "+ob.getDevoluciones());
-			
-			Producto product = this.productManager.get(ob.getIdProducto());
-			Entrada entrada= this.entryManager.get(product.getIdProducto());
-			
-
-			//la suma de las entradas del proyecto - la suma de las salidas del proyecto =  me dan el (stock defaul del proyecto )
-			stockdefault = ob.getCantidadEntrada() - ob.getCantidadSalida();
-
-			//la suma del stock default + devolucion procto = sobrante total del proyecto
-			sobranteProyecto = stockdefault + ob.getDevoluciones();
-			
-			//la suma del sobfante total del proyecto + el stock real = stock del proyecto
-			stock = sobranteProyecto + (product.getStock() == null ? 0 : product.getStock());
-			
-			/////////////////
-			//cantidad = cantidad +devolucion proyecto
-			cantidad = product.getCantidad() + ob.getDevoluciones();
-			
-			
-			//producto
-			//product.setStock(stock);
-			product.setCantidad(cantidad);
-			
-			Salida salida = new Salida ();
-			TipoTrabajo tt = new TipoTrabajo();
-			salida.setCantidad(ob.getDevoluciones());
-			salida.setProducto(product);
-			salida.setProyecto(entrada.getProyecto());
-			salida.setEmpleado(entrada.getEmpleado());
-			tt.setIdTipoTrabajo(3);
-			salida.setTipoTrabajo(tt);
-			salida.setUnidadMedida(entrada.getUnidadMedida());
-			salida.setClaveMueble("");
-			salida.setFecha(new Date());
-			salida.setEstatus(SystemConstants.SALIDA_POR_REASIGNACION);
-			
-			
-			entrada.setProducto(product);
-			entrada.setProyecto(rpa.getProyectoDestino());
-			entrada.setCantidad(ob.getDevoluciones());
-			entrada.setEstatus(SystemConstants.ENTRADA_POR_REASIGNACION);
-			entrada.setFecha(new Date());
-			
-			
-			this.entryManager.saveReasignedEntryProyect(entrada, salida, product);
-			
-		}
-		 
-		 
-		
-		state.setUri("/WEB-INF/zul/product/changeProduct.zul");
-		state.startBreadCrumbsPathFromHome("Reasignación de productos");
-		navigationControl.changeView(win, state);
-	}
-	
-	
 	public void searchReportClose(CierreBean cierreBean, Listbox lb, NavigationState state, Component win){
 		
 		
@@ -588,6 +475,168 @@ public class CloseProjectController {
 		}
 		
 	}
+	
+	
+	//seagignacion de proyecto entradas y salidas
+	public void loadInOutputProjectR (Listbox lb, ResignProyectAdapter ca, Component win) {
+		
+		Combobox prcb = (Combobox) win.getFellowIfAny("prcb");
+		if (prcb != null && prcb.getSelectedItem()!=null ) 
+			ca.getProyecto().setIdProyecto(( (Proyecto) prcb.getSelectedItem().getValue()).getIdProyecto());
+		
+		ListModelList<ReasigneditemAdapter> model = 
+				new ListModelList<ReasigneditemAdapter>(ReasigneditemAdapter.getArray(this.productManager.getReasignedProyecto(ca.getProyecto().getIdProyecto())));
+		lb.setModel(model);
+		lb.setItemRenderer(new ReasignedListitemRenderer());
+		
+		//almancenar las reasignaciones de productos
+		ArrayList<ReasignedBean> listReasignacion = new ArrayList<ReasignedBean>();
+		SessionUtil.setSessionAttribute("listReasignacion", listReasignacion);	
+				
+	}
+
+	//reasignacion de productos a proyectos
+	@SuppressWarnings("unchecked")
+	public void reasignaProductos(Listitem listitem) {
+		
+		Listbox lb = (Listbox) listitem.getParent();	
+		Integer selectedIndex = lb.getIndexOfItem(listitem);
+		ReasigneditemAdapter adapter = (ReasigneditemAdapter) lb.getModel().getElementAt(selectedIndex);
+		ReasignedBean outBean = adapter.getReasignedBean();
+		
+		Component comp = listitem.getFirstChild();
+		
+		comp = comp.getNextSibling();
+		comp = comp.getNextSibling();
+		comp = comp.getNextSibling();
+		comp = comp.getNextSibling();
+		comp = comp.getNextSibling();
+		comp = comp.getNextSibling();
+		comp = comp.getNextSibling();
+		comp = comp.getNextSibling();
+		comp = comp.getNextSibling();
+		comp = comp.getNextSibling();
+		comp = comp.getNextSibling();
+		
+		Hlayout devCant= (Hlayout) comp.getFirstChild();
+		IREditableIntbox quantitybox = (IREditableIntbox) devCant.getFirstChild();
+		
+		System.out.println("cantidad a devolver: "+quantitybox.getValue());
+		System.out.println("id del producto: "+outBean.getIdProducto());
+		
+		if (outBean.getCantidadSalida() < quantitybox.getValue() ) { 
+			throw new WrongValueException(quantitybox, "La cantidad a devolver tiene que ser menor a la cantidad de la salida");
+		}
+		else {
+			outBean.setReasignacion(quantitybox.getValue());
+			System.out.println("Realiza salida");
+			
+			ArrayList<ReasignedBean> listReasignacion = (ArrayList<ReasignedBean>) SessionUtil.getSessionAttribute("listReasignacion");
+			listReasignacion.add(outBean);
+			SessionUtil.setSessionAttribute("listReasignacion", listReasignacion);
+			
+		}
+		
+	}
+	
+	
+	
+	//reasignacion de proyecto
+	@SuppressWarnings("unchecked")
+	public void saveReasign (ResignProyectAdapter rpa, NavigationState state, Component win) {
+		
+		
+		Listbox lb = (Listbox) win.getFellowIfAny("rplb");
+		ListModelList<ReasigneditemAdapter> lml = (ListModelList) lb.getModel();
+		
+		Combobox pDestino = (Combobox) win.getFellowIfAny("prcbd");
+		if (pDestino != null && pDestino.getSelectedItem()!=null )
+			rpa.getProyectoDestino().setIdProyecto(((Proyecto) pDestino.getSelectedItem().getValue()).getIdProyecto());
+		else 
+			throw new WrongValueException(pDestino, "Debe de seleccionar el proyecto destino");
+		
+		
+		for (int i=0; i< lb.getItemCount(); i++ ) {
+			ReasigneditemAdapter ouia= (ReasigneditemAdapter) lml.getElementAt(i);
+			
+			if (ouia.getReasignedBean().getReasignacion()  > 0) {
+				System.out.println("id_producto:"+ouia.getReasignedBean().getIdProducto());
+				System.out.println("cantidad modificada:"+ouia.getReasignedBean().getReasignacion());
+				System.out.println("cantidad entrada: "+ouia.getReasignedBean().getCantidadEntrada());
+				System.out.println("cantidad salida: "+ouia.getReasignedBean().getCantidadSalida());
+			}	
+			
+		}
+		
+		
+		System.out.println("-------------------- ");
+		
+		ArrayList<ReasignedBean> listReasignacion = (ArrayList<ReasignedBean>) SessionUtil.getSessionAttribute("listReasignacion");
+			/*
+			 * listReasignacion
+			 * */
+		
+		int stockdefault = 0;
+		int sobranteProyecto = 0;
+		int cantidad = 0;
+		
+		for (ReasignedBean ob : listReasignacion ) {
+			System.out.println("id_producto:"+ob.getIdProducto());
+			System.out.println("Cantidad: "+ob.getCantidadSalida());
+			System.out.println("Devolucion: "+ob.getReasignacion());
+			
+			Producto product = this.productManager.get(ob.getIdProducto());
+			Entrada entrada= this.entryManager.get(product.getIdProducto());
+			
+
+			//la suma de las entradas del proyecto - la suma de las salidas del proyecto =  me dan el (stock defaul del proyecto )
+			stockdefault = ob.getCantidadEntrada() - ob.getCantidadSalida();
+
+			//la suma del stock default + devolucion procto = sobrante total del proyecto
+			sobranteProyecto = stockdefault + ob.getReasignacion();
+			
+			
+			/////////////////
+			//cantidad = cantidad +devolucion proyecto
+			cantidad = product.getCantidad() + ob.getReasignacion();
+			
+			
+			//producto
+			//product.setStock(stock);
+			product.setCantidad(cantidad);
+			
+			Salida salida = new Salida ();
+			TipoTrabajo tt = new TipoTrabajo();
+			salida.setCantidad(ob.getReasignacion());
+			salida.setProducto(product);
+			salida.setProyecto(entrada.getProyecto());
+			salida.setEmpleado(entrada.getEmpleado());
+			tt.setIdTipoTrabajo(3);
+			salida.setTipoTrabajo(tt);
+			salida.setUnidadMedida(entrada.getUnidadMedida());
+			salida.setClaveMueble("");
+			salida.setFecha(new Date());
+			salida.setEstatus(SystemConstants.SALIDA_POR_REASIGNACION);
+			
+			
+			entrada.setProducto(product);
+			entrada.setProyecto(rpa.getProyectoDestino());
+			entrada.setCantidad(ob.getReasignacion());
+			entrada.setEstatus(SystemConstants.ENTRADA_POR_REASIGNACION);
+			entrada.setFecha(new Date());
+			
+			
+			this.entryManager.saveReasignedEntryProyect(entrada, salida, product);
+			
+		}
+		 
+		 
+		
+		state.setUri("/WEB-INF/zul/product/changeProduct.zul");
+		state.startBreadCrumbsPathFromHome("Reasignación de productos");
+		navigationControl.changeView(win, state);
+	}
+		
 	
 
 }

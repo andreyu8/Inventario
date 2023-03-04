@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
+	
+	<zscript>
+		import com.seidor.inventario.adapter.OutputAdapter;
+		import com.seidor.inventario.navigation.*;
+		
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		 
+		OutputAdapter outputAdapter = outputController.read(state.getDetailIdentifier());
+		
+		public void cancel(){
+			navigationControl.changeToPrevious(win);
+		}
+		
+		public void save(){
+			fcv.validate(win);
+			outputController.save(outputAdapter, state, win);
+		}
+		
+		public void validaProdcto() {
+			outputController.validaProducto (outputAdapter, state, win);
+			
+		}
+		
+		
+	</zscript>
+	
+	<div class="row sectionBox animated aniFadeIn">
+		<div class="col-md-12" align="center" >
+			<label value="Salida de Almacén" sclass="sectionTitle"/>
+		</div>
+		<div class="col-md-6" align="left" >
+			<h:span style="padding-top: 5px; display: block;" />
+			<label value="Categoría: " sclass="sectionTitle" />
+			<label value="(${outputAdapter.producto.categoria.categoria})" style="font-size: 12px;" />
+			<separator spacing="10px" />
+			<label value="Salida de producto:" sclass="sectionTitle" />
+			<label value="(${outputAdapter.producto.nombre})" style="font-size: 12px;" />
+		</div>
+		<div class="col-md-4">
+			<div align="right" style="float: right;" >
+				<button label="cancelar" sclass="btn btn-warning" onClick="cancel();" iconSclass="z-icon-times" />
+				<button label="guardar" sclass="btn btn-success" onClick="save();" iconSclass="z-icon-check" />
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="row subBoxAlt animated aniFadeIn" >
+		<div class="col-md-12">
+			<label value="Datos del producto" />
+		</div>
+	</div>
+	<div class="container animated aniFadeIn" >
+		<div class="row editBox">
+			
+			<div class="col-md-4">
+				<label value="Cantidad*" sclass="editField" />
+				<h:p> <intbox id="ibcantidad" value="@bind(outputAdapter.salida.cantidad)" constraint="${imv}" /> </h:p>
+			</div>
+			
+			<!-- <div class="col-md-4">
+				<label value="Fecha*" sclass="editField" />
+				<h:p>  <datebox id="db0" cols="12" format="short " onCreate="self.value = new Date()" /> </h:p>
+			</div> -->
+			
+		
+		
+			<div class="col-md-4">
+				<label value="Proyecto*" sclass="editField" />
+				<h:p> <combobox value="@bind(outputAdapter.salida.proyecto.nombre)"
+							 		onCreate="projectController.loadProjects(self);" 
+						 			id="prcb" onChange="validaProdcto();" /> </h:p>
+			</div>
+		
+		
+			
+			<div class="col-md-4">
+				<label value="Orden de trabajo*" sclass="editField" />
+				<h:p> <textbox value="@bind(outputAdapter.salida.ordenTrabajo)"  /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Tipo de trabajo*" sclass="editField" />
+				<h:p> <combobox value="@bind(outputAdapter.salida.tipoTrabajo.tipoTrabajo)"
+							 		onCreate="typeWorkController.loadTypeWork(self);" 
+						 			id="cbtt" constraint="${cmv}"/> </h:p>
+			</div>		
+			
+			
+			
+		
+		
+		
+			
+		</div>
+	
+	</div>		
+		
+		
+	<separator spacing="10px" />
+	
+</window>
+</zk>

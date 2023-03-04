@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window mode="modal" position="center" >
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4" />
+			
+			<div class="col-md-4" >
+				<div class="row sysBox" >
+					<div class="row editHeader">
+						<div class="col-md-12" >
+							<a sclass="dangerIcon" iconSclass="z-icon-minus-circle" />
+							<label value="ATENCIÓN" sclass="sysTitle" />
+							<button id="closebtn" label="X" onClick='self.parent.parent.parent.parent.parent.parent.parent.detach();' style="padding-top: 2px; padding-bottom: 2px; float: right;" focus="true" />
+						</div>
+					</div>
+					
+					<h:div class="row gridCard">
+						<h:div class="col-md-12 sysInnerBox" style="text-align: center;" >
+							<h:span style="padding-top: 10px; display: block;" />
+							<label value="Lo sentimos, ocurrió un error, estamos trabajando para corregirlo." sclass="sysField" />
+							<h:span style="padding-bottom: 10px; display: block;" />
+						</h:div>
+					</h:div>
+					
+					<div class="row gridCard">
+						<div class="col-md-12" style="text-align: center;" >
+							<h:span style="padding-top: 5px; display: block;" />
+							<button label="aceptar" sclass="btn btn-warning" iconSclass="z-icon-frown-o" onClick='self.parent.parent.parent.parent.parent.parent.parent.detach();' />
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<h:div class="col-md-4" />
+		</div>
+	</div>
+	
+</window>
+</zk>
