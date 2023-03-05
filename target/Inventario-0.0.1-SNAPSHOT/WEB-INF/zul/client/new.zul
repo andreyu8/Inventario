@@ -49,32 +49,32 @@
 			
 			<div class="col-md-4">
 				<label value="Nombre*" sclass="editField" />
-				<h:p> <textbox value="@bind(clientSave.cliente.nombre)" constraint="${tmv}" width="400 px"/> </h:p>
+				<h:p> <textbox value="@bind(clientSave.cliente.nombre)" constraint="${tmv}" width="400px"/> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="RFC*" sclass="editField" />
-				<h:p> <textbox value="@bind(clientSave.cliente.rfc)" constraint="${tmv}" width="400 px"/> </h:p>
+				<h:p> <textbox value="@bind(clientSave.cliente.rfc)" constraint="${tmv}" width="400px"/> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Dirección*" sclass="editField" />
-				<h:p> <textbox value="@bind(clientSave.cliente.direccion)" constraint="${tmv}" width="400 px"/> </h:p>
+				<h:p> <textbox value="@bind(clientSave.cliente.direccion)" constraint="${tmv}" width="400px"/> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Telefono*" sclass="editField" />
-				<h:p> <doublebox value="@bind(clientSave.cliente.telefono)" constraint="${tmv}" width="400 px"/> </h:p>
+				<h:p> <textbox value="@bind(clientSave.cliente.telefono)" constraint="${tmv}" width="400px"/> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Extension*" sclass="editField" />
-				<h:p> <textbox value="@bind(clientSave.cliente.extension)" constraint="${tmv}" width="400 px"/> </h:p>
+				<h:p> <textbox value="@bind(clientSave.cliente.extension)" constraint="${tmv}" width="400px"/> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Correo*" sclass="editField" />
-				<h:p> <textbox value="@bind(clientSave.cliente.EMail)" constraint="${tmv}" width="400 px"/> </h:p>
+				<h:p> <textbox value="@bind(clientSave.cliente.EMail)" constraint="${tmv}" width="400px"/> </h:p>
 			</div>
 			
 			<div class="col-md-4">

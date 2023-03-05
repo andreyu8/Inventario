@@ -86,7 +86,7 @@
 			
 			
 			<div class="col-md-4">
-				<label value="Descrpción*" sclass="editField" />
+				<label value="Descripción*" sclass="editField" />
 				<h:p> <textbox value="@bind(invoiceSave.factura.descripcion)" constraint="${tmv}" width="400px"/> </h:p>
 			</div>
 				

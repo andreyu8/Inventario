@@ -27,7 +27,7 @@
 		<div class="col-md-6">
 			<h:span style="padding-top: 5px; display: block;" />
 			<div align="left" >
-				<label value="${clientEdit.cliente.idCliente}" sclass="sectionTitle" />
+				<label value="${clientEdit.cliente.nombre}" sclass="sectionTitle" />
 			</div>
 		</div>
 		<div class="col-md-6">
@@ -45,36 +45,37 @@
 	</div>
 	<div class="container animated aniFadeIn" >
 		<div class="row editBox">
-			
-			<div class="col-md-4">
-				<label value="Nombre*" sclass="editField" />
-				<h:p> <textbox value="@bind(clientEdit.cliente.nombre)" /> </h:p>
-			</div>
-			
-			<div class="col-md-4">
-				<label value="RFC*" sclass="editField" />
-				<h:p> <textbox value="@bind(clientEdit.cliente.rfc)" /> </h:p>
-			</div>
-			
-			<div class="col-md-4">
-				<label value="Dirección*" sclass="editField" />
-				<h:p> <textbox value="@bind(clientEdit.cliente.direccion)" /> </h:p>
-			</div>
-			
-			<div class="col-md-4">
-				<label value="Telefono*" sclass="editField" />
-				<h:p> <textbox value="@bind(clientEdit.cliente.telefono)" /> </h:p>
-			</div>
-			
-			<div class="col-md-4">
-				<label value="Extension*" sclass="editField" />
-				<h:p> <textbox value="@bind(clientEdit.cliente.extension)" /> </h:p>
-			</div>
-			
-			<div class="col-md-4">
-				<label value="Correo*" sclass="editField" />
-				<h:p> <textbox value="@bind(clientEdit.cliente.EMail)" /> </h:p>
-			</div>
+		
+		<div class="col-md-3">
+			<label value="Nombre" sclass="editField" />
+			<h:p> <textbox value="@bind(clientEdit.cliente.nombre)" sclass="detailData" width="300px"/> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="RFC" sclass="editField" />
+			<h:p> <textbox value="@bind(clientEdit.cliente.rfc)" sclass="detailData" width="300px"/> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Dirección" sclass="editField" />
+			<h:p> <textbox value="@bind(clientEdit.cliente.direccion)" sclass="detailData" width="300px"/> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Telefono" sclass="editField" />
+			<h:p> <textbox value="@bind(clientEdit.cliente.telefono)" sclass="detailData" width="300px"/> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Extension" sclass="editField" />
+			<h:p> <textbox value="@bind(clientEdit.cliente.extension)" sclass="detailData" width="300px"/> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Correo" sclass="editField" />
+			<h:p> <textbox value="@bind(clientEdit.cliente.EMail)" sclass="detailData" width="300px"/> </h:p>
+		</div>	
+				
 					
 		</div>
 	</div>
