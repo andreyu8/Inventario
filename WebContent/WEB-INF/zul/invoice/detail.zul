@@ -13,6 +13,10 @@
 		
 		InvoiceAdapter invoiceDetail = invoiceController.read(state.getDetailIdentifier());
 		
+<<<<<<< HEAD
+=======
+		
+>>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 		public void modify(){
 			state.setUri("/WEB-INF/zul/invoice/edit.zul");
 			state.appendBreadCrumbsPath("Editar");
@@ -26,7 +30,12 @@
 	<div class="row sectionBox animated aniFadeIn">
 		<div class="col-md-6" align="left" >
 			<h:span style="padding-top: 5px; display: block;" />
+<<<<<<< HEAD
 			<label value="(${invoiceDetail.factura.numeroFactura})" sclass="sectionTitle" />
+=======
+			<label value="Detalle del la factura" sclass="sectionTitle" />
+			<label value="(${invoiceDetail.factura.numeroFactura})" style="font-size: 12px;" />
+>>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 		</div>
 		<div class="col-md-6" align="right" >
 			<button label="modificar" onClick="modify();" iconSclass="z-icon-pencil" />
@@ -39,6 +48,7 @@
 		</div>
 	</div>
 	<div class="row container animated aniFadeIn" >
+<<<<<<< HEAD
 		
 		<div class="col-md-3">
 			<label value="Proveedor" sclass="detailField" />
@@ -75,6 +85,42 @@
 			<h:p> <label value="@bind(invoiceDetail.factura.descripcion)" sclass="detailData" width="400px"/> </h:p>
 		</div>
 			
+=======
+		<div class="col-md-3">
+			<label value="Id del proyecto" sclass="detailField" />
+			<h:p> <label value="${invoiceDetail.factura.idFactura}" sclass="detailData" /> </h:p>
+		</div>
+		<div class="col-md-3">
+			<label value="Número de factura" sclass="detailField" />
+			<h:p> <label value="${invoiceDetail.factura.numeroFactura}" sclass="detailData" /> </h:p>
+		</div>
+		<div class="col-md-3">
+			<label value="Proveedor" sclass="detailField" />
+			<h:p> <label value="${invoiceDetail.factura.proveedor.nombre}" sclass="detailData" /> </h:p>
+		</div>
+		<div class="col-md-3">
+			<label value="Fecha" sclass="detailField" />
+			<h:p> <label value="${invoiceDetail.factura.fecha}" sclass="detailData" /> </h:p>
+		</div>
+		<div class="col-md-3">
+			<label value="Subtotal" sclass="detailField" />
+			<h:p> <label value="${invoiceDetail.factura.subtotal}" sclass="detailData" /> </h:p>
+		</div>
+		<div class="col-md-3">
+			<label value="IVA" sclass="detailField" />
+			<h:p> <label value="${invoiceDetail.factura.iva}" sclass="detailData" /> </h:p>
+		</div>
+		<div class="col-md-3">
+			<label value="Total" sclass="detailField" />
+			<h:p> <label value="${invoiceDetail.factura.total}" sclass="detailData" /> </h:p>
+		</div>
+		<div class="col-md-3">
+			<label value="Descripción" sclass="detailField" />
+			<h:p> <label value="${invoiceDetail.factura.descripcion}" sclass="detailData" /> </h:p>
+		</div>
+		
+		
+>>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 	</div>
 	
 	<separator spacing="10px" />

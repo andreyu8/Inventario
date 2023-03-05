@@ -27,7 +27,11 @@
 		<div class="col-md-6">
 			<h:span style="padding-top: 5px; display: block;" />
 			<div align="left" >
+<<<<<<< HEAD
 				<label value="${ocEdit.orderCompra.descripcion}" sclass="sectionTitle" width="300px"/>
+=======
+				<label value="${ocEdit.orderCompra.descripcion}" sclass="sectionTitle" />
+>>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 			</div>
 		</div>
 		<div class="col-md-6">
@@ -48,27 +52,43 @@
 			
 			<div class="col-md-4">
 				<label value="Descripción de la OC*" sclass="editField" />
+<<<<<<< HEAD
 				<h:p> <textbox value="@bind(ocEdit.orderCompra.descripcion)" width="400px"/> </h:p>
+=======
+				<h:p> <textbox value="@bind(ocEdit.orderCompra.descripcion)" /> </h:p>
+>>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 			</div>
 			
 			
 			<div class="col-md-4">
 				<label value="Fecha*" sclass="editField" />
+<<<<<<< HEAD
 				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(ocEdit.orderCompra.fecha)" width="400px" /> </h:p>
+=======
+				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(ocEdit.orderCompra.fecha)"  /> </h:p>
+>>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Cliente*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocEdit.orderCompra.cliente.nombre)"
 							 		onCreate="clientController.loadClient(self);" 
+<<<<<<< HEAD
 						 			id="clicb" constraint="${cmv}" width="400px"/> </h:p>
+=======
+						 			id="clicb" constraint="${cmv}"/> </h:p>
+>>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 			</div>	
 			
 			<div class="col-md-4">
 				<label value="Factura*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocEdit.orderCompra.factura.numeroFactura)"
 							 		onCreate="invoiceController.loadInvoice(self);" 
+<<<<<<< HEAD
 						 			id="invcb" constraint="${cmv}" width="400px"/> </h:p>
+=======
+						 			id="invcb" constraint="${cmv}"/> </h:p>
+>>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 			</div>		
 		
 				
@@ -77,21 +97,33 @@
 				<label value="Etapa*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocEdit.orderCompra.etapa.etapa)"
 							 		onCreate="phaseController.loadPhase(self);" 
+<<<<<<< HEAD
 						 			id="etapcb" constraint="${cmv}" width="400px"/> </h:p>
+=======
+						 			id="etapcb" constraint="${cmv}"/> </h:p>
+>>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 			</div>	
 			
 			<div class="col-md-4">
 				<label value="Area*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocEdit.orderCompra.area.area)"
 							 		onCreate="areaController.loadArea(self);" 
+<<<<<<< HEAD
 						 			id="areacb" constraint="${cmv}" width="400px"/> </h:p>
+=======
+						 			id="areacb" constraint="${cmv}"/> </h:p>
+>>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 			</div>	
 			
 			<div class="col-md-4">
 				<label value="Tipo de order de compra*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocEdit.orderCompra.tipoOrdenCompra.ordenCompra)"
 							 		onCreate="typeOrderController.loadTOC(self);" 
+<<<<<<< HEAD
 						 			id="toccb" constraint="${cmv}" width="400px"/> </h:p>
+=======
+						 			id="toccb" constraint="${cmv}"/> </h:p>
+>>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 			</div>	
 			
 					
@@ -99,7 +131,11 @@
 				<label value="Empleado*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocEdit.orderCompra.empleado.nombre)"
 							 		onCreate="employeeController.loadEmployee(self);" 
+<<<<<<< HEAD
 						 			id="cbemp" width="400px"/>
+=======
+						 			id="cbemp" />
+>>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 				 </h:p>
 			</div>		
 				
@@ -107,7 +143,11 @@
 				<label value="Proyecto*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocEdit.orderCompra.proyecto.nombre)"
 							 		onCreate="projectController.loadProjects(self);" 
+<<<<<<< HEAD
 						 			id="prcb" width="400px"/> </h:p>
+=======
+						 			id="prcb" /> </h:p>
+>>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 			</div>	
 				
 					
