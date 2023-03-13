@@ -3,7 +3,6 @@ package com.seidor.inventario.controller;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
 import org.zkoss.spring.SpringUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zul.Combobox;
@@ -11,26 +10,13 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 
 import com.seidor.inventario.adapter.ClientAdapter;
-import com.seidor.inventario.adapter.ProviderAdapter;
 import com.seidor.inventario.adapter.render.ClientComboitemRenderer;
-import com.seidor.inventario.adapter.render.ProveedorComboitemRenderer;
 import com.seidor.inventario.adapter.search.ClientSearchAdapter;
-import com.seidor.inventario.adapter.search.ProviderSearchAdapter;
 import com.seidor.inventario.manager.ClientManager;
 import com.seidor.inventario.model.Cliente;
-import com.seidor.inventario.model.Proveedor;
 import com.seidor.inventario.navigation.NavigationControl;
 import com.seidor.inventario.navigation.NavigationState;
 import com.seidor.inventario.navigation.NavigationStates;
-=======
-import org.zkoss.zul.Combobox;
-import org.zkoss.zul.ListModelList;
-
-import com.seidor.inventario.adapter.render.ClientComboitemRenderer;
-import com.seidor.inventario.manager.ClientManager;
-import com.seidor.inventario.model.Cliente;
-import com.seidor.inventario.navigation.NavigationControl;
->>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 
 public class ClientController {
 
@@ -66,7 +52,7 @@ public class ClientController {
 		}
 	}
 	
-<<<<<<< HEAD
+
 	public void search(Listbox lb, ClientSearchAdapter psa, NavigationState state){
 		ArrayList<Cliente> client = this.clientManager.search(psa);
 		
@@ -176,7 +162,14 @@ public class ClientController {
 			return pa;
 		}
 		
-=======
->>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
-	
+		public void delete(ClientAdapter ca, NavigationState state, Component win){
+			//ca.getCliente().setActivo(0);
+			this.clientManager.delete(ca.getCliente());
+			
+			state.setUri("/WEB-INF/zul/client/main.zul");
+			state.setDetailIdentifier(null);
+			state.removeLastBreadCrumbs();
+			state.removeLastBreadCrumbs();
+			this.navigationControl.changeView(win, state);
+		}
 }

@@ -85,7 +85,7 @@
 					projectController.delete(projectEdit, state, win);
 				}
 			};
-			NavigationControl.openModalWindowWithMessage("¿Está seguro de eliminar la categoría actual?", deleteAction);
+			NavigationControl.openModalWindowWithMessage("¿Está seguro de eliminar el proyecto actual?", deleteAction);
 		}
 	</zscript>
 	

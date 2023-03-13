@@ -7,7 +7,7 @@
 	
 	<zscript>
 		import ieci.tdw.ispac.mail.UserMailSender;
-		import ieci.tdw.ispac.navigation.*;
+		import com.seidor.inventario.navigation.*;
 		import ieci.tdw.ispac.util.SessionUtil;
 		import nl.captcha.Captcha;
 		import ieci.tdw.ispac.util.CaptchaUtil;

@@ -200,6 +200,7 @@ com\seidor\inventario\dao\PhaseDAO.class
 com\seidor\inventario\navigation\NavigationRenderer.class
 com\seidor\inventario\validation\EmailboxMandatoryValidator.class
 com\seidor\inventario\util\ReflectUtil.class
+com\seidor\inventario\adapter\UnitMeasureAdapter.class
 com\seidor\inventario\validation\DecimalboxMandatoryValidator.class
 com\seidor\inventario\inroweditablecomps\IREditableComponent.class
 com\seidor\inventario\adapter\beans\OutBean.class

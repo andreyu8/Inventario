@@ -27,7 +27,7 @@
 		<div class="col-md-6">
 			<h:span style="padding-top: 5px; display: block;" />
 			<div align="left" >
-				<label value="${invoiceEdit.invoice.nombre}" sclass="sectionTitle"/>
+				<label value="${projectEdit.proyecto.nombre}" sclass="sectionTitle" />
 			</div>
 		</div>
 		<div class="col-md-6">
@@ -46,40 +46,55 @@
 	<div class="container animated aniFadeIn" >
 		<div class="row editBox">
 			
-			<div class="col-md-3">
+			<div class="col-md-4">
 				<label value="Número de factura*" sclass="editField" />
-				<h:p> <textbox value="@bind(invoiceEdit.factura.numeroFactura)" width="400px"/> </h:p>
+				<h:p> <textbox value="@bind(invoiceEdit.factura.numeroFactura)" constraint="${tmv}" width="400px" /> </h:p>
 			</div>
 			
-			<div class="col-md-3">
+			
+			<div class="col-md-4">
 				<label value="Fecha*" sclass="editField" />
-				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(invoiceEdit.factura.fecha)" width="400px"/> </h:p>
+				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(invoiceEdit.factura.fecha)" width="400px" /> </h:p>
 			</div>
 			
-			<div class="col-md-3">
+			<div class="col-md-4">
 				<label value="Proveedor*" sclass="editField" />
-				<h:p> <combobox value="@bind(invoiceEdit.factura.proveedor.nombre)" width="400px"/> </h:p>
+				<h:p> <combobox value="@bind(invoiceEdit.factura.proveedor.nombre)"
+							 		onCreate="providerController.loadProvider(self);" 
+						 			id="provcb" constraint="${cmv}" width="400px"/> </h:p>
 			</div>		
 		
-			<div class="col-md-3">
+		
+			<div class="col-md-4">
 				<label value="Subtotal*" sclass="editField" />
 				<h:p> <doublebox value="@bind(invoiceEdit.factura.subtotal)" width="400px"/> </h:p>
 			</div>
 			
-			<div class="col-md-3">
+			
+		
+			<div class="col-md-4">
 				<label value="IVA*" sclass="editField" />
 				<h:p> <doublebox value="@bind(invoiceEdit.factura.iva)" width="400px"/> </h:p>
 			</div>
 			
-			<div class="col-md-3">
+			
+			<div class="col-md-4">
 				<label value="Total*" sclass="editField" />
 				<h:p> <doublebox value="@bind(invoiceEdit.factura.total)" width="400px"/> </h:p>
 			</div>
 			
-			<div class="col-md-3">
+			
+			<div class="col-md-4">
 				<label value="Descrpción*" sclass="editField" />
-				<h:p> <textbox value="@bind(invoiceEdit.factura.descripcion)" width="400px"/> </h:p>
+				<h:p> <textbox value="@bind(invoiceEdit.factura.descripcion)" constraint="${tmv}" width="400px"/> </h:p>
 			</div>
+			
+			<!-- <div class="col-md-4">
+				<label value="Nota*" sclass="editField" />
+				<h:p>
+			 		<textbox rows="6" value="@bind(invoiceEdit.factura.notas)" width="370px;" tabindex="11" width="400px"/>
+                 </h:p>   	        
+			</div>	-->
 			
 		</div>
 	</div>

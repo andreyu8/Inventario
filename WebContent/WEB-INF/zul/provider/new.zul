@@ -49,56 +49,32 @@
 			
 			<div class="col-md-4">
 				<label value="Nombre*" sclass="editField" />
-<<<<<<< HEAD
 				<h:p> <textbox value="@bind(providerSave.proveedor.nombre)" constraint="${tmv}" width="400px"/> </h:p>
-=======
-				<h:p> <textbox value="@bind(providerSave.proveedor.nombre)" constraint="${tmv}" /> </h:p>
->>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 			</div>
 			
 			<div class="col-md-4">
 				<label value="RFC*" sclass="editField" />
-<<<<<<< HEAD
 				<h:p> <textbox value="@bind(providerSave.proveedor.rfc)" constraint="${tmv}" width="400px"/> </h:p>
-=======
-				<h:p> <textbox value="@bind(providerSave.proveedor.rfc)" constraint="${tmv}" /> </h:p>
->>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Dirección*" sclass="editField" />
-<<<<<<< HEAD
 				<h:p> <textbox value="@bind(providerSave.proveedor.direccion)" constraint="${tmv}" width="400px"/> </h:p>
-=======
-				<h:p> <textbox value="@bind(providerSave.proveedor.direccion)" constraint="${tmv}" /> </h:p>
->>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Telefono*" sclass="editField" />
-<<<<<<< HEAD
 				<h:p> <textbox value="@bind(providerSave.proveedor.telefono)" constraint="${tmv}" width="400px"/> </h:p>
-=======
-				<h:p> <textbox value="@bind(providerSave.proveedor.telefono)" constraint="${tmv}" /> </h:p>
->>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Extensión" sclass="editField" />
-<<<<<<< HEAD
 				<h:p> <textbox value="@bind(providerSave.proveedor.extension)" width="400px"/> </h:p>
-=======
-				<h:p> <textbox value="@bind(providerSave.proveedor.extension)" /> </h:p>
->>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Email*" sclass="editField" />
-<<<<<<< HEAD
 				<h:p> <textbox value="@bind(providerSave.proveedor.EMail)" constraint="${tmv}" width="400px"/> </h:p>
-=======
-				<h:p> <textbox value="@bind(providerSave.proveedor.EMail)" constraint="${tmv}" /> </h:p>
->>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 			</div>
 			
 			<div class="col-md-4">
@@ -107,15 +83,10 @@
                 	<checkbox mold="switch" checked="true"/>
                 </h:p>	
             </div>
-			
 				
 		</div>
 		
-		
-		
-		
 	</div>
 	
-		
 </window>
 </zk>
