@@ -54,35 +54,11 @@ public class UserManager {
 	
 	public void save(UserAdapter ua){
 		
-//		ArrayList<UserProfile> profiles = ua.getProfiles();
-//		for (UserProfile p : profiles){
-//			if (p.getId() == null) {
-//				DaoUtil.prepareToSave(p);
-//			}
-//		}
-		
 		this.userDao.save(ua.getUsuario());
 	}
 	
 	public void update(UserAdapter ua){
 		DaoUtil.prepareToUpdate(ua.getUsuario());
-		
-		
-//		ArrayList<UserProfile> profiles = ua.getProfiles();
-//		ArrayList<UserProfile> profilesDeleted = new ArrayList<UserProfile>();
-//		for (UserProfile p : profiles){
-//			if (p.getId() == null) {
-//				DaoUtil.prepareToSave(p);
-//			}
-//			else if (p.getFdl().equals(true)){
-//				DaoUtil.prepareToDelete(p);
-//				profilesDeleted.add(p);
-//			}
-//			else {
-//				DaoUtil.prepareToUpdate(p);
-//			}
-//		}
-//		profiles.removeAll(profilesDeleted);
 		
 		this.userDao.update(ua.getUsuario());
 	}

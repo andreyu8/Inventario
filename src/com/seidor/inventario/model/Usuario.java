@@ -14,6 +14,8 @@ public class Usuario implements java.io.Serializable {
 	private Integer idUsuario;
 	private Empleado empleado;
 	private String usuario;
+	private String name;
+	private String EMail;
 	private String password;
 	private Date fecha;
 	private int activo;
@@ -92,5 +94,22 @@ public class Usuario implements java.io.Serializable {
 	public void setPerfilUsuarios(Set perfilUsuarios) {
 		this.perfilUsuarios = perfilUsuarios;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEMail() {
+		return EMail;
+	}
+
+	public void setEMail(String eMail) {
+		EMail = eMail;
+	}
+
 
 }

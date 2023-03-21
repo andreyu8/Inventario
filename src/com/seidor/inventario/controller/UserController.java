@@ -1,7 +1,6 @@
 package com.seidor.inventario.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.zkoss.spring.SpringUtil;
 import org.zkoss.zk.ui.Component;
@@ -45,7 +44,6 @@ public class UserController {
 		this.navigationControl = navigationControl;
 	}
 	
-	//Business logic
 	public void login(Component win){
 		Textbox ustb = (Textbox)win.getFellowIfAny("ustb");
 		if (ustb.getValue() == null || ustb.getValue().length() == 0)
@@ -70,8 +68,6 @@ public class UserController {
 		SessionUtil.setSucursaldUserId(user.getEmpleado().getAlmacen().getAlmacen());
 		
 		SessionUtil.setSucursalId(user.getEmpleado().getAlmacen().getIdAlmacen());
-		
-		//RoleController.initRoles(user);
 			
 		this.navigationControl.showApplication(win);
 	}
@@ -121,11 +117,6 @@ public class UserController {
 		Usuario user = this.userManager.get(userId);
 		ua.setUsuario(user);
 		
-//		ArrayList<Profile> allProfiles = this.userManager.getAllProfiles();
-//		ua.setAllProfiles(allProfiles);
-//		
-//		ArrayList<UserProfile> profiles = this.userManager.getProfilesForUser(userId);
-//		ua.setProfiles(profiles);
 		
 		return ua;
 	}
@@ -135,14 +126,7 @@ public class UserController {
 		
 		Usuario user = new Usuario();
 		user.setActivo(1);
-		//user.setCreateDate(new Date());
 		ua.setUsuario(user);
-		
-//		ArrayList<Profile> allProfiles = this.userManager.getAllProfiles();
-//		ua.setAllProfiles(allProfiles);
-//		
-//		ArrayList<UserProfile> profiles = new ArrayList<UserProfile>();
-//		ua.setProfiles(profiles);
 		
 		return ua;
 	}
@@ -167,10 +151,6 @@ public class UserController {
 		else {
 			throw new WrongValueException(pstb, "Debe indicar una contraseña para el usuario");
 		}
-		
-//		if (!ua.hasAnyProfile()){
-//			throw new WrongValueException(win.getFellowIfAny("prolb"), "Debe agregar al menos un perfil al usuario");
-//		}
 		
 		this.userManager.save(ua);
 		
@@ -222,9 +202,6 @@ public class UserController {
 		
 		
 		if (!wrong) {
-//			if (!ua.hasAnyProfile()){
-//				throw new WrongValueException(win.getFellowIfAny("prolb"), "Debe agregar al menos un perfil al usuario");
-//			}
 			
 			this.userManager.update(ua);
 			
