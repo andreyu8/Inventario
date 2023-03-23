@@ -24,4 +24,6 @@
   <table-filter match-catalog="bd_inventario" match-name="proyecto"/>
   <table-filter match-catalog="bd_inventario" match-name="estatus_proyecto"/>
   <table-filter match-catalog="bd_inventario" match-name="movimientos_stock"/>
+  <table-filter match-catalog="bd_inventario" match-name="estatus_orden_compra"/>
+  <table-filter match-catalog="bd_inventario" match-name="tipo_pago"/>
 </hibernate-reverse-engineering>

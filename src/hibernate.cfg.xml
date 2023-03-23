@@ -28,10 +28,12 @@
         <mapping resource="com/seidor/inventario/model/MovimientosStock.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/OrdenCompra.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/Entrada.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/TipoPago.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/Usuario.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/Almacen.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/TipoOrdenCompra.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/UnidadMedida.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/EstatusOrdenCompra.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/Factura.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/Proveedor.hbm.xml" />
     </session-factory>

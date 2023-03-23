@@ -12,7 +12,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import com.seidor.inventario.adapter.search.PurchaseOrderSearchAdapter;
+import com.seidor.inventario.model.EstatusOrdenCompra;
 import com.seidor.inventario.model.OrdenCompra;
+import com.seidor.inventario.model.TipoPago;
 import com.seidor.inventario.util.DaoUtil;
 
 public class PurchaseOrderDAO extends HibernateDaoSupport{
@@ -28,6 +30,8 @@ public class PurchaseOrderDAO extends HibernateDaoSupport{
 		criteria.setFetchMode("area", FetchMode.JOIN);
 		criteria.setFetchMode("factura", FetchMode.JOIN);
 		criteria.setFetchMode("proyecto", FetchMode.JOIN);
+		criteria.setFetchMode("estatusOrdenCompra", FetchMode.JOIN);
+		criteria.setFetchMode("tipoPago", FetchMode.JOIN);
 		
 		criteria.add(Restrictions.eq("idOrdenCompra", id));
 		OrdenCompra result = (OrdenCompra)criteria.uniqueResult();
@@ -90,6 +94,31 @@ public class PurchaseOrderDAO extends HibernateDaoSupport{
 		session.close();
 		
 		return new ArrayList<OrdenCompra>(result);
+	}
+	
+	//catalogs of the purchaseorder
+	@SuppressWarnings("unchecked")
+	public ArrayList<EstatusOrdenCompra> getAllTypeOrder(){
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = DaoUtil.getCriteria(session, EstatusOrdenCompra.class);
+		criteria.add(Restrictions.eq("activo", 1));
+		List<EstatusOrdenCompra> result = criteria.list();
+		session.flush();
+		session.close();
+		
+		return new ArrayList<EstatusOrdenCompra>(result);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<TipoPago> getAllTypePayment(){
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = DaoUtil.getCriteria(session, TipoPago.class);
+		criteria.add(Restrictions.eq("activo", 1));
+		List<TipoPago> result = criteria.list();
+		session.flush();
+		session.close();
+		
+		return new ArrayList<TipoPago>(result);
 	}
 
 }

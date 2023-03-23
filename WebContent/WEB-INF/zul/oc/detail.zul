@@ -113,6 +113,20 @@
 			<label value="Tipo" sclass="detailField" />
 			<h:p> <label value="${ocDetail.orderCompra.tipoOrdenCompra.descripcion}" sclass="detailData" width="400px"/> </h:p>
 		</div>
+		
+		
+		<div class="col-md-3">
+			<label value="Estatus orden de compra" sclass="detailField" />
+			<h:p> <label value="${ocDetail.orderCompra.estatusOrdenCompra.estatusOrdenCompra}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Tipo de pago" sclass="detailField" />
+			<h:p> <label value="${ocDetail.orderCompra.tipoPago.tipoPago}" sclass="detailData" /> </h:p>
+		</div>
+		
+		
+		
 	</div>
 	
 	<separator spacing="10px" />

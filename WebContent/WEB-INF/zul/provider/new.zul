@@ -83,6 +83,16 @@
                 	<checkbox mold="switch" checked="true"/>
                 </h:p>	
             </div>
+<<<<<<< HEAD
+			
+			<div class="col-md-4">
+				<label value="Nota*" sclass="editField" />
+				<h:p>
+			 		<textbox rows="6" value="@bind(providerSave.proveedor.notas)" width="370px;" tabindex="11" />
+                 </h:p>   	        
+			</div>	
+=======
+>>>>>>> 48109b48ba6568388a80fa3d1244290933440b4e
 				
 		</div>
 		

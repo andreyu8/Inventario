@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 22 feb. 2023 19:54:18 by Hibernate Tools 4.3.5.Final -->
+<!-- Generated 3 mar. 2023 11:27:00 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
     <class name="com.seidor.inventario.model.Almacen" table="almacen" catalog="bd_inventario" optimistic-lock="version">
         <id name="idAlmacen" type="java.lang.Integer">

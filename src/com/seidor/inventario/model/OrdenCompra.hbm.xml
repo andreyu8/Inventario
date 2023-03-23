@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 22 feb. 2023 19:54:18 by Hibernate Tools 4.3.5.Final -->
+<!-- Generated 3 mar. 2023 11:27:00 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
     <class name="com.seidor.inventario.model.OrdenCompra" table="orden_compra" catalog="bd_inventario" optimistic-lock="version">
         <id name="idOrdenCompra" type="java.lang.Integer">
@@ -17,6 +17,11 @@
         <many-to-one name="empleado" class="com.seidor.inventario.model.Empleado" fetch="select">
             <column name="id_empleado" not-null="true" />
         </many-to-one>
+        <many-to-one name="estatusOrdenCompra" class="com.seidor.inventario.model.EstatusOrdenCompra" fetch="select">
+            <column name="id_estatus_orden_compra">
+                <comment>completa o incompleta</comment>
+            </column>
+        </many-to-one>
         <many-to-one name="etapa" class="com.seidor.inventario.model.Etapa" fetch="select">
             <column name="id_etapa" not-null="true" />
         </many-to-one>
@@ -28,6 +33,9 @@
         </many-to-one>
         <many-to-one name="tipoOrdenCompra" class="com.seidor.inventario.model.TipoOrdenCompra" fetch="select">
             <column name="id_tipo_orden_compra" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tipoPago" class="com.seidor.inventario.model.TipoPago" fetch="select">
+            <column name="id_tipo_pago" />
         </many-to-one>
         <property name="descripcion" type="string">
             <column name="descripcion" length="200" />

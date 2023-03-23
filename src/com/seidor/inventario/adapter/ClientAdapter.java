@@ -22,4 +22,9 @@ public class ClientAdapter {
 	public void setFalgActive(Boolean falgActive) {
 		this.falgActive = falgActive;
 	}
+<<<<<<< HEAD
+
+}
+=======
 }	
+>>>>>>> 48109b48ba6568388a80fa3d1244290933440b4e

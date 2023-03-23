@@ -75,6 +75,15 @@
             	<checkbox mold="switch" checked="${providerDetail.falgActive}" disabled="true"/>
             </h:p>	
          </div>
+         
+       <div class="col-md-3">
+       		<h:p> 
+				<label value="Nota" sclass="detailField" />
+			</h:p>	
+			<h:p> 
+				<label value="${providerDetail.proveedor.notas}" class="alert alert-success"  /> 
+			</h:p>
+		</div>
 		
 		
 	</div>

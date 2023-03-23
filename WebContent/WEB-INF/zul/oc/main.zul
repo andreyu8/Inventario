@@ -35,7 +35,7 @@
 		public void create(){
 			state.setDetailList(null);
 			state.setDetailIndex(null);
-			state.appendBreadCrumbsPath("Nueva Orden de compra");
+			state.appendBreadCrumbsPath("Orden de compra");
 			state.setUri("/WEB-INF/zul/oc/new.zul");
 			navigationControl.changeView(winC, state);
 		}

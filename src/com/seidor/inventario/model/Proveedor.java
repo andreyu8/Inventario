@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 22 feb. 2023 19:54:18 by Hibernate Tools 4.3.5.Final
+// Generated 3 mar. 2023 11:27:00 by Hibernate Tools 4.3.5.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,6 +17,7 @@ public class Proveedor implements java.io.Serializable {
 	private String extension;
 	private String EMail;
 	private int activo;
+	private String notas;
 	private Set facturas = new HashSet(0);
 
 	public Proveedor() {
@@ -28,7 +29,7 @@ public class Proveedor implements java.io.Serializable {
 	}
 
 	public Proveedor(String nombre, String rfc, String direccion, String telefono, String extension, String EMail,
-			int activo, Set facturas) {
+			int activo, String notas, Set facturas) {
 		this.nombre = nombre;
 		this.rfc = rfc;
 		this.direccion = direccion;
@@ -36,6 +37,7 @@ public class Proveedor implements java.io.Serializable {
 		this.extension = extension;
 		this.EMail = EMail;
 		this.activo = activo;
+		this.notas = notas;
 		this.facturas = facturas;
 	}
 
@@ -101,6 +103,14 @@ public class Proveedor implements java.io.Serializable {
 
 	public void setActivo(int activo) {
 		this.activo = activo;
+	}
+
+	public String getNotas() {
+		return this.notas;
+	}
+
+	public void setNotas(String notas) {
+		this.notas = notas;
 	}
 
 	public Set getFacturas() {

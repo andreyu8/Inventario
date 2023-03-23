@@ -12,17 +12,20 @@ import org.zkoss.zul.Listbox;
 
 import com.seidor.inventario.adapter.PurcharseAdapter;
 import com.seidor.inventario.adapter.render.PurchaseOrderComboitemRenderer;
+import com.seidor.inventario.adapter.render.StatusTypeOrderComboitemRenderer;
+import com.seidor.inventario.adapter.render.TypePaymentComboitemRenderer;
 import com.seidor.inventario.adapter.search.PurchaseOrderSearchAdapter;
 import com.seidor.inventario.manager.PurchaseOrderManager;
 import com.seidor.inventario.model.Area;
 import com.seidor.inventario.model.Cliente;
 import com.seidor.inventario.model.Empleado;
+import com.seidor.inventario.model.EstatusOrdenCompra;
 import com.seidor.inventario.model.Etapa;
 import com.seidor.inventario.model.Factura;
 import com.seidor.inventario.model.OrdenCompra;
-import com.seidor.inventario.model.Proveedor;
 import com.seidor.inventario.model.Proyecto;
 import com.seidor.inventario.model.TipoOrdenCompra;
+import com.seidor.inventario.model.TipoPago;
 import com.seidor.inventario.navigation.NavigationControl;
 import com.seidor.inventario.navigation.NavigationState;
 import com.seidor.inventario.navigation.NavigationStates;
@@ -82,6 +85,8 @@ public class PurchaseOrderController {
 		oc.setFactura(new Factura());
 		oc.setProyecto(new Proyecto());
 		oc.setTipoOrdenCompra(new TipoOrdenCompra());
+		oc.setEstatusOrdenCompra(new EstatusOrdenCompra());
+		oc.setTipoPago(new TipoPago());
 		p.setOrderCompra(oc);
 		
 		return p;
@@ -133,6 +138,19 @@ public class PurchaseOrderController {
 		else 
 			throw new WrongValueException(proy, "Debe de seleccionar un proyecto");
 		
+		Combobox soccb = (Combobox) win.getFellowIfAny("soccb");
+		if (soccb != null && soccb.getSelectedItem()!=null )
+			pa.getOrderCompra().setEstatusOrdenCompra((EstatusOrdenCompra) soccb.getSelectedItem().getValue());
+		else 
+			throw new WrongValueException(proy, "Debe de seleccionar un estatus de la orden de pago");
+		
+		Combobox tpcb = (Combobox) win.getFellowIfAny("tpcb");
+		if (tpcb != null && tpcb.getSelectedItem()!=null )
+			pa.getOrderCompra().setTipoPago((TipoPago) tpcb.getSelectedItem().getValue());
+		else 
+			throw new WrongValueException(proy, "Debe de seleccionar un tipo de pago");
+				
+			
 		pa.getOrderCompra().setFechaRecepAlmacen(new Date());
 		
 		
@@ -190,6 +208,18 @@ public class PurchaseOrderController {
 		else 
 			throw new WrongValueException(proy, "Debe de seleccionar un proyecto");
 		
+		Combobox soccb = (Combobox) win.getFellowIfAny("soccb");
+		if (soccb != null && soccb.getSelectedItem()!=null )
+			pa.getOrderCompra().setEstatusOrdenCompra((EstatusOrdenCompra) soccb.getSelectedItem().getValue());
+		else 
+			throw new WrongValueException(proy, "Debe de seleccionar un estatus de la orden de pago");
+		
+		Combobox tpcb = (Combobox) win.getFellowIfAny("tpcb");
+		if (tpcb != null && tpcb.getSelectedItem()!=null )
+			pa.getOrderCompra().setTipoPago((TipoPago) tpcb.getSelectedItem().getValue());
+		else 
+			throw new WrongValueException(proy, "Debe de seleccionar un tipo de pago");
+				
 		
 		this.purchaseOrderManager.update(pa.getOrderCompra());
 			
@@ -244,12 +274,31 @@ public class PurchaseOrderController {
 		PurcharseAdapter pa = new PurcharseAdapter();
 		
 		OrdenCompra oc = this.purchaseOrderManager.get(providerId);
+		
 		pa.setOrderCompra(oc);
 		
 		return pa;
 	}
 	
 	
+	//catalog
+	public void loadStateTypeOrder(Combobox combo) {
+		ArrayList<EstatusOrdenCompra> stateOrderType = this.purchaseOrderManager.getAllTypeOrder();
+		if (stateOrderType != null) {
+			ListModelList<EstatusOrdenCompra> model = new ListModelList<EstatusOrdenCompra>(stateOrderType);
+			combo.setItemRenderer(new StatusTypeOrderComboitemRenderer());
+			combo.setModel(model);
+		}
+	}
+	
+	public void loadTypePayment(Combobox combo) {
+		ArrayList<TipoPago> typePayment = this.purchaseOrderManager.getAllTypePayment();
+		if (typePayment != null) {
+			ListModelList<TipoPago> model = new ListModelList<TipoPago>(typePayment);
+			combo.setItemRenderer(new TypePaymentComboitemRenderer());
+			combo.setModel(model);
+		}
+	}
 	
 	
 }

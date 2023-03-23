@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 22 feb. 2023 19:54:18 by Hibernate Tools 4.3.5.Final
+// Generated 3 mar. 2023 11:27:00 by Hibernate Tools 4.3.5.Final
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -19,6 +19,7 @@ public class Factura implements java.io.Serializable {
 	private Double iva;
 	private BigDecimal total;
 	private String descripcion;
+	private String notas;
 	private Set entradas = new HashSet(0);
 	private Set ordenCompras = new HashSet(0);
 
@@ -30,7 +31,7 @@ public class Factura implements java.io.Serializable {
 	}
 
 	public Factura(Proveedor proveedor, String numeroFactura, Date fecha, BigDecimal subtotal, Double iva,
-			BigDecimal total, String descripcion, Set entradas, Set ordenCompras) {
+			BigDecimal total, String descripcion, String notas, Set entradas, Set ordenCompras) {
 		this.proveedor = proveedor;
 		this.numeroFactura = numeroFactura;
 		this.fecha = fecha;
@@ -38,6 +39,7 @@ public class Factura implements java.io.Serializable {
 		this.iva = iva;
 		this.total = total;
 		this.descripcion = descripcion;
+		this.notas = notas;
 		this.entradas = entradas;
 		this.ordenCompras = ordenCompras;
 	}
@@ -104,6 +106,14 @@ public class Factura implements java.io.Serializable {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public String getNotas() {
+		return this.notas;
+	}
+
+	public void setNotas(String notas) {
+		this.notas = notas;
 	}
 
 	public Set getEntradas() {

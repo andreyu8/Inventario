@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 import com.seidor.inventario.adapter.search.PurchaseOrderSearchAdapter;
 import com.seidor.inventario.dao.PurchaseOrderDAO;
+import com.seidor.inventario.model.EstatusOrdenCompra;
 import com.seidor.inventario.model.OrdenCompra;
+import com.seidor.inventario.model.TipoOrdenCompra;
+import com.seidor.inventario.model.TipoPago;
 
 public class PurchaseOrderManager {
 	
@@ -42,5 +45,15 @@ public class PurchaseOrderManager {
 	public ArrayList<OrdenCompra> search(PurchaseOrderSearchAdapter psa) {
 		return this.purchaseOrderDao.search(psa);
 	}
+	
+	public ArrayList<EstatusOrdenCompra> getAllTypeOrder() {
+		return this.purchaseOrderDao.getAllTypeOrder();
+	}
+	
+	public ArrayList<TipoPago> getAllTypePayment() {
+		return this.purchaseOrderDao.getAllTypePayment();
+	}
+
+	
 
 }

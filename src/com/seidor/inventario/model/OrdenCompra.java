@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 22 feb. 2023 19:54:18 by Hibernate Tools 4.3.5.Final
+// Generated 3 mar. 2023 11:27:00 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -14,10 +14,12 @@ public class OrdenCompra implements java.io.Serializable {
 	private Area area;
 	private Cliente cliente;
 	private Empleado empleado;
+	private EstatusOrdenCompra estatusOrdenCompra;
 	private Etapa etapa;
 	private Factura factura;
 	private Proyecto proyecto;
 	private TipoOrdenCompra tipoOrdenCompra;
+	private TipoPago tipoPago;
 	private String descripcion;
 	private Date fecha;
 	private Date fechaRecepAlmacen;
@@ -34,15 +36,18 @@ public class OrdenCompra implements java.io.Serializable {
 		this.tipoOrdenCompra = tipoOrdenCompra;
 	}
 
-	public OrdenCompra(Area area, Cliente cliente, Empleado empleado, Etapa etapa, Factura factura, Proyecto proyecto,
-			TipoOrdenCompra tipoOrdenCompra, String descripcion, Date fecha, Date fechaRecepAlmacen, Set entradas) {
+	public OrdenCompra(Area area, Cliente cliente, Empleado empleado, EstatusOrdenCompra estatusOrdenCompra,
+			Etapa etapa, Factura factura, Proyecto proyecto, TipoOrdenCompra tipoOrdenCompra, TipoPago tipoPago,
+			String descripcion, Date fecha, Date fechaRecepAlmacen, Set entradas) {
 		this.area = area;
 		this.cliente = cliente;
 		this.empleado = empleado;
+		this.estatusOrdenCompra = estatusOrdenCompra;
 		this.etapa = etapa;
 		this.factura = factura;
 		this.proyecto = proyecto;
 		this.tipoOrdenCompra = tipoOrdenCompra;
+		this.tipoPago = tipoPago;
 		this.descripcion = descripcion;
 		this.fecha = fecha;
 		this.fechaRecepAlmacen = fechaRecepAlmacen;
@@ -81,6 +86,14 @@ public class OrdenCompra implements java.io.Serializable {
 		this.empleado = empleado;
 	}
 
+	public EstatusOrdenCompra getEstatusOrdenCompra() {
+		return this.estatusOrdenCompra;
+	}
+
+	public void setEstatusOrdenCompra(EstatusOrdenCompra estatusOrdenCompra) {
+		this.estatusOrdenCompra = estatusOrdenCompra;
+	}
+
 	public Etapa getEtapa() {
 		return this.etapa;
 	}
@@ -111,6 +124,14 @@ public class OrdenCompra implements java.io.Serializable {
 
 	public void setTipoOrdenCompra(TipoOrdenCompra tipoOrdenCompra) {
 		this.tipoOrdenCompra = tipoOrdenCompra;
+	}
+
+	public TipoPago getTipoPago() {
+		return this.tipoPago;
+	}
+
+	public void setTipoPago(TipoPago tipoPago) {
+		this.tipoPago = tipoPago;
 	}
 
 	public String getDescripcion() {

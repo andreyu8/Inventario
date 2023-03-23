@@ -146,6 +146,20 @@
 						 			id="prcb" /> </h:p>
 >>>>>>> 297b8c16a21d4043176898c8785467f62c2d96c1
 			</div>	
+			
+			<div class="col-md-4">
+				<label value="Estatus orde compra*" sclass="editField" />
+				<h:p> <combobox value="@bind(ocSave.orderCompra.estatusOrdenCompra.estatusOrdenCompra)"
+							 		onCreate="purchaseOrderController.loadStateTypeOrder(self);" 
+						 			id="soccb" constraint="${cmv}"/> </h:p>
+			</div>	
+			
+			<div class="col-md-4">
+				<label value="Tipode pago*" sclass="editField" />
+				<h:p> <combobox value="@bind(ocSave.orderCompra.tipoPago.tipoPago)"
+							 		onCreate="purchaseOrderController.loadTypePayment(self);" 
+						 			id="tpcb" constraint="${cmv}"/> </h:p>
+			</div>	
 				
 		</div>
 		

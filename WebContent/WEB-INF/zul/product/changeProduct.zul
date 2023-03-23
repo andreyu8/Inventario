@@ -25,7 +25,7 @@
 			BreadCrumb bc = state.getLastBreadCrumbs();
 			bc.setBookmark(navigationStates.getLastBookmark());
 			
-			pagingControl.loadPaging(state, cplb);
+			pagingControl.loadPaging(state, rplb);
 		}
 		
 		public void search(){
