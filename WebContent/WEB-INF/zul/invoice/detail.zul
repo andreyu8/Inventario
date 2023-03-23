@@ -74,6 +74,15 @@
 			<h:p> <label value="${invoiceDetail.factura.descripcion}" sclass="detailData" /> </h:p>
 		</div>
 		
+		 <div class="col-md-3">
+       		<h:p> 
+				<label value="Nota" sclass="detailField" />
+			</h:p>	
+			<h:p> 
+				<label value="${invoiceDetail.factura.notas}" class="alert alert-success"  /> 
+			</h:p>
+		</div>
+		
 		
 	</div>
 	

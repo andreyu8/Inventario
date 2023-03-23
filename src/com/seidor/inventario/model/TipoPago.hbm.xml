@@ -3,23 +3,23 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 3 mar. 2023 11:27:00 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
-    <class name="com.seidor.inventario.model.Area" table="area" catalog="bd_inventario" optimistic-lock="version">
-        <id name="idArea" type="java.lang.Integer">
-            <column name="id_area" />
+    <class name="com.seidor.inventario.model.TipoPago" table="tipo_pago" catalog="bd_inventario" optimistic-lock="version">
+        <id name="idTipoPago" type="java.lang.Integer">
+            <column name="id_tipo_pago" />
             <generator class="identity" />
         </id>
-        <property name="area" type="string">
-            <column name="area" length="50" not-null="true" />
+        <property name="tipoPago" type="string">
+            <column name="tipo_pago" length="150" />
         </property>
         <property name="descripcion" type="string">
-            <column name="descripcion" length="150" not-null="true" />
+            <column name="descripcion" length="150" />
         </property>
-        <property name="activo" type="int">
-            <column name="activo" not-null="true" />
+        <property name="activo" type="java.lang.Integer">
+            <column name="activo" />
         </property>
         <set name="ordenCompras" table="orden_compra" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="id_area" not-null="true" />
+                <column name="id_tipo_pago" />
             </key>
             <one-to-many class="com.seidor.inventario.model.OrdenCompra" />
         </set>

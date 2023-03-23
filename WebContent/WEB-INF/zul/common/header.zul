@@ -121,6 +121,12 @@
 			navigationControl.changeView(headerwin, state);
 		}
 		
+		void clientes (){
+			state.setUri("/WEB-INF/zul/client/main.zul");
+			state.startBreadCrumbsPathFromHome("Clientes");
+			navigationControl.changeView(headerwin, state);
+		}
+		
 		void logout(){
 			navigationControl.hideApplication(headerwin);
 		}
@@ -164,6 +170,8 @@
 						<menuitem label="Facturas" onClick="facturas();" iconSclass="fas fa-industry"/>
 						<menuseparator/>
 						<menuitem label="Proveedores" onClick="proveedores();" iconSclass="fas fa-industry"/>
+						<menuseparator/>
+						<menuitem label="Clientes" onClick="clientes();" iconSclass="fas fa-industry"/>
 						<menuseparator/>
 					</menupopup>
 				</menu>

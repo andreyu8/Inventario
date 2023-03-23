@@ -3,23 +3,25 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 3 mar. 2023 11:27:00 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
-    <class name="com.seidor.inventario.model.TipoOrdenCompra" table="tipo_orden_compra" catalog="bd_inventario" optimistic-lock="version">
-        <id name="idTipoOrdenCompra" type="java.lang.Integer">
-            <column name="id_tipo_orden_compra" />
+    <class name="com.seidor.inventario.model.EstatusOrdenCompra" table="estatus_orden_compra" catalog="bd_inventario" optimistic-lock="version">
+        <id name="idEstatusOrdenCompra" type="java.lang.Integer">
+            <column name="id_estatus_orden_compra" />
             <generator class="identity" />
         </id>
-        <property name="ordenCompra" type="string">
-            <column name="orden_compra" length="50" not-null="true" />
+        <property name="estatusOrdenCompra" type="string">
+            <column name="estatus_orden_compra" length="150" />
         </property>
         <property name="descripcion" type="string">
             <column name="descripcion" length="150" />
         </property>
-        <property name="activo" type="int">
-            <column name="activo" not-null="true" />
+        <property name="activo" type="java.lang.Integer">
+            <column name="activo" />
         </property>
         <set name="ordenCompras" table="orden_compra" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="id_tipo_orden_compra" not-null="true" />
+                <column name="id_estatus_orden_compra">
+                    <comment>completa o incompleta</comment>
+                </column>
             </key>
             <one-to-many class="com.seidor.inventario.model.OrdenCompra" />
         </set>

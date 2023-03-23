@@ -110,6 +110,20 @@
 						 			id="prcb" /> </h:p>
 			</div>	
 				
+				
+			<div class="col-md-4">
+				<label value="Estatus orde compra*" sclass="editField" />
+				<h:p> <combobox value="@bind(ocEdit.orderCompra.estatusOrdenCompra.estatusOrdenCompra)"
+							 		onCreate="purchaseOrderController.loadStateTypeOrder(self);" 
+						 			id="soccb" constraint="${cmv}"/> </h:p>
+			</div>	
+			
+			<div class="col-md-4">
+				<label value="Tipode pago*" sclass="editField" />
+				<h:p> <combobox value="@bind(ocEdit.orderCompra.tipoPago.tipoPago)"
+							 		onCreate="purchaseOrderController.loadTypePayment(self);" 
+						 			id="tpcb" constraint="${cmv}"/> </h:p>
+			</div>		
 					
 		</div>
 	</div>
