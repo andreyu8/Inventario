@@ -12,7 +12,7 @@
 		
 		<property name="jdbcUrl" value="jdbc:mariadb://localhost:3306/bd_inventario"/>
 		<property name="user" value="root"/>
-		<property name="password" value="29082000"/>
+		<property name="password" value="admin"/>
 		<property name="maxPoolSize" value="50"/>
 		<property name="initialPoolSize" value="2"/>
 		<property name="minPoolSize" value="1"/>

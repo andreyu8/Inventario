@@ -8,7 +8,6 @@ import org.zkoss.zul.Combobox;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 
-import com.seidor.inventario.adapter.InvoiceAdapter;
 import com.seidor.inventario.adapter.ProviderAdapter;
 import com.seidor.inventario.adapter.render.ProveedorComboitemRenderer;
 import com.seidor.inventario.adapter.search.ProviderSearchAdapter;
@@ -55,7 +54,7 @@ public class ProviderController {
 		
 		ListModelList<Proveedor> model = new ListModelList<Proveedor>(provider);
 		lb.setModel(model);
-	}	
+	}
 	
 
 	public void loadInvoice(Combobox combo) {
@@ -166,14 +165,6 @@ public class ProviderController {
 		return pa;
 	}
 	
-	public void delete(ProviderAdapter pa, NavigationState state, Component win){
-		this.providerManager.delete(pa.getProveedor());
-		
-		state.setUri("/WEB-INF/zul/provider/main.zul");
-		state.setDetailIdentifier(null);
-		state.removeLastBreadCrumbs();
-		state.removeLastBreadCrumbs();
-		this.navigationControl.changeView(win, state);
-	}
+	
 	
 }
