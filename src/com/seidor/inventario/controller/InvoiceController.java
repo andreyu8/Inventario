@@ -9,7 +9,6 @@ import org.zkoss.zul.Combobox;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 
-import com.seidor.inventario.adapter.ClientAdapter;
 import com.seidor.inventario.adapter.InvoiceAdapter;
 import com.seidor.inventario.adapter.render.InvoiceComboitemRenderer;
 import com.seidor.inventario.adapter.search.InvoiceSearchAdapter;
@@ -157,14 +156,5 @@ public class InvoiceController {
 		return in;
 	}
 	
-	public void delete(InvoiceAdapter ia, NavigationState state, Component win){
-		this.invoiceManager.delete(ia.getFactura());
-		
-		state.setUri("/WEB-INF/zul/invoice/main.zul");
-		state.setDetailIdentifier(null);
-		state.removeLastBreadCrumbs();
-		state.removeLastBreadCrumbs();
-		this.navigationControl.changeView(win, state);
-	}
 	
 }

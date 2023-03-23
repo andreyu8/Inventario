@@ -49,14 +49,14 @@
 	<div class="animated aniFadeIn" >	
 		<listbox id="prodrlb" emptyMessage="No se encontrarón productos para mostrar" width="60%">
 			<listhead>
-				<listheader label="Familia" hflex="5" />
-				<listheader label="No. articulos" hflex="5"  />
-				<listheader label="Invenario final" hflex="6" />
-				<listheader label="Total Entrada" hflex="5" />
-				<listheader label="Total Salida" hflex="5" />
-				<listheader label="Costo total" hflex="5" />
-				<listheader label="IVA" hflex="5" />
-				<listheader label="Total" hflex="5" />
+				<listheader label="Familia" hflex="3" />
+				<listheader label="No. articulos" hflex="3"  />
+				<listheader label="Invenario final" hflex="3" />
+				<listheader label="Total Entrada" hflex="3" />
+				<listheader label="Total Salida" hflex="3" />
+				<listheader label="Costo total" hflex="3" />
+				<listheader label="IVA" hflex="3" />
+				<listheader label="Total" hflex="3" />
 			</listhead>
 			<template name="model" >
 				<listitem >

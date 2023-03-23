@@ -41,30 +41,30 @@
 	
 	<div class="row subBoxAlt animated aniFadeIn" >
 		<div class="col-md-12">
-			<label value="Datos del Proyecto" />
+			<label value="Datos de la Familia" />
 		</div>
 	</div>
 	<div class="container animated aniFadeIn" >
 		<div class="row editBox">
 			<div class="col-md-4">
 				<label value="Nombre*" sclass="editField" />
-				<h:p> <textbox value="@bind(projectSave.proyecto.nombre)" constraint="${tmv}"  width="400px"/> </h:p>
+				<h:p> <textbox value="@bind(projectSave.proyecto.nombre)" constraint="${tmv}" /> </h:p>
 			</div>
 			<div class="col-md-4">
 				<label value="Fecha Inicio*" sclass="editField" />
-				<h:p> <datebox id="db1" cols="12" format="short" value="@bind(projectSave.proyecto.fechaInicio)" constraint="${dmv}" width="400px "/> </h:p>
+				<h:p> <datebox id="db1" cols="12" format="short" value="@bind(projectSave.proyecto.fechaInicio)" constraint="${dmv}" /> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Fecha Termino" sclass="editField" />
-				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(projectSave.proyecto.fechaFinal)"  width="400px"/> </h:p>
+				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(projectSave.proyecto.fechaFinal)"  /> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Estatus*" sclass="editField" />
 				<h:p> <combobox value="@bind(projectSave.proyecto.estatusProyecto.descripcion)"
 							 		onCreate="projectController.loadEstatus(self);" 
-						 			id="escb" constraint="${cmv}" width="400px"/> </h:p>
+						 			id="escb" constraint="${cmv}"/> </h:p>
 			</div>	
 		</div>
 	</div>

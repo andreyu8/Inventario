@@ -5,7 +5,7 @@
 <window id="confwin" border="normal" position="center" onCreate="setMsg();" zclass="none" >
 	
 	<zscript>
-		import com.seidor.inventario.navigation.Action;
+		import ieci.tdw.ispac.navigation.Action;
 		
 		Action action = Executions.getCurrent().getArg().get("action");
 		String msg = Executions.getCurrent().getArg().get("message");

@@ -42,51 +42,51 @@
 	<div class="row container animated aniFadeIn" >
 		<div class="col-md-3">
 			<label value="Id del producto" sclass="detailField" />
-			<h:p> <label value="${productDetail.producto.idProducto}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${productDetail.producto.idProducto}" sclass="detailData" /> </h:p>
 		</div>
 		<div class="col-md-3">
 			<label value="Categoría" sclass="detailField" />
-			<h:p> <label value="${productDetail.producto.categoria.categoria}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${productDetail.producto.categoria.categoria}" sclass="detailData" /> </h:p>
 		</div>
 		
 		<div class="col-md-3">
 			<label value="Nombre" sclass="detailField" />
-			<h:p> <label value="${productDetail.producto.nombre}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${productDetail.producto.nombre}" sclass="detailData" /> </h:p>
 		</div>
 		
 		<div class="col-md-3">
 			<label value="Código" sclass="detailField" />
-			<h:p> <label value="${productDetail.producto.codigo}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${productDetail.producto.codigo}" sclass="detailData" /> </h:p>
 		</div>
 		
 		<div class="col-md-3">
 			<label value="Cantidad" sclass="detailField" />
-			<h:p> <label value="${productDetail.producto.cantidad}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${productDetail.producto.cantidad}" sclass="detailData" /> </h:p>
 		</div>
 		
 		<div class="col-md-3">
 			<label value="Unidad de medida" sclass="detailField" />
-			<h:p> <label value="${productDetail.producto.unidadMedida.unidadMedida}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${productDetail.producto.unidadMedida.unidadMedida}" sclass="detailData" /> </h:p>
 		</div>
 		
 		<div class="col-md-3">
 			<label value="Pecio de compra" sclass="detailField" />
-			<h:p> <label value="${productDetail.producto.precioCompra}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${productDetail.producto.precioCompra}" sclass="detailData" /> </h:p>
 		</div>
 		
 		<div class="col-md-3">
 			<label value="Precio de venta" sclass="detailField" />
-			<h:p> <label value="${productDetail.producto.precioVenta}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${productDetail.producto.precioVenta}" sclass="detailData" /> </h:p>
 		</div>
 		
 		<div class="col-md-3">
 			<label value="Máximo" sclass="detailField" />
-			<h:p> <label value="${productDetail.producto.maximo}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${productDetail.producto.maximo}" sclass="detailData" /> </h:p>
 		</div>
 		
 		<div class="col-md-3">
 			<label value="Minimo" sclass="detailField" />
-			<h:p> <label value="${productDetail.producto.minimo}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${productDetail.producto.minimo}" sclass="detailData" /> </h:p>
 		</div>
 		
 		

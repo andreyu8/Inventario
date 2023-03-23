@@ -10,7 +10,6 @@ import java.util.Set;
  */
 public class Usuario implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1L;
 	private Integer idUsuario;
 	private Empleado empleado;
 	private String usuario;

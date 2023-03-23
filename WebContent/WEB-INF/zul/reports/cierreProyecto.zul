@@ -171,18 +171,18 @@
 			            	<auxheader colspan="1" align="center">Acc.</auxheader>
 			        	</auxhead>
 						<listhead>
-							<listheader label="Familia" hflex="4" />
-							<listheader label="Código" hflex="4" />
-							<listheader label="Producto" hflex="4" />
+							<listheader label="Familia" hflex="3" />
+							<listheader label="Código" hflex="3" />
+							<listheader label="Producto" hflex="3" />
 							<listheader label="U.medida" hflex="3" />
-							<listheader label="C.Entrada" hflex="3" />
-							<listheader label="Familia" hflex="4" />
-							<listheader label="Código" hflex="4" />
-							<listheader label="Producto" hflex="4" />
+							<listheader label="C.Entrada" hflex="2" />
+							<listheader label="Familia" hflex="3" />
+							<listheader label="Código" hflex="3" />
+							<listheader label="Producto" hflex="3" />
 							<listheader label="U.medida" hflex="3" />
-							<listheader label="C.Salida" hflex="3" />
+							<listheader label="C.Salida" hflex="2" />
 							<listheader label="Total" hflex="2" />
-							<listheader label="Devolución" hflex="4" />
+							<listheader label="Devolución" hflex="2" />
 							<listheader label="Acción" hflex="2" />
 						</listhead>
 						<!-- <template name="model" >
