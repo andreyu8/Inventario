@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<!DOCTYPE html>
+>>>>>>> 48109b48ba6568388a80fa3d1244290933440b4e
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 <?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
 

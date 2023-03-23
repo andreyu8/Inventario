@@ -9,6 +9,7 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 
 import com.seidor.inventario.adapter.CategoryAdapter;
+import com.seidor.inventario.adapter.ClientAdapter;
 import com.seidor.inventario.adapter.render.CategoryComboitemRenderer;
 import com.seidor.inventario.adapter.search.CategorySearchAdapter;
 import com.seidor.inventario.manager.CategoryManager;
@@ -40,8 +41,6 @@ public class CategoryController {
 		this.navigationControl = navigationControl;
 	}
 	
-	
-	
 	// logic search
 	public void search(Listbox lb, CategorySearchAdapter csa, NavigationState state){
 		ArrayList<Categoria> categorys = this.categoryManager.search(csa);
@@ -49,7 +48,6 @@ public class CategoryController {
 		ListModelList<Categoria> model = new ListModelList<Categoria>(categorys);
 		lb.setModel(model);
 	}
-	
 	
 	//Metodo para mostrar el detalle 
 	public void show(Listbox lb, NavigationState state, Component win){
@@ -136,8 +134,8 @@ public class CategoryController {
 		
 	}
 	
-	public void delete(CategoryAdapter ca, NavigationState state, Component win){		
-		this.categoryManager.delete(ca.getCategoria());
+	public void delete(CategoryAdapter c, NavigationState state, Component win){
+		this.categoryManager.delete(c.getCategoria());
 		
 		state.setUri("/WEB-INF/zul/category/main.zul");
 		state.setDetailIdentifier(null);
@@ -156,6 +154,5 @@ public class CategoryController {
 			combo.setModel(model);
 		}
 	}
-	
 	
 }

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+	
+	<zscript>
+			
+	</zscript>
+	
+	<style src="${stylesUrl}styles/navbar.css" />
+	
+	<div class="row navBox" >
+		<div class="col-md-8" style="text-align: left;">
+			<div id="breadcrumbs" style="padding-top: 12px; padding-bottom: 12px;" >
+				<div id="breadcrumbs-content" />
+			</div>
+		</div>
+		<div class="col-md-4" >
+			<div id="navigator" />
+		</div>
+	</div>
+	
+</zk>

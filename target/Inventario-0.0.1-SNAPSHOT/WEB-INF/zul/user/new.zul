@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
+	
+	<zscript>
+		import com.seidor.inventario.adapter.UserAdapter;
+		import com.seidor.inventario.navigation.*;
+		
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		
+		UserAdapter userSave = userController.readForNew();
+		
+		public void cancel(){
+			navigationControl.changeToPrevious(win);
+		}
+		
+		public void save(){
+			fcv.validate(win);
+			userController.save(userSave, state, win);
+		}
+	</zscript>
+	
+	<div class="row sectionBoxAlt animated aniFadeIn">
+		<div class="row">
+			<div class="col-md-8">
+				<h:span style="padding-top: 5px; display: block;" />
+				<div align="left" style="float: left;" >
+					<label value="@bind(userSave.user.name)" sclass="sectionTitle" />
+					<label value="@bind(userSave.user.email)" sclass="sectionTitle" style="font-size: 15px;" />
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div align="right" style="float: right;" >
+					<button label="cancelar" sclass="btn btn-warning" onClick="cancel();" iconSclass="z-icon-times" />
+					<button label="guardar" sclass="btn btn-success" onClick="save();" iconSclass="z-icon-check" />
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row subBoxAlt animated aniFadeIn" >
+		<div class="col-md-12">
+			<label value="Datos generales" />
+		</div>
+	</div>
+	<div class="container animated aniFadeIn" >
+		<div class="row editBox">
+			<div class="col-md-4">
+				<label value="Nombre*" sclass="editField" />
+				<h:p> <textbox value="@bind(userSave.user.name)" constraint="${tmv}" /> </h:p>
+			</div>
+			<div class="col-md-4">
+				<label value="Email*" sclass="editField" />
+				<h:p> <textbox value="@bind(userSave.user.email)" constraint="${umv}" /> </h:p>
+			</div>
+			<div class="col-md-4" onCreate="roleController.checkRoles(self);">
+				<custom-attributes roleList="ADMIN" />
+				<label value="Administrador" sclass="editField" />
+				<h:p> <checkbox value="@bind(userSave.user.admin)" /> </h:p>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="row animated aniFadeIn" >
+		<div class="col-md-12">
+			<label value="Datos de acceso" />
+		</div>
+	</div>
+	<div class="container animated aniFadeIn" >
+		<div class="row editBox">
+			<div class="col-md-4">
+				<label value="Usuario*" sclass="editField" />
+				<h:p> <label value="@bind(userSave.user.email)" /> </h:p>
+			</div>
+			<div class="col-md-4">
+				<label value="Contraseña*" sclass="editField" />
+				<h:p> <textbox id="pstb" type="password" /> </h:p>
+			</div>
+			<div class="col-md-4">
+				<label value="Confirmar*" sclass="editField" />
+				<h:p> <textbox id="pctb" type="password" /> </h:p>
+			</div>
+		</div>
+	</div>
+		
+</window>
+</zk>

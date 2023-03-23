@@ -1,0 +1,362 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+  <groupId>Inventario</groupId>
+  <artifactId>Inventario</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+ 
+  	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>1.11</source>
+					<target>1.11</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.2.2</version>
+				<configuration>
+					<warSourceDirectory>WebContent</warSourceDirectory>
+				</configuration> 
+			</plugin>
+		</plugins>
+	</build>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.release>11</maven.compiler.release>
+	     
+		<!-- please check available version in the repository and specify it -->
+		<zk.version>9.1.0</zk.version>
+		<zkee.version>9.0.0</zkee.version>
+		<zkspring.version>3.2.0</zkspring.version>
+		<zats.version>2.0.0</zats.version>
+		<zkjsp.version>2.6</zkjsp.version>
+		<zkcalendar.version>2.1.5</zkcalendar.version>
+		<zkgmap.version>3.0.4</zkgmap.version>
+		<springframework.version>4.0.6.RELEASE</springframework.version>
+		<hibernate.version>4.3.6.Final</hibernate.version>
+	</properties>
+	
+	<repositories>
+		<repository>
+			<id>ZK CE</id>
+			<name>ZK CE Repository</name>
+			<url>https://mavensync.zkoss.org/maven2</url>
+		</repository>
+		
+		<repository>
+			<id>ZK EE Evaluation Repository</id>
+			<url>http://mavensync.zkoss.org/eval/</url>
+		</repository>
+		
+		<!-- <repository>
+			<id>ZK EE</id>
+			<url>https://maven.zkoss.org/repo/zk/ee</url>
+		</repository> -->
+	</repositories>
+	
+	<dependencies>
+		<!-- Hibernate -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${hibernate.version}</version>
+				<exclusions>
+	 				<!-- <exclusion> 
+	 					<groupId>antlr</groupId> 
+	 					<artifactId>antlr</artifactId> 
+					</exclusion>  -->
+					<exclusion> 
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+					<exclusion> 
+						<groupId>log4j</groupId>
+						<artifactId>log4j</artifactId>
+					</exclusion> 
+				</exclusions>
+		</dependency>
+		
+		<!-- C3P0 -->
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.1</version>
+		</dependency>
+	
+		<!-- Javassist -->
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.9.0.GA</version>
+		</dependency>
+		
+		<dependency>
+	           <groupId>org.mariadb.jdbc</groupId>
+	           <artifactId>mariadb-java-client</artifactId>
+	           <version>2.7.1</version>
+	       </dependency>
+		
+		<!-- Spring -->
+		<!-- Spring Core -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
+		<!-- Spring ORM -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
+		<!-- Spring Context -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
+		<!-- Spring Web -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
+		
+		
+		<!-- ZK Core -->
+		<dependency>
+            <groupId>org.zkoss.zk</groupId>
+            <artifactId>zul</artifactId>
+            <version>${zkee.version}</version>
+        </dependency>
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zkplus</artifactId>
+			<version>${zkee.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zhtml</artifactId>
+			<version>${zkee.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zkbind</artifactId>
+			<version>${zkee.version}</version>
+		</dependency>
+	
+		
+		<!-- ZKExporter -->
+        <dependency>
+            <groupId>org.zkoss.exporter</groupId>
+            <artifactId>zkexporter</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- ZPOI -->
+        <dependency>
+            <groupId>org.zkoss.poi</groupId>
+            <artifactId>zpoi</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>	
+        
+        
+		 
+		<!-- ZK Spring -->
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zkspring-core</artifactId>
+			<version>${zkspring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zkspring-webflow</artifactId>
+			<version>${zkspring.version}</version>
+		</dependency>
+		
+		<!-- ZK Calendar -->
+		<!-- <dependency>
+			<groupId>org.zkoss.calendar</groupId>
+			<artifactId>calendar</artifactId>
+			<version>${zkcalendar.version}</version>
+		</dependency> -->
+		
+		<!-- ZK additional Theme/s more themes -> https://maven.zkoss.org/repo/zk/ee/org/zkoss/theme/ -->
+		<dependency>
+			<groupId>org.zkoss.theme</groupId>
+			<artifactId>breeze</artifactId>
+			<version>${zkee.version}</version>
+		</dependency>
+	 
+		<!-- ZATS Mimic -->
+		<dependency>
+			<groupId>org.zkoss.zats</groupId>
+			<artifactId>zats-mimic-ext7</artifactId>
+			<version>${zats.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		
+		<!-- Google GSON -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.3.1</version>
+            <scope>provided</scope>
+        </dependency>
+	
+        <!-- JSON -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20090211</version>
+            <scope>provided</scope>
+        </dependency>
+	
+        <!-- JSON Simple -->
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1</version>
+            <scope>provided</scope>
+        </dependency>
+        
+		
+		<!-- EMAIL -->
+		<!-- Commons SSL -->
+	      <!--  <dependency>
+	           <groupId>ca.juliusdavies</groupId>
+	           <artifactId>not-yet-commons-ssl</artifactId>
+	           <version>0.3.9</version>
+	           <scope>provided</scope>
+	       </dependency> -->
+	       
+	       
+	       <!-- Java Mail -->
+	      <!--  <dependency>
+	           <groupId>javax.mail</groupId>
+	           <artifactId>mail</artifactId>
+	           <version>1.4.5</version>
+	           <scope>provided</scope>
+	       </dependency> -->
+		    <dependency>
+	               <groupId>com.sun.mail</groupId>
+	               <artifactId>javax.mail</artifactId>
+	               <version>1.6.2</version>
+	        </dependency>
+	        
+	        
+	         <!-- Apache -->
+	        <!-- Apache Commons IO -->
+	        <dependency>
+	            <groupId>commons-io</groupId>
+	            <artifactId>commons-io</artifactId>
+	            <version>2.4</version>
+	            <scope>provided</scope>
+	        </dependency>
+	        <!-- Apache Commons Lang -->
+	        <dependency>
+	            <groupId>commons-lang</groupId>
+	            <artifactId>commons-lang</artifactId>
+	            <version>2.6</version>
+	            <scope>provided</scope>
+	        </dependency>
+	        
+	     
+	        <!-- POI Tratamientos de documentos, Exportar ZK con Render-->
+	        <dependency>
+	            <groupId>org.apache.poi</groupId>
+	            <artifactId>poi</artifactId>
+	            <version>3.10.1</version>
+	            <scope>provided</scope>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.apache.poi</groupId>
+	            <artifactId>poi-ooxml</artifactId>
+	            <version>3.10.1</version>
+	            <scope>provided</scope>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.apache.poi</groupId>
+	            <artifactId>poi-ooxml-schemas</artifactId>
+	            <version>3.10.1</version>
+	            <scope>provided</scope>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.apache.poi</groupId>
+	            <artifactId>poi-scratchpad</artifactId>
+	            <version>3.10.1</version>
+	            <scope>provided</scope>
+	        </dependency>
+	        
+	        
+	        <!-- itext - Exportación a PDF de ZK-->
+	        <dependency>
+	            <groupId>com.lowagie</groupId>
+	            <artifactId>itext</artifactId>
+	            <version>2.1.7</version>
+	            <scope>provided</scope>
+	            <exclusions>
+	                <exclusion>
+	                    <groupId>bouncycastle</groupId>
+	                    <artifactId>bcmail-jdk14</artifactId>
+	                </exclusion>
+	                <exclusion>
+	                    <groupId>bouncycastle</groupId>
+	                    <artifactId>bcprov-jdk14</artifactId>
+	                </exclusion>
+	                <exclusion>
+	                    <groupId>org.bouncycastle</groupId>
+	                    <artifactId>bctsp-jdk14</artifactId>
+	                </exclusion>
+	            </exclusions>
+	        </dependency>
+	        
+	          <!-- DocX4J -->
+	        <dependency>
+	            <groupId>org.docx4j</groupId>
+	            <artifactId>docx4j</artifactId>
+	            <version>3.3.6</version>
+	            <scope>provided</scope>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.docx4j</groupId>
+	            <artifactId>docx4j-export-fo</artifactId>
+	            <version>3.3.6</version>
+	            <scope>provided</scope>
+	        </dependency>
+		        
+	         <!-- Jasperreports -->
+	        <dependency>
+	            <groupId>net.sf.jasperreports</groupId>
+	            <artifactId>jasperreports</artifactId>
+	            <version>6.9.0</version>
+	            <scope>provided</scope>
+	        </dependency>
+	        
+	        <dependency>
+			    <groupId>ch.qos.logback</groupId>
+			    <artifactId>logback-classic</artifactId>
+			    <version>0.9.24</version>
+			</dependency>	
+			
+		
+				        
+				 
+	</dependencies>
+  
+  
+  
+</project>

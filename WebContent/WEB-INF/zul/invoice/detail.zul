@@ -74,14 +74,22 @@
 			<h:p> <label value="${invoiceDetail.factura.descripcion}" sclass="detailData" /> </h:p>
 		</div>
 		
+<<<<<<< HEAD
 		 <div class="col-md-3">
+=======
+		 <!-- <div class="col-md-3">
+>>>>>>> 48109b48ba6568388a80fa3d1244290933440b4e
        		<h:p> 
 				<label value="Nota" sclass="detailField" />
 			</h:p>	
 			<h:p> 
 				<label value="${invoiceDetail.factura.notas}" class="alert alert-success"  /> 
 			</h:p>
+<<<<<<< HEAD
 		</div>
+=======
+		</div> -->
+>>>>>>> 48109b48ba6568388a80fa3d1244290933440b4e
 		
 		
 	</div>

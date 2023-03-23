@@ -1,0 +1,8 @@
+<zk>
+	<div id="exportuploadD" align="center" >
+		<hlayout id="exportuploadH">
+			<a id="export" iconSclass="fa fa-file-excel-o" sclass="linkDark" tooltiptext="Excel" />
+			<button id="upload" iconSclass="z-icon-upload" autodisable="" sclass="linkDark" style="background-color: #fff;border: 0px solid #fff;" />
+		</hlayout>
+	</div>
+</zk>
