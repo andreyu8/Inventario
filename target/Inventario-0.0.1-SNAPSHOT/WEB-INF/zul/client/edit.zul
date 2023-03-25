@@ -1,0 +1,103 @@
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
+	
+	<zscript>
+		import com.seidor.inventario.adapter.ClientAdapter;
+		import com.seidor.inventario.navigation.*;
+		
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		
+		ClientAdapter clientEdit = clientController.readForEdit(state.getDetailIdentifier());
+		
+		public void cancel(){
+			navigationControl.changeToPrevious(win);
+		}
+		
+		public void update(){
+			fcv.validate(win);
+			clientController.update(clientEdit, state, win);
+		}
+	</zscript>
+	
+	<div class="row sectionBoxAlt animated aniFadeIn" >
+		<div class="col-md-6">
+			<h:span style="padding-top: 5px; display: block;" />
+			<div align="left" >
+				<label value="${clientEdit.cliente.nombre}" sclass="sectionTitle" />
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div align="right" >
+				<button label="cancelar" sclass="btn btn-warning" onClick="cancel();" iconSclass="z-icon-times" />
+				<button label="aceptar" sclass="btn btn-success" onClick="update();" iconSclass="z-icon-check" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="row subBoxAlt animated aniFadeIn" >
+		<div class="col-md-12">
+			<label value="Datos generales" />
+		</div>
+	</div>
+	<div class="container animated aniFadeIn" >
+		<div class="row editBox">
+		
+		<div class="col-md-3">
+			<label value="Nombre" sclass="editField" />
+			<h:p> <textbox value="@bind(clientEdit.cliente.nombre)" sclass="detailData" width="300px"/> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="RFC" sclass="editField" />
+			<h:p> <textbox value="@bind(clientEdit.cliente.rfc)" sclass="detailData" width="300px"/> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Dirección" sclass="editField" />
+			<h:p> <textbox value="@bind(clientEdit.cliente.direccion)" sclass="detailData" width="300px"/> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Telefono" sclass="editField" />
+			<h:p> <textbox value="@bind(clientEdit.cliente.telefono)" sclass="detailData" width="300px"/> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Extension" sclass="editField" />
+			<h:p> <textbox value="@bind(clientEdit.cliente.extension)" sclass="detailData" width="300px"/> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Correo" sclass="editField" />
+			<h:p> <textbox value="@bind(clientEdit.cliente.EMail)" sclass="detailData" width="300px"/> </h:p>
+		</div>	
+				
+					
+		</div>
+	</div>
+	
+	
+	<div class="row subBoxAlt animated aniFadeIn" >
+		<div class="col-md-12">
+			<div align="right" >
+				<button label="Eliminar" sclass="btn btn-danger" onClick="delete();" iconSclass="z-icon-trash-o" />
+			</div>
+		</div>
+	</div>
+	
+	<zscript>
+		public void delete(){
+			Action deleteAction = new Action() {
+				public void execute(){
+					clientController.delete(clientEdit, state, win);
+				}
+			};
+			NavigationControl.openModalWindowWithMessage("¿Está seguro de eliminar el cliente actual?", deleteAction);
+		}
+	</zscript>
+	
+</window>
+</zk>

@@ -49,51 +49,51 @@
 			
 			<div class="col-md-4">
 				<label value="Número de factura*" sclass="editField" />
-				<h:p> <textbox value="@bind(invoiceSave.factura.numeroFactura)" constraint="${tmv}" /> </h:p>
+				<h:p> <textbox value="@bind(invoiceSave.factura.numeroFactura)" constraint="${tmv}" width="400px"/> </h:p>
 			</div>
 			
 			
 			<div class="col-md-4">
 				<label value="Fecha*" sclass="editField" />
-				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(invoiceSave.factura.fecha)"  /> </h:p>
+				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(invoiceSave.factura.fecha)"  width="400px"/> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Proveedor*" sclass="editField" />
 				<h:p> <combobox value="@bind(invoiceSave.factura.proveedor.nombre)"
 							 		onCreate="providerController.loadProvider(self);" 
-						 			id="provcb" constraint="${cmv}"/> </h:p>
+						 			id="provcb" constraint="${cmv}" width="400px"/> </h:p>
 			</div>		
 		
 		
 			<div class="col-md-4">
 				<label value="Subtotal*" sclass="editField" />
-				<h:p> <doublebox value="@bind(invoiceSave.factura.subtotal)" /> </h:p>
+				<h:p> <doublebox value="@bind(invoiceSave.factura.subtotal)" width="400px"/> </h:p>
 			</div>
 			
 			
 		
 			<div class="col-md-4">
 				<label value="IVA*" sclass="editField" />
-				<h:p> <doublebox value="@bind(invoiceSave.factura.iva)" /> </h:p>
+				<h:p> <doublebox value="@bind(invoiceSave.factura.iva)" width="400px"/> </h:p>
 			</div>
 			
 			
 			<div class="col-md-4">
 				<label value="Total*" sclass="editField" />
-				<h:p> <doublebox value="@bind(invoiceSave.factura.total)" /> </h:p>
+				<h:p> <doublebox value="@bind(invoiceSave.factura.total)" width="400px"/> </h:p>
 			</div>
 			
 			
 			<div class="col-md-4">
 				<label value="Descrpción*" sclass="editField" />
-				<h:p> <textbox value="@bind(invoiceSave.factura.descripcion)" constraint="${tmv}" /> </h:p>
+				<h:p> <textbox value="@bind(invoiceSave.factura.descripcion)" constraint="${tmv}" width="400px"/> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Nota*" sclass="editField" />
 				<h:p>
-			 		<textbox rows="6" value="@bind(invoiceSave.factura.notas)" width="370px;" tabindex="11" />
+			 		<textbox rows="6" value="@bind(invoiceSave.factura.notas)" width="400px;" tabindex="11" />
                  </h:p>   	        
 			</div>	
 				

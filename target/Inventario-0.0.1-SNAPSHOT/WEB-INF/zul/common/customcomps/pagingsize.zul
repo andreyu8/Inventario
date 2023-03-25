@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?component name="exporter" macroURI="/WEB-INF/zul/common/customcomps/exporter.zul" inline="true"?>
+
+<zk>
+	<div align="center" >
+		<hlayout>
+		    <label value="Registros por página" sclass="sysField" style="font-size: 12px;" />
+			<label value="10" sclass="linkDark" onClick="changePaging(10, self.parent.parent);" />
+			<label value="20" sclass="linkDark" onClick="changePaging(20, self.parent.parent);" />
+			<label value="50" sclass="linkDark" onClick="changePaging(50, self.parent.parent);" />
+			<exporter />
+		</hlayout>
+	</div>
+	
+	<zscript><![CDATA[
+		public void changePaging(Integer pagesize, Component comp){
+			pagingControl.changePageSize(state, pagesize, comp);
+		}
+	]]></zscript>
+	
+</zk>

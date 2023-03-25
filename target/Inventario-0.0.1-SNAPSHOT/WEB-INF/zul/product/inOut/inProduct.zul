@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
+	
+	<zscript>
+		import com.seidor.inventario.adapter.EntryAdapter;
+		import com.seidor.inventario.navigation.*;
+		
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		 
+		EntryAdapter entryNew = entryController.read(state.getDetailIdentifier());
+		
+		public void cancel(){
+			navigationControl.changeToPrevious(win);
+		}
+		
+		public void save(){
+			fcv.validate(win);
+			entryController.save(entryNew, state, win);
+		}
+		
+		public void viewInfoEmployee (){
+			entryController.getDataEmployee (entryNew, win);
+		}
+		
+		public void viewInfoInvoice (){
+			entryController.getDataInvoice (entryNew, win);
+		}
+		
+		public void viewInfoOrdenCompra (){
+			entryController.getOrdenCompra (entryNew, win);
+		}
+		
+		public void viewInfoProyecto (){
+			entryController.getProyecto (entryNew, win);
+		}
+		
+		
+	</zscript>
+	
+	<div class="row sectionBox animated aniFadeIn">
+		<div class="col-md-12" align="center" >
+			<label value="Entrada de Almacén" sclass="sectionTitle" />
+		</div>
+		<div class="col-md-6" align="left" >
+			<h:span style="padding-top: 5px; display: block;" />
+			<label value="Categoría: " sclass="sectionTitle" />
+			<label value="(${entryNew.producto.categoria.categoria})" style="font-size: 12px;" />
+			<separator spacing="10px" />
+			<label value="Entrada de producto: " sclass="sectionTitle" />
+			<label value="(${entryNew.producto.nombre})" style="font-size: 12px;" />
+		</div>
+		<div class="col-md-4">
+			<div align="right" style="float: right;" >
+				<button label="cancelar" sclass="btn btn-warning" onClick="cancel();" iconSclass="z-icon-times" />
+				<button label="guardar" sclass="btn btn-success" onClick="save();" iconSclass="z-icon-check" />
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="row subBoxAlt animated aniFadeIn" >
+		<div class="col-md-12">
+			<label value="Datos del producto" />
+		</div>
+	</div>
+	<div class="container animated aniFadeIn" >
+		<div class="row editBox">
+			
+			<div class="col-md-2">
+				<label value="Cantidad*" sclass="editField" />
+				<h:p> <intbox value="@bind(entryNew.entrada.cantidad)" constraint="${imv}" /> </h:p>
+			</div>
+			
+			<!-- <div class="col-md-4">
+				<label value="Fecha*" sclass="editField" />
+				<h:p>  <datebox id="db0" cols="12" format="short " onCreate="self.value = new Date()" /> </h:p>
+			</div> -->
+			
+			<div class="col-md-2">
+				<label value="Precio unitario*" sclass="editField" />
+				<h:p> <doublebox value="@bind(entryNew.entrada.precioUnitario)"  /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Unidad de medida*" sclass="editField" />
+				<h:p> <combobox value="@bind(entryNew.entrada.unidadMedida.unidadMedida)"
+							 		onCreate="unitMeasureController.loadUnitMeasure(self);" 
+						 			id="cbum" constraint="${cmv}"/> </h:p>
+			</div>		
+			
+			
+			<div class="col-md-4">
+				<label value="Almacen*" sclass="editField" />
+				<h:p> <combobox value="@bind(entryNew.entrada.almacen.almacen)"
+							 		onCreate="warehouseController.loadAlmacen(self);" 
+						 			id="cbal" disabled="true"/> </h:p>
+			</div>	
+			
+			
+			<div class="col-md-4">
+				<label value="Empleado*" sclass="editField" />
+				<h:p> <combobox value="@bind(entryNew.entrada.empleado.nombre)"
+							 		onCreate="employeeController.loadEmployee(self);" 
+						 			id="cbemp" onChange="viewInfoEmployee();" />
+				 </h:p>
+			</div>		
+			
+			
+		</div>
+			
+			
+		<div class="row editBox" id="sectionEmployee" visible="false" >
+			
+				<div class="col-md-12">
+					<label value="Datos del empleado" />
+				</div>
+				
+				<div class="col-md-4">
+					<label value="Nombre completo" sclass="editField" />
+					<h:p>
+						<label id="empName" value="" />
+					</h:p>
+				</div>
+				
+				<div class="col-md-4">
+					<label value="RFC" sclass="editField" />
+					<h:p>
+						<label id="empRFC" value="" />
+					</h:p>
+				</div>
+				
+				<div class="col-md-4">
+					<label value="CURP" sclass="editField" />
+					<h:p>
+						<label id="empCURP" value="" />
+					</h:p>
+				</div>
+				
+				<div class="col-md-4">
+					<label value="No. Empleado" sclass="editField" />
+					<h:p>
+						<label id="empNoEmpleado" value="" />
+					</h:p>
+				</div>
+				
+				<div class="col-md-4">
+					<label value="Telefono" sclass="editField" />
+					<h:p>
+						<label id="empTelefono" value="" />
+					</h:p>
+				</div>
+				
+				<div class="col-md-4" >
+					<label value="Celular" sclass="editField" />
+					<h:p>
+						<label id="empCel" value="" />
+					</h:p>
+				</div>
+				
+				<div class="col-md-4" >
+					<label value="Email" sclass="editField" />
+					<h:p>
+						<label id="empEmail" value="" />
+					</h:p>
+				</div>
+				
+				<div class="col-md-4">
+					<label value="No. Seguridad Social" sclass="editField" />
+					<h:p>
+						<label id="empNoSS" value="" />
+					</h:p>
+				</div>
+			
+				
+		</div>
+			
+			
+		<separator spacing="10px" />
+			
+		<div class="row editBox">	
+			
+			<div class="col-md-4">
+				<label value="Factura*" sclass="editField" />
+				<h:p> <combobox value="@bind(entryNew.entrada.factura.numeroFactura)"
+							 		onCreate="invoiceController.loadInvoice(self);" 
+						 			id="cbfa" onChange="viewInfoInvoice ();"/> </h:p>
+			</div>
+			
+		</div>
+		
+		<div class="row editBox" id="sectionFactura" visible="false" >	
+			
+			<div class="col-md-12">
+					<label value="Datos de la factura" />
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Descripción" sclass="editField" />
+				<h:p>
+					<label id="faDesc" value="" />
+				</h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Fecha" sclass="editField" />
+				<h:p>
+					<label id="faFecha" value="" />
+				</h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="RFC" sclass="editField" />
+				<h:p>
+					<label id="faRFC" value="" />
+				</h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Nombre Proveedor" sclass="editField" />
+				<h:p>
+					<label id="faNom" value="" />
+				</h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Total" sclass="editField" />
+				<h:p>
+					<label id="faTotal" value="" />
+				</h:p>
+			</div>
+		
+		</div>
+		
+		<separator spacing="10px" />	
+		
+		
+		<div class="row editBox">
+		
+			<div class="col-md-4">
+				<label value="Proyecto*" sclass="editField" />
+				<h:p> <combobox value="@bind(entryNew.entrada.proyecto.nombre)"
+							 		onCreate="projectController.loadProjects(self);" 
+							 		onChange="viewInfoProyecto ();"
+						 			id="prcb" /> </h:p>
+			</div>
+		
+		</div>
+		
+		<separator spacing="10px" />
+		
+		<div class="row editBox" id="sectionProyecto" visible="false" >	
+			
+			<div class="col-md-12">
+					<label value="Datos del proyecto" />
+			</div>	
+			
+			
+			<div class="col-md-4">
+				<label value="Proyecto" sclass="editField" />
+				<h:p>
+					<label id="nomPro" value="" />
+				</h:p>
+			</div>
+			
+		</div>	
+		
+			
+		
+		
+		<separator spacing="10px" />
+			
+		<div class="row editBox">
+		
+			<div class="col-md-4">
+				<label value="Orden de compra*" sclass="editField" />
+				<h:p> <combobox value="@bind(entryNew.entrada.ordenCompra.descripcion)"
+							 		onCreate="purchaseOrderController.loadPurchaseOrder(self);" 
+							 		onChange="viewInfoOrdenCompra ();"
+						 			id="cboc" /> </h:p>
+			</div>
+		
+		</div>
+		
+		
+			
+		<div class="row editBox" id="sectionOrden" visible="false" >	
+			
+			<div class="col-md-12">
+					<label value="Datos de la Orden de compra" />
+			</div>	
+			
+			
+			<div class="col-md-4">
+				<label value="Proyecto" sclass="editField" />
+				<h:p>
+					<label id="ocPro" value="" />
+				</h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Cliente" sclass="editField" />
+				<h:p>
+					<label id="ocCli" value="" />
+				</h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Etapa" sclass="editField" />
+				<h:p>
+					<label id="ocEta" value="" />
+				</h:p>
+			</div>
+			
+			
+			<div class="col-md-4">
+				<label value="Area" sclass="editField" />
+				<h:p>
+					<label id="ocAre" value="" />
+				</h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Tipo de orden" sclass="editField" />
+				<h:p>
+					<label id="ocTO" value="" />
+				</h:p>
+			</div>
+			
+			
+		</div>
+		
+		<separator spacing="10px" />
+			
+		<div class="row editBox">
+			<div class="col-md-4">
+				<label value="Ubicación*" sclass="editField" />
+				<h:p> <combobox value="@bind(entryNew.entrada.ubicacion.ubicacion)"
+							 		onCreate="locationController.loadLocation(self);" 
+						 			id="cbub" constraint="${cmv}"/> </h:p>
+			</div>		
+		
+		
+		
+			
+		</div>
+	
+	</div>		
+		
+		
+	<separator spacing="10px" />
+	
+	
+	
+	
+</window>
+</zk>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
+	
+	<zscript>
+		import com.seidor.inventario.adapter.ProviderAdapter;
+		import com.seidor.inventario.navigation.*;
+		
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		
+		ProviderAdapter providerSave = providerController.readForNew();
+		
+		public void cancel(){
+			navigationControl.changeToPrevious(win);
+		}
+		
+		public void save(){
+			fcv.validate(win);
+			providerController.save(providerSave, state, win);
+		}
+	</zscript>
+	
+	<div class="row sectionBoxAlt animated aniFadeIn">
+		<div class="row">
+			<div class="col-md-8">
+				<h:span style="padding-top: 5px; display: block;" />
+				<div align="left" style="float: left;" >
+					<label value="@bind(providerSave.proveedor.nombre)" sclass="sectionTitle" />
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div align="right" style="float: right;" >
+					<button label="cancelar" sclass="btn btn-warning" onClick="cancel();" iconSclass="z-icon-times" />
+					<button label="guardar" sclass="btn btn-success" onClick="save();" iconSclass="z-icon-check" />
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row subBoxAlt animated aniFadeIn" >
+		<div class="col-md-12">
+			<label value="Datos de la factura" />
+		</div>
+	</div>
+	<div class="container animated aniFadeIn" >
+		<div class="row editBox">
+			
+			<div class="col-md-4">
+				<label value="Nombre*" sclass="editField" />
+				<h:p> <textbox value="@bind(providerSave.proveedor.nombre)" constraint="${tmv}" /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="RFC*" sclass="editField" />
+				<h:p> <textbox value="@bind(providerSave.proveedor.rfc)" constraint="${tmv}" /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Dirección*" sclass="editField" />
+				<h:p> <textbox value="@bind(providerSave.proveedor.direccion)" constraint="${tmv}" /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Telefono*" sclass="editField" />
+				<h:p> <textbox value="@bind(providerSave.proveedor.telefono)" constraint="${tmv}" /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Extensión" sclass="editField" />
+				<h:p> <textbox value="@bind(providerSave.proveedor.extension)" /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Email*" sclass="editField" />
+				<h:p> <textbox value="@bind(providerSave.proveedor.EMail)" constraint="${tmv}" /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+                <label value="Activo" sclass="editField" />
+                <h:p>  
+                	<checkbox mold="switch" checked="true"/>
+                </h:p>	
+            </div>
+			
+			<div class="col-md-4">
+				<label value="Nota*" sclass="editField" />
+				<h:p>
+			 		<textbox rows="6" value="@bind(providerSave.proveedor.notas)" width="370px;" tabindex="11" />
+                 </h:p>   	        
+			</div>	
+				
+		</div>
+		
+		
+		
+		
+	</div>
+	
+		
+</window>
+</zk>

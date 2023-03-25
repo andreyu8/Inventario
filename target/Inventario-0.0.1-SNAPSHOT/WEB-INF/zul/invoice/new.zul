@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
+	
+	<zscript>
+		import com.seidor.inventario.adapter.InvoiceAdapter;
+		import com.seidor.inventario.navigation.*;
+		
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		
+		InvoiceAdapter invoiceSave = invoiceController.readForNew();
+		
+		public void cancel(){
+			navigationControl.changeToPrevious(win);
+		}
+		
+		public void save(){
+			fcv.validate(win);
+			invoiceController.save(invoiceSave, state, win);
+		}
+	</zscript>
+	
+	<div class="row sectionBoxAlt animated aniFadeIn">
+		<div class="row">
+			<div class="col-md-8">
+				<h:span style="padding-top: 5px; display: block;" />
+				<div align="left" style="float: left;" >
+					<label value="@bind(productSave.producto.nombre)" sclass="sectionTitle" />
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div align="right" style="float: right;" >
+					<button label="cancelar" sclass="btn btn-warning" onClick="cancel();" iconSclass="z-icon-times" />
+					<button label="guardar" sclass="btn btn-success" onClick="save();" iconSclass="z-icon-check" />
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row subBoxAlt animated aniFadeIn" >
+		<div class="col-md-12">
+			<label value="Datos de la factura" />
+		</div>
+	</div>
+	<div class="container animated aniFadeIn" >
+		<div class="row editBox">
+			
+			<div class="col-md-4">
+				<label value="Número de factura*" sclass="editField" />
+				<h:p> <textbox value="@bind(invoiceSave.factura.numeroFactura)" constraint="${tmv}" /> </h:p>
+			</div>
+			
+			
+			<div class="col-md-4">
+				<label value="Fecha*" sclass="editField" />
+				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(invoiceSave.factura.fecha)"  /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Proveedor*" sclass="editField" />
+				<h:p> <combobox value="@bind(invoiceSave.factura.proveedor.nombre)"
+							 		onCreate="providerController.loadProvider(self);" 
+						 			id="provcb" constraint="${cmv}"/> </h:p>
+			</div>		
+		
+		
+			<div class="col-md-4">
+				<label value="Subtotal*" sclass="editField" />
+				<h:p> <doublebox value="@bind(invoiceSave.factura.subtotal)" /> </h:p>
+			</div>
+			
+			
+		
+			<div class="col-md-4">
+				<label value="IVA*" sclass="editField" />
+				<h:p> <doublebox value="@bind(invoiceSave.factura.iva)" /> </h:p>
+			</div>
+			
+			
+			<div class="col-md-4">
+				<label value="Total*" sclass="editField" />
+				<h:p> <doublebox value="@bind(invoiceSave.factura.total)" /> </h:p>
+			</div>
+			
+			
+			<div class="col-md-4">
+				<label value="Descrpción*" sclass="editField" />
+				<h:p> <textbox value="@bind(invoiceSave.factura.descripcion)" constraint="${tmv}" /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Nota*" sclass="editField" />
+				<h:p>
+			 		<textbox rows="6" value="@bind(invoiceSave.factura.notas)" width="370px;" tabindex="11" />
+                 </h:p>   	        
+			</div>	
+				
+		</div>
+		
+		
+		
+		
+	</div>
+	
+		
+</window>
+</zk>

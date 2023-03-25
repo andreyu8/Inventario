@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="win" border="none" onOK="search();" onCreate="productController.searchReportProv(prodrlb, state); prepareSearchFields();"  apply="org.zkoss.bind.BindComposer" >
+	
+	<zscript>
+		import com.seidor.inventario.navigation.*;
+		import com.seidor.inventario.adapter.beans.ProveedoresBean;
+						
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		
+		ProveedoresBean reportCostSearch = state.getSearchCriteria();
+		
+		if (reportCostSearch == null) {
+			reportCostSearch = new ProveedoresBean();
+			state.setSearchCriteria(reportCostSearch);
+		}
+		
+		public void prepareSearchFields(){
+			BreadCrumb bc = state.getLastBreadCrumbs();
+			bc.setBookmark(navigationStates.getLastBookmark());
+			
+			pagingControl.loadPaging(state, prodrlb);
+		}
+		
+		public void search(){
+			pagingControl.resetActivePage(state);
+			navigationControl.changeView(win, state);
+		}
+		
+		public void print(){
+			//productController.printReport(win);
+		}
+	</zscript>
+	
+	<div class="row sectionBox animated aniFadeIn">
+		<div class="row">
+			<div class="col-md-8" align="right" >
+				<span style="padding-top: 5px; display: block;" />
+				<!--  <button label="Reporte productos" onClick="print();" iconSclass="fas fa-file-contract" /> -->
+			</div>
+			
+		</div>
+	</div>
+	
+	<div class="animated aniFadeIn" >	
+		<listbox id="prodrlb" emptyMessage="No se encontrarón productos para mostrar" width="60%">
+			<listhead>
+				<listheader label="Proveedor" hflex="3" />
+				<listheader label="Familia" hflex="3" />
+				<listheader label="Código" hflex="3" />
+				<listheader label="Producto" hflex="3" />
+				<listheader label="U. de medida" hflex="3" />
+				<listheader label="Cantidad" hflex="3" />
+				<listheader label="Precio Unitario" hflex="3" />
+				<listheader label="Fecha" hflex="3" />
+			</listhead>
+			<template name="model" >
+				<listitem >
+					<listcell label="${each.nombre}" />
+					<listcell label="${each.familia}" />
+					<listcell label="${each.codigo}" />
+					<listcell label="${each.producto}" />
+					<listcell label="${each.unidadMedida}" />
+					<listcell label="${each.cantidad}" />
+					<listcell label="${each.precioUnitarioS}" />
+					<listcell label="${each.fecha}" />
+				</listitem>
+			</template>
+		</listbox>
+		<pagingsize />
+	</div>
+	
+	<separator spacing="10px" />
+		
+</window>
+</zk>

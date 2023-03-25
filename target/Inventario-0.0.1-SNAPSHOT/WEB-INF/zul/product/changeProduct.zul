@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
+	
+	<zscript>
+		import com.seidor.inventario.navigation.*;
+		import com.seidor.inventario.adapter.beans.CierreBean;
+		import com.seidor.inventario.adapter.ResignProyectAdapter;
+								
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		
+		CierreBean cierreBeanSearch = state.getSearchCriteria();
+		ResignProyectAdapter rProjectAdapter = closeProjectController.readAsigned ();
+		
+		if (cierreBeanSearch == null) {
+			cierreBeanSearch = new CierreBean();
+			state.setSearchCriteria(cierreBeanSearch);
+		}
+		
+		public void prepareSearchFields(){
+			BreadCrumb bc = state.getLastBreadCrumbs();
+			bc.setBookmark(navigationStates.getLastBookmark());
+			
+			pagingControl.loadPaging(state, rplb);
+		}
+		
+		public void search(){
+			pagingControl.resetActivePage(state);
+			navigationControl.changeView(win, state);
+		}
+		
+		
+		public void cancel(){
+			navigationControl.changeToPrevious(win);
+		}
+		
+		public void saveReasignProject(){
+			fcv.validate(win);
+			closeProjectController.saveReasign(rProjectAdapter, state, win);
+		}
+		
+		public void viewOutput () {
+			closeProjectController.loadInOutputProjectR (rplb, rProjectAdapter, win); 
+		}
+		
+		
+	</zscript>
+	
+	<div class="row sectionBox animated aniFadeIn">
+		<div class="row">
+			<div class="col-md-8" align="right" >
+				<span style="padding-top: 5px; display: block;" />
+			</div>
+			
+			
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	<tabbox >
+		<tabs id="tabsCP">
+			<tab label="Reasignación de Productos" />
+		</tabs>
+		<tabpanels id="panel1">
+		
+			<tabpanel>
+		
+				
+				<div class="row sectionBox animated aniFadeIn">
+					<div class="col-md-6" align="left" >
+						<h:span style="padding-top: 5px; display: block;" />
+						<label value="Reasignación de Productos" sclass="sectionTitle" />
+					</div>
+					<div class="col-md-4">
+						<div align="right" style="float: right;" >
+							<button label="cancelar" sclass="btn btn-warning" onClick="cancel();" iconSclass="z-icon-times" />
+							<button label="guardar" sclass="btn btn-success" onClick="saveReasignProject();" iconSclass="z-icon-check" />
+						</div>
+					</div>
+				</div>
+				
+				<div class="container animated aniFadeIn" >
+					<div class="row editBox">
+						
+						
+						<div class="col-md-4">
+							<label value="Proyecto*" sclass="editField" />
+							<h:p> <combobox value="@bind(rProjectAdapter.proyecto.nombre)"
+										 		onCreate="projectController.loadOpenProjects(self);" 
+									 			id="prcb" onChange="viewOutput();" /> </h:p>
+						</div>
+					
+					
+						<div class="col-md-4">
+							<label value="Proyecto destino*" sclass="editField" />
+							<h:p> <combobox value="@bind(rProjectAdapter.proyectoDestino.nombre)"
+										 		onCreate="projectController.loadOpenProjectsEnd(self);" 
+									 			id="prcbd" /> </h:p>
+						</div>
+					
+					
+						
+					</div>
+				</div>
+					
+				<div class="animated aniFadeIn" >	
+					<listbox id="rplb" emptyMessage="No se encontrarón productos para mostrar" width="90%">
+					 	<auxhead>
+			            	<auxheader colspan="5" align="center" style=" background: green;">Entradas</auxheader>
+			            	<auxheader colspan="5" align="center" style=" background: red;">Salidas</auxheader>
+			            	<auxheader colspan="1" align="center">Dif.</auxheader>
+			            	<auxheader colspan="1" align="center">Reas.</auxheader>
+			            	<auxheader colspan="1" align="center">Acc.</auxheader>
+			        	</auxhead>
+						<listhead>
+							<listheader label="Familia" hflex="3" />
+							<listheader label="Código" hflex="3" />
+							<listheader label="Producto" hflex="3" />
+							<listheader label="U.medida" hflex="3" />
+							<listheader label="C.Entrada" hflex="2" />
+							<listheader label="Familia" hflex="3" />
+							<listheader label="Código" hflex="3" />
+							<listheader label="Producto" hflex="3" />
+							<listheader label="U.medida" hflex="3" />
+							<listheader label="C.Salida" hflex="2" />
+							<listheader label="Total" hflex="2" />
+							<listheader label="Reasignación" hflex="2" />
+							<listheader label="Acción" hflex="2" />
+						</listhead>
+					</listbox>
+					<pagingsize />
+				</div>
+				
+				<separator spacing="10px" />			
+		
+		
+			</tabpanel>
+						
+		
+		</tabpanels>
+	</tabbox>
+	
+	
+	
+	
+		
+</window>
+</zk>

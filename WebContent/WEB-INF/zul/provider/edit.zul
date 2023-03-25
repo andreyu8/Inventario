@@ -48,32 +48,32 @@
 			
 				<div class="col-md-4">
 				<label value="Nombre*" sclass="editField" />
-				<h:p> <textbox value="@bind(providerEdit.proveedor.nombre)" constraint="${tmv}" /> </h:p>
+				<h:p> <textbox value="@bind(providerEdit.proveedor.nombre)" constraint="${tmv}" width="400px"/> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="RFC*" sclass="editField" />
-				<h:p> <textbox value="@bind(providerEdit.proveedor.rfc)" constraint="${tmv}" /> </h:p>
+				<h:p> <textbox value="@bind(providerEdit.proveedor.rfc)" constraint="${tmv}" width="400px"/> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Dirección*" sclass="editField" />
-				<h:p> <textbox value="@bind(providerEdit.proveedor.direccion)" constraint="${tmv}" /> </h:p>
+				<h:p> <textbox value="@bind(providerEdit.proveedor.direccion)" constraint="${tmv}" width="400px"/> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Telefono*" sclass="editField" />
-				<h:p> <textbox value="@bind(providerEdit.proveedor.telefono)" constraint="${tmv}" /> </h:p>
+				<h:p> <textbox value="@bind(providerEdit.proveedor.telefono)" constraint="${tmv}" width="400px"/> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Extensión" sclass="editField" />
-				<h:p> <textbox value="@bind(providerEdit.proveedor.extension)" /> </h:p>
+				<h:p> <textbox value="@bind(providerEdit.proveedor.extension)" width="400px"/> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Email*" sclass="editField" />
-				<h:p> <textbox value="@bind(providerEdit.proveedor.EMail)" constraint="${tmv}" /> </h:p>
+				<h:p> <textbox value="@bind(providerEdit.proveedor.EMail)" constraint="${tmv}" width="400px"/> </h:p>
 			</div>
 			
 			<div class="col-md-4">
@@ -86,7 +86,7 @@
             <div class="col-md-4">
 				<label value="Nota*" sclass="editField" />
 				<h:p>
-			 		<textbox rows="6" value="@bind(providerEdit.proveedor.notas)" width="370px;" tabindex="11" />
+			 		<textbox rows="6" value="@bind(providerEdit.proveedor.notas)" width="400px;" tabindex="11" />
                  </h:p>   	        
 			</div>	
 			

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="win" border="none"  >
+	
+	<zscript>
+		import com.seidor.inventario.adapter.UserAdapter;
+		import com.seidor.inventario.NavigationControl;
+		import com.seidor.inventario.util.SessionUtil;
+		
+		UserAdapter userDetail = userController.read(SessionUtil.getLoggedUserId());
+		String welcome = userDetail.getUsuario().getEmpleado().getNombre();
+		
+		void loadRoomTab() {
+			//NavigationControl.loadComponent("/WEB-INF/zul/book/rooms.zul", roomstab);
+		}
+		
+		void loadSeatTab() {
+			//NavigationControl.loadComponent("/WEB-INF/zul/book/seats.zul", seatstab);
+		}
+	</zscript>
+	
+	<div class="row sectionBox animated aniFadeIn">
+		<div class="row">
+			<div class="col-md-12" align="left" >
+				<label value="Bienvenido: " sclass="sectionSubtitle" />
+				<label value="${welcome}" sclass="sectionTitle" />
+			</div>
+		</div>
+	</div>
+	
+	<tabbox id="tb" >
+	    <tabs id="tabs">
+	        <tab label="Inventario" />
+	        <tab label="Reportes" />
+	    </tabs>
+	    <tabpanels>
+	        <tabpanel id="roomstab" onCreate="loadRoomTab();">
+	        	
+	        	 <!--  <button label="Below" image="/widgets/input/button/img/ArrowDown-16x16.png"
+                        hoverImage="/widgets/input/button/img/ArrowDownGreen-16x16.png"
+                        width="125px" orient="vertical" dir="reverse" /> -->
+	        
+	        </tabpanel>
+	        <tabpanel id="seatstab" onCreate="loadSeatTab();" />
+	    </tabpanels>
+	</tabbox>
+	
+	
+	<separator spacing="10px" />
+	
+</window>
+</zk>

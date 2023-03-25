@@ -28,6 +28,15 @@
 					<warSourceDirectory>WebContent</warSourceDirectory>
 				</configuration> 
 			</plugin>
+			
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-war-plugin</artifactId>
+			    <configuration>
+			        <packagingExcludes>WEB-INF/lib/websocket-*.jar</packagingExcludes>
+			    </configuration>
+			</plugin>
+			
 		</plugins>
 	</build>
 	

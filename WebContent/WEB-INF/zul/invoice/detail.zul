@@ -43,35 +43,35 @@
 	<div class="row container animated aniFadeIn" >
 		<div class="col-md-3">
 			<label value="Id del proyecto" sclass="detailField" />
-			<h:p> <label value="${invoiceDetail.factura.idFactura}" sclass="detailData" /> </h:p>
+			<h:p> <label value="${invoiceDetail.factura.idFactura}" sclass="detailData" width="400px"/> </h:p>
 		</div>
 		<div class="col-md-3">
 			<label value="Número de factura" sclass="detailField" />
-			<h:p> <label value="${invoiceDetail.factura.numeroFactura}" sclass="detailData" /> </h:p>
+			<h:p> <label value="${invoiceDetail.factura.numeroFactura}" sclass="detailData" width="400px"/> </h:p>
 		</div>
 		<div class="col-md-3">
 			<label value="Proveedor" sclass="detailField" />
-			<h:p> <label value="${invoiceDetail.factura.proveedor.nombre}" sclass="detailData" /> </h:p>
+			<h:p> <label value="${invoiceDetail.factura.proveedor.nombre}" sclass="detailData" width="400px"/> </h:p>
 		</div>
 		<div class="col-md-3">
 			<label value="Fecha" sclass="detailField" />
-			<h:p> <label value="${invoiceDetail.factura.fecha}" sclass="detailData" /> </h:p>
+			<h:p> <label value="${invoiceDetail.factura.fecha}" sclass="detailData" width="400px"/> </h:p>
 		</div>
 		<div class="col-md-3">
 			<label value="Subtotal" sclass="detailField" />
-			<h:p> <label value="${invoiceDetail.factura.subtotal}" sclass="detailData" /> </h:p>
+			<h:p> <label value="${invoiceDetail.factura.subtotal}" sclass="detailData" width="400px"/> </h:p>
 		</div>
 		<div class="col-md-3">
 			<label value="IVA" sclass="detailField" />
-			<h:p> <label value="${invoiceDetail.factura.iva}" sclass="detailData" /> </h:p>
+			<h:p> <label value="${invoiceDetail.factura.iva}" sclass="detailData" width="400px"/> </h:p>
 		</div>
 		<div class="col-md-3">
 			<label value="Total" sclass="detailField" />
-			<h:p> <label value="${invoiceDetail.factura.total}" sclass="detailData" /> </h:p>
+			<h:p> <label value="${invoiceDetail.factura.total}" sclass="detailData" width="400px"/> </h:p>
 		</div>
 		<div class="col-md-3">
 			<label value="Descripción" sclass="detailField" />
-			<h:p> <label value="${invoiceDetail.factura.descripcion}" sclass="detailData" /> </h:p>
+			<h:p> <label value="${invoiceDetail.factura.descripcion}" sclass="detailData" width="400px"/> </h:p>
 		</div>
 		
 		 <div class="col-md-3">
@@ -79,7 +79,7 @@
 				<label value="Nota" sclass="detailField" />
 			</h:p>	
 			<h:p> 
-				<label value="${invoiceDetail.factura.notas}" class="alert alert-success"  /> 
+				<label value="${invoiceDetail.factura.notas}" class="alert alert-success" width="400px" /> 
 			</h:p>
 		</div>
 		

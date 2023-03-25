@@ -48,11 +48,11 @@
 		<div class="row editBox">
 			<div class="col-md-4">
 				<label value="Familia*" sclass="editField" />
-				<h:p> <textbox value="@bind(categorySave.categoria.categoria)" constraint="${tmv}" /> </h:p>
+				<h:p> <textbox value="@bind(categorySave.categoria.categoria)" constraint="${tmv}" width="400px"/> </h:p>
 			</div>
 			<div class="col-md-4">
 				<label value="Descripción*" sclass="editField" />
-				<h:p> <textbox value="@bind(categorySave.categoria.descripcion)" constraint="${tmv}" /> </h:p>
+				<h:p> <textbox value="@bind(categorySave.categoria.descripcion)" constraint="${tmv}" width="400px" /> </h:p>
 			</div>
 		</div>
 	</div>

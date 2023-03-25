@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./modwin"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="modwin" border="normal" position="center" zclass="none" >
+	
+	<zscript>
+		import ieci.tdw.ispac.mail.UserMailSender;
+		import ieci.tdw.ispac.navigation.*;
+		import ieci.tdw.ispac.util.SessionUtil;
+		import nl.captcha.Captcha;
+		import ieci.tdw.ispac.util.CaptchaUtil;
+		
+		Captcha cap = CaptchaUtil.getCaptcha(150, 50);
+		
+		public void loadCaptcha(){
+			captcha.setContent(cap.getImage());
+		}
+		
+		public void reloadCaptcha(){
+			cap = CaptchaUtil.getCaptcha(150, 50);
+			captcha.setContent(cap.getImage());
+		}
+		
+		public void verifyCaptcha(){
+			if (!cap.getAnswer().equalsIgnoreCase(captchatb.getValue())){
+				captchatb.setValue("");
+				reloadCaptcha();
+				throw new WrongValueException(captchatb, "Texto incorrecto.");
+			}
+		}
+		
+		public void recover(){
+			verifyCaptcha();
+			UserMailSender.recoverPassword(usertb, modwin);
+		}
+		
+	</zscript>
+	
+	<div class="container">
+		<div class="row">
+			<h:div class="col-md-2" />
+			
+			<h:div class="col-md-8" >
+				<div class="row sysBox" style="background: #F1F2F4; border: 1px solid #C1C2C4;" >			
+					<div class="row editHeader">
+						<div class="col-md-12" >
+							<a sclass="confirmIcon" iconSclass="z-icon-key" />
+							<label value="RECUPERAR CONTRASEÑA" sclass="sysTitle" />
+							<button id="closebtn" label="X" onClick="modwin.detach();" style="padding-top: 2px; padding-bottom: 2px; float: right;" focus="true" />
+						</div>
+					</div>
+						
+					<h:div class="row">
+						<h:div class="col-md-6" >
+							<h:div class="col-md-12" >
+								<h:p> <textbox id="usertb" placeholder="Usuario*" constraint="@{tmv}" /> </h:p>
+							</h:div>
+						</h:div>
+						
+						<h:div class="col-md-6"  >
+							<h:p> <label value="Ingresa el texto de la imagen*" sclass="sysField" style="font-size: 18px;" /> </h:p>
+							<h:p> <image id="captcha" onCreate="loadCaptcha();" /> </h:p>
+							<h:p> <textbox id="captchatb" sclass="form-control" width="150px" /> </h:p>
+							<h:p> 
+								<label value="-No distingue mayúsculas" sclass="sysField" />
+								<button label="regenerar" onClick="reloadCaptcha();" />
+							</h:p>
+							<h:p> <label id="captchalb" style="color: red;" /> </h:p>
+							<separator spacing="20px" />
+							<button label="recuperar" sclass="btn primary" style="font-size: 25px; width: 80%;" onClick="recover();"/>
+						</h:div>	
+					</h:div>
+									
+					<separator spacing="10px" />
+						
+					<h:div class="row gridCard">
+						<h:div class="col-md-12" style="text-align: center;" >
+							<h:span style="padding-top: 10px; display: block;" />
+							<button label="cerrar" onClick='modwin.detach();' />
+						</h:div>
+					</h:div>			
+				</div>			
+			</h:div>
+			
+			<h:div class="col-md-2" />
+		</div>
+	</div>
+	
+</window>
+</zk>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
+	
+	<zscript>
+		import com.seidor.inventario.adapter.PurcharseAdapter;
+		import com.seidor.inventario.navigation.*;
+		
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		
+		PurcharseAdapter ocSave = purchaseOrderController.readForNew();
+		
+		public void cancel(){
+			navigationControl.changeToPrevious(win);
+		}
+		
+		public void save(){
+			fcv.validate(win);
+			purchaseOrderController.save(ocSave, state, win);
+		}
+	</zscript>
+	
+	<div class="row sectionBoxAlt animated aniFadeIn">
+		<div class="row">
+			<div class="col-md-8">
+				<h:span style="padding-top: 5px; display: block;" />
+				<div align="left" style="float: left;" >
+					<label value="@bind(ocSave.orderCompra.descripcion)" sclass="sectionTitle" />
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div align="right" style="float: right;" >
+					<button label="cancelar" sclass="btn btn-warning" onClick="cancel();" iconSclass="z-icon-times" />
+					<button label="guardar" sclass="btn btn-success" onClick="save();" iconSclass="z-icon-check" />
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row subBoxAlt animated aniFadeIn" >
+		<div class="col-md-12">
+			<label value="Datos de la OC" />
+		</div>
+	</div>
+	<div class="container animated aniFadeIn" >
+		<div class="row editBox">
+			
+			<div class="col-md-4">
+				<label value="Descripción de la OC*" sclass="editField" />
+				<h:p> <textbox value="@bind(ocSave.orderCompra.descripcion)" /> </h:p>
+			</div>
+			
+			
+			<div class="col-md-4">
+				<label value="Fecha*" sclass="editField" />
+				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(ocSave.orderCompra.fecha)"  /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Cliente*" sclass="editField" />
+				<h:p> <combobox value="@bind(ocSave.orderCompra.cliente.nombre)"
+							 		onCreate="clientController.loadClient(self);" 
+						 			id="clicb" constraint="${cmv}"/> </h:p>
+			</div>	
+			
+			<div class="col-md-4">
+				<label value="Factura*" sclass="editField" />
+				<h:p> <combobox value="@bind(ocSave.orderCompra.factura.numeroFactura)"
+							 		onCreate="invoiceController.loadInvoice(self);" 
+						 			id="invcb" constraint="${cmv}"/> </h:p>
+			</div>		
+		
+				
+			
+			<div class="col-md-4">
+				<label value="Etapa*" sclass="editField" />
+				<h:p> <combobox value="@bind(ocSave.orderCompra.etapa.etapa)"
+							 		onCreate="phaseController.loadPhase(self);" 
+						 			id="etapcb" constraint="${cmv}"/> </h:p>
+			</div>	
+			
+			<div class="col-md-4">
+				<label value="Area*" sclass="editField" />
+				<h:p> <combobox value="@bind(ocSave.orderCompra.area.area)"
+							 		onCreate="areaController.loadArea(self);" 
+						 			id="areacb" constraint="${cmv}"/> </h:p>
+			</div>	
+			
+			<div class="col-md-4">
+				<label value="Tipo de order de compra*" sclass="editField" />
+				<h:p> <combobox value="@bind(ocSave.orderCompra.tipoOrdenCompra.ordenCompra)"
+							 		onCreate="typeOrderController.loadTOC(self);" 
+						 			id="toccb" constraint="${cmv}"/> </h:p>
+			</div>	
+			
+					
+			<div class="col-md-4">
+				<label value="Empleado*" sclass="editField" />
+				<h:p> <combobox value="@bind(ocSave.orderCompra.empleado.nombre)"
+							 		onCreate="employeeController.loadEmployee(self);" 
+						 			id="cbemp" />
+				 </h:p>
+			</div>		
+				
+			<div class="col-md-4">
+				<label value="Proyecto*" sclass="editField" />
+				<h:p> <combobox value="@bind(ocSave.orderCompra.proyecto.nombre)"
+							 		onCreate="projectController.loadProjects(self);" 
+						 			id="prcb" /> </h:p>
+			</div>	
+			
+			<div class="col-md-4">
+				<label value="Estatus orde compra*" sclass="editField" />
+				<h:p> <combobox value="@bind(ocSave.orderCompra.estatusOrdenCompra.estatusOrdenCompra)"
+							 		onCreate="purchaseOrderController.loadStateTypeOrder(self);" 
+						 			id="soccb" constraint="${cmv}"/> </h:p>
+			</div>	
+			
+			<div class="col-md-4">
+				<label value="Tipode pago*" sclass="editField" />
+				<h:p> <combobox value="@bind(ocSave.orderCompra.tipoPago.tipoPago)"
+							 		onCreate="purchaseOrderController.loadTypePayment(self);" 
+						 			id="tpcb" constraint="${cmv}"/> </h:p>
+			</div>	
+				
+		</div>
+		
+		
+		
+		
+	</div>
+	
+		
+</window>
+</zk>

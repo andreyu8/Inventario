@@ -49,27 +49,27 @@
 			
 			<div class="col-md-4">
 				<label value="Descripción de la OC*" sclass="editField" />
-				<h:p> <textbox value="@bind(ocSave.orderCompra.descripcion)" /> </h:p>
+				<h:p> <textbox value="@bind(ocSave.orderCompra.descripcion)" width="400px"/> </h:p>
 			</div>
 			
 			
 			<div class="col-md-4">
 				<label value="Fecha*" sclass="editField" />
-				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(ocSave.orderCompra.fecha)"  /> </h:p>
+				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(ocSave.orderCompra.fecha)" width="400px" /> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Cliente*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocSave.orderCompra.cliente.nombre)"
 							 		onCreate="clientController.loadClient(self);" 
-						 			id="clicb" constraint="${cmv}"/> </h:p>
+						 			id="clicb" constraint="${cmv}" width="400px"/> </h:p>
 			</div>	
 			
 			<div class="col-md-4">
 				<label value="Factura*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocSave.orderCompra.factura.numeroFactura)"
 							 		onCreate="invoiceController.loadInvoice(self);" 
-						 			id="invcb" constraint="${cmv}"/> </h:p>
+						 			id="invcb" constraint="${cmv}" width="400px"/> </h:p>
 			</div>		
 		
 				
@@ -78,21 +78,21 @@
 				<label value="Etapa*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocSave.orderCompra.etapa.etapa)"
 							 		onCreate="phaseController.loadPhase(self);" 
-						 			id="etapcb" constraint="${cmv}"/> </h:p>
+						 			id="etapcb" constraint="${cmv}" width="400px"/> </h:p>
 			</div>	
 			
 			<div class="col-md-4">
 				<label value="Area*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocSave.orderCompra.area.area)"
 							 		onCreate="areaController.loadArea(self);" 
-						 			id="areacb" constraint="${cmv}"/> </h:p>
+						 			id="areacb" constraint="${cmv}" width="400px"/> </h:p>
 			</div>	
 			
 			<div class="col-md-4">
 				<label value="Tipo de order de compra*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocSave.orderCompra.tipoOrdenCompra.ordenCompra)"
 							 		onCreate="typeOrderController.loadTOC(self);" 
-						 			id="toccb" constraint="${cmv}"/> </h:p>
+						 			id="toccb" constraint="${cmv}" width="400px"/> </h:p>
 			</div>	
 			
 					
@@ -100,7 +100,7 @@
 				<label value="Empleado*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocSave.orderCompra.empleado.nombre)"
 							 		onCreate="employeeController.loadEmployee(self);" 
-						 			id="cbemp" />
+						 			id="cbemp" width="400px"/>
 				 </h:p>
 			</div>		
 				
@@ -108,21 +108,21 @@
 				<label value="Proyecto*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocSave.orderCompra.proyecto.nombre)"
 							 		onCreate="projectController.loadProjects(self);" 
-						 			id="prcb" /> </h:p>
+						 			id="prcb" width="400px"/> </h:p>
 			</div>	
 			
 			<div class="col-md-4">
 				<label value="Estatus orde compra*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocSave.orderCompra.estatusOrdenCompra.estatusOrdenCompra)"
 							 		onCreate="purchaseOrderController.loadStateTypeOrder(self);" 
-						 			id="soccb" constraint="${cmv}"/> </h:p>
+						 			id="soccb" constraint="${cmv}" width="400px"/> </h:p>
 			</div>	
 			
 			<div class="col-md-4">
 				<label value="Tipode pago*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocSave.orderCompra.tipoPago.tipoPago)"
 							 		onCreate="purchaseOrderController.loadTypePayment(self);" 
-						 			id="tpcb" constraint="${cmv}"/> </h:p>
+						 			id="tpcb" constraint="${cmv}" width="400px"/> </h:p>
 			</div>	
 				
 		</div>

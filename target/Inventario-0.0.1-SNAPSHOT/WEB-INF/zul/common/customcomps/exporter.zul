@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<zk>
+	
+	<div align="center" >
+		<hlayout>
+			<label value="Exportar en formato" sclass="sysField" style="font-size: 12px;" />
+			<a iconSclass="fa fa-file-pdf-o" onClick="pdf(self.parent.parent);" sclass="linkDark" tooltiptext="PDF" />
+			<a iconSclass="fa fa-file-excel-o" onClick="excel(self.parent.parent);" sclass="linkDark" tooltiptext="Excel" />
+		</hlayout>
+	</div>
+	
+	<zscript><![CDATA[
+		import com.seidor.inventario.util.ExporterUtil;
+		
+		public void excel(Component comp) {
+			if (comp.getPreviousSibling() instanceof Listbox) {
+				ExporterUtil.excel(comp.getPreviousSibling());
+			}
+			else {
+				comp = comp.getParent().getParent();
+				ExporterUtil.excel(comp.getPreviousSibling());
+			}
+		}
+		
+		public void pdf(Component comp) {
+			if (comp.getPreviousSibling() instanceof Listbox) {
+				ExporterUtil.pdf(comp.getPreviousSibling());
+			}
+			else {
+				comp = comp.getParent().getParent();
+				ExporterUtil.pdf(comp.getPreviousSibling());
+			}
+		}
+		
+		
+	]]></zscript>
+	
+</zk>

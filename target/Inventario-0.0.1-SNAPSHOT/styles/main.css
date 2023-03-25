@@ -1,0 +1,272 @@
+/* 
+colors
+#165785 //blue
+#f9a630 //yellow
+#333 //gray 
+#37474f //gray2 
+#26333c //gray3
+#a8a8a8 //lightgray
+#071824 //black
+*/
+
+/** HTML **/
+body {
+	background: transparent !important;
+	padding: 0px;
+}
+
+a {
+    color: #165785;
+}
+
+a:hover {
+    color: #165785;
+}
+
+/** General **/
+.workArea {
+	padding-left: 20px;
+	padding-right: 20px;
+	min-height: 600px;
+}
+
+.btn-default {
+	color: #fff;
+	background: #165785;
+	border: 1px solid #165785;
+}
+
+.btn-default:hover {
+	color: #fff;
+	background: #26333c;
+	border: 1px solid #26333c;
+}
+
+/** LOGIN **/
+.login-bg {
+	background-image: /*linear-gradient(#165785, #165785),*/ url("../img/inventarioWP.jpg");
+	background-position: center bottom;
+	background-size: cover;
+	background-blend-mode: color;
+}
+
+.loginTitle {
+	font-size: 20px;
+	color: #fff;
+	font-family: 'open_sansbold',Helvetica,sans-serif;
+}
+
+.loginBtn {
+	background: #777; /*#f9a630;*/
+	border: 1px solid #777; /*#f9a630;*/
+	color: white;
+}
+
+.loginBtn:hover {
+	background: #337ab7; /*#f9a630;*/
+	border: 1px solid #337ab7; /*#f9a630;*/
+	box-shadow: 0px 0px 5px 1px #337ab7; /*#fbb842;*/
+}
+
+.loginLink {
+	font-family: 'open_sansbold',Helvetica,sans-serif;
+	font-weight: 400;
+	color: #fff;
+	font-size: 18px;
+	text-decoration: none;
+	font-style: italic;
+}
+
+.loginLink:hover {
+	color: #337ab7;
+}
+
+.fieldLabel {
+	
+}
+
+/** HEADER **/
+.header-login-bg {
+	background: #fff;
+	border-bottom: 4px solid #337ab7;
+}
+
+.headerPattern {
+	background: #fff;
+	border-bottom: 4px solid #777;
+}
+
+.headerTitle {
+	font-size: 2.5em;
+	color: #777;
+	font-family: 'open_sansbold',Helvetica,sans-serif;
+}
+
+.logo {
+	background-image: url("../img/logo_inv.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+  	background-size: contain;  
+  	cursor: pointer;
+  	min-height: 128px;
+  	max-width: 323px;
+}
+
+/** FOOTER **/
+.footer-bg, .footerBox {
+	background: #26333c;
+	color: #fff;
+	padding: 26px 24px;
+}
+
+.footerLeftLine {
+	font-family: 'open_sanssemibold',Helvetica,sans-serif;
+	font-weight: 400;
+	padding: 26px 12px;
+	color: #fff;
+}
+
+.footerLeftLine ul {
+	list-style: none;
+	padding: 0px;
+	margin: 0;
+	margin-top: 15px;
+	font-family: 'open_sanssemibold',Helvetica,sans-serif;
+	font-weight: 400;
+}
+
+.footerLeftLine ul li {
+	display: inline;
+}
+
+.footerLeftLine ul li a {
+	color: #fff;
+	text-decoration: none;
+	font-size: 15px;
+}
+
+.footerLeftLine ul li a:visited {
+	color: #a8a8a8;
+}
+
+.footerLeftLine ul li a:hover {
+	color:#777;
+}
+
+.footerRightLine ul {
+	list-style: none;
+	margin: 0;
+	margin-top: 15px;
+	font-family: 'open_sanssemibold',Helvetica,sans-serif;
+	font-weight: 400;
+	text-align: center;
+}
+
+.footerRightLine ul li {
+	
+	display: inline;
+}
+
+.footerRightLine ul li span {
+	cursor: pointer;
+}
+
+.footerRightLine ul li span i {
+	color: #071824;
+}
+
+.footerRightLine ul li span .fa-inverse {
+	color: #fff;
+}
+
+.footerRightLine ul li .fa-stack:hover .fa-circle {
+	color: #777;
+}
+
+.copyright {
+	color: #bbc7cd;
+	background: #151e28;
+	padding: 15px 24px;
+	font-family: 'open_sansregular',Helvetica,sans-serif;
+	font-weight: 400;
+	text-align: left;
+}
+
+.copyright span {
+	font-size: 13px;
+}
+
+/** form control **/
+.form-control:focus {
+    color: #333;
+    background-color: #fff;
+    border-color: #165785;
+    outline: 0;
+    box-shadow: 0 0 0 0 rgba(13,110,253,.25);
+}
+
+/** breadcrumbs bar **/
+.navBox {
+	margin: 0px;
+}
+
+.home-icon, .bclabel, .bclink, .lastcrumb, .titleLabel, .sectionTitle {
+	color: #165785;
+}
+
+.bclink {
+	font-style: italic;
+	cursor: pointer;
+}
+
+/** section an titles **/
+.titleLabel {
+	font-size: 24px;
+}
+
+.sectionTitle {
+	font-size: 20px;
+}
+
+.sectionSubtitle {
+	color: rgba(0,0,0,0.57);
+}
+
+.sectionBox {
+	margin: 20px;
+}
+
+.subBox, .subBoxAlt {
+	color: #165785;
+}
+
+.detailField {
+	color: #165785;
+}
+
+.editField {
+	color: #165785;
+}
+
+.detailData {
+	color: #777;
+}
+
+.form-control {
+    color: #a8a8a8;
+    transition: border-color .3s ease-in-out
+    			color .3s ease-in-out;
+}
+
+.form-control:focus {
+    color: #165785;
+}
+
+.calendarBtns {
+	padding-top: 20px;
+	padding-bottom: 10px;
+}
+
+.calendarBox {
+	padding-bottom: 10px;
+}
