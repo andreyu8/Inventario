@@ -9,6 +9,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
+import com.seidor.inventario.adapter.search.EmployeeSearchAdapter;
 import com.seidor.inventario.model.Empleado;
 import com.seidor.inventario.util.DaoUtil;
 
