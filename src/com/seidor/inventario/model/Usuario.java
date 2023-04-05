@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 3 mar. 2023 11:27:00 by Hibernate Tools 4.3.5.Final
+// Generated 29 mar. 2023 21:04:16 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -13,8 +13,6 @@ public class Usuario implements java.io.Serializable {
 	private Integer idUsuario;
 	private Empleado empleado;
 	private String usuario;
-	private String name;
-	private String EMail;
 	private String password;
 	private Date fecha;
 	private int activo;
@@ -93,22 +91,5 @@ public class Usuario implements java.io.Serializable {
 	public void setPerfilUsuarios(Set perfilUsuarios) {
 		this.perfilUsuarios = perfilUsuarios;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getEMail() {
-		return EMail;
-	}
-
-	public void setEMail(String eMail) {
-		EMail = eMail;
-	}
-
 
 }

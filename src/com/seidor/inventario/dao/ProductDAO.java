@@ -166,7 +166,7 @@ public class ProductDAO extends HibernateDaoSupport{
 		sb.append("SELECT  " );
 		sb.append("a.Familia AS Familia, a.id_producto, a.codigo,a.nombre, a.unidad_medida, a.sum_entra , ");
 		sb.append("b.Familia AS Familia_s , b.id_producto AS id_producto_s, b.codigo AS codigo_s, b.nombre AS nombre_s, b.unidad_medida AS unidad_medida_s ,b.sum_salida,   ");
-		sb.append("nvl ((a.sum_entra-b.sum_salida),a.sum_entra)  as diferencia ");
+		sb.append(" IFNULL ((a.sum_entra-b.sum_salida),a.sum_entra)  as diferencia ");
 		sb.append(" FROM ( ");
 		sb.append(" SELECT c.categoria AS Familia, p.id_producto, p.codigo,p.nombre, u.unidad_medida,SUM(e.cantidad) AS sum_entra  ");
 		sb.append("FROM entrada e , producto p, unidad_medida u, categoria c ");
@@ -256,7 +256,7 @@ public class ProductDAO extends HibernateDaoSupport{
 		sb.append("SELECT  " );
 		sb.append("a.Familia AS Familia, a.id_producto, a.codigo,a.nombre, a.unidad_medida, a.sum_entra , ");
 		sb.append("b.Familia AS Familia_s , b.id_producto AS id_producto_s, b.codigo AS codigo_s, b.nombre AS nombre_s, b.unidad_medida AS unidad_medida_s ,b.sum_salida,   ");
-		sb.append("nvl ((a.sum_entra-b.sum_salida),a.sum_entra)  as diferencia ");
+		sb.append(" IFNULL ((a.sum_entra-b.sum_salida),a.sum_entra)  as diferencia ");
 		sb.append(" FROM ( ");
 		sb.append(" SELECT c.categoria AS Familia, p.id_producto, p.codigo,p.nombre, u.unidad_medida,SUM(e.cantidad) AS sum_entra  ");
 		sb.append("FROM entrada e , producto p, unidad_medida u, categoria c ");
@@ -343,7 +343,7 @@ public class ProductDAO extends HibernateDaoSupport{
 		sb.append("SELECT  " );
 		sb.append("a.Familia AS Familia, a.id_producto, a.codigo,a.nombre, a.unidad_medida, a.sum_entra , ");
 		sb.append("b.Familia AS Familia_s , b.id_producto AS id_producto_s, b.codigo AS codigo_s, b.nombre AS nombre_s, b.unidad_medida AS unidad_medida_s ,b.sum_salida,   ");
-		sb.append("nvl ((a.sum_entra-b.sum_salida),a.sum_entra)  as diferencia ");
+		sb.append(" IFNULL ((a.sum_entra-b.sum_salida),a.sum_entra)  as diferencia ");
 		sb.append(" FROM ( ");
 		sb.append(" SELECT c.categoria AS Familia, p.id_producto, p.codigo,p.nombre, u.unidad_medida,SUM(e.cantidad) AS sum_entra  ");
 		sb.append("FROM entrada e , producto p, unidad_medida u, categoria c ");

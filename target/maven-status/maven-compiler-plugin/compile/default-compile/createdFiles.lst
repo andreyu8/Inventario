@@ -74,6 +74,7 @@ com\seidor\inventario\inroweditablecomps\IREditableCombobox$2.class
 com\seidor\inventario\util\ReportUtil.class
 com\seidor\inventario\inroweditablecomps\OpenEventBandbox.class
 com\seidor\inventario\inroweditablecomps\SelectEventBandbox.class
+com\seidor\inventario\dao\RoleDAO.class
 com\seidor\inventario\adapter\ProviderAdapter.class
 com\seidor\inventario\actionimages\UploadButton.class
 com\seidor\inventario\validation\UserMandatoryValidator.class
@@ -109,7 +110,6 @@ com\seidor\inventario\util\EncryptUtil.class
 com\seidor\inventario\adapter\search\ProviderSearchAdapter.class
 com\seidor\inventario\model\Empleado.class
 com\seidor\inventario\adapter\render\AreaComboitemRenderer.class
-com\seidor\inventario\adapter\EmployeeAdapter.class
 com\seidor\inventario\inroweditablecomps\EditableListitemRenderer$24.class
 com\seidor\inventario\model\Salida.class
 com\seidor\inventario\navigation\NavigationRenderer$PrevEvent.class
@@ -123,6 +123,7 @@ com\seidor\inventario\adapter\render\OutputListitemRenderer.class
 com\seidor\inventario\inroweditablecomps\IREditableDatebox$2.class
 com\seidor\inventario\controller\ProviderController.class
 com\seidor\inventario\adapter\CategoryAdapter.class
+com\seidor\inventario\manager\RoleManager.class
 com\seidor\inventario\adapter\search\UnitMeasureSearchAdapter.class
 com\seidor\inventario\inroweditablecomps\EditableListitemRenderer$8.class
 com\seidor\inventario\util\ExporterUtil$4.class
@@ -197,6 +198,7 @@ com\seidor\inventario\inroweditablecomps\EditableListitemRenderer$16.class
 com\seidor\inventario\adapter\EntryAdapter.class
 com\seidor\inventario\inroweditablecomps\EditableListitemRenderer$5.class
 com\seidor\inventario\adapter\ClientAdapter.class
+com\seidor\inventario\adapter\search\EmployeeSearchAdapter.class
 com\seidor\inventario\manager\TypeWorkManager.class
 com\seidor\inventario\validation\LongboxMandatoryValidator.class
 com\seidor\inventario\adapter\beans\CloseProjectBean.class
@@ -205,7 +207,6 @@ com\seidor\inventario\dao\PhaseDAO.class
 com\seidor\inventario\navigation\NavigationRenderer.class
 com\seidor\inventario\validation\EmailboxMandatoryValidator.class
 com\seidor\inventario\util\ReflectUtil.class
-com\seidor\inventario\adapter\UnitMeasureAdapter.class
 com\seidor\inventario\validation\DecimalboxMandatoryValidator.class
 com\seidor\inventario\inroweditablecomps\IREditableComponent.class
 com\seidor\inventario\adapter\beans\OutBean.class
@@ -259,3 +260,4 @@ com\seidor\inventario\adapter\InvoiceAdapter.class
 com\seidor\inventario\validation\FullComponentValidator.class
 com\seidor\inventario\inroweditablecomps\IREditablePassbox$1.class
 com\seidor\inventario\dao\EntryDAO.class
+com\seidor\inventario\controller\RoleController.class

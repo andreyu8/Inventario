@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 3 mar. 2023 11:27:00 by Hibernate Tools 4.3.5.Final
+// Generated 29 mar. 2023 21:04:16 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -20,6 +20,7 @@ public class OrdenCompra implements java.io.Serializable {
 	private Proyecto proyecto;
 	private TipoOrdenCompra tipoOrdenCompra;
 	private TipoPago tipoPago;
+	private String numeroOc;
 	private String descripcion;
 	private Date fecha;
 	private Date fechaRecepAlmacen;
@@ -38,7 +39,7 @@ public class OrdenCompra implements java.io.Serializable {
 
 	public OrdenCompra(Area area, Cliente cliente, Empleado empleado, EstatusOrdenCompra estatusOrdenCompra,
 			Etapa etapa, Factura factura, Proyecto proyecto, TipoOrdenCompra tipoOrdenCompra, TipoPago tipoPago,
-			String descripcion, Date fecha, Date fechaRecepAlmacen, Set entradas) {
+			String numeroOc, String descripcion, Date fecha, Date fechaRecepAlmacen, Set entradas) {
 		this.area = area;
 		this.cliente = cliente;
 		this.empleado = empleado;
@@ -48,6 +49,7 @@ public class OrdenCompra implements java.io.Serializable {
 		this.proyecto = proyecto;
 		this.tipoOrdenCompra = tipoOrdenCompra;
 		this.tipoPago = tipoPago;
+		this.numeroOc = numeroOc;
 		this.descripcion = descripcion;
 		this.fecha = fecha;
 		this.fechaRecepAlmacen = fechaRecepAlmacen;
@@ -132,6 +134,14 @@ public class OrdenCompra implements java.io.Serializable {
 
 	public void setTipoPago(TipoPago tipoPago) {
 		this.tipoPago = tipoPago;
+	}
+
+	public String getNumeroOc() {
+		return this.numeroOc;
+	}
+
+	public void setNumeroOc(String numeroOc) {
+		this.numeroOc = numeroOc;
 	}
 
 	public String getDescripcion() {

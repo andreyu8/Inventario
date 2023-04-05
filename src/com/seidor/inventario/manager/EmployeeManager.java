@@ -2,6 +2,7 @@ package com.seidor.inventario.manager;
 
 import java.util.ArrayList;
 
+import com.seidor.inventario.adapter.search.EmployeeSearchAdapter;
 import com.seidor.inventario.dao.EmployeeDAO;
 import com.seidor.inventario.model.Empleado;
 
@@ -37,5 +38,10 @@ public class EmployeeManager {
 	public void delete (Empleado oc) {
 		this.employeeDao.delete(oc);
 	}
+
+	public ArrayList<Empleado> search(EmployeeSearchAdapter esa) {
+		return 	this.employeeDao.search (esa);
+	}
+	
 	
 }

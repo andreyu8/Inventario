@@ -23,6 +23,7 @@
 	<bean id="phaseDao" class="com.seidor.inventario.dao.PhaseDAO" autowire="byName" />
 	<bean id="areaDao" class="com.seidor.inventario.dao.AreaDAO" autowire="byName" />
 	<bean id="typeOrderDao" class="com.seidor.inventario.dao.TypeOrderDAO" autowire="byName" />
+	<bean id="roleDao" class="com.seidor.inventario.dao.RoleDAO" autowire="byName" />
 	
 		
 	<bean id="userManager" class="com.seidor.inventario.manager.UserManager" autowire="byName" />
@@ -44,7 +45,7 @@
 	<bean id="phaseManager" class="com.seidor.inventario.manager.PhaseManager" autowire="byName" />
 	<bean id="areaManager" class="com.seidor.inventario.manager.AreaManager" autowire="byName" />
 	<bean id="typeOrderManager" class="com.seidor.inventario.manager.TypeOrderManager" autowire="byName" />
-		
+	<bean id="roleManager" class="com.seidor.inventario.manager.RoleManager" autowire="byName" />
 	
 	<bean id="userController" class="com.seidor.inventario.controller.UserController" autowire="byName" />
 	<bean id="categoryController" class="com.seidor.inventario.controller.CategoryController" autowire="byName" />
@@ -66,5 +67,6 @@
 	<bean id="phaseController" class="com.seidor.inventario.controller.PhaseController" autowire="byName" />
 	<bean id="areaController" class="com.seidor.inventario.controller.AreaController" autowire="byName" />
 	<bean id="typeOrderController" class="com.seidor.inventario.controller.TypeOrderController" autowire="byName" />
+	<bean id="roleController" class="com.seidor.inventario.controller.RoleController" autowire="byName" />
 	
 </beans>

@@ -46,6 +46,10 @@
 			<h:p> <label value="${ocDetail.orderCompra.idOrdenCompra}" sclass="detailData" /> </h:p>
 		</div>
 		<div class="col-md-3">
+			<label value="Número de la OC*" sclass="detailField" />
+			<h:p> <label value="${ocDetail.orderCompra.numeroOc}" sclass="detailData" /> </h:p>
+		</div>
+		<div class="col-md-3">
 			<label value="Area" sclass="detailField" />
 			<h:p> <label value="${ocDetail.orderCompra.area.descripcion}" sclass="detailData" /> </h:p>
 		</div>

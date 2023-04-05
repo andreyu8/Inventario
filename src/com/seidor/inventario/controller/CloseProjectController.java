@@ -383,7 +383,6 @@ public class CloseProjectController {
 			tt.setIdTipoTrabajo(3);
 			salida.setTipoTrabajo(tt);
 			salida.setUnidadMedida(entrada.getUnidadMedida());
-			salida.setClaveMueble("");
 			salida.setFecha(new Date());
 			salida.setEstatus(SystemConstants.SALIDA_POR_REASIGNACION);
 			
@@ -614,7 +613,7 @@ public class CloseProjectController {
 			tt.setIdTipoTrabajo(3);
 			salida.setTipoTrabajo(tt);
 			salida.setUnidadMedida(entrada.getUnidadMedida());
-			salida.setClaveMueble("");
+			salida.setModeloMueble("");
 			salida.setFecha(new Date());
 			salida.setEstatus(SystemConstants.SALIDA_POR_REASIGNACION);
 			

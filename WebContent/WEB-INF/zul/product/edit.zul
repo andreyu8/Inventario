@@ -64,10 +64,10 @@
 				<h:p> <textbox value="@bind(productEdit.producto.nombre)" constraint="${tmv}" /> </h:p>
 			</div>
 			
-			<div class="col-md-4">
+			<!-- <div class="col-md-4">
 				<label value="Cantidad*" sclass="editField" />
 				<h:p> <intbox value="@bind(productEdit.producto.cantidad)"  /> </h:p>
-			</div>
+			</div> -->
 			
 				
 			<div class="col-md-4">

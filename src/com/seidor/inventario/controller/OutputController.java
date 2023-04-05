@@ -1,5 +1,6 @@
 package com.seidor.inventario.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,13 +126,16 @@ public class OutputController {
 		
 		Intbox ibcantidad = (Intbox) win.getFellowIfAny("ibcantidad");
 		
-		//resta a productos la cantidad
-		oa.getSalida().getProducto().setCantidad(oa.getSalida().getProducto().getCantidad() - oa.getSalida().getCantidad());
 		
+		Entrada entryProduct = getCantidadEntrada(entryManager.getIdProjectProduct(oa.getSalida().getProyecto().getIdProyecto(),  oa.getSalida().getProducto().getIdProducto()));
+		Salida outputProduct = getCantidadSalida (entryManager.getIdProjectProductS(oa.getSalida().getProyecto().getIdProyecto(),  oa.getSalida().getProducto().getIdProducto()));
 		
-		Entrada entryProduct = entryManager.getIdProjectProduct(oa.getSalida().getProyecto().getIdProyecto(),  oa.getSalida().getProducto().getIdProducto());
-		int cantidadProducto = entryProduct.getProducto().getCantidad();
+		int cantidadProducto = entryProduct.getCantidad() - outputProduct.getCantidad();
 
+		//resta a productos la cantidad
+		oa.getSalida().getProducto().setCantidad(cantidadProducto - oa.getSalida().getCantidad());
+				
+		
 		System.out.println("Cantidad entrada: "+cantidadProducto);
 		System.out.println("Cantidad salida: "+oa.getSalida().getProducto().getCantidad());
 		
@@ -140,8 +144,10 @@ public class OutputController {
 		else
 			throw new WrongValueException(ibcantidad, "No puede sacar mas productos de los existentes!!!!!");
 		
-		if (oa.getSalida().getProducto().getCantidad() < oa.getSalida().getProducto().getMinimo()) 
-			throw new WrongValueException(ibcantidad, "Se ha revasado el minimo requerido favor de validar!");
+		/*
+		 * Se notifica por correo
+		 * if (oa.getSalida().getProducto().getCantidad() < oa.getSalida().getProducto().getMinimo()) 
+			throw new WrongValueException(ibcantidad, "Se ha revasado el minimo requerido favor de validar!");*/
 		
 		
 		state.setDetailIdentifier(oa.getProducto().getIdProducto());
@@ -153,6 +159,30 @@ public class OutputController {
 	
 	
 	
+	private Salida getCantidadSalida(ArrayList<Salida> idProjectProduct) {
+		int cantidad =0 ;
+		Salida salida = new Salida();
+		
+		for (Salida s : idProjectProduct) {
+			cantidad = cantidad + s.getCantidad();
+			salida = s;
+		}
+		salida.setCantidad(cantidad);
+		return salida;
+	}
+
+	private Entrada getCantidadEntrada(ArrayList<Entrada> idProjectProduct) {
+		int cantidad =0 ;
+		Entrada entrada = new Entrada();
+		
+		for (Entrada e : idProjectProduct) {
+			cantidad = cantidad + e.getCantidad();
+			entrada = e;
+		}
+		entrada.setCantidad(cantidad);
+		return entrada;
+	}
+
 	public void validaProducto (OutputAdapter oa, NavigationState state, Component win){
 	
 		
@@ -162,12 +192,10 @@ public class OutputController {
 		
 			Proyecto pr=  this.projectManager.get(oa.getSalida().getProyecto().getIdProyecto());
 			
-			Entrada e = entryManager.getIdProjectProduct (pr.getIdProyecto(), oa.getProducto().getIdProducto());
+			Entrada e = getCantidadEntrada(entryManager.getIdProjectProduct (pr.getIdProyecto(), oa.getProducto().getIdProducto()));
 			
 			oa.setEntrada(e);
 			
-			if (e!= null && e.getProyecto().getEstatusProyecto().getIdEstatusProyecto() == 2)
-				throw new WrongValueException(prcb, "El proyecto ya se encuentra Cerrado!");
 			
 			if (e == null) 
 				throw new WrongValueException(prcb, "No existe el producto en la entrada del proyecto!");

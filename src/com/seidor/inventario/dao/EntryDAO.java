@@ -97,7 +97,7 @@ public class EntryDAO extends HibernateDaoSupport{
 	}
 
 	@SuppressWarnings("unchecked")
-	public Entrada getIdProjectProduct(Integer idProyecto, Integer idProducto) {
+	public ArrayList<Entrada> getIdProjectProduct(Integer idProyecto, Integer idProducto) {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		Criteria criteria = session.createCriteria(Entrada.class);
 		criteria.setFetchMode("unidadMedida", FetchMode.JOIN);
@@ -110,9 +110,26 @@ public class EntryDAO extends HibernateDaoSupport{
 		List<Entrada> result = criteria.list();
 		session.flush();
 		session.close();
-		return  new ArrayList<Entrada>(result).size() > 0 ?  new ArrayList<Entrada>(result).get(0) : null;
+		return  new ArrayList<Entrada>(result);
 	}
 
+	@SuppressWarnings("unchecked")
+	public ArrayList<Salida> getIdProjectProductS(Integer idProyecto, Integer idProducto) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = session.createCriteria(Salida.class);
+		criteria.setFetchMode("unidadMedida", FetchMode.JOIN);
+		criteria.setFetchMode("proyecto", FetchMode.JOIN);
+		criteria.setFetchMode("producto", FetchMode.JOIN);
+		criteria.add(Restrictions.eq("proyecto.idProyecto", idProyecto));
+		criteria.add(Restrictions.eq("producto.idProducto", idProducto));		
+		
+		List<Salida> result = criteria.list();
+		session.flush();
+		session.close();
+		return  new ArrayList<Salida>(result);
+	}
+	
+	
 	public void saveReasignedEntryProyect(Entrada e, Salida s, Producto p) {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		

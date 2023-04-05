@@ -183,11 +183,11 @@ public class EntryController {
 	public void save(EntryAdapter ea, NavigationState state, Component win){
 		
 		
-		Combobox cbUnidad = (Combobox) win.getFellowIfAny("cbum");
+		/*Combobox cbUnidad = (Combobox) win.getFellowIfAny("cbum");
 		if (cbUnidad != null && cbUnidad.getSelectedItem()!=null )
 			ea.getEntrada().setUnidadMedida((UnidadMedida) cbUnidad.getSelectedItem().getValue());
 		else 
-			throw new WrongValueException(cbUnidad, "Debe de seleccionar un Unidad de medida");
+			throw new WrongValueException(cbUnidad, "Debe de seleccionar un Unidad de medida");*/
 		
 		Combobox cbAlmacen = (Combobox) win.getFellowIfAny("cbal");
 		if (cbAlmacen != null && cbAlmacen.getSelectedItem()!=null )
@@ -226,6 +226,8 @@ public class EntryController {
 		else 
 			throw new WrongValueException(cbUbicacion, "Debe de seleccionar una ubicación");
 		
+		
+		ea.getEntrada().setUnidadMedida(ea.getProducto().getUnidadMedida());
 		ea.getEntrada().setFecha(new Date());
 		ea.getEntrada().setEstatus(SystemConstants.ENTRADA_POR_COMPRA);
 		

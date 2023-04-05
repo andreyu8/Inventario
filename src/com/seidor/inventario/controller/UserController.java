@@ -1,20 +1,31 @@
 package com.seidor.inventario.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.spring.SpringUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.WrongValueException;
+import org.zkoss.zul.Checkbox;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Menu;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.ext.SelectionControl;
 
 import com.seidor.inventario.adapter.UserAdapter;
+import com.seidor.inventario.adapter.listitem.CloseitemAdapter;
 import com.seidor.inventario.adapter.search.UserSearchAdapter;
 import com.seidor.inventario.exception.BusinessException;
+import com.seidor.inventario.manager.RoleManager;
 import com.seidor.inventario.manager.UserManager;
+import com.seidor.inventario.model.Empleado;
+import com.seidor.inventario.model.Perfil;
+import com.seidor.inventario.model.PerfilUsuario;
 import com.seidor.inventario.model.Usuario;
 import com.seidor.inventario.navigation.NavigationControl;
 import com.seidor.inventario.navigation.NavigationState;
@@ -24,8 +35,16 @@ import com.seidor.inventario.util.SessionUtil;
 
 public class UserController {
 	
+	@Autowired
 	private UserManager userManager;
+	
+	@Autowired
 	private NavigationControl navigationControl;
+	
+	@Autowired
+	private RoleManager roleManager;
+
+	
 	
 	//Spring getters and setters
 	public UserManager getUserManager() {
@@ -44,6 +63,15 @@ public class UserController {
 		this.navigationControl = navigationControl;
 	}
 	
+	public RoleManager getRoleManager() {
+		return roleManager;
+	}
+
+	public void setRoleManager(RoleManager roleManager) {
+		this.roleManager = roleManager;
+	}
+
+	//Business logic
 	public void login(Component win){
 		Textbox ustb = (Textbox)win.getFellowIfAny("ustb");
 		if (ustb.getValue() == null || ustb.getValue().length() == 0)
@@ -68,6 +96,8 @@ public class UserController {
 		SessionUtil.setSucursaldUserId(user.getEmpleado().getAlmacen().getAlmacen());
 		
 		SessionUtil.setSucursalId(user.getEmpleado().getAlmacen().getIdAlmacen());
+		
+		//RoleController.initRoles(user);
 			
 		this.navigationControl.showApplication(win);
 	}
@@ -104,9 +134,9 @@ public class UserController {
 		UserAdapter ua = new UserAdapter();
 	
 		Usuario user = this.userManager.get(userId);
-		ua.setNameComplete(user.getEmpleado().getNombre()+" "+user.getEmpleado().getAPaterno()+" "+user.getEmpleado().getAMaterno());
-		
+		ua.setNameComplete(user.getEmpleado().getNombre()+" "+(user.getEmpleado().getAPaterno() == null ? "" :  user.getEmpleado().getAPaterno() ) +" "+(user.getEmpleado().getAMaterno() == null ? "" :  user.getEmpleado().getAMaterno()));
 		ua.setUsuario(user);
+		ua.setProfiles(this.roleManager.getProfileUser(user));
 		
 		return ua;
 	}
@@ -117,6 +147,11 @@ public class UserController {
 		Usuario user = this.userManager.get(userId);
 		ua.setUsuario(user);
 		
+//		ArrayList<Profile> allProfiles = this.userManager.getAllProfiles();
+//		ua.setAllProfiles(allProfiles);
+//		
+//		ArrayList<UserProfile> profiles = this.userManager.getProfilesForUser(userId);
+//		ua.setProfiles(profiles);
 		
 		return ua;
 	}
@@ -126,11 +161,16 @@ public class UserController {
 		
 		Usuario user = new Usuario();
 		user.setActivo(1);
+		user.setFecha(new Date());
+		user.setEmpleado(new Empleado());
+		ua.setRole(new Perfil());
+		ua.setProfiles(new ArrayList<PerfilUsuario>());
 		ua.setUsuario(user);
-		
+
 		return ua;
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void save(UserAdapter ua, NavigationState state, Component win){
 		Textbox pstb = (Textbox)win.getFellowIfAny("pstb");
 		if (pstb.getValue() != null && pstb.getValue().length() > 0) {
@@ -152,7 +192,40 @@ public class UserController {
 			throw new WrongValueException(pstb, "Debe indicar una contraseña para el usuario");
 		}
 		
-		this.userManager.save(ua);
+		
+		Combobox employee = (Combobox) win.getFellowIfAny("cbemp");
+		if (employee != null &&employee.getSelectedItem()!=null )
+			ua.getUsuario().setEmpleado((Empleado) employee.getSelectedItem().getValue());
+		else 
+			throw new WrongValueException(employee, "Debe de seleccionar un empleado");
+		
+		ua.getUsuario().setActivo(1);
+		ua.getUsuario().setFecha(new Date());
+		
+		Listbox lb = (Listbox) win.getFellowIfAny("usrlb");
+		ListModelList<Perfil> lml = (ListModelList) lb.getModel();
+		Set<Perfil> selectedCars = ((ListModelList<Perfil>)lml).getSelection();
+		
+		PerfilUsuario pub = new PerfilUsuario();
+		
+        for (Perfil p: selectedCars) {
+        	pub= new PerfilUsuario();
+        	System.out.println("id:"+p.getIdPerfil());
+			System.out.println("nombre: "+p.getNombre());
+			pub.setPerfil(p);
+			pub.setUsuario(ua.getUsuario());
+			pub.setActivo(1);
+			ua.getProfiles().add(pub);
+        }
+		
+				
+		if (ua.getProfiles().size() == 0){
+			throw new WrongValueException(win.getFellowIfAny("usrlb"), "Debe agregar al menos un perfil al usuario");
+		} else {
+			this.userManager.save(ua);
+		}
+		
+		
 		
 		state.setDetailIdentifier(ua.getUsuario().getIdUsuario());
 		state.setUri("/WEB-INF/zul/user/detail.zul");
@@ -202,6 +275,9 @@ public class UserController {
 		
 		
 		if (!wrong) {
+//			if (!ua.hasAnyProfile()){
+//				throw new WrongValueException(win.getFellowIfAny("prolb"), "Debe agregar al menos un perfil al usuario");
+//			}
 			
 			this.userManager.update(ua);
 			
@@ -236,5 +312,6 @@ public class UserController {
 		state.removeLastBreadCrumbs();
 		this.navigationControl.changeView(win, state);
 	}
+	
 	
 }

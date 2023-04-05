@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
-
 <?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
 
+
 <zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
-<window id="win" border="none" onOK="search();" onCreate="employeeController.search(emplb, employeeSearch, state); prepareSearchFields();" apply="org.zkoss.bind.BindComposer" >
+<window id="winE" border="none" onOK="search();" onCreate="employeeController.search(catlb, employeeSearch, state); prepareSearchFields();" apply="org.zkoss.bind.BindComposer" >
 
 	
 	<zscript>
@@ -24,24 +24,24 @@
 			BreadCrumb bc = state.getLastBreadCrumbs();
 			bc.setBookmark(navigationStates.getLastBookmark());
 			
-			pagingControl.loadPaging(state, emplb);
+			pagingControl.loadPaging(state, catlb);
 		}
 		
 		public void search(){
 			pagingControl.resetActivePage(state);
-			navigationControl.changeView(win, state);
+			navigationControl.changeView(winE, state);
 		}
 		
 		public void create(){
 			state.setDetailList(null);
 			state.setDetailIndex(null);
 			state.appendBreadCrumbsPath("Nuevo empleado");
-			state.setUri("/WEB-INF/zul/employee/new.zul");
-			navigationControl.changeView(win, state);
+			//state.setUri("/WEB-INF/zul/employee/new.zul");
+			//navigationControl.changeView(winE, state);
 		}
 		
 		public void show(){
-			userController.show(emplb, state, win);
+			//employeeController.show(catlb, state, winE);
 		}
 	</zscript>
 	
@@ -68,12 +68,8 @@
 		<div class="editBox">
 			<div class="row">
 				<div sclass="col-md-4" >
-					<label value="Nombre" sclass="editField" />
+					<label value="Empleado" sclass="editField" />
 					<h:p> <textbox value="@bind(employeeSearch.name)" /> </h:p>
-				</div>
-				<div sclass="col-md-4" >
-					<label value="Usuario" sclass="editField" />
-					<h:p> <textbox value="@bind(employeeSearch.user)" /> </h:p>
 				</div>
 			</div>
 			
@@ -84,23 +80,29 @@
 	</div>
 	
 	<div class="animated aniFadeIn" >	
-		<listbox id="emplb" emptyMessage="No se encontrarón empleados para mostrar" >
+		<listbox id="catlb" emptyMessage="No se encontrarón empleados para mostrar" >
 			<listhead>
 				<listheader label="Ver" width="50px" />
-				<listheader label="Nombre" hflex="3" sort="auto(lower(name))" />
-				<listheader label="Correo" hflex="3" sort="auto(lower(email))" />
-				<listheader label="Administrador" hflex="1" sort="auto(lower(admin))" />
+				<listheader label="id" hflex="3" sort="auto(lower(idEmpleado))" />
+				<listheader label="Nombre" hflex="3" sort="auto(lower(nombre))" />
+				<listheader label="A. paterno" hflex="3" sort="auto(lower(APaterno))" />
+				<listheader label="A. materno" hflex="3" sort="auto(lower(AMaterno))" />
+				<listheader label="Cargo" hflex="3" sort="auto(lower(cargo))" />
+				<listheader label="Almacen" hflex="3" sort="auto(lower(almacen.almacen))" />
+				<listheader label="Correo" hflex="3" sort="auto(lower(activo))" />
 			</listhead>
 			<template name="model" >
 				<listitem >
 					<listcell style="text-align: center;" >
 						<a iconSclass="z-icon-eye" onClick="show();" />
 					</listcell>
-					<listcell label="${each.name}" />
-					<listcell label="${each.email}" />
-					<listcell style="text-align: center;" >
-						<span sclass="fa fa-check-circle-o" visible="${each.admin}" />
-					</listcell>
+					<listcell label="${each.idEmpleado}" />
+					<listcell label="${each.nombre}" />
+					<listcell label="${each.APaterno}" />
+					<listcell label="${each.AMaterno}" />
+					<listcell label="${each.cargo}" />
+					<listcell label="${each.almacen.almacen}" />
+					<listcell label="${each.activo}" />
 				</listitem>
 			</template>
 		</listbox>
@@ -108,6 +110,7 @@
 	</div>
 	
 	<separator spacing="10px" />
-		
+	
+			
 </window>
 </zk>

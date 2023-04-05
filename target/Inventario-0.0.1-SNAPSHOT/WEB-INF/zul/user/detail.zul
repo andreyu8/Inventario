@@ -31,7 +31,7 @@
 			<label value="(${userDetail.usuario.empleado.EMail})" style="font-size: 12px;" />
 		</div>
 		<div class="col-md-6" align="right" >
-			<!--  <button label="modificar" onClick="modify();" iconSclass="z-icon-pencil" /> -->
+			 <button label="modificar" onClick="modify();" iconSclass="z-icon-pencil" /> 
 		</div>
 	</div>
 	
@@ -47,6 +47,32 @@
 			<h:p>
 				<image src="img/user.png" />
 			</h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Id usuario" sclass="detailField" />
+			<h:p> <label value="${userDetail.usuario.idUsuario}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Usuario" sclass="detailField" />
+			<h:p> <label value="${userDetail.usuario.usuario}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Password" sclass="detailField" />
+			<h:p> <label value="${userDetail.usuario.password}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Fecha de alta" sclass="detailField" />
+			<h:p> <label value="${userDetail.usuario.fecha}" sclass="detailData" /> </h:p>
+		</div>
+		
+		
+		<div class="col-md-3">
+			<label value="Id del empleado" sclass="detailField" />
+			<h:p> <label value="${userDetail.usuario.empleado.idEmpleado}" sclass="detailData" /> </h:p>
 		</div>
 		
 		<div class="col-md-3">
@@ -93,9 +119,30 @@
 		</div>
 		
 		<div class="col-md-3">
+			<label value="Cargo" sclass="detailField" />
+			<h:p> <label value="${userDetail.usuario.empleado.cargo}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
 			<label value="Almacen" sclass="detailField" />
 			<h:p> <label value="${userDetail.usuario.empleado.almacen.almacen}" sclass="detailData" /> </h:p>
 		</div>
+		
+		<div class="col-md-6">
+			<listbox id="usrlb" onCreate="roleController.readSearch(usrlb, userDetail,  state);"  emptyMessage="No se encontrarón Perfiles para mostrar" >
+				<listhead>
+					<listheader label="id" hflex="3" sort="auto(lower(idPerfil))" />
+					<listheader label="Perfil" hflex="3" sort="auto(lower(nombre))" />
+				</listhead>
+				<template name="model">
+					<listitem >
+						<listcell label="${each.idPerfil}" />
+						<listcell label="${each.nombre}" />
+					</listitem>
+				</template>
+			</listbox>
+		</div>	
+		
 		
 	</div>
 	

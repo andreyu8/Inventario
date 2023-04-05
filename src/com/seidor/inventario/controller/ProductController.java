@@ -175,6 +175,7 @@ public class ProductController {
 		a.setAlmacen(SessionUtil.getSucursaldUserId());
 		
 		pa.getProducto().setAlmacen(a);
+		pa.getProducto().setCantidad(0);
 		
 		this.productManager.save(pa.getProducto());
 		

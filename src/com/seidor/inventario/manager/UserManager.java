@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.seidor.inventario.adapter.UserAdapter;
 import com.seidor.inventario.adapter.search.UserSearchAdapter;
 import com.seidor.inventario.dao.UserDAO;
+import com.seidor.inventario.model.PerfilUsuario;
 import com.seidor.inventario.model.Usuario;
 import com.seidor.inventario.util.DaoUtil;
 
@@ -53,12 +54,28 @@ public class UserManager {
 	}
 	
 	public void save(UserAdapter ua){
-		
-		this.userDao.save(ua.getUsuario());
+		this.userDao.save(ua);
 	}
 	
 	public void update(UserAdapter ua){
 		DaoUtil.prepareToUpdate(ua.getUsuario());
+		
+		
+//		ArrayList<UserProfile> profiles = ua.getProfiles();
+//		ArrayList<UserProfile> profilesDeleted = new ArrayList<UserProfile>();
+//		for (UserProfile p : profiles){
+//			if (p.getId() == null) {
+//				DaoUtil.prepareToSave(p);
+//			}
+//			else if (p.getFdl().equals(true)){
+//				DaoUtil.prepareToDelete(p);
+//				profilesDeleted.add(p);
+//			}
+//			else {
+//				DaoUtil.prepareToUpdate(p);
+//			}
+//		}
+//		profiles.removeAll(profilesDeleted);
 		
 		this.userDao.update(ua.getUsuario());
 	}

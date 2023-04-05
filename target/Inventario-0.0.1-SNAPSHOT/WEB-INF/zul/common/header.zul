@@ -20,14 +20,21 @@
 		
 		void profile(){
 			state.setDetailIdentifier(userDetail.getUsuario().getIdUsuario());
-			state.setUri("/WEB-INF/zul/user/detail.zul");
+			state.setUri("/WEB-INF/zul/user/info.zul");
 			state.startBreadCrumbsPathFromHome("Mi Perfil");
 			navigationControl.changeView(headerwin, state);
 		}
 		
 		void users(){
+			state.setDetailIdentifier(userDetail.getUsuario().getIdUsuario());
 			state.setUri("/WEB-INF/zul/user/main.zul");
 			state.startBreadCrumbsPathFromHome("Usuarios");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+		void employee(){
+			state.setUri("/WEB-INF/zul/employee/main.zul");
+			state.startBreadCrumbsPathFromHome("Empleados");
 			navigationControl.changeView(headerwin, state);
 		}
 		
@@ -148,7 +155,7 @@
 	<div class="row headerPattern" style="margin: 0px; padding: 0px;" >
 	
 		<div class="col-md-2">
-			<div sclass="logo" style="min-height: 75px;" />
+			<div sclass="logo" style="min-height: 75px;" onClick="redirectSeidor();" />
 		</div>
 	
 		<div class="col-md-10" >

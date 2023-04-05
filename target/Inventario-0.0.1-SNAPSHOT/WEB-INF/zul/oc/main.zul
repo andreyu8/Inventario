@@ -83,12 +83,13 @@
 		<listbox id="catlb" emptyMessage="No se encontrarón categorías para mostrar" >
 			<listhead>
 				<listheader label="Ver" width="50px" />
-				<listheader label="id" hflex="3" sort="auto(lower(categoria))" />
-				<listheader label="Cliente" hflex="3" sort="auto(lower(descripcion))" />
-				<listheader label="Empleado" hflex="3" sort="auto(lower(descripcion))" />
-				<listheader label="Factura" hflex="3" sort="auto(lower(descripcion))" />
+				<listheader label="id" hflex="3" sort="auto(lower(idOrdenCompra))" />
+				<listheader label="No.OC" hflex="3" sort="auto(lower(numeroOc))" />
+				<listheader label="Cliente" hflex="3" sort="auto(lower(cliente.nombre))" />
+				<listheader label="Empleado" hflex="3" sort="auto(lower(empleado.nombre))" />
+				<listheader label="Factura" hflex="3" sort="auto(lower(factura.numeroFactura))" />
 				<listheader label="Descripción" hflex="3" sort="auto(lower(descripcion))" />
-				<listheader label="Fecha" hflex="3" sort="auto(lower(descripcion))" />
+				<listheader label="Fecha" hflex="3" sort="auto(lower(fecha))" />
 			</listhead>
 			<template name="model" >
 				<listitem >
@@ -96,6 +97,7 @@
 						<a iconSclass="z-icon-eye" onClick="show();" />
 					</listcell>
 					<listcell label="${each.idOrdenCompra}" />
+					<listcell label="${each.numeroOc}" />
 					<listcell label="${each.cliente.nombre}" />
 					<listcell label="${each.empleado.nombre}" />
 					<listcell label="${each.factura.numeroFactura}" />

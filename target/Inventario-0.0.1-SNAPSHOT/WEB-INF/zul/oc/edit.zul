@@ -47,6 +47,11 @@
 		<div class="row editBox">
 			
 			<div class="col-md-4">
+				<label value="Número de la OC*" sclass="editField" />
+				<h:p> <textbox value="@bind(ocEdit.orderCompra.numeroOc)" /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
 				<label value="Descripción de la OC*" sclass="editField" />
 				<h:p> <textbox value="@bind(ocEdit.orderCompra.descripcion)" /> </h:p>
 			</div>

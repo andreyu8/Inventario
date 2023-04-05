@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 3 mar. 2023 11:27:00 by Hibernate Tools 4.3.5.Final
+// Generated 29 mar. 2023 21:04:16 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -24,6 +24,7 @@ public class Empleado implements java.io.Serializable {
 	private String EMail;
 	private String numeroSegSocial;
 	private Date fechaRegistro;
+	private String cargo;
 	private int activo;
 	private Set ordenCompras = new HashSet(0);
 	private Set entradas = new HashSet(0);
@@ -33,15 +34,16 @@ public class Empleado implements java.io.Serializable {
 	public Empleado() {
 	}
 
-	public Empleado(Date fechaRegistro, int activo) {
+	public Empleado(Date fechaRegistro, String cargo, int activo) {
 		this.fechaRegistro = fechaRegistro;
+		this.cargo = cargo;
 		this.activo = activo;
 	}
 
 	public Empleado(Almacen almacen, String nombre, String APaterno, String AMaterno, String curp, String rfc,
 			String numeroEmpleado, String telefono, String extension, String celular, String EMail,
-			String numeroSegSocial, Date fechaRegistro, int activo, Set ordenCompras, Set entradas, Set salidas,
-			Set usuarios) {
+			String numeroSegSocial, Date fechaRegistro, String cargo, int activo, Set ordenCompras, Set entradas,
+			Set salidas, Set usuarios) {
 		this.almacen = almacen;
 		this.nombre = nombre;
 		this.APaterno = APaterno;
@@ -55,6 +57,7 @@ public class Empleado implements java.io.Serializable {
 		this.EMail = EMail;
 		this.numeroSegSocial = numeroSegSocial;
 		this.fechaRegistro = fechaRegistro;
+		this.cargo = cargo;
 		this.activo = activo;
 		this.ordenCompras = ordenCompras;
 		this.entradas = entradas;
@@ -172,6 +175,14 @@ public class Empleado implements java.io.Serializable {
 
 	public void setFechaRegistro(Date fechaRegistro) {
 		this.fechaRegistro = fechaRegistro;
+	}
+
+	public String getCargo() {
+		return this.cargo;
+	}
+
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
 	}
 
 	public int getActivo() {

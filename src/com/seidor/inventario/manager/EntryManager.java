@@ -40,8 +40,12 @@ public class EntryManager {
 		return this.getEntryDao().get(idProducto);
 	}
 
-	public Entrada getIdProjectProduct(Integer idProyecto, Integer idProducto) {
+	public ArrayList<Entrada> getIdProjectProduct(Integer idProyecto, Integer idProducto) {
 		return this.getEntryDao().getIdProjectProduct(idProyecto, idProducto);
+	}
+	
+	public ArrayList<Salida> getIdProjectProductS(Integer idProyecto, Integer idProducto) {
+		return this.getEntryDao().getIdProjectProductS(idProyecto, idProducto);
 	}
 
 	public void saveReasignedEntryProyect(Entrada entrada, Salida salida, Producto product) {

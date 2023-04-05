@@ -84,12 +84,12 @@
 				<h:p> <doublebox value="@bind(entryNew.entrada.precioUnitario)"  /> </h:p>
 			</div>
 			
-			<div class="col-md-4">
+			<!-- <div class="col-md-4">
 				<label value="Unidad de medida*" sclass="editField" />
 				<h:p> <combobox value="@bind(entryNew.entrada.unidadMedida.unidadMedida)"
 							 		onCreate="unitMeasureController.loadUnitMeasure(self);" 
 						 			id="cbum" constraint="${cmv}"/> </h:p>
-			</div>		
+			</div> -->		
 			
 			
 			<div class="col-md-4">

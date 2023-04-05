@@ -12,6 +12,7 @@
 		
 		UserAdapter userSave = userController.readForNew();
 		
+		
 		public void cancel(){
 			navigationControl.changeToPrevious(win);
 		}
@@ -27,8 +28,7 @@
 			<div class="col-md-8">
 				<h:span style="padding-top: 5px; display: block;" />
 				<div align="left" style="float: left;" >
-					<label value="@bind(userSave.user.name)" sclass="sectionTitle" />
-					<label value="@bind(userSave.user.email)" sclass="sectionTitle" style="font-size: 15px;" />
+					<label value="@bind(userSave.usuario.usuario)" sclass="sectionTitle" />
 				</div>
 			</div>
 			<div class="col-md-4">
@@ -48,17 +48,8 @@
 	<div class="container animated aniFadeIn" >
 		<div class="row editBox">
 			<div class="col-md-4">
-				<label value="Nombre*" sclass="editField" />
-				<h:p> <textbox value="@bind(userSave.user.name)" constraint="${tmv}" /> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="Email*" sclass="editField" />
-				<h:p> <textbox value="@bind(userSave.user.email)" constraint="${umv}" /> </h:p>
-			</div>
-			<div class="col-md-4" onCreate="roleController.checkRoles(self);">
-				<custom-attributes roleList="ADMIN" />
-				<label value="Administrador" sclass="editField" />
-				<h:p> <checkbox value="@bind(userSave.user.admin)" /> </h:p>
+				<label value="Usuario*" sclass="editField" />
+				<h:p> <textbox value="@bind(userSave.usuario.usuario)" constraint="${tmv}" /> </h:p>
 			</div>
 		</div>
 	</div>
@@ -73,7 +64,7 @@
 		<div class="row editBox">
 			<div class="col-md-4">
 				<label value="Usuario*" sclass="editField" />
-				<h:p> <label value="@bind(userSave.user.email)" /> </h:p>
+				<h:p> <label value="@bind(userSave.usuario.usuario)" /> </h:p>
 			</div>
 			<div class="col-md-4">
 				<label value="Contraseña*" sclass="editField" />
@@ -83,8 +74,36 @@
 				<label value="Confirmar*" sclass="editField" />
 				<h:p> <textbox id="pctb" type="password" /> </h:p>
 			</div>
+			
+			<div class="col-md-4">
+				<label value="Empleado*" sclass="editField" />
+				<h:p> <combobox value="@bind(userSave.usuario.empleado.nombre)"
+							 		onCreate="employeeController.loadEmployee(self);" 
+						 			id="cbemp"  />
+				 </h:p>
+			</div>	
+			
+			<!-- List rol -->
+			
+			<div class="col-md-6">
+				<listbox id="usrlb" onCreate="roleController.search(usrlb, state);"  emptyMessage="No se encontrarón Perfiles para mostrar" >
+					<listhead>
+						<listheader label="id" hflex="3" sort="auto(lower(idPerfil))" />
+						<listheader label="Perfil" hflex="3" sort="auto(lower(nombre))" />
+					</listhead>
+					<template name="model">
+						<listitem >
+							<listcell label="${each.idPerfil}" />
+							<listcell label="${each.nombre}" />
+						</listitem>
+					</template>
+				</listbox>
+			</div>	
+			
 		</div>
 	</div>
+	
+	<separator spacing="10px" />	
 		
 </window>
 </zk>

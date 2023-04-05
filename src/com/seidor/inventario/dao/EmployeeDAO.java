@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
@@ -59,6 +61,24 @@ public class EmployeeDAO extends HibernateDaoSupport{
 		session.update(e);
 		session.flush();
 		session.close();
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Empleado> search(EmployeeSearchAdapter esa) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = DaoUtil.getCriteria(session, Empleado.class);
+		
+		criteria.setFetchMode("almacen", FetchMode.JOIN);
+		
+		if (esa.getName() != null && esa.getName().trim().length() > 0){
+			criteria.add(Restrictions.ilike("nombre", esa.getName().trim(), MatchMode.ANYWHERE));
+		}
+		
+		List<Empleado> result = criteria.list();
+		session.flush();
+		session.close();
+		
+		return new ArrayList<Empleado>(result);
 	}
 
 }

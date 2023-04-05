@@ -1,7 +1,9 @@
 package com.seidor.inventario.dao;
 
+import com.seidor.inventario.adapter.UserAdapter;
 import com.seidor.inventario.adapter.search.UserSearchAdapter;
 import com.seidor.inventario.exception.BusinessException;
+import com.seidor.inventario.model.PerfilUsuario;
 import com.seidor.inventario.model.Usuario;
 import com.seidor.inventario.util.DaoUtil;
 
@@ -21,26 +23,27 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 public class UserDAO extends HibernateDaoSupport {
 	
 	@SuppressWarnings("unchecked")
-	public void save(Usuario u){
+	public void save(UserAdapter ua){
 		SessionImpl session = (SessionImpl)this.getHibernateTemplate().getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 		try {
 			Criteria criteria = DaoUtil.getCriteria(session, Usuario.class);
-			criteria.add(Restrictions.eq("name", u.getEmpleado().getNombre()));
-//			criteria.add(Restrictions.eq("fdl", false));
+			criteria.add(Restrictions.eq("usuario", ua.getUsuario().getEmpleado().getNombre()));
 			List<Usuario> result = criteria.list();
 			if (result.size() == 0) { 
-				session.save(u);
+				session.save(ua.getUsuario());
 			}
 			else {
 				throw new BusinessException("El usuario espcificado no esta disponible");
 			}
 			
-			//Profiles
-//			for (UserProfile p : profiles){
-//				session.save(p);
-//			}
 			
+			ArrayList<PerfilUsuario> profiles = ua.getProfiles();
+			for (PerfilUsuario p : profiles){
+				session.save(p);
+			}
+			
+
 			transaction.commit();
 //			session.afterTransactionCompletion(transaction, true);
 			session.flush();
@@ -157,6 +160,8 @@ public class UserDAO extends HibernateDaoSupport {
 		Criteria criteria = DaoUtil.getCriteria(session, Usuario.class);
 		
 		criteria.setFetchMode("empleado", FetchMode.JOIN);
+		criteria.setFetchMode("empleado.almacen", FetchMode.JOIN);
+				
 		
 		if (usa.getName() != null && usa.getName().trim().length() > 0){
 			criteria.add(Restrictions.ilike("empleado.nombre", usa.getName().trim(), MatchMode.ANYWHERE));

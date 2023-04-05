@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 3 mar. 2023 11:27:00 by Hibernate Tools 4.3.5.Final
+// Generated 29 mar. 2023 21:04:16 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 
@@ -15,7 +15,7 @@ public class Salida implements java.io.Serializable {
 	private TipoTrabajo tipoTrabajo;
 	private UnidadMedida unidadMedida;
 	private String ordenTrabajo;
-	private String claveMueble;
+	private String modeloMueble;
 	private Integer cantidad;
 	private Date fecha;
 	private Integer estatus;
@@ -29,7 +29,7 @@ public class Salida implements java.io.Serializable {
 	}
 
 	public Salida(Empleado empleado, Producto producto, Proyecto proyecto, TipoTrabajo tipoTrabajo,
-			UnidadMedida unidadMedida, String ordenTrabajo, String claveMueble, Integer cantidad, Date fecha,
+			UnidadMedida unidadMedida, String ordenTrabajo, String modeloMueble, Integer cantidad, Date fecha,
 			Integer estatus) {
 		this.empleado = empleado;
 		this.producto = producto;
@@ -37,7 +37,7 @@ public class Salida implements java.io.Serializable {
 		this.tipoTrabajo = tipoTrabajo;
 		this.unidadMedida = unidadMedida;
 		this.ordenTrabajo = ordenTrabajo;
-		this.claveMueble = claveMueble;
+		this.modeloMueble = modeloMueble;
 		this.cantidad = cantidad;
 		this.fecha = fecha;
 		this.estatus = estatus;
@@ -99,12 +99,12 @@ public class Salida implements java.io.Serializable {
 		this.ordenTrabajo = ordenTrabajo;
 	}
 
-	public String getClaveMueble() {
-		return this.claveMueble;
+	public String getModeloMueble() {
+		return this.modeloMueble;
 	}
 
-	public void setClaveMueble(String claveMueble) {
-		this.claveMueble = claveMueble;
+	public void setModeloMueble(String modeloMueble) {
+		this.modeloMueble = modeloMueble;
 	}
 
 	public Integer getCantidad() {

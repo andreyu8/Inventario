@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 3 mar. 2023 11:27:00 by Hibernate Tools 4.3.5.Final -->
+<!-- Generated 29 mar. 2023 21:04:16 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
     <class name="com.seidor.inventario.model.Empleado" table="empleado" catalog="bd_inventario" optimistic-lock="version">
         <id name="idEmpleado" type="java.lang.Integer">
@@ -46,6 +46,9 @@
         </property>
         <property name="fechaRegistro" type="timestamp">
             <column name="fecha_registro" length="19" not-null="true" />
+        </property>
+        <property name="cargo" type="string">
+            <column name="cargo" length="100" not-null="true" />
         </property>
         <property name="activo" type="int">
             <column name="activo" not-null="true" />

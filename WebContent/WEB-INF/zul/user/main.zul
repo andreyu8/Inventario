@@ -87,20 +87,26 @@
 		<listbox id="uselb" emptyMessage="No se encontrarón trámites para mostrar" >
 			<listhead>
 				<listheader label="Ver" width="50px" />
-				<listheader label="Nombre" hflex="3" sort="auto(lower(name))" />
-				<listheader label="Correo" hflex="3" sort="auto(lower(email))" />
-				<listheader label="Administrador" hflex="1" sort="auto(lower(admin))" />
+				<listheader label="Id" hflex="3" sort="auto(lower(idUsuario))" />
+				<listheader label="Usuario" hflex="3" sort="auto(lower(usuario))" />
+				<listheader label="Nombre" hflex="3" sort="auto(lower(empleado.nombre))" />
+				<listheader label="A. paterno" hflex="3" sort="auto(lower(each.empleado.APaterno))" />
+				<listheader label="A. materno" hflex="3" sort="auto(lower(empleado.AMaterno))" />
+			<!-- <listheader label="Administrador" hflex="1" sort="auto(lower(admin))" /> -->
 			</listhead>
 			<template name="model" >
 				<listitem >
 					<listcell style="text-align: center;" >
 						<a iconSclass="z-icon-eye" onClick="show();" />
 					</listcell>
-					<listcell label="${each.name}" />
-					<listcell label="${each.email}" />
-					<listcell style="text-align: center;" >
+					<listcell label="${each.idUsuario}" />
+					<listcell label="${each.usuario}" />
+					<listcell label="${each.empleado.nombre}" />
+					<listcell label="${each.empleado.APaterno}" />
+					<listcell label="${each.empleado.AMaterno}" />
+					<!-- <listcell style="text-align: center;" >
 						<span sclass="fa fa-check-circle-o" visible="${each.admin}" />
-					</listcell>
+					</listcell> -->
 				</listitem>
 			</template>
 		</listbox>

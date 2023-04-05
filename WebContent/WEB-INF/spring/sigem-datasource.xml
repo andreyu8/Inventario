@@ -8,11 +8,24 @@
 	<bean id="jndiDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"> 
 		<property name="driverClass" value="org.mariadb.jdbc.Driver"/>  
 		
+		
+		<!-- ======== Propiedades para el servidor visnav ============== -->
+		
+		<!-- <property name="jdbcUrl" value="jdbc:mariadb://localhost:3309/bd_inventario"/>
+		<property name="user" value="root"/>
+		<property name="password" value="4dm1n1nv3"/>
+		<property name="maxPoolSize" value="50"/>
+		<property name="initialPoolSize" value="2"/>
+		<property name="minPoolSize" value="1"/>
+		<property name="maxStatements" value="200"/>
+		<property name="maxIdleTime" value="300"/>
+		<property name="acquireIncrement"  value="10"/> --> 
+		
 		<!-- ======== Propiedades para el servidor local ============== -->
 		
 		<property name="jdbcUrl" value="jdbc:mariadb://localhost:3306/bd_inventario"/>
 		<property name="user" value="root"/>
-		<property name="password" value="29082000"/>
+		<property name="password" value="admin"/>
 		<property name="maxPoolSize" value="50"/>
 		<property name="initialPoolSize" value="2"/>
 		<property name="minPoolSize" value="1"/>
@@ -20,20 +33,8 @@
 		<property name="maxIdleTime" value="300"/>
 		<property name="acquireIncrement"  value="10"/>
 		<property name="unreturnedConnectionTimeout" value="90"/>
-		<property name="maxConnectionAge" value="120"/> 
+		<property name="maxConnectionAge" value="120"/>  
 		
-		<!-- ypasa produc -->
-		<!-- <property name="jdbcUrl" value="jdbc:sqlserver://172.16.10.7\SQL2008R2;databaseName=intranet3"/> 
-		<property name="user" value="intranet3"/>
-		<property name="password" value="user123"/>		
-		<property name="maxPoolSize" value="50"/>
-		<property name="initialPoolSize" value="2"/>
-		<property name="minPoolSize" value="1"/>
-		<property name="maxStatements" value="200"/>
-		<property name="maxIdleTime" value="300"/>
-		<property name="acquireIncrement"  value="10"/>
-		<property name="unreturnedConnectionTimeout" value="90"/>
-		<property name="maxConnectionAge" value="120"/> -->
 	</bean>
 	
 	<!--========== TransactionManager ========== -->
@@ -62,6 +63,10 @@
 				<prop key="cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
 				<prop key="cache.use_query_cache">false</prop>
 				<prop key="cache.use_minimal_puts">false</prop>
+				
+				<!--<prop key="hibernate.c3p0.timeout">100</prop> seconds -->
+				<!--<prop key="hibernate.c3p0.debugUnreturnedConnectionStackTraces">true</prop> -->
+				<!--<prop key="hibernate.c3p0.unreturnedConnectionTimeout">300</prop> seconds -->
 				
 				
 			</props>

@@ -43,56 +43,60 @@
 	<div class="row container animated aniFadeIn" >
 		<div class="col-md-3">
 			<label value="Id de la orden de compra" sclass="detailField" />
-			<h:p> <label value="${ocDetail.orderCompra.idOrdenCompra}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${ocDetail.orderCompra.idOrdenCompra}" sclass="detailData" /> </h:p>
+		</div>
+		<div class="col-md-3">
+			<label value="Número de la OC*" sclass="detailField" />
+			<h:p> <label value="${ocDetail.orderCompra.numeroOc}" sclass="detailData" /> </h:p>
 		</div>
 		<div class="col-md-3">
 			<label value="Area" sclass="detailField" />
-			<h:p> <label value="${ocDetail.orderCompra.area.descripcion}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${ocDetail.orderCompra.area.descripcion}" sclass="detailData" /> </h:p>
 		</div>
 		<div class="col-md-3">
 			<label value="Cliente" sclass="detailField" />
-			<h:p> <label value="${ocDetail.orderCompra.cliente.nombre}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${ocDetail.orderCompra.cliente.nombre}" sclass="detailData" /> </h:p>
 		</div>
 		<div class="col-md-3">
 			<label value="Descripción" sclass="detailField" />
-			<h:p> <label value="${ocDetail.orderCompra.descripcion}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${ocDetail.orderCompra.descripcion}" sclass="detailData" /> </h:p>
 		</div>
 		<div class="col-md-3">
 			<label value="Nombre" sclass="detailField" />
-			<h:p> <label value="${ocDetail.orderCompra.empleado.nombre}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${ocDetail.orderCompra.empleado.nombre}" sclass="detailData" /> </h:p>
 		</div>
 		<div class="col-md-3">
 			<label value="Etapa" sclass="detailField" />
-			<h:p> <label value="${ocDetail.orderCompra.etapa.descripcion}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${ocDetail.orderCompra.etapa.descripcion}" sclass="detailData" /> </h:p>
 		</div>
 		<div class="col-md-3">
 			<label value="Factura" sclass="detailField" />
-			<h:p> <label value="${ocDetail.orderCompra.factura.numeroFactura}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${ocDetail.orderCompra.factura.numeroFactura}" sclass="detailData" /> </h:p>
 		</div>
 		<div class="col-md-3">
 			<label value="Descripción" sclass="detailField" />
-			<h:p> <label value="${ocDetail.orderCompra.fecha}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${ocDetail.orderCompra.fecha}" sclass="detailData" /> </h:p>
 		</div>
 		
 		<div class="col-md-3">
 			<label value="Proyecto" sclass="detailField" />
-			<h:p> <label value="${ocDetail.orderCompra.proyecto.nombre}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${ocDetail.orderCompra.proyecto.nombre}" sclass="detailData" /> </h:p>
 		</div>
 		
 		<div class="col-md-3">
 			<label value="Tipo" sclass="detailField" />
-			<h:p> <label value="${ocDetail.orderCompra.tipoOrdenCompra.descripcion}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${ocDetail.orderCompra.tipoOrdenCompra.descripcion}" sclass="detailData" /> </h:p>
 		</div>
 		
 		
 		<div class="col-md-3">
 			<label value="Estatus orden de compra" sclass="detailField" />
-			<h:p> <label value="${ocDetail.orderCompra.estatusOrdenCompra.estatusOrdenCompra}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${ocDetail.orderCompra.estatusOrdenCompra.estatusOrdenCompra}" sclass="detailData" /> </h:p>
 		</div>
 		
 		<div class="col-md-3">
 			<label value="Tipo de pago" sclass="detailField" />
-			<h:p> <label value="${ocDetail.orderCompra.tipoPago.tipoPago}" sclass="detailData" width="400px"/> </h:p>
+			<h:p> <label value="${ocDetail.orderCompra.tipoPago.tipoPago}" sclass="detailData" /> </h:p>
 		</div>
 		
 		

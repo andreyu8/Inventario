@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 3 mar. 2023 11:27:00 by Hibernate Tools 4.3.5.Final -->
+<!-- Generated 29 mar. 2023 21:04:16 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
     <class name="com.seidor.inventario.model.Cliente" table="cliente" catalog="bd_inventario" optimistic-lock="version">
         <id name="idCliente" type="java.lang.Integer">
@@ -15,7 +15,7 @@
             <column name="rfc" length="14" />
         </property>
         <property name="direccion" type="string">
-            <column name="direccion" length="50" />
+            <column name="direccion" length="150" />
         </property>
         <property name="telefono" type="string">
             <column name="telefono" length="50" />
