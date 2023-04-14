@@ -110,6 +110,7 @@ com\seidor\inventario\util\EncryptUtil.class
 com\seidor\inventario\adapter\search\ProviderSearchAdapter.class
 com\seidor\inventario\model\Empleado.class
 com\seidor\inventario\adapter\render\AreaComboitemRenderer.class
+com\seidor\inventario\adapter\EmployeeAdapter.class
 com\seidor\inventario\inroweditablecomps\EditableListitemRenderer$24.class
 com\seidor\inventario\model\Salida.class
 com\seidor\inventario\navigation\NavigationRenderer$PrevEvent.class
@@ -207,6 +208,7 @@ com\seidor\inventario\dao\PhaseDAO.class
 com\seidor\inventario\navigation\NavigationRenderer.class
 com\seidor\inventario\validation\EmailboxMandatoryValidator.class
 com\seidor\inventario\util\ReflectUtil.class
+com\seidor\inventario\adapter\UnitMeasureAdapter.class
 com\seidor\inventario\validation\DecimalboxMandatoryValidator.class
 com\seidor\inventario\inroweditablecomps\IREditableComponent.class
 com\seidor\inventario\adapter\beans\OutBean.class

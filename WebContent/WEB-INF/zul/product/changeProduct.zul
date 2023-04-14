@@ -94,7 +94,7 @@
 							<label value="Proyecto*" sclass="editField" />
 							<h:p> <combobox value="@bind(rProjectAdapter.proyecto.nombre)"
 										 		onCreate="projectController.loadOpenProjects(self);" 
-									 			id="prcb" onChange="viewOutput();" /> </h:p>
+									 			id="prcb" onChange="viewOutput();" width="400px;"/> </h:p>
 						</div>
 					
 					
@@ -102,7 +102,7 @@
 							<label value="Proyecto destino*" sclass="editField" />
 							<h:p> <combobox value="@bind(rProjectAdapter.proyectoDestino.nombre)"
 										 		onCreate="projectController.loadOpenProjectsEnd(self);" 
-									 			id="prcbd" /> </h:p>
+									 			id="prcbd" width="400px;"/> </h:p>
 						</div>
 					
 					
@@ -124,15 +124,15 @@
 							<listheader label="Código" hflex="3" />
 							<listheader label="Producto" hflex="3" />
 							<listheader label="U.medida" hflex="3" />
-							<listheader label="C.Entrada" hflex="2" />
+							<listheader label="C.Entrada" hflex="3" />
 							<listheader label="Familia" hflex="3" />
 							<listheader label="Código" hflex="3" />
 							<listheader label="Producto" hflex="3" />
 							<listheader label="U.medida" hflex="3" />
-							<listheader label="C.Salida" hflex="2" />
-							<listheader label="Total" hflex="2" />
-							<listheader label="Reasignación" hflex="2" />
-							<listheader label="Acción" hflex="2" />
+							<listheader label="C.Salida" hflex="3" />
+							<listheader label="Total" hflex="3" />
+							<listheader label="Reasignación" hflex="4" />
+							<listheader label="Acción" hflex="3" />
 						</listhead>
 					</listbox>
 					<pagingsize />
