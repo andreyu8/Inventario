@@ -6,12 +6,12 @@
 <window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
 	
 	<zscript>
-		import com.seidor.inventario.adapter.CategoryAdapter;
+		import com.seidor.inventario.adapter.UnitMeasureAdapter;
 		import com.seidor.inventario.navigation.*;
 		
 		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
 		
-		CategoryAdapter categoryEdit = categoryController.readForEdit(state.getDetailIdentifier());
+		UnitMeasureAdapter unitMeasureEdit = unitMeasureController.readForEdit(state.getDetailIdentifier());
 		
 		public void cancel(){
 			navigationControl.changeToPrevious(win);
@@ -19,7 +19,7 @@
 		
 		public void update(){
 			fcv.validate(win);
-			categoryController.update(categoryEdit, state, win);
+			unitMeasureController.update(unitMeasureEdit, state, win);
 		}
 	</zscript>
 	
@@ -27,7 +27,7 @@
 		<div class="col-md-6">
 			<h:span style="padding-top: 5px; display: block;" />
 			<div align="left" >
-				<label value="${categoryEdit.categoria.categoria}" sclass="sectionTitle" />
+				<label value="${unitMeasureEdit.unidadMedida.unidadMedida}" sclass="sectionTitle" />
 			</div>
 		</div>
 		<div class="col-md-6">
@@ -46,12 +46,12 @@
 	<div class="container animated aniFadeIn" >
 		<div class="row editBox">
 			<div class="col-md-4">
-				<label value="Familia*" sclass="editField" />
-				<h:p> <textbox value="@bind(categoryEdit.categoria.categoria)" constraint="${tmv}" /> </h:p>
+				<label value="Unidad de medida*" sclass="editField" />
+				<h:p> <textbox value="@bind(unitMeasureEdit.unidadMedida.unidadMedida)" sclass="detailData" constraint="${tmv}" /> </h:p>
 			</div>
 			<div class="col-md-4">
 				<label value="Descripción*" sclass="editField" />
-				<h:p> <textbox value="@bind(categoryEdit.categoria.descripcion)" constraint="${tmv}" /> </h:p>
+				<h:p> <textbox value="@bind(unitMeasureEdit.unidadMedida.descripcion)"  sclass="detailData" constraint="${tmv}" /> </h:p>
 			</div>
 			
 		</div>
@@ -70,10 +70,10 @@
 		public void delete(){
 			Action deleteAction = new Action() {
 				public void execute(){
-					categoryController.delete(categoryEdit, state, win);
+					unitMeasureController.delete(unitMeasureEdit, state, win);
 				}
 			};
-			NavigationControl.openModalWindowWithMessage("¿Está seguro de eliminar la categoría actual?", deleteAction);
+			NavigationControl.openModalWindowWithMessage("¿Está seguro de eliminar la unidad actual?", deleteAction);
 		}
 	</zscript>
 	
