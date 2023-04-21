@@ -112,7 +112,7 @@
 		public void delete(){
 			Action deleteAction = new Action() {
 				public void execute(){
-					invoiceController.delete(invoceEdit, state, win);
+					invoiceController.delete(invoiceEdit, state, win);
 				}
 			};
 			NavigationControl.openModalWindowWithMessage("¿Está seguro de eliminar la factura actual?", deleteAction);

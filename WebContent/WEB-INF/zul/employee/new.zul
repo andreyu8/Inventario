@@ -1,6 +1,109 @@
-<?page title="new page title" contentType="text/html;charset=UTF-8"?>
-<zk>
-<window title="new page title" border="normal">
-New Content Here!
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
+	
+	<zscript>
+		import com.seidor.inventario.adapter.UserAdapter;
+		import com.seidor.inventario.navigation.*;
+		
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		
+		UserAdapter userSave = userController.readForNew();
+		
+		
+		public void cancel(){
+			navigationControl.changeToPrevious(win);
+		}
+		
+		public void save(){
+			fcv.validate(win);
+			userController.save(userSave, state, win);
+		}
+	</zscript>
+	
+	<div class="row sectionBoxAlt animated aniFadeIn">
+		<div class="row">
+			<div class="col-md-8">
+				<h:span style="padding-top: 5px; display: block;" />
+				<div align="left" style="float: left;" >
+					<label value="@bind(userSave.usuario.usuario)" sclass="sectionTitle" />
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div align="right" style="float: right;" >
+					<button label="cancelar" sclass="btn btn-warning" onClick="cancel();" iconSclass="z-icon-times" />
+					<button label="guardar" sclass="btn btn-success" onClick="save();" iconSclass="z-icon-check" />
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row subBoxAlt animated aniFadeIn" >
+		<div class="col-md-12">
+			<label value="Datos generales" />
+		</div>
+	</div>
+	<div class="container animated aniFadeIn" >
+		<div class="row editBox">
+			<div class="col-md-4">
+				<label value="Usuario*" sclass="editField" />
+				<h:p> <textbox value="@bind(userSave.usuario.usuario)" constraint="${tmv}" /> </h:p>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="row animated aniFadeIn" >
+		<div class="col-md-12">
+			<label value="Datos de acceso" />
+		</div>
+	</div>
+	<div class="container animated aniFadeIn" >
+		<div class="row editBox">
+			<!-- <div class="col-md-4">
+				<label value="Usuario*" sclass="editField" />
+				<h:p> <label value="@bind(userSave.usuario.usuario)" width="400px;"/> </h:p>
+			</div>  -->
+			<div class="col-md-4">
+				<label value="Contraseña*" sclass="editField" />
+				<h:p> <textbox id="pstb" type="password" width="400px;"/> </h:p>
+			</div>
+			<div class="col-md-4">
+				<label value="Confirmar*" sclass="editField" />
+				<h:p> <textbox id="pctb" type="password" width="400px;"/> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Empleado*" sclass="editField" />
+				<h:p> <combobox value="@bind(userSave.usuario.empleado.nombre)"
+							 		onCreate="employeeController.loadEmployee(self);" 
+						 			id="cbemp"  width="400px;"/>
+				 </h:p>
+			</div>	
+			
+			<!-- List rol -->
+			
+			<div class="col-md-6">
+				<listbox id="usrlb" onCreate="roleController.search(usrlb, state);"  emptyMessage="No se encontrarón Perfiles para mostrar" >
+					<listhead>
+						<listheader label="id" hflex="3" sort="auto(lower(idPerfil))" />
+						<listheader label="Perfil" hflex="3" sort="auto(lower(nombre))" />
+					</listhead>
+					<template name="model">
+						<listitem >
+							<listcell label="${each.idPerfil}" />
+							<listcell label="${each.nombre}" />
+						</listitem>
+					</template>
+				</listbox>
+			</div>	
+			
+		</div>
+	</div>
+	
+	<separator spacing="10px" />	
+		
 </window>
 </zk>

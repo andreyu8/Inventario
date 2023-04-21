@@ -45,8 +45,10 @@
 		<maven.compiler.release>11</maven.compiler.release>
 	     
 		<!-- please check available version in the repository and specify it -->
-		<zk.version>9.1.0</zk.version>
-		<zkee.version>9.0.0</zkee.version>
+		<!-- <zk.version>9.1.0</zk.version>
+		<zkee.version>9.0.0</zkee.version>-->
+		<zk.version>9.6.0.2</zk.version>
+		<zkee.version>9.6.0.2</zkee.version> 
 		<zkspring.version>3.2.0</zkspring.version>
 		<zats.version>2.0.0</zats.version>
 		<zkjsp.version>2.6</zkjsp.version>

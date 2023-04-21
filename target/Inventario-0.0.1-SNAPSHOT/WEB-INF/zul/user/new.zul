@@ -62,24 +62,24 @@
 	</div>
 	<div class="container animated aniFadeIn" >
 		<div class="row editBox">
-			<div class="col-md-4">
+			<!-- <div class="col-md-4">
 				<label value="Usuario*" sclass="editField" />
-				<h:p> <label value="@bind(userSave.usuario.usuario)" /> </h:p>
-			</div>
+				<h:p> <label value="@bind(userSave.usuario.usuario)" width="400px;"/> </h:p>
+			</div>  -->
 			<div class="col-md-4">
 				<label value="Contraseña*" sclass="editField" />
-				<h:p> <textbox id="pstb" type="password" /> </h:p>
+				<h:p> <textbox id="pstb" type="password" width="400px;"/> </h:p>
 			</div>
 			<div class="col-md-4">
 				<label value="Confirmar*" sclass="editField" />
-				<h:p> <textbox id="pctb" type="password" /> </h:p>
+				<h:p> <textbox id="pctb" type="password" width="400px;"/> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Empleado*" sclass="editField" />
 				<h:p> <combobox value="@bind(userSave.usuario.empleado.nombre)"
 							 		onCreate="employeeController.loadEmployee(self);" 
-						 			id="cbemp"  />
+						 			id="cbemp"  width="400px;"/>
 				 </h:p>
 			</div>	
 			

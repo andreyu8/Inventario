@@ -10,7 +10,7 @@ public class EmployeeAdapter {
 		return empleado;
 	}
 
-	public void setEmpleado(Empleado empleado) {
-		this.empleado = empleado;
+	public void setEmpleado(Empleado employee) {
+		this.empleado = employee;
 	}
 }

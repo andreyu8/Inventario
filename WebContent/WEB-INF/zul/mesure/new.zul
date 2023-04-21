@@ -5,12 +5,12 @@
 <window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
 	
 	<zscript>
-		import com.seidor.inventario.adapter.CategoryAdapter;
+		import com.seidor.inventario.adapter.UnitMeasureAdapter;
 		import com.seidor.inventario.navigation.*;
 		
 		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
 		
-		CategoryAdapter categorySave = categoryController.readForNew();
+		UnitMeasureAdapter unitMeasureSave = unitMeasureController.readForNew();
 		
 		public void cancel(){
 			navigationControl.changeToPrevious(win);
@@ -18,7 +18,7 @@
 		
 		public void save(){
 			fcv.validate(win);
-			categoryController.save(categorySave, state, win);
+			unitMeasureController.save(unitMeasureSave, state, win);
 		}
 	</zscript>
 	
@@ -27,7 +27,7 @@
 			<div class="col-md-8">
 				<h:span style="padding-top: 5px; display: block;" />
 				<div align="left" style="float: left;" >
-					<label value="@bind(categorySave.categoria.categoria)" sclass="sectionTitle" />
+					<label value="@bind(unitMeasureSave.unidadMedida.unidadMedida)" sclass="sectionTitle" />
 				</div>
 			</div>
 			<div class="col-md-4">
@@ -41,18 +41,18 @@
 	
 	<div class="row subBoxAlt animated aniFadeIn" >
 		<div class="col-md-12">
-			<label value="Datos de la Familia" />
+			<label value="Datos de la unidad de medida" />
 		</div>
 	</div>
 	<div class="container animated aniFadeIn" >
 		<div class="row editBox">
 			<div class="col-md-4">
-				<label value="Familia*" sclass="editField" />
-				<h:p> <textbox value="@bind(categorySave.categoria.categoria)" constraint="${tmv}" /> </h:p>
+				<label value="Unidad Medida*" sclass="editField" />
+				<h:p> <textbox value="@bind(unitMeasureSave.unidadMedida.unidadMedida)" constraint="${tmv}" width="400px;"/> </h:p>
 			</div>
 			<div class="col-md-4">
 				<label value="Descripción*" sclass="editField" />
-				<h:p> <textbox value="@bind(categorySave.categoria.descripcion)" constraint="${tmv}" /> </h:p>
+				<h:p> <textbox value="@bind(unitMeasureSave.unidadMedida.descripcion)" constraint="${tmv}" width="400px;"/> </h:p>
 			</div>
 		</div>
 	</div>

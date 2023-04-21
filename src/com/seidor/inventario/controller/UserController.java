@@ -8,17 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.spring.SpringUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.WrongValueException;
-import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Menu;
 import org.zkoss.zul.Textbox;
-import org.zkoss.zul.ext.SelectionControl;
 
 import com.seidor.inventario.adapter.UserAdapter;
-import com.seidor.inventario.adapter.listitem.CloseitemAdapter;
 import com.seidor.inventario.adapter.search.UserSearchAdapter;
 import com.seidor.inventario.exception.BusinessException;
 import com.seidor.inventario.manager.RoleManager;
@@ -311,7 +308,6 @@ public class UserController {
 		state.removeLastBreadCrumbs();
 		state.removeLastBreadCrumbs();
 		this.navigationControl.changeView(win, state);
-	}
-	
-	
+	}	
+
 }

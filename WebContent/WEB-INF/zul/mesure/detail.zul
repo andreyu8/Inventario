@@ -6,15 +6,15 @@
 <window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
 	
 	<zscript>
-		import com.seidor.inventario.adapter.CategoryAdapter;
+		import com.seidor.inventario.adapter.UnitMeasureAdapter;
 		import com.seidor.inventario.navigation.*;
 		
 		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
 		
-		CategoryAdapter categoryDetail = categoryController.read(state.getDetailIdentifier());
+		UnitMeasureAdapter unitMeasureDetail = unitMeasureController.read(state.getDetailIdentifier());
 		
 		public void modify(){
-			state.setUri("/WEB-INF/zul/category/edit.zul");
+			state.setUri("/WEB-INF/zul/mesure/edit.zul");
 			state.appendBreadCrumbsPath("Editar");
 			state.setDetailIndex(null);
 			state.setDetailList(null);
@@ -26,8 +26,8 @@
 	<div class="row sectionBox animated aniFadeIn">
 		<div class="col-md-6" align="left" >
 			<h:span style="padding-top: 5px; display: block;" />
-			<label value="Detalle de la Familia" sclass="sectionTitle" />
-			<label value="(${categoryDetail.categoria.categoria})" style="font-size: 12px;" />
+			<label value="Detalle de la Unidad" sclass="sectionTitle" />
+			<label value="(${unitMeasureSave.unidadMedida.unidadMedida})" style="font-size: 12px;" />
 		</div>
 		<div class="col-md-6" align="right" >
 			<button label="modificar" onClick="modify();" iconSclass="z-icon-pencil" />
@@ -41,16 +41,12 @@
 	</div>
 	<div class="row container animated aniFadeIn" >
 		<div class="col-md-3">
-			<label value="Id de la familia" sclass="detailField" />
-			<h:p> <label value="${categoryDetail.categoria.idCategoria}" sclass="detailData" /> </h:p>
-		</div>
-		<div class="col-md-3">
-			<label value="Familia" sclass="detailField" />
-			<h:p> <label value="${categoryDetail.categoria.categoria}" sclass="detailData" /> </h:p>
+			<label value="Unidad de medida" sclass="detailField" />
+			<h:p> <label value="${unitMeasureDetail.unidadMedida.unidadMedida}" sclass="detailData" /> </h:p>
 		</div>
 		<div class="col-md-3">
 			<label value="Descripción" sclass="detailField" />
-			<h:p> <label value="${categoryDetail.categoria.descripcion}" sclass="detailData" /> </h:p>
+			<h:p> <label value="@bind(unitMeasureDetail.unidadMedida.descripcion)" sclass="detailData" /> </h:p>
 		</div>
 		
 	</div>

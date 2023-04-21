@@ -52,19 +52,19 @@
 			</div>
 			<div class="col-md-4">
 				<label value="Fecha Inicio*" sclass="editField" />
-				<h:p> <datebox id="db1" cols="12" format="short" value="@bind(projectSave.proyecto.fechaInicio)" constraint="${dmv}" /> </h:p>
+				<h:p> <datebox id="db1" cols="12" format="short" value="@bind(projectSave.proyecto.fechaInicio)" constraint="${dmv}" width="400px;"/> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Fecha Termino" sclass="editField" />
-				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(projectSave.proyecto.fechaFinal)"  /> </h:p>
+				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(projectSave.proyecto.fechaFinal)"  width="400px;"/> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Estatus*" sclass="editField" />
 				<h:p> <combobox value="@bind(projectSave.proyecto.estatusProyecto.descripcion)"
 							 		onCreate="projectController.loadEstatus(self);" 
-						 			id="escb" constraint="${cmv}"/> </h:p>
+						 			id="escb" constraint="${cmv}" width="400px;"/> </h:p>
 			</div>	
 		</div>
 	</div>
