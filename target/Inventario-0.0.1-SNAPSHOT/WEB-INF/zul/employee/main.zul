@@ -36,12 +36,12 @@
 			state.setDetailList(null);
 			state.setDetailIndex(null);
 			state.appendBreadCrumbsPath("Nuevo empleado");
-			//state.setUri("/WEB-INF/zul/employee/new.zul");
-			//navigationControl.changeView(winE, state);
+			state.setUri("/WEB-INF/zul/employee/new.zul");
+			navigationControl.changeView(winE, state);
 		}
 		
 		public void show(){
-			//employeeController.show(catlb, state, winE);
+			employeeController.show(catlb, state, winE);
 		}
 	</zscript>
 	

@@ -49,27 +49,27 @@
 		<div class="row editBox">
 			<div class="col-md-4">
 				<label value="Nombre*" sclass="editField" />
-				<h:p> <textbox value="@bind(employeeSave.nombre)" constraint="${tmv}" width="400px;"/> </h:p>
+				<h:p> <textbox value="@bind(employeeSave.empleado.nombre)" constraint="${tmv}" width="400px;"/> </h:p>
 			</div>
 			<div class="col-md-4">
 				<label value="A. Paterno*" sclass="editField" />
-				<h:p> <textbox value="@bind(employeeSave.APaterno)" constraint="${tmv}" width="400px;"/> </h:p>
+				<h:p> <textbox value="@bind(employeeSave.empleado.APaterno)" constraint="${tmv}" width="400px;"/> </h:p>
 			</div>
 			<div class="col-md-4">
 				<label value="A. Materno*" sclass="editField" />
-				<h:p> <textbox value="@bind(employeeSave.APaterno)" constraint="${tmv}" width="400px;"/> </h:p>
+				<h:p> <textbox value="@bind(employeeSave.empleado.AMaterno)" constraint="${tmv}" width="400px;"/> </h:p>
 			</div>
 			<div class="col-md-4">
 				<label value="Cargo*" sclass="editField" />
-				<h:p> <textbox value="@bind(employeeSave.cargo)" constraint="${tmv}" width="400px;"/> </h:p>
+				<h:p> <textbox value="@bind(employeeSave.empleado.cargo)" constraint="${tmv}" width="400px;"/> </h:p>
 			</div>
 			<div class="col-md-4">
 				<label value="Almacen*" sclass="editField" />
-				<h:p> <textbox value="@bind(employeeSave.almacen)" constraint="${tmv}" width="400px;"/> </h:p>
+				<h:p> <textbox value="@bind(employeeSave.empleado.almacen)" constraint="${tmv}" width="400px;"/> </h:p>
 			</div>
 			<div class="col-md-4">
 				<label value="Correo*" sclass="editField" />
-				<h:p> <textbox value="@bind(employeeSave.EMail)" constraint="${tmv}" width="400px;"/> </h:p>
+				<h:p> <textbox value="@bind(employeeSave.empleado.EMail)" constraint="${tmv}" width="400px;"/> </h:p>
 			</div>
 		</div>
 	</div>

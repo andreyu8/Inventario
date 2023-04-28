@@ -62,10 +62,10 @@
 	</div>
 	<div class="container animated aniFadeIn" >
 		<div class="row editBox">
-			<!-- <div class="col-md-4">
+			<div class="col-md-4">
 				<label value="Usuario*" sclass="editField" />
 				<h:p> <label value="@bind(userSave.usuario.usuario)" width="400px;"/> </h:p>
-			</div>  -->
+			</div>
 			<div class="col-md-4">
 				<label value="Contraseña*" sclass="editField" />
 				<h:p> <textbox id="pstb" type="password" width="400px;"/> </h:p>
@@ -96,6 +96,26 @@
 							<listcell label="${each.idPerfil}" />
 							<listcell label="${each.nombre}" />
 						</listitem>
+						static{
+							roles.add("Dirección general");
+							roles.add("Dirección de pagos");
+							roles.add("Dirección RRHH");
+							roles.add("Dirección operaciones");
+							roles.add("Coordinador de almacenes");
+							roles.add("Contabilidad");
+							roles.add("Gerente de producción Toluca y Tepalcates");
+							roles.add("Jefe de producción Toluca);
+							roles.add("Jefe de producción Tepalcates");
+							roles.add("Jefe de compras Toluca / Tepalcates");
+							roles.add("Compras Toluca");
+							roles.add("Compras Tepalcates");
+							roles.add("Jefe de proyecto");
+							roles.add("Encargado de almacen Toluca");
+							roles.add("Encargado de almacen Tepalcates");
+							roles.add("Capturista");
+							roles.add("Jefa de presupuestos");
+							roles.add("Presupuestos");
+						}
 					</template>
 				</listbox>
 			</div>	

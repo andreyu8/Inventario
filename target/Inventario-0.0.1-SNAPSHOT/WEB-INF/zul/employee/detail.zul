@@ -1,6 +1,85 @@
-<?page title="new page title" contentType="text/html;charset=UTF-8"?>
-<zk>
-<window title="new page title" border="normal">
-New Content Here!
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
+	
+	<zscript>
+		import com.seidor.inventario.adapter.EmployeeAdapter;
+		import com.seidor.inventario.navigation.*;
+		
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		
+		EmployeeAdapter employeeDetail = employeeController.read(state.getDetailIdentifier());
+		
+		
+		public void cancel(){
+			navigationControl.changeToPrevious(win);
+		}
+		
+		public void modify(){
+			state.setUri("/WEB-INF/zul/employee/edit.zul");
+			state.appendBreadCrumbsPath("Editar");
+			state.setDetailIndex(null);
+			state.setDetailList(null);
+			state.setDetailLabels(null);
+			navigationControl.changeView(win, state);
+		}
+	</zscript>
+	
+	<div class="row sectionBoxAlt animated aniFadeIn">
+		<div class="row">
+			<div class="col-md-8">
+				<h:span style="padding-top: 5px; display: block;" />
+				<div align="left" style="float: left;" >
+					<label value="Detalle de la Unidad" sclass="sectionTitle" />	
+					<label value="(${employeeSave.nombre})" style="font-size: 12px;" />
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div align="right" style="float: right;" >
+					<button label="modificar" onClick="modify();" iconSclass="z-icon-pencil" />
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row subBoxAlt animated aniFadeIn" >
+		<div class="col-md-12">
+			<label value="Datos del empleado" />
+		</div>
+	</div>
+	<div class="container animated aniFadeIn" >
+		<div class="row editBox">
+			<div class="col-md-4">
+				<label value="Nombre*" sclass="detailField"/>
+				<h:p> <textbox value="@bind(employeeDetail.empleado.nombre)" constraint="${tmv}" width="400px;"/> </h:p>
+			</div>
+			<div class="col-md-4">
+				<label value="A. Paterno*" sclass="detailField" />
+				<h:p> <textbox value="@bind(employeeDetail.empleado.APaterno)" constraint="${tmv}" width="400px;"/> </h:p>
+			</div>
+			<div class="col-md-4">
+				<label value="A. Materno*" sclass="detailField" />
+				<h:p> <textbox value="@bind(employeeDetail.empleado.AMaterno)" sclass="detailData" /> </h:p>
+			</div>
+			<div class="col-md-4">
+				<label value="Cargo*" sclass="detailField"/>
+				<h:p> <textbox value="@bind(employeeDetail.empleado.cargo)" sclass="detailData" /> </h:p>
+			</div>
+			<div class="col-md-4">
+				<label value="Almacen*" sclass="detailField" />
+				<h:p> <textbox value="@bind(employeeDetail.empleado.almacen)" sclass="detailData" /> </h:p>
+			</div>
+			<div class="col-md-4">
+				<label value="Correo*" sclass="detailField"/>
+				<h:p> <textbox value="@bind(employeeDetail.empleado.EMail)" sclass="detailData" /> </h:p>
+			</div>
+		</div>
+	</div>
+	
+	<separator spacing="10px" />
+	
 </window>
 </zk>

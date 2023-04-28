@@ -62,10 +62,10 @@
 	</div>
 	<div class="container animated aniFadeIn" >
 		<div class="row editBox">
-			<!-- <div class="col-md-4">
+			<div class="col-md-4">
 				<label value="Usuario*" sclass="editField" />
 				<h:p> <label value="@bind(userSave.usuario.usuario)" width="400px;"/> </h:p>
-			</div>  -->
+			</div>
 			<div class="col-md-4">
 				<label value="Contraseña*" sclass="editField" />
 				<h:p> <textbox id="pstb" type="password" width="400px;"/> </h:p>
