@@ -6,7 +6,7 @@
 <window id="msgwin" border="normal" position="center" zclass="none">
  
 	<zscript>
-	 	import ieci.tdw.ispac.navigation.Action;
+	 	import com.seidor.inventario.navigation.Action;
 	 	
 	 	Action action = Executions.getCurrent().getArg().get("action");
 		String msg = Executions.getCurrent().getArg().get("message");

@@ -102,7 +102,7 @@
 					<listcell label="${each.AMaterno}" />
 					<listcell label="${each.cargo}" />
 					<listcell label="${each.almacen.almacen}" />
-					<listcell label="${each.activo}" />
+					<listcell label="${each.EMail}" />
 				</listitem>
 			</template>
 		</listbox>

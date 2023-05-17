@@ -20,6 +20,7 @@ public class EmployeeDAO extends HibernateDaoSupport{
 	public Empleado get(Integer id){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		Criteria criteria = session.createCriteria(Empleado.class);
+		criteria.setFetchMode("almacen", FetchMode.JOIN);
 		criteria.add(Restrictions.eq("idEmpleado", id));
 		Empleado result = (Empleado)criteria.uniqueResult();
 		session.flush();
@@ -31,6 +32,7 @@ public class EmployeeDAO extends HibernateDaoSupport{
 	public ArrayList<Empleado> getAll(){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		Criteria criteria = DaoUtil.getCriteria(session, Empleado.class);
+		criteria.setFetchMode("almacen", FetchMode.JOIN);
 		criteria.addOrder(Order.asc("nombre"));
 		List<Empleado> result = criteria.list();
 		session.flush();
@@ -58,7 +60,7 @@ public class EmployeeDAO extends HibernateDaoSupport{
 	
 	public void delete(Empleado e){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
-		session.update(e);
+		session.delete(e);
 		session.flush();
 		session.close();
 	}

@@ -66,6 +66,7 @@ C:\Users\andyg\git\Inventario\src\com\seidor\inventario\adapter\search\UserSearc
 C:\Users\andyg\git\Inventario\src\com\seidor\inventario\constants\CalendarConstants.java
 C:\Users\andyg\git\Inventario\src\com\seidor\inventario\model\Salida.java
 C:\Users\andyg\git\Inventario\src\com\seidor\inventario\model\TipoPago.java
+C:\Users\andyg\git\Inventario\src\com\seidor\inventario\adapter\render\AlmacenComboitemRenderer.java
 C:\Users\andyg\git\Inventario\src\com\seidor\inventario\adapter\search\ProductSearchAdapter.java
 C:\Users\andyg\git\Inventario\src\com\seidor\inventario\model\PerfilUsuario.java
 C:\Users\andyg\git\Inventario\src\com\seidor\inventario\adapter\beans\InBean.java
@@ -148,6 +149,7 @@ C:\Users\andyg\git\Inventario\src\com\seidor\inventario\adapter\render\TypeWorkC
 C:\Users\andyg\git\Inventario\src\com\seidor\inventario\adapter\listitem\ReasigneditemAdapter.java
 C:\Users\andyg\git\Inventario\src\com\seidor\inventario\actionimages\Accept.java
 C:\Users\andyg\git\Inventario\src\com\seidor\inventario\model\Almacen.java
+C:\Users\andyg\git\Inventario\src\com\seidor\inventario\adapter\search\AlmacenSearchAdapter.java
 C:\Users\andyg\git\Inventario\src\com\seidor\inventario\navigation\NavigationStates.java
 C:\Users\andyg\git\Inventario\src\com\seidor\inventario\manager\RoleManager.java
 C:\Users\andyg\git\Inventario\src\com\seidor\inventario\actionimages\Download.java
@@ -191,6 +193,7 @@ C:\Users\andyg\git\Inventario\src\com\seidor\inventario\dao\EmployeeDAO.java
 C:\Users\andyg\git\Inventario\src\com\seidor\inventario\adapter\beans\SalidaProyectoBean.java
 C:\Users\andyg\git\Inventario\src\com\seidor\inventario\controller\UserController.java
 C:\Users\andyg\git\Inventario\src\com\seidor\inventario\manager\AreaManager.java
+C:\Users\andyg\git\Inventario\src\com\seidor\inventario\adapter\WarehouseAdapter.java
 C:\Users\andyg\git\Inventario\src\com\seidor\inventario\model\Area.java
 C:\Users\andyg\git\Inventario\src\com\seidor\inventario\inroweditablecomps\IREditableComponent.java
 C:\Users\andyg\git\Inventario\src\com\seidor\inventario\adapter\beans\EntradasProyectoBean.java

@@ -24,6 +24,7 @@ com\seidor\inventario\inroweditablecomps\IREditablePassbox$2.class
 com\seidor\inventario\util\ExporterUtil$1.class
 com\seidor\inventario\adapter\render\UnitMeasureComboitemRenderer.class
 com\seidor\inventario\model\Cliente.class
+com\seidor\inventario\adapter\render\AlmacenComboitemRenderer.class
 com\seidor\inventario\inroweditablecomps\EditableListitemRenderer$3.class
 com\seidor\inventario\inroweditablecomps\IREditableIntbox.class
 com\seidor\inventario\inroweditablecomps\IREditableTextbox$2.class
@@ -34,6 +35,7 @@ com\seidor\inventario\dao\WarehouseDAO.class
 com\seidor\inventario\controller\AreaController.class
 com\seidor\inventario\util\SessionUtil.class
 com\seidor\inventario\model\EstatusProyecto.class
+com\seidor\inventario\adapter\search\AlmacenSearchAdapter.class
 com\seidor\inventario\inroweditablecomps\IREditableTextbox$1.class
 com\seidor\inventario\adapter\render\OutputListitemRenderer$1.class
 com\seidor\inventario\controller\EmployeeController.class
@@ -261,5 +263,6 @@ com\seidor\inventario\manager\PurchaseOrderManager.class
 com\seidor\inventario\adapter\InvoiceAdapter.class
 com\seidor\inventario\validation\FullComponentValidator.class
 com\seidor\inventario\inroweditablecomps\IREditablePassbox$1.class
+com\seidor\inventario\adapter\WarehouseAdapter.class
 com\seidor\inventario\dao\EntryDAO.class
 com\seidor\inventario\controller\RoleController.class

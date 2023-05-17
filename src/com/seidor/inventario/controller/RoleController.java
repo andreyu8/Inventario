@@ -49,12 +49,12 @@ public class RoleController {
 		lb.setCheckmark(true);
 	}
 	
-	public void readSearch(Listbox lb, UserAdapter userDetail, NavigationState state){
+	public void search(Listbox lb, UserAdapter userDetail, NavigationState state){
 		ArrayList<Perfil> role = new ArrayList<Perfil> ();
 		
-		for (PerfilUsuario pu : userDetail.getProfiles()) {
-			role.add(pu.getPerfil());
-		}
+		//for (PerfilUsuario pu : userDetail.getProfiles()) {
+		//	role.add(pu.getPerfil());
+		//}
 
 		ListModelList<Perfil> model = new ListModelList<Perfil>(role);
 		lb.setModel(model);
