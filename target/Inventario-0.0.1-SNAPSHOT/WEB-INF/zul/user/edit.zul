@@ -3,7 +3,7 @@
 <?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
-<window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
+<window id="win" border="none" apply="org.zkoss.bind.BindComposer" >	
 	
 	<zscript>
 		import com.seidor.inventario.adapter.UserAdapter;
@@ -27,7 +27,7 @@
 		<div class="col-md-6">
 			<h:span style="padding-top: 5px; display: block;" />
 			<div align="left" >
-				<label value="${userEdit.usuario.empleado.nombre}" sclass="sectionTitle" />
+				<label value="${userEdit.usuario.usuario}" sclass="sectionTitle" />
 			</div>
 		</div>
 		<div class="col-md-6">
@@ -45,58 +45,23 @@
 	</div>
 	<div class="container animated aniFadeIn" >
 		<div class="row editBox">
-			<!--<div class="col-md-4">
+			<div class="col-md-4">
 				<label value="Nombre*" sclass="editField" />
-				<h:p> <textbox value="@bind(userDetail.user.name)" constraint="${tmv}" /> </h:p>
+				<h:p> <textbox value="@bind(userEdit.usuario.usuario)" constraint="${tmv}" /> </h:p>
 			</div>
 			<div class="col-md-4">
 				<label value="Email*" sclass="editField" />
-				<h:p> <textbox value="@bind(userDetail.user.email)" constraint="${emv}" /> </h:p>
+				<h:p> <textbox value="@bind(userEdit.usuario.empleado.EMail)" constraint="${emv}" /> </h:p>
 			</div>
 			<div class="col-md-2">
 				<label value="Fecha alta" sclass="editField" />
-				<h:p> <label value="${userDetail.createDateS}" sclass="detailData" /> </h:p>
+				<h:p> <label value="${userEdit.usuario.fecha}" sclass="detailData" /> </h:p>
 			</div>
-			<div class="col-md-2" onCreate="roleController.checkRoles(self);">
+			<!-- <div class="col-md-2" onCreate="roleController.checkRoles(self);">
 				<custom-attributes roleList="ADMIN" />
 				<label value="Administrador" sclass="editField" />
 				<h:p> <checkbox checked="@bind(userDetail.user.admin)" /> </h:p>
-			</div>  -->
-			
-			<div class="col-md-4">
-				<label value="Nombre completo*" sclass="editField" />
-				<h:p> <textbox value="@bind(userEdit.usuario.empleado.nombre)" constraint="${tmv}" width="400px;"/> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="Fecha de alta*" sclass="editField" />
-				<h:p> <datebox value="@bind(userEdit.usuario.fecha)" constraint="${tmv}" width="400px;"/> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="CURP*" sclass="editField" />
-				<h:p> <textbox value="@bind(userEdit.usuario.empleado.curp)" constraint="${tmv}" width="400px;"/> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="Celular*" sclass="editField" />
-				<h:p> <textbox value="@bind(userEdit.usuario.empleado.celular)" constraint="${tmv}" width="400px;"/> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="No. Seguro Social*" sclass="editField" />
-				<h:p> <textbox value="@bind(userEdit.usuario.empleado.numeroSegSocial)" constraint="${tmv}" width="400px;"/> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="Telefono*" sclass="editField" />
-				<h:p> <textbox value="@bind(userEdit.usuario.empleado.telefono)" constraint="${tmv}" width="400px;"/> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="Cargo*" sclass="editField" />
-				<h:p> <textbox value="@bind(userEdit.usuario.empleado.cargo)" constraint="${tmv}" width="400px;"/> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="Almacen*" sclass="editField" />
-				<h:p> <combobox value="@bind(userEdit.usuario.empleado.almacen.almacen)"
-							 		onCreate="warehouseController.loadAlmacen(self);" 
-						 			id="clicb" constraint="${cmv}" width="400px;"/> </h:p>
-			</div> 
+			</div> -->
 		</div>
 	</div>
 	
@@ -117,49 +82,53 @@
 				<h:p> <textbox id="pstb" type="password" /> </h:p>
 			</div>
 			<div class="col-md-4">
-				<label value="Confirmar contraseña*" sclass="editField" />
+				<label value="Confirmar*" sclass="editField" />
 				<h:p> <textbox id="pctb" type="password" /> </h:p>
 			</div>	
 		</div>
 	</div>
 		
- 		<!-- <div class="col-md-6" style="padding: 0px;" > 
- 			<div class="row subBoxAlt"> 
- 				<div class="col-md-12"> 
- 					<label value="Perfiles" /> 
- 				</div> 
- 			</div> 
- 			<div class="row"> 
- 				<div class="col-md-5" style="padding: 3px;" > 
- 					<listbox id="mprlb" onCreate="userDetail.loadMissingProfiles(self);" > 
+	<div class="col-md-6" style="padding: 0px;" > 
+			<div class="row subBoxAlt"> 
+				<div class="col-md-12"> 
+					<label value="Perfiles" /> 
+				</div> 
+			</div> 
+			<div class="row"> 
+				<div class="col-md-5" style="padding: 3px;" > 
+					<listbox id="mprlb" onCreate="userEdit.loadMissingProfiles(self);" > 
 						<listhead> 
- 							<listheader label="Disponibles" /> 
- 						</listhead> 
- 						<listitem self="@{each=p}" value="@{p}" > 
- 							<listcell label="@{p.name}" /> 
- 						</listitem> 
- 					</listbox> 
- 				</div> 
+							<listheader label="Disponibles" /> 
+						</listhead> 
+						<template name="model">
+				            <listitem>
+				                <listcell label="${each.nombre}"/>
+				            </listitem>
+				        </template>
+					</listbox> 
+				</div> 
 				
- 				<div class="col-md-2"> 
- 					<h:span style="padding-top: 25px; display: block;" /> 
- 					<h:p> <button onClick="userDetail.addProfile(mprlb, prolb);" iconSclass="z-icon-caret-right" tooltiptext="asignar perfil" /> </h:p> 
- 					<h:p> <button onClick="userDetail.removeProfile(mprlb, prolb);" iconSclass="z-icon-caret-left" tooltiptext="remover perfil" /> </h:p> 
- 					<h:span style="padding-top: 20px; display: block;" /> 
- 				</div> 
+				<div class="col-md-2"> 
+					<h:span style="padding-top: 25px; display: block;" /> 
+					<h:p> <button onClick="userEdit.addProfile(mprlb, prolb);" iconSclass="z-icon-caret-right" tooltiptext="asignar perfil" /> </h:p> 
+					<h:p> <button onClick="userEdit.removeProfile(mprlb, prolb);" iconSclass="z-icon-caret-left" tooltiptext="remover perfil" /> </h:p> 
+					<h:span style="padding-top: 20px; display: block;" /> 
+				</div> 
 				
- 				<div class="col-md-5" style="padding: 3px;" > 
- 					<listbox id="prolb" onCreate="userDetail.loadProfilesEdit(self);"  > 
- 						<listhead> 
- 							<listheader label="Asignadas" /> 
- 						</listhead> 
- 						<listitem self="@{each=up}" value="@{up}"> 
- 							<listcell label="@{up.profile.name}" /> 
- 						</listitem> 
- 					</listbox> 
- 				</div> 
- 			</div> 
- 		</div>  --> 
+				<div class="col-md-5" style="padding: 3px;" > 
+					<listbox id="prolb" onCreate="userEdit.loadProfilesEdit(self);"  > 
+						<listhead> 
+							<listheader label="Asignadas" /> 
+						</listhead> 
+						<template name="model">
+				            <listitem>
+				                <listcell label="${each.perfil.nombre}"/>
+				            </listitem>
+				        </template>
+					</listbox> 
+				</div> 
+			</div> 
+		</div> 
 	
 	<div class="row subBoxAlt animated aniFadeIn" >
 		<div class="col-md-12">
@@ -173,7 +142,7 @@
 		public void delete(){
 			Action deleteAction = new Action() {
 				public void execute(){
-					userController.delete(userDetail, state, win);
+					userController.delete(userEdit, state, win);
 				}
 			};
 			NavigationControl.openModalWindowWithMessage("¿Está seguro de eliminar al usuario actual?", deleteAction);

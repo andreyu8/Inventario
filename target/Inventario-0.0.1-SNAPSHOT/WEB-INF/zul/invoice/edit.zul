@@ -48,45 +48,45 @@
 			
 			<div class="col-md-4">
 				<label value="Número de factura*" sclass="editField" />
-				<h:p> <textbox value="@bind(invoiceEdit.factura.numeroFactura)" constraint="${tmv}" width="400px;"/> </h:p>
+				<h:p> <textbox value="@bind(invoiceEdit.factura.numeroFactura)" constraint="${tmv}" /> </h:p>
 			</div>
 			
 			
 			<div class="col-md-4">
 				<label value="Fecha*" sclass="editField" />
-				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(invoiceEdit.factura.fecha)"  width="400px;"/> </h:p>
+				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(invoiceEdit.factura.fecha)"  /> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Proveedor*" sclass="editField" />
 				<h:p> <combobox value="@bind(invoiceEdit.factura.proveedor.nombre)"
 							 		onCreate="providerController.loadProvider(self);" 
-						 			id="provcb" constraint="${cmv}" width="400px;"/> </h:p>
+						 			id="provcb" constraint="${cmv}"/> </h:p>
 			</div>		
 		
 		
 			<div class="col-md-4">
 				<label value="Subtotal*" sclass="editField" />
-				<h:p> <doublebox value="@bind(invoiceEdit.factura.subtotal)" width="400px;"/> </h:p>
+				<h:p> <doublebox value="@bind(invoiceEdit.factura.subtotal)" /> </h:p>
 			</div>
 			
 			
 		
 			<div class="col-md-4">
 				<label value="IVA*" sclass="editField" />
-				<h:p> <doublebox value="@bind(invoiceEdit.factura.iva)" width="400px;"/> </h:p>
+				<h:p> <doublebox value="@bind(invoiceEdit.factura.iva)" /> </h:p>
 			</div>
 			
 			
 			<div class="col-md-4">
 				<label value="Total*" sclass="editField" />
-				<h:p> <doublebox value="@bind(invoiceEdit.factura.total)" width="400px;"/> </h:p>
+				<h:p> <doublebox value="@bind(invoiceEdit.factura.total)" /> </h:p>
 			</div>
 			
 			
 			<div class="col-md-4">
 				<label value="Descrpción*" sclass="editField" />
-				<h:p> <textbox value="@bind(invoiceEdit.factura.descripcion)" constraint="${tmv}" width="400px;"/> </h:p>
+				<h:p> <textbox value="@bind(invoiceEdit.factura.descripcion)" constraint="${tmv}" /> </h:p>
 			</div>
 			
 			<div class="col-md-4">
@@ -112,10 +112,10 @@
 		public void delete(){
 			Action deleteAction = new Action() {
 				public void execute(){
-					invoiceController.delete(invoiceEdit, state, win);
+					projectController.delete(projectEdit, state, win);
 				}
 			};
-			NavigationControl.openModalWindowWithMessage("¿Está seguro de eliminar la factura actual?", deleteAction);
+			NavigationControl.openModalWindowWithMessage("¿Está seguro de eliminar la categoría actual?", deleteAction);
 		}
 	</zscript>
 	

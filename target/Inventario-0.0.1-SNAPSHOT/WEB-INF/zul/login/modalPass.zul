@@ -1,40 +1,30 @@
 <!DOCTYPE html>
+	
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
-<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./modwin"?>
+<?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
-<window id="modwin" border="normal" position="center" zclass="none" >
+<window id="updwin" border="none" apply="org.zkoss.bind.BindComposer" >	
 	
 	<zscript>
-		import ieci.tdw.ispac.mail.UserMailSender;
-		import ieci.tdw.ispac.navigation.*;
-		import ieci.tdw.ispac.util.SessionUtil;
-		import nl.captcha.Captcha;
-		import ieci.tdw.ispac.util.CaptchaUtil;
 		
-		Captcha cap = CaptchaUtil.getCaptcha(150, 50);
+		import com.seidor.inventario.adapter.UserChangeKeyAdapter;
+		import com.seidor.inventario.navigation.*;
 		
-		public void loadCaptcha(){
-			captcha.setContent(cap.getImage());
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		
+		UserChangeKeyAdapter userDetail = userController.readUserKeyPass ();
+		
+		public void update(){
+			fcv.validate(updwin);
+			userController.updatePassword(userDetail, state, updwin);
 		}
 		
-		public void reloadCaptcha(){
-			cap = CaptchaUtil.getCaptcha(150, 50);
-			captcha.setContent(cap.getImage());
+		public void cancel(){
+			navigationControl.changeToPrevious(updwin);
 		}
 		
-		public void verifyCaptcha(){
-			if (!cap.getAnswer().equalsIgnoreCase(captchatb.getValue())){
-				captchatb.setValue("");
-				reloadCaptcha();
-				throw new WrongValueException(captchatb, "Texto incorrecto.");
-			}
-		}
 		
-		public void recover(){
-			verifyCaptcha();
-			UserMailSender.recoverPassword(usertb, modwin);
-		}
 		
 	</zscript>
 	
@@ -44,43 +34,69 @@
 			
 			<h:div class="col-md-8" >
 				<div class="row sysBox" style="background: #F1F2F4; border: 1px solid #C1C2C4;" >			
-					<div class="row editHeader">
-						<div class="col-md-12" >
-							<a sclass="confirmIcon" iconSclass="z-icon-key" />
-							<label value="RECUPERAR CONTRASEÑA" sclass="sysTitle" />
-							<button id="closebtn" label="X" onClick="modwin.detach();" style="padding-top: 2px; padding-bottom: 2px; float: right;" focus="true" />
+					
+					<div class="col-md-12">
+						<div align="right" >
+							<button label="cancelar" sclass="btn btn-warning" onClick="cancel();" iconSclass="z-icon-times" />
+							<button label="aceptar" sclass="btn btn-success" onClick="update();" iconSclass="z-icon-check" />
 						</div>
 					</div>
+					
 						
-					<h:div class="row">
-						<h:div class="col-md-6" >
-							<h:div class="col-md-12" >
-								<h:p> <textbox id="usertb" placeholder="Usuario*" constraint="@{tmv}" /> </h:p>
-							</h:div>
-						</h:div>
-						
-						<h:div class="col-md-6"  >
-							<h:p> <label value="Ingresa el texto de la imagen*" sclass="sysField" style="font-size: 18px;" /> </h:p>
-							<h:p> <image id="captcha" onCreate="loadCaptcha();" /> </h:p>
-							<h:p> <textbox id="captchatb" sclass="form-control" width="150px" /> </h:p>
-							<h:p> 
-								<label value="-No distingue mayúsculas" sclass="sysField" />
-								<button label="regenerar" onClick="reloadCaptcha();" />
-							</h:p>
-							<h:p> <label id="captchalb" style="color: red;" /> </h:p>
-							<separator spacing="20px" />
-							<button label="recuperar" sclass="btn primary" style="font-size: 25px; width: 80%;" onClick="recover();"/>
-						</h:div>	
-					</h:div>
+					
+					<div class="row subBoxAlt animated aniFadeIn" >
+						<div class="col-md-12">
+							<label value="Datos generales" />
+						</div>
+					</div>
+					
+					<div class="container animated aniFadeIn" >
+						<div class="row editBox">
+							<div class="col-md-4">
+								<label value="Nombre*" sclass="editField" />
+								<h:p> <textbox value="@bind(userDetail.usuario.usuario)" readonly="true"/> </h:p>
+							</div>
+							<div class="col-md-4">
+								<label value="Email*" sclass="editField" />
+								<h:p> <textbox value="@bind(userDetail.usuario.empleado.EMail)" readonly="true" /> </h:p>
+							</div>
+							<!-- <div class="col-md-2" onCreate="roleController.checkRoles(self);">
+								<custom-attributes roleList="ADMIN" />
+								<label value="Administrador" sclass="editField" />
+								<h:p> <checkbox checked="@bind(userDetail.user.admin)" /> </h:p>
+							</div> -->
+						</div>
+					</div>	
+	
+	
+					<div class="row subBoxAlt animated aniFadeIn" >
+						<div class="col-md-12">
+							<label value="Datos de acceso" />
+						</div>
+					</div>
+					<div class="container animated aniFadeIn" >
+						<div class="row editBox">
+							<!-- <div class="col-md-4">
+								<label value="Contraseña anterior*" sclass="editField" />
+								<h:p> <textbox id="optb" type="password" /> </h:p>
+							</div> -->
+							<div class="col-md-4">
+								<label value="Nueva contraseña*" sclass="editField" />
+								<h:p> <textbox id="pstb" type="password" /> </h:p>
+							</div>
+							<div class="col-md-4">
+								<label value="Confirmar*" sclass="editField" />
+								<h:p> <textbox id="pctb" type="password" /> </h:p>
+							</div>	
+						</div>
+					</div>
+					
+					
+					
 									
 					<separator spacing="10px" />
 						
-					<h:div class="row gridCard">
-						<h:div class="col-md-12" style="text-align: center;" >
-							<h:span style="padding-top: 10px; display: block;" />
-							<button label="cerrar" onClick='modwin.detach();' />
-						</h:div>
-					</h:div>			
+						
 				</div>			
 			</h:div>
 			

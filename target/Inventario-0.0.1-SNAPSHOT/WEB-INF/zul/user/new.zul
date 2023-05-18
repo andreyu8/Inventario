@@ -18,7 +18,7 @@
 		}
 		
 		public void save(){
-			//fcv.validate(win);
+			fcv.validate(win);
 			userController.save(userSave, state, win);
 		}
 	</zscript>
@@ -45,86 +45,63 @@
 			<label value="Datos generales" />
 		</div>
 	</div>
-
 	<div class="container animated aniFadeIn" >
 		<div class="row editBox">
 			<div class="col-md-4">
 				<label value="Usuario*" sclass="editField" />
-				<h:p> <textbox value="@bind(userSave.usuario.usuario)" constraint="${tmv}" width="400px;" /> </h:p>
+				<h:p> <textbox value="@bind(userSave.usuario.usuario)" constraint="${tmv}" /> </h:p>
 			</div>
+		</div>
+	</div>
+	
+	
+	<div class="row animated aniFadeIn" >
+		<div class="col-md-12">
+			<label value="Datos de acceso" />
+		</div>
+	</div>
+	<div class="container animated aniFadeIn" >
+		<div class="row editBox">
+			<div class="col-md-4">
+				<label value="Usuario*" sclass="editField" />
+				<h:p> <label value="@bind(userSave.usuario.usuario)" /> </h:p>
+			</div>
+			<div class="col-md-4">
+				<label value="Contraseña*" sclass="editField" />
+				<h:p> <textbox id="pstb" type="password" /> </h:p>
+			</div>
+			<div class="col-md-4">
+				<label value="Confirmar*" sclass="editField" />
+				<h:p> <textbox id="pctb" type="password" /> </h:p>
+			</div>
+			
 			<div class="col-md-4">
 				<label value="Empleado*" sclass="editField" />
 				<h:p> <combobox value="@bind(userSave.usuario.empleado.nombre)"
 							 		onCreate="employeeController.loadEmployee(self);" 
-						 			id="cbemp"  width="400px;"/>
+						 			id="cbemp"  />
 				 </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="Almacen*" sclass="editField" />
-				<h:p> <combobox value="@bind(userSave.usuario.empleado.almacen.almacen)"
-							 		onCreate="warehouseController.loadAlmacen(self);" 
-						 			id="clicb" constraint="${cmv}" width="400px;"/> </h:p>
-			</div> 
-			<div class="col-md-4">
-				<label value="Fecha de alta*" sclass="editField" />
-				<h:p> <datebox value="@bind(userSave.usuario.fecha)" constraint="${tmv}" width="400px;"/> </h:p>
-			</div>
-		<div class="row subBoxAlt animated aniFadeIn" >
-				<div class="col-md-12">
-				<label value="Datos de acceso" />
-			</div>
+			</div>	
+			
+			<!-- List rol -->
+			
+			<div class="col-md-6">
+				<listbox id="usrlb" onCreate="roleController.search(usrlb, state);"  emptyMessage="No se encontrarón Perfiles para mostrar" >
+					<listhead>
+						<listheader label="id" hflex="3" sort="auto(lower(idPerfil))" />
+						<listheader label="Perfil" hflex="3" sort="auto(lower(nombre))" />
+					</listhead>
+					<template name="model">
+						<listitem >
+							<listcell label="${each.idPerfil}" />
+							<listcell label="${each.nombre}" />
+						</listitem>
+					</template>
+				</listbox>
+			</div>	
+			
 		</div>
-			<div class="col-md-4">
-				<label value="Contraseña*" sclass="editField" />
-				<h:p> <textbox id="pstb" type="password" width="400px;"/> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="Confirmar contraseña*" sclass="editField" />
-				<h:p> <textbox id="pctb" type="password" width="400px;"/> </h:p>
-			</div>
-			
-			<div class="col-md-6" style="padding: 0px;" > 
- 			<div class="row subBoxAlt"> 
- 				<div class="col-md-12"> 
- 					<label value="Perfiles" /> 
- 				</div> 
- 			</div> 
- 			<div class="row"> 
- 				<div class="col-md-5" style="padding: 3px;" > 
- 					<listbox id="usrlb" onCreate="roleController.search(usrlb, state);"  emptyMessage="No se encontrarón Perfiles para mostrar" > 
- 						<listhead> 
- 							<listheader label="Disponibles" /> 
- 						</listhead> 
- 						<template name="model" >
-							<listitem >
-								<listcell label="${each.nombre}" />
-							</listitem>
-						</template> 
- 					</listbox> 
- 				</div> 
-				
- 				<div class="col-md-2"> 
- 					<h:span style="padding-top: 25px; display: block;" /> 
- 					<h:p> <button onClick="userSave.addProfiles(usrlb);" iconSclass="z-icon-caret-right" tooltiptext="asignar perfil" /> </h:p> 
- 					<h:p> <button onClick="userSave.removeProfiles(usrlb);" iconSclass="z-icon-caret-left" tooltiptext="remover perfil" /> </h:p> 
- 					<h:span style="padding-top: 20px; display: block;" /> 
- 				</div>		
- 				<div class="col-md-5" style="padding: 3px;" > 
- 					 <listbox id="up" onCreate="userSave.showProfiles(self);"  >  
- 						<listhead> 
- 							<listheader label="Asignadas" /> 
- 						</listhead> 
- 						<listitem self="@{each=up}" value="@{up}"> 
- 							<listcell label="@{up.perfil}" /> 
- 						</listitem> 
- 					 </listbox>
- 				</div> 
- 			</div> 
- 		</div> 
-			
-			
-		</div> 
-	</div> 
+	</div>
 	
 	<separator spacing="10px" />	
 		

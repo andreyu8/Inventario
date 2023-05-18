@@ -50,18 +50,18 @@
 				<label value="Categoría*" sclass="editField" />
 				<h:p> <combobox value="@bind(productEdit.producto.categoria.categoria)"
 							 		onCreate="categoryController.loadCategory(self);" 
-						 			id="catcb" constraint="${cmv}" width="400px;"/> </h:p>
+						 			id="catcb" constraint="${cmv}"/> </h:p>
 			</div>		
 		
 		
 			<div class="col-md-4">
 				<label value="Codigo*" sclass="editField" />
-				<h:p> <textbox value="@bind(productEdit.producto.codigo)" constraint="${tmv}" width="400px;"/> </h:p>
+				<h:p> <textbox value="@bind(productEdit.producto.codigo)" constraint="${tmv}" /> </h:p>
 			</div>
 		
 			<div class="col-md-4">
 				<label value="Nombre*" sclass="editField" />
-				<h:p> <textbox value="@bind(productEdit.producto.nombre)" constraint="${tmv}" width="400px;"/> </h:p>
+				<h:p> <textbox value="@bind(productEdit.producto.nombre)" constraint="${tmv}" /> </h:p>
 			</div>
 			
 			<!-- <div class="col-md-4">
@@ -74,29 +74,29 @@
 				<label value="Unidad de medida*" sclass="editField" />
 				<h:p> <combobox value="@bind(productEdit.producto.unidadMedida.unidadMedida)"
 							 		onCreate="unitMeasureController.loadUnitMeasure(self);" 
-						 			id="umcb" constraint="${cmv}" width="400px;"/> </h:p>
+						 			id="umcb" constraint="${cmv}"/> </h:p>
 			</div>		
 		
 			
 			<div class="col-md-4">
 				<label value="Precio compra" sclass="editField" />
-				<h:p> <doublebox value="@bind(productEdit.producto.precioCompra)" width="400px;"/> </h:p>
+				<h:p> <doublebox value="@bind(productEdit.producto.precioCompra)" /> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Precio de venta" sclass="editField" />
-				<h:p> <doublebox value="@bind(productEdit.producto.precioVenta)" width="400px;"/> </h:p>
+				<h:p> <doublebox value="@bind(productEdit.producto.precioVenta)" /> </h:p>
 			</div>
 			
 			
 			<div class="col-md-4">
 				<label value="Maximo*" sclass="editField" />
-				<h:p> <intbox value="@bind(productEdit.producto.maximo)" width="400px;"/> </h:p>
+				<h:p> <intbox value="@bind(productEdit.producto.maximo)" /> </h:p>
 			</div>
 			
 			<div class="col-md-4">
 				<label value="Minimo*" sclass="editField" />
-				<h:p> <intbox value="@bind(productEdit.producto.minimo)" width="400px;"/> </h:p>
+				<h:p> <intbox value="@bind(productEdit.producto.minimo)"/> </h:p>
 			</div>
 	
 		

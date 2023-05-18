@@ -8,9 +8,6 @@
 	<zscript>
 		import com.seidor.inventario.adapter.UnitMeasureAdapter;
 		import com.seidor.inventario.navigation.*;
-		import org.zkoss.zk.ui.event.Event;
-		import org.zkoss.zk.ui.event.EventListener;
-		
 		
 		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
 		
@@ -23,15 +20,6 @@
 		public void update(){
 			fcv.validate(win);
 			unitMeasureController.update(unitMeasureEdit, state, win);
-		}
-		
-		public void delete(){
-			Action deleteAction = new Action() {
-				public void execute(){
-					unitMeasureController.delete(unitMeasureEdit, state, win);
-				}
-			};
-			NavigationControl.openModalWindowWithMessage("¿Está seguro de eliminar la unidad actual?", deleteAction);
 		}
 	</zscript>
 	
@@ -78,6 +66,16 @@
 		</div>
 	</div>
 	
+	<zscript>
+		public void delete(){
+			Action deleteAction = new Action() {
+				public void execute(){
+					unitMeasureController.delete(unitMeasureEdit, state, win);
+				}
+			};
+			NavigationControl.openModalWindowWithMessage("¿Está seguro de eliminar la unidad actual?", deleteAction);
+		}
+	</zscript>
 	
 </window>
 </zk>

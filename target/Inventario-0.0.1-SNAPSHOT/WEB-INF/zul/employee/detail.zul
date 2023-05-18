@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-	
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 <?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
 <window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
+	
 	<zscript>
 		import com.seidor.inventario.adapter.EmployeeAdapter;
 		import com.seidor.inventario.navigation.*;
@@ -27,88 +27,56 @@
 			navigationControl.changeView(win, state);
 		}
 	</zscript>
-
-<div class="row sectionBox animated aniFadeIn">
-		<div class="col-md-6" align="left" >
-			<h:span style="padding-top: 5px; display: block;" />
-			<label value="Detalle del cliente" sclass="sectionTitle" />
-			<label value="(${employeeDetail.empleado.nombre})" style="font-size: 12px;" />
-		</div>
-		<div class="col-md-6" align="right" >
-			<button label="modificar" onClick="modify();" iconSclass="z-icon-pencil" />
+	
+	<div class="row sectionBoxAlt animated aniFadeIn">
+		<div class="row">
+			<div class="col-md-8">
+				<h:span style="padding-top: 5px; display: block;" />
+				<div align="left" style="float: left;" >
+					<label value="Detalle de la Unidad" sclass="sectionTitle" />	
+					<label value="(${employeeSave.nombre})" style="font-size: 12px;" />
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div align="right" style="float: right;" >
+					<button label="modificar" onClick="modify();" iconSclass="z-icon-pencil" />
+				</div>
+			</div>
 		</div>
 	</div>
 	
-	<div class="row subBox animated aniFadeIn">
+	<div class="row subBoxAlt animated aniFadeIn" >
 		<div class="col-md-12">
-			<label value="Datos generales" />
+			<label value="Datos del empleado" />
 		</div>
 	</div>
-	
-	<div class="row container animated aniFadeIn" >
-			
-		<div class="col-md-4">
-				<label value="Nombre" sclass="detailField"/>
-				<h:p> <label value="@bind(employeeDetail.empleado.nombre)" sclass="detailData" /> </h:p>
+	<div class="container animated aniFadeIn" >
+		<div class="row editBox">
+			<div class="col-md-4">
+				<label value="Nombre*" sclass="detailField"/>
+				<h:p> <textbox value="@bind(employeeDetail.nombre)" constraint="${tmv}" width="400px;"/> </h:p>
 			</div>
 			<div class="col-md-4">
-				<label value="A. Paterno" sclass="detailField" />
-				<h:p> <label value="@bind(employeeDetail.empleado.APaterno)" sclass="detailData" /> </h:p>
+				<label value="A. Paterno*" sclass="detailField" />
+				<h:p> <textbox value="@bind(employeeDetail.APaterno)" constraint="${tmv}" width="400px;"/> </h:p>
 			</div>
 			<div class="col-md-4">
-				<label value="A. Materno" sclass="detailField" />
-				<h:p> <label value="@bind(employeeDetail.empleado.AMaterno)" sclass="detailData" /> </h:p>
+				<label value="A. Materno*" sclass="detailField" />
+				<h:p> <textbox value="@bind(employeeDetail.APaterno)" sclass="detailData" /> </h:p>
 			</div>
 			<div class="col-md-4">
-				<label value="Cargo" sclass="detailField"/>
-				<h:p> <label value="@bind(employeeDetail.empleado.cargo)" sclass="detailData" /> </h:p>
+				<label value="Cargo*" sclass="detailField"/>
+				<h:p> <textbox value="@bind(employeeDetail.cargo)" sclass="detailData" /> </h:p>
 			</div>
 			<div class="col-md-4">
-				<label value="Almacen" sclass="detailField" />
-				<h:p> <label value="@bind(employeeDetail.empleado.almacen.almacen)" sclass="detailData" /> </h:p>
+				<label value="Almacen*" sclass="detailField" />
+				<h:p> <textbox value="@bind(employeeDetail.almacen)" sclass="detailData" /> </h:p>
 			</div>
 			<div class="col-md-4">
-				<label value="Correo" sclass="detailField"/>
-				<h:p> <label value="@bind(employeeDetail.empleado.EMail)" sclass="detailData" /> </h:p>
+				<label value="Correo*" sclass="detailField"/>
+				<h:p> <textbox value="@bind(employeeDetail.EMail)" sclass="detailData" /> </h:p>
 			</div>
-			<div class="col-md-4">
-				<label value="CURP" sclass="detailField"/>
-				<h:p> <label value="@bind(employeeDetail.empleado.curp)" sclass="detailData" /> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="RFC" sclass="detailField"/>
-				<h:p> <label value="@bind(employeeDetail.empleado.rfc)" sclass="detailData" /> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="Numero de Empleado" sclass="detailField" />
-				<h:p> <label value="@bind(employeeDetail.empleado.numeroEmpleado)" sclass="detailData"/> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="Telefono" sclass="detailField" />
-				<h:p> <label value="@bind(employeeDetail.empleado.telefono)" sclass="detailData" /> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="Extensión" sclass="detailField" />
-				<h:p> <label value="@bind(employeeDetail.empleado.extension)" sclass="detailData" /> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="Celular" sclass="detailField" />
-				<h:p> <label value="@bind(employeeDetail.empleado.celular)" sclass="detailData" /> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="Numero del Seguro Social" sclass="detailField" />
-				<h:p> <label value="@bind(employeeDetail.empleado.numeroSegSocial)" sclass="detailData" /> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="Fecha de registro" sclass="detailField" />
-				<h:p> <label value="@bind(employeeDetail.empleado.fechaRegistro)" sclass="detailData" /> </h:p>
-			</div>
-			<div class="col-md-3">
-            <label value="Activo" sclass="detailField" />
-            <h:p>  
-            	<checkbox mold="switch" checked="${employeeDetail.falgActive}" disabled="true"/>
-            </h:p>	
-         </div>
+		</div>
 	</div>
 	
 	<separator spacing="10px" />

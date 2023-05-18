@@ -187,6 +187,7 @@ com\seidor\inventario\dao\TypeWorkDAO.class
 com\seidor\inventario\validation\DateboxMandatoryValidator.class
 com\seidor\inventario\adapter\search\InvoiceSearchAdapter.class
 com\seidor\inventario\inroweditablecomps\IREditablePassbox.class
+com\seidor\inventario\adapter\UserChangeKeyAdapter.class
 com\seidor\inventario\navigation\NavigationRenderer$FirstEvent.class
 com\seidor\inventario\model\Factura.class
 com\seidor\inventario\inroweditablecomps\IREditableBandbox$1.class
