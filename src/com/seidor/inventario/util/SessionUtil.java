@@ -3,6 +3,7 @@ package com.seidor.inventario.util;
 import java.util.ArrayList;
 
 import com.seidor.inventario.constants.RoleConstants;
+import com.seidor.inventario.model.PerfilUsuario;
 import com.seidor.inventario.model.Usuario;
 //import com.seidor.officereserv.constant.RoleConstants;
 //import com.seidor.officereserv.constant.SystemPropertiesConstants;
@@ -115,15 +116,15 @@ public class SessionUtil {
 		Sessions.getCurrent().setAttribute("loginId", null);
 	}
 	
-	public static void addUserRoles( ArrayList<String> userRoles){
-		Sessions.getCurrent().setAttribute(RoleConstants.USER_ROLES, userRoles);
+		
+	public static void setUserRoles(ArrayList<PerfilUsuario> roles) {
+		Sessions.getCurrent().setAttribute(RoleConstants.USER_ROLES, roles);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static ArrayList<String> getUserRoles(){
-		return (ArrayList<String>)Sessions.getCurrent().getAttribute(RoleConstants.USER_ROLES);
+	public static ArrayList<PerfilUsuario> getUserRoles(){
+		return (ArrayList<PerfilUsuario>)Sessions.getCurrent().getAttribute(RoleConstants.USER_ROLES);
 	}
-	
 	
 	
 }

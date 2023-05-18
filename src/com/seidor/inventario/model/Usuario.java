@@ -12,7 +12,6 @@ public class Usuario implements java.io.Serializable {
 
 	private Integer idUsuario;
 	private Empleado empleado;
-	private Almacen almacen;
 	private String usuario;
 	private String password;
 	private Date fecha;
@@ -91,14 +90,6 @@ public class Usuario implements java.io.Serializable {
 
 	public void setPerfilUsuarios(Set perfilUsuarios) {
 		this.perfilUsuarios = perfilUsuarios;
-	}
-
-	public Almacen getAlmacen() {
-		return almacen;
-	}
-
-	public void setAlmacen(Almacen almacen) {
-		this.almacen = almacen;
 	}
 
 }

@@ -2,6 +2,13 @@ package com.seidor.inventario.controller;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.zkoss.spring.SpringUtil;
+import org.zkoss.zk.ui.Component;
+import org.zkoss.zul.Combobox;
+import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Listbox;
+
 import com.seidor.inventario.adapter.EmployeeAdapter;
 import com.seidor.inventario.adapter.render.EmployeeComboitemRenderer;
 import com.seidor.inventario.adapter.search.EmployeeSearchAdapter;
@@ -11,19 +18,6 @@ import com.seidor.inventario.navigation.NavigationControl;
 import com.seidor.inventario.navigation.NavigationState;
 import com.seidor.inventario.navigation.NavigationStates;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.zkoss.spring.SpringUtil;
-import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.WrongValueException;
-import org.zkoss.zul.Checkbox;
-import org.zkoss.zul.Combobox;
-import org.zkoss.zul.Label;
-import org.zkoss.zul.ListModelList;
-import org.zkoss.zul.Listbox;
-import org.zkoss.zul.Menu;
-import org.zkoss.zul.Textbox;
-import org.zkoss.zul.ext.SelectionControl;
-
 public class EmployeeController {
 
 	@Autowired
@@ -31,7 +25,7 @@ public class EmployeeController {
 	
 	@Autowired
 	private NavigationControl navigationControl;
-
+	
 	public EmployeeManager getEmployeeManager() {
 		return employeeManager;
 	}
@@ -76,7 +70,7 @@ public class EmployeeController {
 			for (int i = 0; i < lb.getModel().getSize(); i++) {
 				Empleado u = (Empleado)lb.getModel().getElementAt(i);
 				detailLabels.add(u.getNombre());
-				if (u.getIdEmpleado().equals(employee.getIdEmpleado())) state.setDetailIndex(detailList.size() - 0);
+				if (u.getIdEmpleado().equals(employee.getIdEmpleado())) state.setDetailIndex(detailList.size() - 1);
 			}
 			state.setDetailList(detailList);
 			state.setDetailLabels(detailLabels);
@@ -126,10 +120,6 @@ public class EmployeeController {
 
 	public void save(EmployeeAdapter pa, NavigationState state, Component win){
 		
-		Combobox empl = (Combobox) win.getFellowIfAny("empld");
-		if (empl != null && empl.getSelectedItem() !=null)
-			pa.getEmpleado().setIdEmpleado(null);
-		
 		pa.getEmpleado().setActivo(1);
 		
 		this.employeeManager.save(pa.getEmpleado());
@@ -143,7 +133,11 @@ public class EmployeeController {
 	
 	public void update(EmployeeAdapter pa, NavigationState state, Component win){
 		
-		pa.getEmpleado().setActivo(1);
+		
+		if (pa.getFalgActive())
+			pa.getEmpleado().setActivo(1);
+		else
+			pa.getEmpleado().setActivo(0);
 		
 		this.employeeManager.update(pa.getEmpleado());
 			

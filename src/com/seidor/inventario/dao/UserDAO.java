@@ -122,8 +122,8 @@ public class UserDAO extends HibernateDaoSupport {
 		Criteria criteria = DaoUtil.getCriteria(session, Usuario.class);
 		criteria.add(Restrictions.in("id", ids));
 		
-//		criteria.setFetchMode("userProfiles", FetchMode.JOIN);
-//		criteria.setFetchMode("userProfiles.profile", FetchMode.JOIN);
+		criteria.setFetchMode("empleado", FetchMode.JOIN);
+		criteria.setFetchMode("empleado.almacen", FetchMode.JOIN);
 
 		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		List<Usuario> result = criteria.list();
@@ -179,6 +179,25 @@ public class UserDAO extends HibernateDaoSupport {
 		session.close();
 		
 		return new ArrayList<Usuario>(result);
+	}
+
+	public void insertProfile(ArrayList<PerfilUsuario> profilesAdd) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		for (PerfilUsuario p: profilesAdd) {
+			session.save(p);
+		}	
+		session.flush();
+		session.close();
+		
+	}
+
+	public void deleteProfile(ArrayList<PerfilUsuario> profilesDeleted) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		for (PerfilUsuario p: profilesDeleted) {
+			session.update(profilesDeleted);
+		}	
+		session.flush();
+		session.close();
 	}
 	
 //	@SuppressWarnings("unchecked")

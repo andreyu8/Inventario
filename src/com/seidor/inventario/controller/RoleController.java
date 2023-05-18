@@ -12,6 +12,7 @@ import com.seidor.inventario.model.Perfil;
 import com.seidor.inventario.model.PerfilUsuario;
 import com.seidor.inventario.navigation.NavigationControl;
 import com.seidor.inventario.navigation.NavigationState;
+import com.seidor.inventario.util.SessionUtil;
 
 public class RoleController {
 	
@@ -49,15 +50,39 @@ public class RoleController {
 		lb.setCheckmark(true);
 	}
 	
-	public void search(Listbox lb, UserAdapter userDetail, NavigationState state){
+	public void readSearch(Listbox lb, UserAdapter userDetail, NavigationState state){
 		ArrayList<Perfil> role = new ArrayList<Perfil> ();
 		
-		//for (PerfilUsuario pu : userDetail.getProfiles()) {
-		//	role.add(pu.getPerfil());
-		//}
+		for (PerfilUsuario pu : userDetail.getProfiles()) {
+			role.add(pu.getPerfil());
+		}
 
 		ListModelList<Perfil> model = new ListModelList<Perfil>(role);
 		lb.setModel(model);
+	}
+	
+	
+	public Boolean checkRoles(String profileList) {
+		String[] profiles = profileList.split(",");
+		Boolean hasRole = false;
+		for (String profile : profiles){
+			hasRole = userHasRole(profile);
+			if (hasRole) break;
+		}
+		return hasRole;
+	}
+	
+	public Boolean userHasRole(String profile){
+		Boolean hasRole = false;
+		ArrayList<PerfilUsuario> userRoles = SessionUtil.getUserRoles();
+		if (userRoles == null) return false;
+		for (PerfilUsuario r: userRoles) {
+			if (r.getPerfil().getNombre().equals(profile)) {
+				hasRole = true;
+			}	
+		}
+		
+		return hasRole;
 	}
 
 }

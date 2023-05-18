@@ -27,8 +27,8 @@
 		<div class="col-md-6" align="left" >
 			<h:span style="padding-top: 5px; display: block;" />
 			<label value="Detalle de usuario" sclass="sectionTitle" />
-			<label value="${userEdit.nameComplete}" />
-			<label value="(${userEdit.usuario.empleado.EMail})" style="font-size: 12px;" />
+			<label value="${userDetail.nameComplete}" />
+			<label value="(${userDetail.usuario.empleado.EMail})" style="font-size: 12px;" />
 		</div>
 		<div class="col-md-6" align="right" >
 			 <button label="modificar" onClick="modify();" iconSclass="z-icon-pencil" /> 
@@ -60,7 +60,7 @@
 		</div>
 		
 		<div class="col-md-3">
-			<label value="Contraseña" sclass="detailField" />
+			<label value="Password" sclass="detailField" />
 			<h:p> <label value="${userDetail.usuario.password}" sclass="detailData" /> </h:p>
 		</div>
 		
@@ -76,6 +76,11 @@
 		</div>
 		
 		<div class="col-md-3">
+			<label value="Id del empleado" sclass="detailField" />
+			<h:p> <label value="${userDetail.usuario.empleado.idEmpleado}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
 			<label value="No.Empleado" sclass="detailField" />
 			<h:p> <label value="${userDetail.usuario.empleado.numeroEmpleado}" sclass="detailData" /> </h:p>
 		</div>
@@ -84,7 +89,6 @@
 			<label value="Nombre completo" sclass="detailField" />
 			<h:p> <label value="${userDetail.nameComplete}" sclass="detailData" /> </h:p>
 		</div>
-		
 		<div class="col-md-3">
 			<label value="Email" sclass="detailField" />
 			<h:p> <label value="${userDetail.usuario.empleado.EMail}" sclass="detailData" /> </h:p>
@@ -124,7 +128,7 @@
 			<h:p> <label value="${userDetail.usuario.empleado.almacen.almacen}" sclass="detailData" /> </h:p>
 		</div>
 		
-		<!-- <div class="col-md-6">
+		<div class="col-md-6">
 			<listbox id="usrlb" onCreate="roleController.readSearch(usrlb, userDetail,  state);"  emptyMessage="No se encontrarón Perfiles para mostrar" >
 				<listhead>
 					<listheader label="id" hflex="3" sort="auto(lower(idPerfil))" />
@@ -137,7 +141,7 @@
 					</listitem>
 				</template>
 			</listbox>
-		</div>	 -->
+		</div>	
 		
 		
 	</div>

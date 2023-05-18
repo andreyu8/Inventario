@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-	
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
-<?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
 <window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
@@ -59,7 +57,7 @@
 			</div>
 			<div class="col-md-4">
 				<label value="A. Materno*" sclass="editField" />
-				<h:p> <textbox value="@bind(employeeSave.empleado.AMaterno)" constraint="${tmv}" width="400px;"/> </h:p>
+				<h:p> <textbox value="@bind(employeeSave.empleado.APaterno)" constraint="${tmv}" width="400px;"/> </h:p>
 			</div>
 			<div class="col-md-4">
 				<label value="Cargo*" sclass="editField" />
@@ -67,52 +65,12 @@
 			</div>
 			<div class="col-md-4">
 				<label value="Almacen*" sclass="editField" />
-				<h:p> <combobox value="@bind(employeeSave.empleado.almacen.almacen)"
-							 		onCreate="warehouseController.loadAlmacen(self);" 
-						 			id="clicb" constraint="${cmv}" width="400px;"/> </h:p>
+				<h:p> <textbox value="@bind(employeeSave.empleado.almacen)" constraint="${tmv}" width="400px;"/> </h:p>
 			</div>
 			<div class="col-md-4">
 				<label value="Correo*" sclass="editField" />
 				<h:p> <textbox value="@bind(employeeSave.empleado.EMail)" constraint="${tmv}" width="400px;"/> </h:p>
 			</div>
-			<div class="col-md-4">
-				<label value="CURP*" sclass="editField" />
-				<h:p> <textbox value="@bind(employeeSave.empleado.curp)" constraint="${tmv}" width="400px;"/> </h:p>
-			</div>	
-			<div class="col-md-4">
-				<label value="RFC*" sclass="editField" />
-				<h:p> <textbox value="@bind(employeeSave.empleado.rfc)" constraint="${tmv}" width="400px;"/> </h:p>
-			</div>	
-			<div class="col-md-4">
-				<label value="Numero de Empleado*" sclass="editField" />
-				<h:p> <textbox value="@bind(employeeSave.empleado.numeroEmpleado)" constraint="${tmv}" width="400px;"/> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="Telefono*" sclass="editField" />
-				<h:p> <textbox value="@bind(employeeSave.empleado.telefono)" constraint="${tmv}" width="400px;"/> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="Extensión*" sclass="editField" />
-				<h:p> <textbox value="@bind(employeeSave.empleado.extension)" constraint="${tmv}" width="400px;"/> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="Celular*" sclass="editField" />
-				<h:p> <textbox value="@bind(employeeSave.empleado.celular)" constraint="${tmv}" width="400px;"/> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="Numero del Seguro Social*" sclass="editField" />
-				<h:p> <textbox value="@bind(employeeSave.empleado.numeroSegSocial)" constraint="${tmv}" width="400px;"/> </h:p>
-			</div>
-			<div class="col-md-4">
-				<label value="Fecha de registro*" sclass="editField" />
-				<h:p> <datebox value="@bind(employeeSave.empleado.fechaRegistro)" constraint="${tmv}" width="400px;"/> </h:p>
-			</div>
-			<div class="col-md-4">
-                <label value="Activo" sclass="editField" />
-                <h:p>  
-                	<checkbox mold="switch" checked="@bind(employeeSave.falgActive)"/>
-                </h:p>	
-            </div>
 		</div>
 	</div>
 	

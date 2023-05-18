@@ -31,6 +31,7 @@ public class RoleDAO extends HibernateDaoSupport {
 	public ArrayList<Perfil> getAll(){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		Criteria criteria = DaoUtil.getCriteria(session, Perfil.class);
+		criteria.add(Restrictions.eq("activo", 1));
 		criteria.addOrder(Order.asc("idPerfil"));
 		List<Perfil> result = criteria.list();
 		session.flush();

@@ -148,6 +148,14 @@
 			navigationControl.changeView(headerwin, state);
 		}
 		
+		void updatePassword (){
+			state.setUri("/WEB-INF/zul/login/modalPass.zul");
+			state.startBreadCrumbsPathFromHome("Actualizar password");
+			navigationControl.changeView(headerwin, state);
+		}
+		
+		
+		
 	]]></zscript>
 	
 	<style src="${stylesUrl}styles/header.css" />
@@ -253,17 +261,20 @@
 					</menupopup>
 				</menu>
 				
-				<menu id="usrmenu" label="Configuración" iconSclass="z-icon-cogs"  > <!-- onCreate="roleController.checkRoles(self);" -->
+				<menu id="usrmenu" label="Configuración" iconSclass="z-icon-cogs" > 
 					<menupopup width="190px" >
 						<menuitem label="Inicio" onClick="home();" iconSclass="z-icon-home"/>
 						<menuseparator/>
-						<menuitem label="Empleados" onClick="employee();" iconSclass="z-icon-group" >
-							<custom-attributes roleList="ADMIN" />
+						<menuitem label="Empleados" onClick="employee();" iconSclass="z-icon-group" visible='roleController.checkRoles(self.getAttribute("roleList"));'>
+							<custom-attributes roleList="ADMINISTRADOR GENERAL" />
 						</menuitem>
-						<menuseparator >
+						<menuitem label="Cambiar Password" onClick="updatePassword();" iconSclass="z-icon-group" >
+							<custom-attributes roleList="USER_CAP" />
+						</menuitem>
+						<menuseparator>
 							<custom-attributes roleList="ADMIN" />
 						</menuseparator>	
-						<menuitem label="Usuarios" onClick="users();" iconSclass="z-icon-group" >
+						<menuitem label="Usuarios" onClick="users();" iconSclass="z-icon-group">
 							<custom-attributes roleList="ADMIN" />
 						</menuitem>
 						<menuseparator >

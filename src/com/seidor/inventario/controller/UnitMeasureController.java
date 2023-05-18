@@ -144,7 +144,6 @@ public class UnitMeasureController {
 	}
 	
 	public void delete(UnitMeasureAdapter um, NavigationState state, Component win){		
-		//if productManager 
 		this.unitMeasureManager.delete(um.getUnidadMedida());
 		
 		state.setUri("/WEB-INF/zul/mesure/main.zul");

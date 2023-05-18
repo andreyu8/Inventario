@@ -46,7 +46,7 @@
 		<div class="row editBox">
 		
 		<div class="col-md-3">
-			<label value="Nombre*" sclass="editField" />
+			<label value="Nombre" sclass="editField" />
 			<h:p> <textbox value="@bind(clientEdit.cliente.nombre)" sclass="detailData" width="300px"/> </h:p>
 		</div>
 		
@@ -56,22 +56,22 @@
 		</div>
 		
 		<div class="col-md-3">
-			<label value="Dirección*" sclass="editField" />
+			<label value="Dirección" sclass="editField" />
 			<h:p> <textbox value="@bind(clientEdit.cliente.direccion)" sclass="detailData" width="300px"/> </h:p>
 		</div>
 		
 		<div class="col-md-3">
-			<label value="Telefono*" sclass="editField" />
+			<label value="Telefono" sclass="editField" />
 			<h:p> <textbox value="@bind(clientEdit.cliente.telefono)" sclass="detailData" width="300px"/> </h:p>
 		</div>
 		
 		<div class="col-md-3">
-			<label value="Extension*" sclass="editField" />
+			<label value="Extension" sclass="editField" />
 			<h:p> <textbox value="@bind(clientEdit.cliente.extension)" sclass="detailData" width="300px"/> </h:p>
 		</div>
 		
 		<div class="col-md-3">
-			<label value="Correo*" sclass="editField" />
+			<label value="Correo" sclass="editField" />
 			<h:p> <textbox value="@bind(clientEdit.cliente.EMail)" sclass="detailData" width="300px"/> </h:p>
 		</div>	
 				

@@ -63,7 +63,7 @@ public class UnitMeasureDAO extends HibernateDaoSupport {
 	
 	public void delete(UnidadMedida um){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
-		session.delete(um);
+		session.update(um);
 		session.flush();
 		session.close();
 	}

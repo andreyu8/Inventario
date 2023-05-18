@@ -23,6 +23,9 @@ public class WarehouseController {
 	}
 
 
+
+
+
 	public void loadAlmacen(Combobox combo) {
 		ArrayList<Almacen> almacenes = this.warehouseManager.getAll();
 		if (almacenes != null) {

@@ -8,14 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.spring.SpringUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.WrongValueException;
+import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Menu;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.ext.SelectionControl;
 
 import com.seidor.inventario.adapter.UserAdapter;
+import com.seidor.inventario.adapter.UserChangeKeyAdapter;
+import com.seidor.inventario.adapter.listitem.CloseitemAdapter;
 import com.seidor.inventario.adapter.search.UserSearchAdapter;
 import com.seidor.inventario.exception.BusinessException;
 import com.seidor.inventario.manager.RoleManager;
@@ -94,7 +98,9 @@ public class UserController {
 		
 		SessionUtil.setSucursalId(user.getEmpleado().getAlmacen().getIdAlmacen());
 		
-		//RoleController.initRoles(user);
+		ArrayList<PerfilUsuario> roles = roleManager.getProfileUser(user);
+		SessionUtil.setUserRoles (roles);
+		
 			
 		this.navigationControl.showApplication(win);
 	}
@@ -142,13 +148,15 @@ public class UserController {
 		UserAdapter ua = new UserAdapter();
 		
 		Usuario user = this.userManager.get(userId);
+		ua.setNameComplete(user.getEmpleado().getNombre()+" "+(user.getEmpleado().getAPaterno() == null ? "" :  user.getEmpleado().getAPaterno() ) +" "+(user.getEmpleado().getAMaterno() == null ? "" :  user.getEmpleado().getAMaterno()));
 		ua.setUsuario(user);
 		
-//		ArrayList<Profile> allProfiles = this.userManager.getAllProfiles();
-//		ua.setAllProfiles(allProfiles);
-//		
-//		ArrayList<UserProfile> profiles = this.userManager.getProfilesForUser(userId);
-//		ua.setProfiles(profiles);
+		ArrayList<Perfil> allProfiles = this.roleManager.getAll();
+		ua.setAllProfiles(allProfiles);
+
+	
+		ArrayList<PerfilUsuario> profiles = this.roleManager.getProfileUser(user);
+		ua.setProfiles(profiles);
 		
 		return ua;
 	}
@@ -166,6 +174,60 @@ public class UserController {
 
 		return ua;
 	}
+	
+	
+	public UserChangeKeyAdapter  readUserKeyPass () {
+		
+		UserChangeKeyAdapter uck = new UserChangeKeyAdapter();
+		int userId = SessionUtil.getLoggedUserId();
+		
+		Usuario user = this.userManager.get(userId);
+			
+		uck.setUsuario(user);
+		uck.setPasswordNew("");
+		uck.setPasswordNew2("");
+		
+		return uck;
+		
+	}
+	
+	
+	
+	public void updatePassword(UserChangeKeyAdapter ua, NavigationState state, Component win){
+	
+		Textbox pstb = (Textbox)win.getFellowIfAny("pstb");
+		if (pstb.getValue() != null && pstb.getValue().length() > 0) {
+			if (pstb.getValue().length() >= 6) {
+		
+				Textbox pctb = (Textbox)win.getFellowIfAny("pctb");
+				if (pctb.getValue() != null && pstb.getValue().equals(pctb.getValue())){
+					String pass = EncryptUtil.encryptSHA(pstb.getValue());
+					ua.getUsuario().setPassword(pass);
+					
+					userManager.update(ua.getUsuario());
+					
+				}
+				else {
+					throw new WrongValueException(pctb, "Confirmación de contraseña incorrecta");
+				}
+			}
+			else {
+				throw new WrongValueException(pstb, "La contraseña debe tener al menos 6 caracteres");
+			}
+		}
+		else {
+			throw new WrongValueException(pstb, "Debe indicar una contraseña para el usuario");
+		}
+		
+		
+		state.setDetailIdentifier(ua.getUsuario().getIdUsuario());
+		state.setUri("/WEB-INF/zul/user/detail.zul");
+		state.removeLastBreadCrumbs();
+		state.appendBreadCrumbsPath(ua.getUsuario().getEmpleado().getNombre());
+		this.navigationControl.changeView(win, state);
+	}
+	
+	
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void save(UserAdapter ua, NavigationState state, Component win){
@@ -272,21 +334,15 @@ public class UserController {
 		
 		
 		if (!wrong) {
-//			if (!ua.hasAnyProfile()){
-//				throw new WrongValueException(win.getFellowIfAny("prolb"), "Debe agregar al menos un perfil al usuario");
-//			}
+			if (!ua.hasAnyProfile()){
+				throw new WrongValueException(win.getFellowIfAny("prolb"), "Debe agregar al menos un perfil al usuario");
+			}
 			
 			this.userManager.update(ua);
 			
 			if (ua.getUsuario().getIdUsuario().equals(SessionUtil.getLoggedUserId())) {
 				Component header = win.getDesktop().getPageIfAny("indexPage").getFellowIfAny("header");
 				Component footer = win.getDesktop().getPageIfAny("indexPage").getFellowIfAny("footer");
-				
-				Menu menu = (Menu)header.getFirstChild().getFellow("usrmenu");
-				menu.setLabel(ua.getUsuario().getEmpleado().getNombre());
-				
-				Label name = (Label)footer.getFirstChild().getFellow("usrname");
-				name.setValue(ua.getUsuario().getEmpleado().getNombre());
 			}
 			
 			NavigationStates navStates = (NavigationStates)SpringUtil.getBean("navigationStates");
@@ -308,6 +364,10 @@ public class UserController {
 		state.removeLastBreadCrumbs();
 		state.removeLastBreadCrumbs();
 		this.navigationControl.changeView(win, state);
-	}	
-
+	}
+	
+	
+	
+	
+	
 }

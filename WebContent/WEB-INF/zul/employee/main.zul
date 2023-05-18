@@ -41,7 +41,7 @@
 		}
 		
 		public void show(){
-			employeeController.show(catlb, state, winE);
+			//employeeController.show(catlb, state, winE);
 		}
 	</zscript>
 	
@@ -102,7 +102,7 @@
 					<listcell label="${each.AMaterno}" />
 					<listcell label="${each.cargo}" />
 					<listcell label="${each.almacen.almacen}" />
-					<listcell label="${each.EMail}" />
+					<listcell label="${each.activo}" />
 				</listitem>
 			</template>
 		</listbox>
