@@ -81,4 +81,17 @@ public class EmployeeDAO extends HibernateDaoSupport{
 		return new ArrayList<Empleado>(result);
 	}
 
+	@SuppressWarnings("unchecked")
+	public ArrayList<Empleado> getAllProject() {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = DaoUtil.getCriteria(session, Empleado.class);
+		criteria.add(Restrictions.eq("cargo", "JEFE DE PROYECTO"));
+		criteria.addOrder(Order.asc("nombre"));
+		List<Empleado> result = criteria.list();
+		session.flush();
+		session.close();
+		
+		return new ArrayList<Empleado>(result);
+	}
+
 }

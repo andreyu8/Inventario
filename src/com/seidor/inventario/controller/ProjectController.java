@@ -14,6 +14,7 @@ import com.seidor.inventario.adapter.render.EstatusComboItemRenderer;
 import com.seidor.inventario.adapter.render.ProjectComboitemRenderer;
 import com.seidor.inventario.adapter.search.ProjectSearchAdapter;
 import com.seidor.inventario.manager.ProjectManager;
+import com.seidor.inventario.model.Empleado;
 import com.seidor.inventario.model.EstatusProyecto;
 import com.seidor.inventario.model.Proyecto;
 import com.seidor.inventario.navigation.NavigationControl;
@@ -102,7 +103,9 @@ public class ProjectController {
 		
 		Proyecto project = new Proyecto();
 		EstatusProyecto s = new EstatusProyecto();
+		Empleado e= new Empleado();
 		pa.setProyecto(project);
+		pa.getProyecto().setEmpleado(e);
 		pa.getProyecto().setEstatusProyecto(s);
 		
 		
@@ -117,6 +120,12 @@ public class ProjectController {
 			pa.getProyecto().setEstatusProyecto((EstatusProyecto) escb.getSelectedItem().getValue());
 		else 
 			throw new WrongValueException(escb, "Debe de seleccionar una estatus");
+		
+		Combobox empcb = (Combobox) win.getFellowIfAny("cbemp");
+		if (empcb != null && escb.getSelectedItem()!=null )
+			pa.getProyecto().setEmpleado((Empleado) empcb.getSelectedItem().getValue());
+		else 
+			throw new WrongValueException(empcb, "Debe de seleccionar un empleado");
 		
 		
 		this.projectManager.save(pa.getProyecto());
@@ -136,6 +145,11 @@ public class ProjectController {
 		else 
 			throw new WrongValueException(escb, "Debe de seleccionar una estatus");
 		
+		Combobox empcb = (Combobox) win.getFellowIfAny("cbemp");
+		if (empcb != null && escb.getSelectedItem()!=null )
+			pa.getProyecto().setEmpleado((Empleado) empcb.getSelectedItem().getValue());
+		else 
+			throw new WrongValueException(empcb, "Debe de seleccionar un empleado");
 		
 		this.projectManager.update(pa.getProyecto());
 			

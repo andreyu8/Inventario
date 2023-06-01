@@ -15,6 +15,7 @@ import com.seidor.inventario.adapter.render.PurchaseOrderComboitemRenderer;
 import com.seidor.inventario.adapter.render.StatusTypeOrderComboitemRenderer;
 import com.seidor.inventario.adapter.render.TypePaymentComboitemRenderer;
 import com.seidor.inventario.adapter.search.PurchaseOrderSearchAdapter;
+import com.seidor.inventario.manager.EmployeeManager;
 import com.seidor.inventario.manager.PurchaseOrderManager;
 import com.seidor.inventario.model.Area;
 import com.seidor.inventario.model.Cliente;
@@ -29,6 +30,7 @@ import com.seidor.inventario.model.TipoPago;
 import com.seidor.inventario.navigation.NavigationControl;
 import com.seidor.inventario.navigation.NavigationState;
 import com.seidor.inventario.navigation.NavigationStates;
+import com.seidor.inventario.util.SessionUtil;
 
 public class PurchaseOrderController {
 
@@ -53,6 +55,8 @@ public class PurchaseOrderController {
 		this.navigationControl = navigationControl;
 	}
 
+	
+	
 
 	//business logic 
 	public void search(Listbox lb, PurchaseOrderSearchAdapter psa, NavigationState state){
@@ -108,6 +112,10 @@ public class PurchaseOrderController {
 		else 
 			throw new WrongValueException(fa, "Debe de seleccionar una factura");
 		
+		if (pa.getOrderCompra().getFactura().getIdFactura() == 0)
+			pa.getOrderCompra().setFactura(null);
+			
+		
 		Combobox etapa = (Combobox) win.getFellowIfAny("etapcb");
 		if (etapa != null && etapa.getSelectedItem()!=null )
 			pa.getOrderCompra().setEtapa((Etapa) etapa.getSelectedItem().getValue());
@@ -126,11 +134,12 @@ public class PurchaseOrderController {
 		else 
 			throw new WrongValueException(toc, "Debe de seleccionar un tipo de orden de compra");
 		
-		Combobox empl = (Combobox) win.getFellowIfAny("cbemp");
+		/*Combobox empl = (Combobox) win.getFellowIfAny("cbemp");
 		if (empl != null && empl.getSelectedItem()!=null )
 			pa.getOrderCompra().setEmpleado((Empleado) empl.getSelectedItem().getValue());
 		else 
-			throw new WrongValueException(empl, "Debe de seleccionar un empleado");
+			throw new WrongValueException(empl, "Debe de seleccionar un empleado");*/
+		pa.getOrderCompra().setEmpleado((Empleado)SessionUtil.getEmpleadoId());
 		
 		Combobox proy = (Combobox) win.getFellowIfAny("prcb");
 		if (proy != null && proy.getSelectedItem()!=null )
@@ -196,11 +205,12 @@ public class PurchaseOrderController {
 		else 
 			throw new WrongValueException(toc, "Debe de seleccionar un tipo de orden de compra");
 		
-		Combobox empl = (Combobox) win.getFellowIfAny("cbemp");
+		/*Combobox empl = (Combobox) win.getFellowIfAny("cbemp");
 		if (empl != null && empl.getSelectedItem()!=null )
 			pa.getOrderCompra().setEmpleado((Empleado) empl.getSelectedItem().getValue());
 		else 
-			throw new WrongValueException(empl, "Debe de seleccionar un empleado");
+			throw new WrongValueException(empl, "Debe de seleccionar un empleado");*/
+		pa.getOrderCompra().setEmpleado((Empleado)SessionUtil.getEmpleadoId());
 		
 		Combobox proy = (Combobox) win.getFellowIfAny("prcb");
 		if (proy != null && proy.getSelectedItem()!=null )
@@ -274,6 +284,9 @@ public class PurchaseOrderController {
 		PurcharseAdapter pa = new PurcharseAdapter();
 		
 		OrdenCompra oc = this.purchaseOrderManager.get(providerId);
+		
+		if (oc.getFactura() == null)
+			oc.setFactura(new Factura());
 		
 		pa.setOrderCompra(oc);
 		

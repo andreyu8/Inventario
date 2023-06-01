@@ -84,6 +84,7 @@
 			<listhead>
 				<listheader label="Ver" width="50px" />
 				<listheader label="Nombre" hflex="3" />
+				<listheader label="No. Presupuesto" hflex="3"  />
 				<listheader label="Estatus" hflex="3"  />
 			</listhead>
 			<template name="model" >
@@ -92,6 +93,7 @@
 						<a iconSclass="z-icon-eye" onClick="show();" />
 					</listcell>
 					<listcell label="${each.nombre}" /> 
+					<listcell label="${each.numeroPresupuesto}" />
 					<listcell label="${each.estatusProyecto.descripcion}"/>
 				</listitem>
 			</template>

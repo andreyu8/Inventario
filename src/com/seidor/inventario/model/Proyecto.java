@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 29 mar. 2023 21:04:16 by Hibernate Tools 4.3.5.Final
+// Generated 22 may. 2023 18:00:34 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -11,10 +11,12 @@ import java.util.Set;
 public class Proyecto implements java.io.Serializable {
 
 	private Integer idProyecto;
+	private Empleado empleado;
 	private EstatusProyecto estatusProyecto;
 	private String nombre;
 	private Date fechaInicio;
 	private Date fechaFinal;
+	private String numeroPresupuesto;
 	private Set salidas = new HashSet(0);
 	private Set entradas = new HashSet(0);
 	private Set movimientosStocks = new HashSet(0);
@@ -28,12 +30,15 @@ public class Proyecto implements java.io.Serializable {
 		this.nombre = nombre;
 	}
 
-	public Proyecto(EstatusProyecto estatusProyecto, String nombre, Date fechaInicio, Date fechaFinal, Set salidas,
-			Set entradas, Set movimientosStocks, Set ordenCompras) {
+	public Proyecto(Empleado empleado, EstatusProyecto estatusProyecto, String nombre, Date fechaInicio,
+			Date fechaFinal, String numeroPresupuesto, Set salidas, Set entradas, Set movimientosStocks,
+			Set ordenCompras) {
+		this.empleado = empleado;
 		this.estatusProyecto = estatusProyecto;
 		this.nombre = nombre;
 		this.fechaInicio = fechaInicio;
 		this.fechaFinal = fechaFinal;
+		this.numeroPresupuesto = numeroPresupuesto;
 		this.salidas = salidas;
 		this.entradas = entradas;
 		this.movimientosStocks = movimientosStocks;
@@ -46,6 +51,14 @@ public class Proyecto implements java.io.Serializable {
 
 	public void setIdProyecto(Integer idProyecto) {
 		this.idProyecto = idProyecto;
+	}
+
+	public Empleado getEmpleado() {
+		return this.empleado;
+	}
+
+	public void setEmpleado(Empleado empleado) {
+		this.empleado = empleado;
 	}
 
 	public EstatusProyecto getEstatusProyecto() {
@@ -78,6 +91,14 @@ public class Proyecto implements java.io.Serializable {
 
 	public void setFechaFinal(Date fechaFinal) {
 		this.fechaFinal = fechaFinal;
+	}
+
+	public String getNumeroPresupuesto() {
+		return this.numeroPresupuesto;
+	}
+
+	public void setNumeroPresupuesto(String numeroPresupuesto) {
+		this.numeroPresupuesto = numeroPresupuesto;
 	}
 
 	public Set getSalidas() {

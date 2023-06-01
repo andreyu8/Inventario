@@ -51,6 +51,16 @@ public class EmployeeController {
 		}
 	}
 	
+	public void loadEmployeeProject(Combobox combo) {
+		ArrayList<Empleado> empleados = this.employeeManager.getAllProject();
+		if (empleados != null) {
+			ListModelList<Empleado> model = new ListModelList<Empleado>(empleados);
+			combo.setItemRenderer(new EmployeeComboitemRenderer());
+			combo.setModel(model);
+		}
+	}
+	
+	
 	public void search(Listbox lb, EmployeeSearchAdapter esa, NavigationState state){
 		ArrayList<Empleado> employee = this.employeeManager.search(esa);
 		

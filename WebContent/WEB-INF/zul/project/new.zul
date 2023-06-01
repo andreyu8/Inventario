@@ -50,6 +50,7 @@
 				<label value="Nombre*" sclass="editField" />
 				<h:p> <textbox value="@bind(projectSave.proyecto.nombre)" constraint="${tmv}" /> </h:p>
 			</div>
+			
 			<div class="col-md-4">
 				<label value="Fecha Inicio*" sclass="editField" />
 				<h:p> <datebox id="db1" cols="12" format="short" value="@bind(projectSave.proyecto.fechaInicio)" constraint="${dmv}" /> </h:p>
@@ -59,6 +60,19 @@
 				<label value="Fecha Termino" sclass="editField" />
 				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(projectSave.proyecto.fechaFinal)"  /> </h:p>
 			</div>
+			
+			<div class="col-md-4">
+				<label value="No. Presupuesto" sclass="editField" />
+				<h:p> <textbox value="@bind(projectSave.proyecto.numeroPresupuesto)" /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Empleado*" sclass="editField" />
+				<h:p> <combobox value="@bind(projectSave.proyecto.empleado.nombre)"
+							 		onCreate="employeeController.loadEmployeeProject(self);" 
+						 			id="cbemp"  />
+				 </h:p>
+			</div>	
 			
 			<div class="col-md-4">
 				<label value="Estatus*" sclass="editField" />

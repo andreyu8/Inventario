@@ -169,7 +169,7 @@ public class EntryController {
 		entrada.setUbicacion(new Ubicacion());
 		entrada.setUnidadMedida(new UnidadMedida());
 		entrada.setOrdenCompra(new OrdenCompra());
-		entrada.setEmpleado(new Empleado());
+		entrada.setEmpleado(SessionUtil.getEmpleadoId());
 		entrada.setFactura(new Factura());
 		e.setEntrada(entrada);
 		
@@ -195,11 +195,11 @@ public class EntryController {
 		else 
 			throw new WrongValueException(cbAlmacen, "Debe de seleccionar un almacén");
 				
-		Combobox cbEmpleado = (Combobox) win.getFellowIfAny("cbemp");
+		/*Combobox cbEmpleado = (Combobox) win.getFellowIfAny("cbemp");
 		if (cbEmpleado != null && cbEmpleado.getSelectedItem()!=null )
 			ea.getEntrada().setEmpleado((Empleado) cbEmpleado.getSelectedItem().getValue());
 		else 
-			throw new WrongValueException(cbEmpleado, "Debe de seleccionar un empleado");
+			throw new WrongValueException(cbEmpleado, "Debe de seleccionar un empleado");*/
 		
 		Combobox cbFactura = (Combobox) win.getFellowIfAny("cbfa");
 		if (cbFactura != null && cbFactura.getSelectedItem()!=null )
@@ -220,12 +220,14 @@ public class EntryController {
 		else 
 			throw new WrongValueException(cbOrdenCompra, "Debe de seleccionar una orden de compra");
 		
-		Combobox cbUbicacion = (Combobox) win.getFellowIfAny("cbub");
+		/*Combobox cbUbicacion = (Combobox) win.getFellowIfAny("cbub");
 		if (cbUbicacion != null && cbUbicacion.getSelectedItem()!=null )
 			ea.getEntrada().setUbicacion((Ubicacion) cbUbicacion.getSelectedItem().getValue());
 		else 
-			throw new WrongValueException(cbUbicacion, "Debe de seleccionar una ubicación");
-		
+			throw new WrongValueException(cbUbicacion, "Debe de seleccionar una ubicación");*/
+		Ubicacion u= new Ubicacion();
+		u.setIdUbicacion(SessionUtil.getSucursalId());
+		ea.getEntrada().setUbicacion(u);
 		
 		ea.getEntrada().setUnidadMedida(ea.getProducto().getUnidadMedida());
 		ea.getEntrada().setFecha(new Date());
@@ -250,9 +252,9 @@ public class EntryController {
 	
 	public void getDataEmployee (EntryAdapter ea,  Component win) {
 		
-		Combobox cbEmpleado = (Combobox) win.getFellowIfAny("cbemp");
-		if (cbEmpleado != null && cbEmpleado.getSelectedItem()!=null ) {
-			ea.getEntrada().setEmpleado((Empleado) cbEmpleado.getSelectedItem().getValue());
+		//Combobox cbEmpleado = (Combobox) win.getFellowIfAny("cbemp");
+		//if (cbEmpleado != null && cbEmpleado.getSelectedItem()!=null ) {
+			//ea.getEntrada().setEmpleado((Empleado) cbEmpleado.getSelectedItem().getValue());
 		
 		
 			Empleado e= employeeManager.get(ea.getEntrada().getEmpleado().getIdEmpleado());
@@ -288,7 +290,7 @@ public class EntryController {
 			  
 			  Label empNoSS = (Label) win.getFellowIfAny("empNoSS");
 			  empNoSS.setValue(e.getNumeroSegSocial());
-		}
+		//}
 		
 		
 	}

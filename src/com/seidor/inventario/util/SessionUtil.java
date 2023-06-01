@@ -3,6 +3,7 @@ package com.seidor.inventario.util;
 import java.util.ArrayList;
 
 import com.seidor.inventario.constants.RoleConstants;
+import com.seidor.inventario.model.Empleado;
 import com.seidor.inventario.model.PerfilUsuario;
 import com.seidor.inventario.model.Usuario;
 //import com.seidor.officereserv.constant.RoleConstants;
@@ -28,6 +29,19 @@ public class SessionUtil {
 			return null;
 		}
 	}
+	
+	public static void setEmpleadoId(Empleado idEmpleado) {
+		Sessions.getCurrent().setAttribute("employeeId", idEmpleado);
+	}
+	
+	public static Empleado getEmpleadoId() {
+		try {
+			return (Empleado)Sessions.getCurrent().getAttribute("employeeId");
+		} catch (Exception ex){
+			return null;
+		}
+	}
+	
 	
 	//sucursal
 	public static void setSucursaldUserId(String sucursal) {
@@ -125,6 +139,7 @@ public class SessionUtil {
 	public static ArrayList<PerfilUsuario> getUserRoles(){
 		return (ArrayList<PerfilUsuario>)Sessions.getCurrent().getAttribute(RoleConstants.USER_ROLES);
 	}
-	
+
+		
 	
 }

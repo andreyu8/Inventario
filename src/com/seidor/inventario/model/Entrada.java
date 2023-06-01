@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 29 mar. 2023 21:04:16 by Hibernate Tools 4.3.5.Final
+// Generated 22 may. 2023 18:00:34 by Hibernate Tools 4.3.5.Final
 
 import java.math.BigDecimal;
 import java.util.Date;

@@ -71,6 +71,12 @@
 					<label value="Descripción" sclass="editField" />
 					<h:p> <textbox value="@bind(orderSearch.name)" /> </h:p>
 				</div>
+				
+				<div sclass="col-md-4" >
+					<label value="No. Orden" sclass="editField" />
+					<h:p> <textbox value="@bind(orderSearch.noOrden)" /> </h:p>
+				</div>
+				
 			</div>
 			
 			<div class="row">

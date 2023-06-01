@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 29 mar. 2023 21:04:16 by Hibernate Tools 4.3.5.Final
+// Generated 22 may. 2023 18:00:34 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -27,6 +27,7 @@ public class Empleado implements java.io.Serializable {
 	private String cargo;
 	private int activo;
 	private Set ordenCompras = new HashSet(0);
+	private Set proyectos = new HashSet(0);
 	private Set entradas = new HashSet(0);
 	private Set salidas = new HashSet(0);
 	private Set usuarios = new HashSet(0);
@@ -42,8 +43,8 @@ public class Empleado implements java.io.Serializable {
 
 	public Empleado(Almacen almacen, String nombre, String APaterno, String AMaterno, String curp, String rfc,
 			String numeroEmpleado, String telefono, String extension, String celular, String EMail,
-			String numeroSegSocial, Date fechaRegistro, String cargo, int activo, Set ordenCompras, Set entradas,
-			Set salidas, Set usuarios) {
+			String numeroSegSocial, Date fechaRegistro, String cargo, int activo, Set ordenCompras, Set proyectos,
+			Set entradas, Set salidas, Set usuarios) {
 		this.almacen = almacen;
 		this.nombre = nombre;
 		this.APaterno = APaterno;
@@ -60,6 +61,7 @@ public class Empleado implements java.io.Serializable {
 		this.cargo = cargo;
 		this.activo = activo;
 		this.ordenCompras = ordenCompras;
+		this.proyectos = proyectos;
 		this.entradas = entradas;
 		this.salidas = salidas;
 		this.usuarios = usuarios;
@@ -199,6 +201,14 @@ public class Empleado implements java.io.Serializable {
 
 	public void setOrdenCompras(Set ordenCompras) {
 		this.ordenCompras = ordenCompras;
+	}
+
+	public Set getProyectos() {
+		return this.proyectos;
+	}
+
+	public void setProyectos(Set proyectos) {
+		this.proyectos = proyectos;
 	}
 
 	public Set getEntradas() {

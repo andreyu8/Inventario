@@ -98,6 +98,8 @@ public class UserController {
 		
 		SessionUtil.setSucursalId(user.getEmpleado().getAlmacen().getIdAlmacen());
 		
+		SessionUtil.setEmpleadoId (user.getEmpleado());
+		
 		ArrayList<PerfilUsuario> roles = roleManager.getProfileUser(user);
 		SessionUtil.setUserRoles (roles);
 		

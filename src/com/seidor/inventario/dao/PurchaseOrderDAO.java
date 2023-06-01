@@ -89,6 +89,10 @@ public class PurchaseOrderDAO extends HibernateDaoSupport{
 			criteria.add(Restrictions.ilike("nombre", psa.getName().trim(), MatchMode.ANYWHERE));
 		}
 		
+		if (psa.getNoOrden() != null && psa.getNoOrden().trim().length() > 0){
+			criteria.add(Restrictions.ilike("numeroOc", psa.getNoOrden().trim(), MatchMode.ANYWHERE));
+		}
+		
 		List<OrdenCompra> result = criteria.list();
 		session.flush();
 		session.close();

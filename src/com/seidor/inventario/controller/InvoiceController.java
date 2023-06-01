@@ -53,8 +53,21 @@ public class InvoiceController {
 
 	public void loadInvoice(Combobox combo) {
 		ArrayList<Factura> invoices = this.invoiceManager.getAll();
+		
 		if (invoices != null) {
-			ListModelList<Factura> model = new ListModelList<Factura>(invoices);
+			ArrayList<Factura> invoicesFinal = new ArrayList<Factura>();
+			
+			Factura f = new Factura ();
+			f.setIdFactura(0);
+			f.setNumeroFactura("N/A");
+			f.setDescripcion("NO CUENTA CON FACTURA");
+			invoicesFinal.add(f);
+			
+			for (Factura fa : invoices) {
+				invoicesFinal.add(fa);
+			}
+			
+			ListModelList<Factura> model = new ListModelList<Factura>(invoicesFinal);
 			combo.setItemRenderer(new InvoiceComboitemRenderer());
 			combo.setModel(model);
 		}

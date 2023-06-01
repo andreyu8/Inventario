@@ -101,13 +101,13 @@
 			</div>	
 			
 					
-			<div class="col-md-4">
+			<!-- <div class="col-md-4">
 				<label value="Empleado*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocSave.orderCompra.empleado.nombre)"
 							 		onCreate="employeeController.loadEmployee(self);" 
 						 			id="cbemp" />
 				 </h:p>
-			</div>		
+			</div> -->		
 				
 			<div class="col-md-4">
 				<label value="Proyecto*" sclass="editField" />
@@ -117,14 +117,14 @@
 			</div>	
 			
 			<div class="col-md-4">
-				<label value="Estatus orde compra*" sclass="editField" />
+				<label value="Estatus de orden compra*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocSave.orderCompra.estatusOrdenCompra.estatusOrdenCompra)"
 							 		onCreate="purchaseOrderController.loadStateTypeOrder(self);" 
 						 			id="soccb" constraint="${cmv}"/> </h:p>
-			</div>	
+			</div> 	
 			
 			<div class="col-md-4">
-				<label value="Tipode pago*" sclass="editField" />
+				<label value="Tipo de pago*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocSave.orderCompra.tipoPago.tipoPago)"
 							 		onCreate="purchaseOrderController.loadTypePayment(self);" 
 						 			id="tpcb" constraint="${cmv}"/> </h:p>

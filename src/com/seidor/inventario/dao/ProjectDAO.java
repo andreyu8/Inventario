@@ -23,6 +23,7 @@ public class ProjectDAO extends HibernateDaoSupport {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		Criteria criteria = session.createCriteria(Proyecto.class);
 		criteria.setFetchMode("estatusProyecto", FetchMode.JOIN);
+		criteria.setFetchMode("empleado", FetchMode.JOIN);
 		criteria.add(Restrictions.eq("idProyecto", id));
 		Proyecto result = (Proyecto)criteria.uniqueResult();
 		session.flush();
@@ -35,6 +36,7 @@ public class ProjectDAO extends HibernateDaoSupport {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		Criteria criteria = DaoUtil.getCriteria(session, Proyecto.class);
 		criteria.setFetchMode("estatusProyecto", FetchMode.JOIN);
+		criteria.setFetchMode("empleado", FetchMode.JOIN);
 		criteria.addOrder(Order.asc("fechaInicio"));
 		List<Proyecto> result = criteria.list();
 		session.flush();
@@ -78,6 +80,7 @@ public class ProjectDAO extends HibernateDaoSupport {
 		Criteria criteria = DaoUtil.getCriteria(session, Proyecto.class);
 		
 		criteria.setFetchMode("estatusProyecto", FetchMode.JOIN);
+		criteria.setFetchMode("empleado", FetchMode.JOIN);
 		
 		if (psa.getNombre() != null && psa.getNombre().trim().length() > 0){
 			criteria.add(Restrictions.ilike("nombre", psa.getNombre(), MatchMode.ANYWHERE));

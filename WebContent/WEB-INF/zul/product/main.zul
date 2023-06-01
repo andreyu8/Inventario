@@ -80,6 +80,10 @@
 					<label value="Productos" sclass="editField" />
 					<h:p> <textbox value="@bind(productSearch.nombre)" /> </h:p>
 				</div>
+				<div sclass="col-md-4" >
+					<label value="Codigo" sclass="editField" />
+					<h:p> <textbox value="@bind(productSearch.codigo)" /> </h:p>
+				</div>
 			</div>
 			
 			<div class="row">

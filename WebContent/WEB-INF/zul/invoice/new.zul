@@ -7,6 +7,7 @@
 	<zscript>
 		import com.seidor.inventario.adapter.InvoiceAdapter;
 		import com.seidor.inventario.navigation.*;
+		import java.math.BigDecimal;
 		
 		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
 		
@@ -20,6 +21,21 @@
 			fcv.validate(win);
 			invoiceController.save(invoiceSave, state, win);
 		}
+		
+		public void getTotal() {
+			
+			Doublebox subd= (Doublebox) win.getFellowIfAny("subtotal");
+			Doublebox ivad= (Doublebox) win.getFellowIfAny("iva");
+			Doublebox totald= (Doublebox) win.getFellowIfAny("total");
+			
+			ivad.setValue( ((Double)subd.getValue()).doubleValue() * 0.16);
+			invoiceSave.getFactura().setIva(ivad.getValue());
+			totald.setValue( ((Double)subd.getValue()).doubleValue() * 1.16);
+			invoiceSave.getFactura().setTotal(new BigDecimal(totald.getValue()));
+		
+		}
+		
+		
 	</zscript>
 	
 	<div class="row sectionBoxAlt animated aniFadeIn">
@@ -68,25 +84,25 @@
 		
 			<div class="col-md-4">
 				<label value="Subtotal*" sclass="editField" />
-				<h:p> <doublebox value="@bind(invoiceSave.factura.subtotal)" /> </h:p>
+				<h:p> <doublebox id="subtotal" value="@bind(invoiceSave.factura.subtotal)" onChange='getTotal();' /> </h:p>
 			</div>
 			
 			
 		
 			<div class="col-md-4">
 				<label value="IVA*" sclass="editField" />
-				<h:p> <doublebox value="@bind(invoiceSave.factura.iva)" /> </h:p>
+				<h:p> <doublebox id="iva" value="@bind(invoiceSave.factura.iva)" /> </h:p>
 			</div>
 			
 			
 			<div class="col-md-4">
 				<label value="Total*" sclass="editField" />
-				<h:p> <doublebox value="@bind(invoiceSave.factura.total)" /> </h:p>
+				<h:p> <doublebox id="total" value="@bind(invoiceSave.factura.total)" /> </h:p>
 			</div>
 			
 			
 			<div class="col-md-4">
-				<label value="Descrpción*" sclass="editField" />
+				<label value="Descripción*" sclass="editField" />
 				<h:p> <textbox value="@bind(invoiceSave.factura.descripcion)" constraint="${tmv}" /> </h:p>
 			</div>
 			

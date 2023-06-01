@@ -63,7 +63,21 @@
 				<label value="Estatus*" sclass="editField" />
 				<h:p> <combobox value="@bind(projectEdit.proyecto.estatusProyecto.descripcion)"
 							 		onCreate="projectController.loadEstatus(self);" 
-						 			id="escb" constraint="${cmv}"/> </h:p>
+						 			id="escb" constraint="${cmv}"/>
+				</h:p>
+			</div>	
+			
+			<div class="col-md-4">
+				<label value="No. Presupuesto" sclass="editField" />
+				<h:p> <textbox value="@bind(projectEdit.proyecto.numeroPresupuesto)" /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Empleado*" sclass="editField" />
+				<h:p> <combobox value="@bind(projectEdit.proyecto.empleado.nombre)"
+							 		onCreate="employeeController.loadEmployeeProject(self);" 
+						 			id="cbemp"  />
+				 </h:p>
 			</div>	
 			
 		</div>

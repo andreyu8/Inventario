@@ -62,7 +62,6 @@ public class ProductController {
 	// logic search
 	public void search(Listbox lb, ProductSearchAdapter psa, NavigationState state){
 	
-		psa.setCodigo(null);
 		psa.setIdCategoria(0);
 		psa.setIdAlmacen(SessionUtil.getSucursalId());
 		

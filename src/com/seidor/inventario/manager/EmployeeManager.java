@@ -42,6 +42,10 @@ public class EmployeeManager {
 	public ArrayList<Empleado> search(EmployeeSearchAdapter esa) {
 		return 	this.employeeDao.search (esa);
 	}
+
+	public ArrayList<Empleado> getAllProject() {
+		return this.employeeDao.getAllProject();
+	}
 	
 	
 }

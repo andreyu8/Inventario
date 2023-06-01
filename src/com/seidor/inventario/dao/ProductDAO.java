@@ -107,6 +107,10 @@ public class ProductDAO extends HibernateDaoSupport{
 			criteria.add(Restrictions.ilike("nombre", psa.getNombre().trim(), MatchMode.ANYWHERE));
 		}
 		
+		if (psa.getCodigo() != null && psa.getCodigo().trim().length() > 0){
+			criteria.add(Restrictions.ilike("codigo", psa.getCodigo().trim(), MatchMode.ANYWHERE));
+		}
+		
 		criteria.add(Restrictions.eq("almacen.idAlmacen", psa.getIdAlmacen()));
 		
 		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
