@@ -104,7 +104,7 @@
 				<label value="Empleado*" sclass="editField" />
 				<h:p> <combobox value="@bind(entryNew.entrada.empleado.nombre)"
 							 		onCreate="employeeController.loadEmployee(self);" 
-						 			id="cbemp" onChange="viewInfoEmployee();" />
+						 			id="cbemp" disabled="true"/>
 				 </h:p>
 			</div>		
 			
@@ -334,7 +334,7 @@
 		
 		<separator spacing="10px" />
 			
-		<div class="row editBox">
+		<!-- <div class="row editBox">
 			<div class="col-md-4">
 				<label value="Ubicación*" sclass="editField" />
 				<h:p> <combobox value="@bind(entryNew.entrada.ubicacion.ubicacion)"
@@ -345,7 +345,7 @@
 		
 		
 			
-		</div>
+		</div>-->
 	
 	</div>		
 		

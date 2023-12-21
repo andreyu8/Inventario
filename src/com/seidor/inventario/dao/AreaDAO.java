@@ -41,6 +41,7 @@ public class AreaDAO  extends HibernateDaoSupport {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		
 		Criteria criteria = DaoUtil.getCriteria(session, Area.class);
+		DaoUtil.prepareToSave(a);
 		session.save(a);
 		
 		session.flush();
@@ -49,6 +50,7 @@ public class AreaDAO  extends HibernateDaoSupport {
 	
 	public void update(Area a){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToUpdate(a);
 		session.update(a);
 		session.flush();
 		session.close();
@@ -56,6 +58,7 @@ public class AreaDAO  extends HibernateDaoSupport {
 	
 	public void delete(Area a){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToDelete(a);
 		session.update(a);
 		session.flush();
 		session.close();

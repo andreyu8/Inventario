@@ -90,8 +90,51 @@
                  </h:p>   	        
 			</div>	
 			
+			<div class="col-md-4">
+				<label value="Tipo de pago*" sclass="editField" />
+				<h:p> <combobox value="@bind(providerEdit.proveedor.tipoPago.tipoPago)"
+							 		onCreate="purchaseOrderController.loadTypePayment(self);" 
+						 			id="tpcb" constraint="${cmv}"/> </h:p>
+			</div>	
+			
+			<div class="col-md-4">
+				<label value="Días de crédito" sclass="editField" />
+				<h:p> <intbox value="@bind(providerEdit.proveedor.diasCredito)" /> </h:p>
+			</div>	
+			
+			
+			<div class="col-md-12">
+				<label value="Datos bancarios" />
+			</div>
+			
+			<div align="right">
+				<button tooltiptext="Añadir cuenta" iconSclass="z-icon-plus-circle"  onClick="providerController.addCta (prolb);" />
+			</div>
+			  
+	        <div class="col-md-12" style="padding: 0px;" >
+				<listbox id="prolb" onCreate="providerController.loadEditDataBank(self,providerEdit, true)" emptyMessage="" style="margin: 0; height: 100%; padding: 1% 0 1% 0;" >
+					<custom-attributes pa="@{ocSave}" />
+					<listhead>
+						<listheader label="Banco" hflex="5" align="center" />
+						<listheader label="Cuenta" hflex="5" align="center" />
+						<listheader label="Clabe" hflex="2" align="center" />
+						<listheader label="Acciones" hflex="2"  align="center" />
+					</listhead>	
+					<listfoot>
+						<listfooter></listfooter>
+						<listfooter></listfooter>
+						<listfooter></listfooter>
+						<listfooter width="100%" align="right">
+							<label id="idtcoin" value="0.0"/>
+						</listfooter>
+					</listfoot>	
+				</listbox>
+			</div>
+			
+			
 		</div>
 	</div>
+	
 	
 	
 	<div class="row subBoxAlt animated aniFadeIn" >

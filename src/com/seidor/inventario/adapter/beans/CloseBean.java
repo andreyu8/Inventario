@@ -4,27 +4,25 @@ import com.seidor.inventario.model.Proyecto;
 
 public class CloseBean {
 
-	
 	private Proyecto proyecto;
-	
+
 	private String familia;
 	private int idProducto;
 	private String codigo;
 	private String producto;
 	private String unidadMedida;
-	private int cantidadEntrada;
-	
+	private double cantidadEntrada;
+
 	private String familia_s;
 	private int idProducto_s;
 	private String codigo_s;
 	private String producto_s;
 	private String unidadMedida_s;
-	private int cantidadSalida;
-	
-	private int diferencia;
-	private int devoluciones;
-	
-	
+	private double cantidadSalida;
+
+	private double diferencia;
+	private double devoluciones;
+
 	public Proyecto getProyecto() {
 		return proyecto;
 	}
@@ -73,11 +71,11 @@ public class CloseBean {
 		this.unidadMedida = unidadMedida;
 	}
 
-	public int getCantidadEntrada() {
+	public double getCantidadEntrada() {
 		return cantidadEntrada;
 	}
 
-	public void setCantidadEntrada(int cantidadEntrada) {
+	public void setCantidadEntrada(double cantidadEntrada) {
 		this.cantidadEntrada = cantidadEntrada;
 	}
 
@@ -121,28 +119,28 @@ public class CloseBean {
 		this.unidadMedida_s = unidadMedida_s;
 	}
 
-	public int getCantidadSalida() {
+	public double getCantidadSalida() {
 		return cantidadSalida;
 	}
 
-	public void setCantidadSalida(int cantidadSalida) {
+	public void setCantidadSalida(double cantidadSalida) {
 		this.cantidadSalida = cantidadSalida;
 	}
 
-	public int getDiferencia() {
+	public double getDiferencia() {
 		return diferencia;
 	}
 
-	public void setDiferencia(int diferencia) {
+	public void setDiferencia(double diferencia) {
 		this.diferencia = diferencia;
 	}
 
-	public int getDevoluciones() {
+	public double getDevoluciones() {
 		return devoluciones;
 	}
 
-	public void setDevoluciones(int devoluciones) {
+	public void setDevoluciones(double devoluciones) {
 		this.devoluciones = devoluciones;
 	}
-	
+
 }

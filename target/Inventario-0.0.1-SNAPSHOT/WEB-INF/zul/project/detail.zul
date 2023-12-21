@@ -36,7 +36,7 @@
 	
 	<div class="row subBox animated aniFadeIn">
 		<div class="col-md-12">
-			<label value="Datos generales" />
+			<label value="" />
 		</div>
 	</div>
 	<div class="row container animated aniFadeIn" >
@@ -59,6 +59,16 @@
 		<div class="col-md-3">
 			<label value="Estatus" sclass="detailField" />
 			<h:p> <label value="${projectDetail.proyecto.estatusProyecto.descripcion}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="No. Presupuesto" sclass="detailField" />
+			<h:p> <label value="${projectDetail.proyecto.numeroPresupuesto}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Jefe de proyecto" sclass="detailField" />
+			<h:p> <label value="${projectDetail.proyecto.empleado.nombre}" sclass="detailData" /> </h:p>
 		</div>
 		
 		

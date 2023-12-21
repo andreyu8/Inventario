@@ -24,6 +24,8 @@ public class EntryDAO extends HibernateDaoSupport{
 	
 	public void save (Entrada e) {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		
+		DaoUtil.prepareToSave(e);
 		session.save(e);
 		
 		session.flush();
@@ -32,6 +34,8 @@ public class EntryDAO extends HibernateDaoSupport{
 	
 	public void update (Entrada e) {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		
+		DaoUtil.prepareToUpdate(e);
 		session.update(e);
 		
 		session.flush();
@@ -45,7 +49,10 @@ public class EntryDAO extends HibernateDaoSupport{
 			
 			session.beginTransaction();
 			
+			DaoUtil.prepareToSave(e);
 			session.save(e);
+			
+			DaoUtil.prepareToUpdate(p);
 			session.update(p);
 		
 			session.getTransaction().commit();
@@ -137,8 +144,13 @@ public class EntryDAO extends HibernateDaoSupport{
 			
 			session.beginTransaction();
 			
+			DaoUtil.prepareToSave(e);
 			session.save(e);
+			
+			DaoUtil.prepareToSave(s);
 			session.save(s);
+			
+			DaoUtil.prepareToUpdate(p);
 			session.update(p);
 		
 			session.getTransaction().commit();

@@ -48,6 +48,10 @@
 			<label value="Descripción" sclass="detailField" />
 			<h:p> <label value="@bind(unitMeasureDetail.unidadMedida.descripcion)" sclass="detailData" /> </h:p>
 		</div>
+		<div class="col-md-3">
+			<label value="Abrev." sclass="detailField" />
+			<h:p> <label value="@bind(unitMeasureDetail.unidadMedida.abrev)" sclass="detailData" /> </h:p>
+		</div>
 		
 	</div>
 	

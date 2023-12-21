@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 22 may. 2023 18:00:34 by Hibernate Tools 4.3.5.Final
+// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -11,49 +11,79 @@ import java.util.Set;
 public class OrdenCompra implements java.io.Serializable {
 
 	private Integer idOrdenCompra;
+	private Almacen almacen;
 	private Area area;
 	private Cliente cliente;
 	private Empleado empleado;
 	private EstatusOrdenCompra estatusOrdenCompra;
 	private Etapa etapa;
-	private Factura factura;
+	private Proveedor proveedor;
 	private Proyecto proyecto;
 	private TipoOrdenCompra tipoOrdenCompra;
-	private TipoPago tipoPago;
 	private String numeroOc;
 	private String descripcion;
 	private Date fecha;
 	private Date fechaRecepAlmacen;
+	private String noPresupuesto;
+	private String noRequisicion;
+	private String lugarEntrega;
+	private boolean fdl;
+	private int cbu;
+	private Date cat;
+	private int luu;
+	private Date uat;
+	private Set facturas = new HashSet(0);
+	private Set movimientoses = new HashSet(0);
 	private Set entradas = new HashSet(0);
+	private Set detalleOrdenCompras = new HashSet(0);
 
 	public OrdenCompra() {
 	}
 
-	public OrdenCompra(Area area, Cliente cliente, Empleado empleado, Etapa etapa, TipoOrdenCompra tipoOrdenCompra) {
+	public OrdenCompra(Area area, Cliente cliente, Empleado empleado, Etapa etapa, TipoOrdenCompra tipoOrdenCompra,
+			boolean fdl, int cbu, Date cat, int luu, Date uat) {
 		this.area = area;
 		this.cliente = cliente;
 		this.empleado = empleado;
 		this.etapa = etapa;
 		this.tipoOrdenCompra = tipoOrdenCompra;
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
 	}
 
-	public OrdenCompra(Area area, Cliente cliente, Empleado empleado, EstatusOrdenCompra estatusOrdenCompra,
-			Etapa etapa, Factura factura, Proyecto proyecto, TipoOrdenCompra tipoOrdenCompra, TipoPago tipoPago,
-			String numeroOc, String descripcion, Date fecha, Date fechaRecepAlmacen, Set entradas) {
+	public OrdenCompra(Almacen almacen, Area area, Cliente cliente, Empleado empleado,
+			EstatusOrdenCompra estatusOrdenCompra, Etapa etapa, Proveedor proveedor, Proyecto proyecto,
+			TipoOrdenCompra tipoOrdenCompra, String numeroOc, String descripcion, Date fecha, Date fechaRecepAlmacen,
+			String noPresupuesto, String noRequisicion, String lugarEntrega, boolean fdl, int cbu, Date cat, int luu,
+			Date uat, Set facturas, Set movimientoses, Set entradas, Set detalleOrdenCompras) {
+		this.almacen = almacen;
 		this.area = area;
 		this.cliente = cliente;
 		this.empleado = empleado;
 		this.estatusOrdenCompra = estatusOrdenCompra;
 		this.etapa = etapa;
-		this.factura = factura;
+		this.proveedor = proveedor;
 		this.proyecto = proyecto;
 		this.tipoOrdenCompra = tipoOrdenCompra;
-		this.tipoPago = tipoPago;
 		this.numeroOc = numeroOc;
 		this.descripcion = descripcion;
 		this.fecha = fecha;
 		this.fechaRecepAlmacen = fechaRecepAlmacen;
+		this.noPresupuesto = noPresupuesto;
+		this.noRequisicion = noRequisicion;
+		this.lugarEntrega = lugarEntrega;
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
+		this.facturas = facturas;
+		this.movimientoses = movimientoses;
 		this.entradas = entradas;
+		this.detalleOrdenCompras = detalleOrdenCompras;
 	}
 
 	public Integer getIdOrdenCompra() {
@@ -62,6 +92,14 @@ public class OrdenCompra implements java.io.Serializable {
 
 	public void setIdOrdenCompra(Integer idOrdenCompra) {
 		this.idOrdenCompra = idOrdenCompra;
+	}
+
+	public Almacen getAlmacen() {
+		return this.almacen;
+	}
+
+	public void setAlmacen(Almacen almacen) {
+		this.almacen = almacen;
 	}
 
 	public Area getArea() {
@@ -104,12 +142,12 @@ public class OrdenCompra implements java.io.Serializable {
 		this.etapa = etapa;
 	}
 
-	public Factura getFactura() {
-		return this.factura;
+	public Proveedor getProveedor() {
+		return this.proveedor;
 	}
 
-	public void setFactura(Factura factura) {
-		this.factura = factura;
+	public void setProveedor(Proveedor proveedor) {
+		this.proveedor = proveedor;
 	}
 
 	public Proyecto getProyecto() {
@@ -126,14 +164,6 @@ public class OrdenCompra implements java.io.Serializable {
 
 	public void setTipoOrdenCompra(TipoOrdenCompra tipoOrdenCompra) {
 		this.tipoOrdenCompra = tipoOrdenCompra;
-	}
-
-	public TipoPago getTipoPago() {
-		return this.tipoPago;
-	}
-
-	public void setTipoPago(TipoPago tipoPago) {
-		this.tipoPago = tipoPago;
 	}
 
 	public String getNumeroOc() {
@@ -168,12 +198,100 @@ public class OrdenCompra implements java.io.Serializable {
 		this.fechaRecepAlmacen = fechaRecepAlmacen;
 	}
 
+	public String getNoPresupuesto() {
+		return this.noPresupuesto;
+	}
+
+	public void setNoPresupuesto(String noPresupuesto) {
+		this.noPresupuesto = noPresupuesto;
+	}
+
+	public String getNoRequisicion() {
+		return this.noRequisicion;
+	}
+
+	public void setNoRequisicion(String noRequisicion) {
+		this.noRequisicion = noRequisicion;
+	}
+
+	public String getLugarEntrega() {
+		return this.lugarEntrega;
+	}
+
+	public void setLugarEntrega(String lugarEntrega) {
+		this.lugarEntrega = lugarEntrega;
+	}
+
+	public boolean isFdl() {
+		return this.fdl;
+	}
+
+	public void setFdl(boolean fdl) {
+		this.fdl = fdl;
+	}
+
+	public int getCbu() {
+		return this.cbu;
+	}
+
+	public void setCbu(int cbu) {
+		this.cbu = cbu;
+	}
+
+	public Date getCat() {
+		return this.cat;
+	}
+
+	public void setCat(Date cat) {
+		this.cat = cat;
+	}
+
+	public int getLuu() {
+		return this.luu;
+	}
+
+	public void setLuu(int luu) {
+		this.luu = luu;
+	}
+
+	public Date getUat() {
+		return this.uat;
+	}
+
+	public void setUat(Date uat) {
+		this.uat = uat;
+	}
+
+	public Set getFacturas() {
+		return this.facturas;
+	}
+
+	public void setFacturas(Set facturas) {
+		this.facturas = facturas;
+	}
+
+	public Set getMovimientoses() {
+		return this.movimientoses;
+	}
+
+	public void setMovimientoses(Set movimientoses) {
+		this.movimientoses = movimientoses;
+	}
+
 	public Set getEntradas() {
 		return this.entradas;
 	}
 
 	public void setEntradas(Set entradas) {
 		this.entradas = entradas;
+	}
+
+	public Set getDetalleOrdenCompras() {
+		return this.detalleOrdenCompras;
+	}
+
+	public void setDetalleOrdenCompras(Set detalleOrdenCompras) {
+		this.detalleOrdenCompras = detalleOrdenCompras;
 	}
 
 }

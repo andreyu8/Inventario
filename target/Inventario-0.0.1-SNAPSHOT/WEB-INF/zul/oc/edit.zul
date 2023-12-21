@@ -13,14 +13,26 @@
 		
 		PurcharseAdapter ocEdit = purchaseOrderController.readForEdit(state.getDetailIdentifier());
 		
+		
 		public void cancel(){
 			navigationControl.changeToPrevious(win);
 		}
 		
-		public void update(){
+		/*public void update(){
 			fcv.validate(win);
 			purchaseOrderController.update(ocEdit, state, win);
+		}*/
+		
+		public void update(){
+			Action deleteAction = new Action() {
+				public void execute(){
+					fcv.validate(win);
+					purchaseOrderController.update(ocEdit, state, win);
+				}
+			};
+			NavigationControl.openModalWindowWithMessage("¿Está seguro de actualizar la OC?", deleteAction);
 		}
+		
 	</zscript>
 	
 	<div class="row sectionBoxAlt animated aniFadeIn" >
@@ -40,19 +52,19 @@
 	
 	<div class="row subBoxAlt animated aniFadeIn" >
 		<div class="col-md-12">
-			<label value="Datos generales" />
+			<label value="Modificar Orden de Compra" />
 		</div>
 	</div>
 	<div class="container animated aniFadeIn" >
 		<div class="row editBox">
 			
-			<div class="col-md-4">
+			<!-- <div class="col-md-4">
 				<label value="Número de la OC*" sclass="editField" />
 				<h:p> <textbox value="@bind(ocEdit.orderCompra.numeroOc)" /> </h:p>
-			</div>
+			</div> --> 
 			
 			<div class="col-md-4">
-				<label value="Descripción de la OC*" sclass="editField" />
+				<label value="Observaciones de la OC*" sclass="editField" />
 				<h:p> <textbox value="@bind(ocEdit.orderCompra.descripcion)" /> </h:p>
 			</div>
 			
@@ -69,13 +81,19 @@
 						 			id="clicb" constraint="${cmv}"/> </h:p>
 			</div>	
 			
-			<div class="col-md-4">
+			<!-- <div class="col-md-4">
 				<label value="Factura*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocEdit.orderCompra.factura.numeroFactura)"
 							 		onCreate="invoiceController.loadInvoice(self);" 
 						 			id="invcb" constraint="${cmv}"/> </h:p>
-			</div>		
+			</div> -->		
 		
+			<div class="col-md-4">
+				<label value="Proveedor*" sclass="editField" />
+				<h:p> <combobox value="@bind(ocEdit.orderCompra.proveedor.nombre)"
+							 		onCreate="providerController.loadProvider(self);" 
+						 			id="provcb" constraint="${cmv}"/> </h:p>
+			</div> 
 				
 			
 			<div class="col-md-4">
@@ -88,9 +106,18 @@
 			<div class="col-md-4">
 				<label value="Area*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocEdit.orderCompra.area.area)"
+									onChange="employeeController.loadCatalogChild(self, areaempcb)"
 							 		onCreate="areaController.loadArea(self);" 
 						 			id="areacb" constraint="${cmv}"/> </h:p>
 			</div>	
+			
+			
+			<div class="col-md-4">
+				<label value="Responsable requisición*" sclass="editField" />
+				<h:p> <combobox value="@bind(ocEdit.orderCompra.empleado.nombre)"
+						 			id="areaempcb"/> </h:p>
+			</div>	
+			
 			
 			<div class="col-md-4">
 				<label value="Tipo de order de compra*" sclass="editField" />
@@ -100,13 +127,13 @@
 			</div>	
 			
 					
-			<div class="col-md-4">
+			<!-- <div class="col-md-4">
 				<label value="Empleado*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocEdit.orderCompra.empleado.nombre)"
 							 		onCreate="employeeController.loadEmployee(self);" 
 						 			id="cbemp" />
 				 </h:p>
-			</div>		
+			</div> -->		
 				
 			<div class="col-md-4">
 				<label value="Proyecto*" sclass="editField" />
@@ -116,21 +143,74 @@
 			</div>	
 				
 				
-			<div class="col-md-4">
-				<label value="Estatus orde compra*" sclass="editField" />
+			<!-- <div class="col-md-4">
+				<label value="Estatus de orden compra*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocEdit.orderCompra.estatusOrdenCompra.estatusOrdenCompra)"
 							 		onCreate="purchaseOrderController.loadStateTypeOrder(self);" 
 						 			id="soccb" /> </h:p>
-			</div>	
+			</div> -->	
 			
 			<div class="col-md-4">
 				<label value="Tipode pago" sclass="editField" />
-				<h:p> <combobox value="@bind(ocEdit.orderCompra.tipoPago.tipoPago)"
+				<h:p> <combobox value="@bind(ocEdit.orderCompra.proveedor.tipoPago.tipoPago)"
 							 		onCreate="purchaseOrderController.loadTypePayment(self);" 
 						 			id="tpcb" /> </h:p>
 			</div>		
-					
-		</div>
+			
+			<div class="col-md-4">
+				<label value="Días de crédito" sclass="editField" />
+				<h:p> <intbox value="@bind(ocEdit.orderCompra.proveedor.diasCredito)" /> </h:p>
+			</div>	
+		
+			
+			<div class="col-md-4">
+				<label value="No. requisición*" sclass="editField" />
+				<h:p> <textbox value="@bind(ocEdit.orderCompra.noRequisicion)" /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="No. presupuesto*" sclass="editField" />
+				<h:p> <textbox value="@bind(ocEdit.orderCompra.noPresupuesto)" /> </h:p>
+			</div>
+			
+			
+			<div  class="col-md-12" align="right">
+		  		<label value="Producto " />
+		  		<combobox onCreate="productController.loadNameProduct(self);" id="productcb" width="600px"/>
+		  
+		    	<button tooltiptext="Añadir producto" iconSclass="z-icon-plus-circle"  onClick="purchaseOrderController.addEditProduct(productcb, prolb);" />
+		  		<!-- <button iconSclass="fas fa-print" xmlns:w="http://www.zkoss.org/2005/zk/client" w:onClick="window.print();" style="padding-top: 2px; padding-bottom: 2px; float: right; color: gray; background: #ffff; " /> -->
+		  	</div>
+			  		
+		    <div class="col-md-12" style="padding: 0px;" >
+				<listbox id="prolb" onCreate="purchaseOrderController.loadEditProducts(self,ocEdit, idtcoin, true)" emptyMessage="" style="margin: 0; height: 100%; padding: 1% 0 1% 0;" >
+					<custom-attributes pa="@{ocSave}" />
+					<listhead>
+						<listheader label="Código" hflex="5" align="center" />
+						<listheader label="Producto" hflex="5" align="center" />
+						<listheader label="Cantidad" hflex="2" align="center" />
+						<listheader label="Unidad de medida" hflex="3" align="center" />
+						<listheader label="Precio Unitario" hflex="3" align="center" />
+						<listheader label="Subtotal" hflex="2" align="center" />
+						<listheader label="Acciones" hflex="2"  align="center" />
+					</listhead>	
+					<listfoot>
+						<listfooter></listfooter>
+						<listfooter></listfooter>
+						<listfooter></listfooter>
+						<listfooter></listfooter>
+						<listfooter align="right" width="100%">
+							<label id="idtcoin" value="0.0"/>
+						</listfooter>
+					</listfoot>	
+				</listbox>
+			</div>
+		
+			<separator spacing="10px" />
+			
+			
+			</div>
+		
 	</div>
 	
 	

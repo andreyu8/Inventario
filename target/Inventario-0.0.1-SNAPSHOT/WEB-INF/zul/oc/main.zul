@@ -71,6 +71,12 @@
 					<label value="Descripción" sclass="editField" />
 					<h:p> <textbox value="@bind(orderSearch.name)" /> </h:p>
 				</div>
+				
+				<div sclass="col-md-4" >
+					<label value="No. Orden" sclass="editField" />
+					<h:p> <textbox value="@bind(orderSearch.noOrden)" /> </h:p>
+				</div>
+				
 			</div>
 			
 			<div class="row">
@@ -83,11 +89,8 @@
 		<listbox id="catlb" emptyMessage="No se encontrarón categorías para mostrar" >
 			<listhead>
 				<listheader label="Ver" width="50px" />
-				<listheader label="id" hflex="3" sort="auto(lower(idOrdenCompra))" />
-				<listheader label="No.OC" hflex="3" sort="auto(lower(numeroOc))" />
-				<listheader label="Cliente" hflex="3" sort="auto(lower(cliente.nombre))" />
-				<listheader label="Empleado" hflex="3" sort="auto(lower(empleado.nombre))" />
-				<listheader label="Factura" hflex="3" sort="auto(lower(factura.numeroFactura))" />
+				<listheader label="No. Orden compra" hflex="3" sort="auto(lower(idOrdenCompra))" />
+				<listheader label="Proveedor" hflex="3" sort="auto(lower(factura.numeroFactura))" />
 				<listheader label="Descripción" hflex="3" sort="auto(lower(descripcion))" />
 				<listheader label="Fecha" hflex="3" sort="auto(lower(fecha))" />
 			</listhead>
@@ -97,10 +100,7 @@
 						<a iconSclass="z-icon-eye" onClick="show();" />
 					</listcell>
 					<listcell label="${each.idOrdenCompra}" />
-					<listcell label="${each.numeroOc}" />
-					<listcell label="${each.cliente.nombre}" />
-					<listcell label="${each.empleado.nombre}" />
-					<listcell label="${each.factura.numeroFactura}" />
+					<listcell label="${each.proveedor.nombre}" />
 					<listcell label="${each.descripcion}" />
 					<listcell label="${each.fecha}" />
 				</listitem>

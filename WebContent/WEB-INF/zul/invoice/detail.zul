@@ -22,6 +22,12 @@
 			state.setDetailLabels(null);
 			navigationControl.changeView(winInv, state);
 		}
+		
+		public void printPDFoc() {
+			invoiceController.createReportData(invoiceDetail, winInv);
+		}	
+		
+		
 	</zscript>
 	
 	<div class="row sectionBox animated aniFadeIn">
@@ -37,44 +43,27 @@
 	
 	<div class="row subBox animated aniFadeIn">
 		<div class="col-md-12">
-			<label value="Datos generales" />
+			<label value="" />
 		</div>
 	</div>
 	<div class="row container animated aniFadeIn" >
 		<div class="col-md-3">
-			<label value="Id del proyecto" sclass="detailField" />
+			<label value="No. entrada" sclass="detailField" />
 			<h:p> <label value="${invoiceDetail.factura.idFactura}" sclass="detailData" /> </h:p>
 		</div>
 		<div class="col-md-3">
 			<label value="Número de factura" sclass="detailField" />
 			<h:p> <label value="${invoiceDetail.factura.numeroFactura}" sclass="detailData" /> </h:p>
 		</div>
-		<div class="col-md-3">
-			<label value="Proveedor" sclass="detailField" />
-			<h:p> <label value="${invoiceDetail.factura.proveedor.nombre}" sclass="detailData" /> </h:p>
-		</div>
+		
 		<div class="col-md-3">
 			<label value="Fecha" sclass="detailField" />
 			<h:p> <label value="${invoiceDetail.factura.fecha}" sclass="detailData" /> </h:p>
 		</div>
-		<div class="col-md-3">
-			<label value="Subtotal" sclass="detailField" />
-			<h:p> <label value="${invoiceDetail.factura.subtotal}" sclass="detailData" /> </h:p>
-		</div>
-		<div class="col-md-3">
-			<label value="IVA" sclass="detailField" />
-			<h:p> <label value="${invoiceDetail.factura.iva}" sclass="detailData" /> </h:p>
-		</div>
-		<div class="col-md-3">
-			<label value="Total" sclass="detailField" />
-			<h:p> <label value="${invoiceDetail.factura.total}" sclass="detailData" /> </h:p>
-		</div>
-		<div class="col-md-3">
-			<label value="Descripción" sclass="detailField" />
-			<h:p> <label value="${invoiceDetail.factura.descripcion}" sclass="detailData" /> </h:p>
-		</div>
 		
-		 <div class="col-md-3">
+		<separator spacing="10px" />
+		
+		 <div class="col-md-6">
        		<h:p> 
 				<label value="Nota" sclass="detailField" />
 			</h:p>	
@@ -83,6 +72,53 @@
 			</h:p>
 		</div>
 		
+		
+		<div class="col-md-6" align="right" >
+			<button label="PDF" onClick="printPDFoc();" iconSclass="z-icon-pencil" />
+		</div>
+		
+		
+		<div class="animated aniFadeIn" >	
+			<listbox id="ocinvlb" onCreate="invoiceController.obtieneDOC(invoiceDetail, ocinvlb, idtcoin)" emptyMessage="No se encontrarón categorías para mostrar" >
+				<auxhead>
+	            	<auxheader colspan="6" align="center" style=" background: green;">Productos OC</auxheader>
+	            	<auxheader colspan="2" align="center">Entrada Almacen</auxheader>
+	        	</auxhead>
+				<listhead>
+					<listheader label="Código" hflex="3" />
+					<listheader label="Producto" hflex="3" />
+					<listheader label="Cantidad" hflex="2" />
+					<listheader label="U.medida" hflex="3" />
+					<listheader label="Precio" hflex="3" />
+					<listheader label="Total" hflex="2" />
+					<listheader label="Entrada" hflex="2" />
+					<listheader label="Faltante" hflex="2" />
+				</listhead>
+				<template name="model" >
+					<listitem >
+						<listcell label="${each.producto.codigo}" />
+						<listcell label="${each.producto.nombre}" />
+						<listcell label="${each.cantidad}" />
+						<listcell label="${each.producto.unidadMedida.descripcion}" />
+						<listcell label="${each.precioUnitario}" />
+						<listcell label="${each.cantidad * each.precioUnitario}" />
+						<listcell label="${each.cantidadFactura}" />
+						<listcell label="${each.cantidad - each.cantidadFactura}" />
+					</listitem>
+				</template>
+				<listfoot>
+					<listfooter></listfooter>
+					<listfooter></listfooter>
+					<listfooter></listfooter>
+					<listfooter></listfooter>
+					<listfooter align="right" width="100%">
+						<label id="idtcoin" value="0.0"/>
+					</listfooter>
+				</listfoot>	
+				
+			</listbox>
+			<pagingsize />
+		</div>
 		
 	</div>
 	

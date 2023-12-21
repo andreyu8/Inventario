@@ -1,6 +1,7 @@
 package com.seidor.inventario.manager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import com.seidor.inventario.adapter.beans.CierreBean;
 import com.seidor.inventario.adapter.beans.CloseBean;
@@ -34,9 +35,12 @@ public class ProductManager {
 		return this.productDao.get(id);
 	}
 	
-	
 	public ArrayList<Producto> getAll(){
 		return this.productDao.getAll();
+	}
+	
+	public ArrayList<Producto> getAll(Integer almacenId){
+		return this.productDao.getAll(almacenId);
 	}
 	
 	public void save(Producto p){
@@ -90,6 +94,14 @@ public class ProductManager {
 	
 	public ArrayList<SalidaProyectoBean> getSalidasProyecto (int idProyecto){
 		return this.productDao.getSalidasProyecto (idProyecto);
+	}
+
+	public Producto getCodigo(String codigo, Integer sucursalId) {
+		return this.productDao.getCodigo(codigo, sucursalId);
+	}
+
+	public  ArrayList<Producto> getAllCodigo(Integer almacenId) {
+		return this.productDao.getAllCodigo(almacenId);
 	}
 
 }

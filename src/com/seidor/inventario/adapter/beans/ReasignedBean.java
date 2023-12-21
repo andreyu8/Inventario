@@ -18,10 +18,10 @@ public class ReasignedBean {
 	private String codigo_s;
 	private String producto_s;
 	private String unidadMedida_s;
-	private int cantidadSalida;
+	private double cantidadSalida;
 
-	private int diferencia;
-	private int reasignacion;
+	private double diferencia;
+	private double reasignacion;
 
 	public Proyecto getProyecto() {
 		return proyecto;
@@ -119,27 +119,27 @@ public class ReasignedBean {
 		this.unidadMedida_s = unidadMedida_s;
 	}
 
-	public int getCantidadSalida() {
+	public double getCantidadSalida() {
 		return cantidadSalida;
 	}
 
-	public void setCantidadSalida(int cantidadSalida) {
+	public void setCantidadSalida(double cantidadSalida) {
 		this.cantidadSalida = cantidadSalida;
 	}
 
-	public int getDiferencia() {
+	public double getDiferencia() {
 		return diferencia;
 	}
 
-	public void setDiferencia(int diferencia) {
+	public void setDiferencia(double diferencia) {
 		this.diferencia = diferencia;
 	}
 
-	public int getReasignacion() {
+	public double getReasignacion() {
 		return reasignacion;
 	}
 
-	public void setReasignacion(int reasignacion) {
+	public void setReasignacion(double reasignacion) {
 		this.reasignacion = reasignacion;
 	}
 

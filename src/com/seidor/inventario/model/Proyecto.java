@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 22 may. 2023 18:00:34 by Hibernate Tools 4.3.5.Final
+// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -17,6 +17,11 @@ public class Proyecto implements java.io.Serializable {
 	private Date fechaInicio;
 	private Date fechaFinal;
 	private String numeroPresupuesto;
+	private boolean fdl;
+	private int cbu;
+	private Date cat;
+	private int luu;
+	private Date uat;
 	private Set salidas = new HashSet(0);
 	private Set entradas = new HashSet(0);
 	private Set movimientosStocks = new HashSet(0);
@@ -25,20 +30,30 @@ public class Proyecto implements java.io.Serializable {
 	public Proyecto() {
 	}
 
-	public Proyecto(EstatusProyecto estatusProyecto, String nombre) {
+	public Proyecto(EstatusProyecto estatusProyecto, String nombre, boolean fdl, int cbu, Date cat, int luu, Date uat) {
 		this.estatusProyecto = estatusProyecto;
 		this.nombre = nombre;
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
 	}
 
 	public Proyecto(Empleado empleado, EstatusProyecto estatusProyecto, String nombre, Date fechaInicio,
-			Date fechaFinal, String numeroPresupuesto, Set salidas, Set entradas, Set movimientosStocks,
-			Set ordenCompras) {
+			Date fechaFinal, String numeroPresupuesto, boolean fdl, int cbu, Date cat, int luu, Date uat, Set salidas,
+			Set entradas, Set movimientosStocks, Set ordenCompras) {
 		this.empleado = empleado;
 		this.estatusProyecto = estatusProyecto;
 		this.nombre = nombre;
 		this.fechaInicio = fechaInicio;
 		this.fechaFinal = fechaFinal;
 		this.numeroPresupuesto = numeroPresupuesto;
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
 		this.salidas = salidas;
 		this.entradas = entradas;
 		this.movimientosStocks = movimientosStocks;
@@ -99,6 +114,46 @@ public class Proyecto implements java.io.Serializable {
 
 	public void setNumeroPresupuesto(String numeroPresupuesto) {
 		this.numeroPresupuesto = numeroPresupuesto;
+	}
+
+	public boolean isFdl() {
+		return this.fdl;
+	}
+
+	public void setFdl(boolean fdl) {
+		this.fdl = fdl;
+	}
+
+	public int getCbu() {
+		return this.cbu;
+	}
+
+	public void setCbu(int cbu) {
+		this.cbu = cbu;
+	}
+
+	public Date getCat() {
+		return this.cat;
+	}
+
+	public void setCat(Date cat) {
+		this.cat = cat;
+	}
+
+	public int getLuu() {
+		return this.luu;
+	}
+
+	public void setLuu(int luu) {
+		this.luu = luu;
+	}
+
+	public Date getUat() {
+		return this.uat;
+	}
+
+	public void setUat(Date uat) {
+		this.uat = uat;
 	}
 
 	public Set getSalidas() {

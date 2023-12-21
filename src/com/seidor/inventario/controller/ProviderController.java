@@ -4,23 +4,34 @@ import java.util.ArrayList;
 
 import org.zkoss.spring.SpringUtil;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Listitem;
 
 import com.seidor.inventario.adapter.ProviderAdapter;
+import com.seidor.inventario.adapter.listitem.DataBankListitemAdapter;
+import com.seidor.inventario.adapter.render.DataBanckEditableListitemRenderer;
 import com.seidor.inventario.adapter.render.ProveedorComboitemRenderer;
 import com.seidor.inventario.adapter.search.ProviderSearchAdapter;
+import com.seidor.inventario.constants.SystemConstants;
+import com.seidor.inventario.inroweditablecomps.IREditableTextbox;
+import com.seidor.inventario.manager.DatosBancariosManager;
 import com.seidor.inventario.manager.ProviderManager;
+import com.seidor.inventario.model.DatosBancarios;
 import com.seidor.inventario.model.Proveedor;
+import com.seidor.inventario.model.TipoPago;
 import com.seidor.inventario.navigation.NavigationControl;
 import com.seidor.inventario.navigation.NavigationState;
 import com.seidor.inventario.navigation.NavigationStates;
+import com.seidor.inventario.util.SessionUtil;
 
 public class ProviderController {
 
 	
 	private ProviderManager providerManager;
+	private DatosBancariosManager datosBancariosManager;
 	private NavigationControl navigationControl;
 
 	public ProviderManager getProviderManager() {
@@ -38,7 +49,17 @@ public class ProviderController {
 	public void setNavigationControl(NavigationControl navigationControl) {
 		this.navigationControl = navigationControl;
 	}
+	
+	
+	public DatosBancariosManager getDatosBancariosManager() {
+		return datosBancariosManager;
+	}
 
+	public void setDatosBancariosManager(DatosBancariosManager datosBancariosManager) {
+		this.datosBancariosManager = datosBancariosManager;
+	}
+
+	
 	//read the provider
 	public void loadProvider(Combobox combo) {
 		ArrayList<Proveedor> provider = this.providerManager.getAll();
@@ -70,15 +91,37 @@ public class ProviderController {
 	public ProviderAdapter readForNew () {
 		ProviderAdapter p = new ProviderAdapter();	
 		p.setProveedor(new Proveedor());
+		p.getProveedor().setTipoPago(new TipoPago());
 		return p;
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public void save(ProviderAdapter pa, NavigationState state, Component win){
 		
-		pa.getProveedor().setActivo(1);
+		Combobox cli = (Combobox) win.getFellowIfAny("tpcb");
+		if (cli != null && cli.getSelectedItem()!=null )
+			pa.getProveedor().setTipoPago((TipoPago) cli.getSelectedItem().getValue());
+		else 
+			throw new WrongValueException(cli, "Debe de seleccionar un tipo de pago");
+		
+		if (pa.getProveedor().getDiasCredito() == null)
+			pa.getProveedor().setDiasCredito(0);
+		
+		
+		pa.getProveedor().setActivo(SystemConstants.PROVEEDOR_ACTIVA);
 		
 		this.providerManager.save(pa.getProveedor());
+		
+		ArrayList<DatosBancarios> listDataBank = (ArrayList<DatosBancarios>) SessionUtil.getSessionAttribute("listDataBank");
+		
+		for (DatosBancarios db : listDataBank ) {
+
+			db.setProveedor(pa.getProveedor());
+			db.setEstatus(SystemConstants.DATOSBANCARIOS_ACTIVA);
+			datosBancariosManager.save(db);        	
+        	
+		}
 		
 		state.setDetailIdentifier(pa.getProveedor().getIdProveedor());
 		state.setUri("/WEB-INF/zul/provider/main.zul");
@@ -88,15 +131,41 @@ public class ProviderController {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public void update(ProviderAdapter pa, NavigationState state, Component win){
 		
 		
 		if (pa.getFalgActive())
-			pa.getProveedor().setActivo(1);
+			pa.getProveedor().setActivo(SystemConstants.PROVEEDOR_ACTIVA);
 		else
-			pa.getProveedor().setActivo(0);
+			pa.getProveedor().setActivo(SystemConstants.PROVEEDOR_INACTIVA);
+		
+		Combobox cli = (Combobox) win.getFellowIfAny("tpcb");
+		if (cli != null && cli.getSelectedItem()!=null )
+			pa.getProveedor().setTipoPago((TipoPago) cli.getSelectedItem().getValue());
+		else 
+			throw new WrongValueException(cli, "Debe de seleccionar un tipo de pago");
+		
+		if (pa.getProveedor().getDiasCredito() == null)
+			pa.getProveedor().setDiasCredito(0);
 		
 		this.providerManager.update(pa.getProveedor());
+		
+		ArrayList<DatosBancarios> listDataBank = (ArrayList<DatosBancarios>) SessionUtil.getSessionAttribute("listDataBank");
+		
+		for (DatosBancarios db : listDataBank ) {
+
+			db.setProveedor(pa.getProveedor());
+			
+			if (db.getIdDatosBancarios() == null) {
+				db.setEstatus(SystemConstants.DATOSBANCARIOS_ACTIVA);
+				datosBancariosManager.save(db); 
+			} else {
+				datosBancariosManager.update(db); 
+			}
+			
+        	
+		}
 			
 		NavigationStates navStates = (NavigationStates)SpringUtil.getBean("navigationStates");
 		NavigationState prev = navStates.getPreviousOriginal();
@@ -139,7 +208,9 @@ public class ProviderController {
 		ProviderAdapter pa = new ProviderAdapter();
 	
 		Proveedor p = this.providerManager.get(providerId);
+		ArrayList<DatosBancarios> dbp= this.datosBancariosManager.getDatosBancarios(providerId);
 		pa.setProveedor(p);
+		pa.setDatosBancarios(dbp);
 		
 		if (pa.getProveedor().getActivo() == 1)
 			pa.setFalgActive(Boolean.TRUE);
@@ -148,13 +219,14 @@ public class ProviderController {
 		
 		return pa;
 	}
-	
-	
+			
 	public ProviderAdapter readForEdit(Integer providerId){
 		ProviderAdapter pa = new ProviderAdapter();
 		
 		Proveedor p = this.providerManager.get(providerId);
+		ArrayList<DatosBancarios> dbp= this.datosBancariosManager.getDatosBancarios(providerId);
 		pa.setProveedor(p);
+		pa.setDatosBancarios(dbp);
 		
 		if (pa.getProveedor().getActivo() == 1)
 			pa.setFalgActive(Boolean.TRUE);
@@ -165,6 +237,132 @@ public class ProviderController {
 		return pa;
 	}
 	
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void addCta(Listbox lbcp) {
+		
+		ProviderAdapter provider = new ProviderAdapter();
+		Proveedor p= new Proveedor();
+		provider.setProveedor(p);
+		provider.setDatosBancarios(new ArrayList<DatosBancarios>());
+	
+		ListModelList<DataBankListitemAdapter> model = (ListModelList) lbcp.getModel();
+		DataBankListitemAdapter adapter = new DataBankListitemAdapter(new DatosBancarios());
+		model.add(adapter);
+									
+	}
+	
+	public void loadDataBank(Listbox lb, boolean edit){
+		
+		ArrayList<DatosBancarios> pl= new ArrayList<DatosBancarios>();
+		DatosBancarios db= new DatosBancarios();
+		pl.add(db);
+		
+		SessionUtil.setSessionAttribute("listDataBank", new ArrayList<DatosBancarios>());
+		
+		ListModelList<DataBankListitemAdapter> lml = new ListModelList<DataBankListitemAdapter>();
+		if(edit) {
+			lb.setItemRenderer(new DataBanckEditableListitemRenderer());
+		}
+		lb.setModel(lml);
+		
+	}
+	
+	public void loadEditDataBank (Listbox lb, ProviderAdapter providerEdit, boolean edit){
+		
+		if (providerEdit.getDatosBancarios() != null) {
+			ListModelList<DataBankListitemAdapter> lml = new ListModelList<DataBankListitemAdapter>(DataBankListitemAdapter.getArray(providerEdit.getDatosBancarios()));
+			
+			SessionUtil.setSessionAttribute("listDataBank", providerEdit.getDatosBancarios());
+			
+			if(edit) {
+				lb.setItemRenderer(new DataBanckEditableListitemRenderer());
+			}
+			lb.setModel(lml);
+		}
+		
+	}
+	
+	
+	public void obtieneDBP (ProviderAdapter providerDetail, Listbox lb) {
+		ListModelList<DatosBancarios> model = new ListModelList<DatosBancarios>(providerDetail.getDatosBancarios());
+		lb.setModel(model);
+	}
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	public void recordCtaBancaria(Listitem listitem) {
+		Listbox lb = (Listbox) listitem.getParent();	
+		Integer selectedIndex = lb.getIndexOfItem(listitem);
+		DataBankListitemAdapter adapter = (DataBankListitemAdapter) lb.getModel().getElementAt(selectedIndex);
+		DatosBancarios db = adapter.getDatosBancarios();
+		
+		Component comp = listitem.getFirstChild();
+		IREditableTextbox banco = (IREditableTextbox) comp.getFirstChild();
+		comp = comp.getNextSibling();
+		
+		IREditableTextbox cuenta = (IREditableTextbox) comp.getFirstChild();
+		comp = comp.getNextSibling();
+		
+		IREditableTextbox clabe = (IREditableTextbox) comp.getFirstChild();
+		comp = comp.getNextSibling();
+		
+				
+		db.setBanco(banco.getValue());
+		db.setCta(cuenta.getValue());
+		db.setClabe(clabe.getValue());
+	
+		ArrayList<DatosBancarios> listDataBank = (ArrayList<DatosBancarios>) SessionUtil.getSessionAttribute("listDataBank");
+		
+		if (db.getIdDatosBancarios() == null)
+			listDataBank.add(db);
+		else 
+		if (db.getIdDatosBancarios() > 0) {
+			listDataBank.set(selectedIndex, db);
+		}
+		
+		System.out.println("tamaño de la lista "+listDataBank.size());
+		
+		SessionUtil.setSessionAttribute("listDataBank", listDataBank);
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void deleteCtaBancaria(Listitem listitem) {
+		Listbox lb = (Listbox) listitem.getParent();	
+		Integer selectedIndex = lb.getIndexOfItem(listitem);
+		DataBankListitemAdapter adapter = (DataBankListitemAdapter) lb.getModel().getElementAt(selectedIndex);
+		DatosBancarios db = adapter.getDatosBancarios();
+		
+		Component comp = listitem.getFirstChild();
+		IREditableTextbox banco = (IREditableTextbox) comp.getFirstChild();
+		comp = comp.getNextSibling();
+		
+		IREditableTextbox cuenta = (IREditableTextbox) comp.getFirstChild();
+		comp = comp.getNextSibling();
+		
+		IREditableTextbox clabe = (IREditableTextbox) comp.getFirstChild();
+		comp = comp.getNextSibling();
+		
+				
+		db.setBanco(banco.getValue());
+		db.setCta(cuenta.getValue());
+		db.setClabe(clabe.getValue());
+		db.setEstatus(SystemConstants.DATOSBANCARIOS_INACTIVA);
+	
+		ArrayList<DatosBancarios> listDataBank = (ArrayList<DatosBancarios>) SessionUtil.getSessionAttribute("listDataBank");
+		
+		if (db.getIdDatosBancarios() == null && db.getIdDatosBancarios() == 0)
+			listDataBank.remove(db);
+		else 
+		if (db.getIdDatosBancarios() > 0) {
+			listDataBank.set(selectedIndex, db);
+		}
+		
+		SessionUtil.setSessionAttribute("listDataBank", listDataBank);
+		
+	}
 	
 	
 }

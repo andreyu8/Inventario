@@ -53,6 +53,7 @@ public class ProjectDAO extends HibernateDaoSupport {
 		criteria.add(Restrictions.eq("nombre", p.getNombre().toUpperCase().trim()));
 		List<Proyecto> result = criteria.list();
 		if (result.size() == 0) { 
+			DaoUtil.prepareToSave(p);
 			session.save(p);
 		}
 		
@@ -62,6 +63,7 @@ public class ProjectDAO extends HibernateDaoSupport {
 	
 	public void update(Proyecto p){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToUpdate(p);
 		session.update(p);
 		session.flush();
 		session.close();
@@ -69,6 +71,7 @@ public class ProjectDAO extends HibernateDaoSupport {
 	
 	public void delete(Proyecto p){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToDelete(p);
 		session.update(p);
 		session.flush();
 		session.close();

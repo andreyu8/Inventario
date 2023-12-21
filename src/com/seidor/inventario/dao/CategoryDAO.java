@@ -46,6 +46,7 @@ public class CategoryDAO extends HibernateDaoSupport {
 		criteria.add(Restrictions.eq("categoria", c.getCategoria().toUpperCase().trim()));
 		List<Categoria> result = criteria.list();
 		if (result.size() == 0) { 
+			DaoUtil.prepareToSave(c);
 			session.save(c);
 		}
 		
@@ -55,6 +56,7 @@ public class CategoryDAO extends HibernateDaoSupport {
 	
 	public void update(Categoria c){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToUpdate(c);
 		session.update(c);
 		session.flush();
 		session.close();
@@ -62,6 +64,7 @@ public class CategoryDAO extends HibernateDaoSupport {
 	
 	public void delete(Categoria c){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToDelete(c);
 		session.update(c);
 		session.flush();
 		session.close();

@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 22 may. 2023 18:00:34 by Hibernate Tools 4.3.5.Final
+// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 
@@ -13,20 +13,38 @@ public class MovimientosStock implements java.io.Serializable {
 	private Proyecto proyecto;
 	private Date fecha;
 	private Integer tipo;
-	private Integer cantidad;
+	private Double cantidad;
 	private Integer estatus;
+	private boolean fdl;
+	private int cbu;
+	private Date cat;
+	private int luu;
+	private Date uat;
 
 	public MovimientosStock() {
 	}
 
-	public MovimientosStock(Producto producto, Proyecto proyecto, Date fecha, Integer tipo, Integer cantidad,
-			Integer estatus) {
+	public MovimientosStock(boolean fdl, int cbu, Date cat, int luu, Date uat) {
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
+	}
+
+	public MovimientosStock(Producto producto, Proyecto proyecto, Date fecha, Integer tipo, Double cantidad,
+			Integer estatus, boolean fdl, int cbu, Date cat, int luu, Date uat) {
 		this.producto = producto;
 		this.proyecto = proyecto;
 		this.fecha = fecha;
 		this.tipo = tipo;
 		this.cantidad = cantidad;
 		this.estatus = estatus;
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
 	}
 
 	public Integer getIdMovimientoStock() {
@@ -69,11 +87,11 @@ public class MovimientosStock implements java.io.Serializable {
 		this.tipo = tipo;
 	}
 
-	public Integer getCantidad() {
+	public Double getCantidad() {
 		return this.cantidad;
 	}
 
-	public void setCantidad(Integer cantidad) {
+	public void setCantidad(Double cantidad) {
 		this.cantidad = cantidad;
 	}
 
@@ -83,6 +101,46 @@ public class MovimientosStock implements java.io.Serializable {
 
 	public void setEstatus(Integer estatus) {
 		this.estatus = estatus;
+	}
+
+	public boolean isFdl() {
+		return this.fdl;
+	}
+
+	public void setFdl(boolean fdl) {
+		this.fdl = fdl;
+	}
+
+	public int getCbu() {
+		return this.cbu;
+	}
+
+	public void setCbu(int cbu) {
+		this.cbu = cbu;
+	}
+
+	public Date getCat() {
+		return this.cat;
+	}
+
+	public void setCat(Date cat) {
+		this.cat = cat;
+	}
+
+	public int getLuu() {
+		return this.luu;
+	}
+
+	public void setLuu(int luu) {
+		this.luu = luu;
+	}
+
+	public Date getUat() {
+		return this.uat;
+	}
+
+	public void setUat(Date uat) {
+		this.uat = uat;
 	}
 
 }

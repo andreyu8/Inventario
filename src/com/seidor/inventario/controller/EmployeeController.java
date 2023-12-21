@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.spring.SpringUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Constraint;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 
@@ -13,10 +14,12 @@ import com.seidor.inventario.adapter.EmployeeAdapter;
 import com.seidor.inventario.adapter.render.EmployeeComboitemRenderer;
 import com.seidor.inventario.adapter.search.EmployeeSearchAdapter;
 import com.seidor.inventario.manager.EmployeeManager;
+import com.seidor.inventario.model.Area;
 import com.seidor.inventario.model.Empleado;
 import com.seidor.inventario.navigation.NavigationControl;
 import com.seidor.inventario.navigation.NavigationState;
 import com.seidor.inventario.navigation.NavigationStates;
+import com.seidor.inventario.util.SessionUtil;
 
 public class EmployeeController {
 
@@ -161,5 +164,29 @@ public class EmployeeController {
 		
 		this.navigationControl.changeToPrevious(win);
 	}
+	
+	public void loadCatalogChild(Combobox parent, Combobox child){
+		Area parentCatalgs= parent.getSelectedItem().getValue();
+		this.clearCombo(child, null, true);
+		Integer id_almacen= SessionUtil.getSucursalId();
+		ArrayList<Empleado> munis = this.employeeManager.getByParentId(parentCatalgs.getIdArea(), id_almacen);
+		ListModelList<Empleado> model = new ListModelList<Empleado>(munis);
+		
+		child.setItemRenderer(new EmployeeComboitemRenderer());
+		child.setModel(model);
+	}
+	
+	public void clearCombo(Combobox combo, String value, Boolean cleanModel){
+		if (combo != null) {
+			Constraint cons = combo.getConstraint();
+			combo.setConstraint((Constraint)null);
+			if (value != null && value.trim().length() > 0) combo.setValue(value);
+			else combo.setValue(null);
+			if (cleanModel != null && cleanModel) combo.setModel(new ListModelList<Object>());
+			combo.setConstraint(cons);
+		}
+	}
+
+	
 	
 }

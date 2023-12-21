@@ -83,16 +83,17 @@
 		<listbox id="umlb" emptyMessage="No se encontrarón unidades de medida para mostrar" >
 			<listhead>
 				<listheader label="Ver" width="50px" />
-				<listheader label="Unidad" hflex="3" sort="auto(lower(categoria))" />
 				<listheader label="Descripción" hflex="3" sort="auto(lower(descripcion))" />
+				<listheader label="Unidad" hflex="3" sort="auto(lower(categoria))" />
 			</listhead>
 			<template name="model" >
 				<listitem >
 					<listcell style="text-align: center;" >
 						<a iconSclass="z-icon-eye" onClick="show();" />
 					</listcell>
-					<listcell label="${each.unidadMedida}" />
 					<listcell label="${each.descripcion}" />
+					<listcell label="${each.abrev}" />
+					
 				</listitem>
 			</template>
 		</listbox>

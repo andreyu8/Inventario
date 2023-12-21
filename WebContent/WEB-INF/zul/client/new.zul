@@ -68,8 +68,8 @@
 			</div>
 			
 			<div class="col-md-4">
-				<label value="Extension*" sclass="editField" />
-				<h:p> <textbox value="@bind(clientSave.cliente.extension)" constraint="${tmv}" width="400px"/> </h:p>
+				<label value="Extension" sclass="editField" />
+				<h:p> <textbox value="@bind(clientSave.cliente.extension)" width="400px"/> </h:p>
 			</div>
 			
 			<div class="col-md-4">

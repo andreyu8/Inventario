@@ -47,6 +47,7 @@ public class UnitMeasureDAO extends HibernateDaoSupport {
 		criteria.add(Restrictions.eq("unidadMedida", um.getUnidadMedida()));
 		List<UnidadMedida> result = criteria.list();
 		if (result.size() == 0) { 
+			DaoUtil.prepareToSave(um);
 			session.save(um);
 		}
 		
@@ -56,6 +57,8 @@ public class UnitMeasureDAO extends HibernateDaoSupport {
 	
 	public void update(UnidadMedida um){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		
+		DaoUtil.prepareToUpdate(um);
 		session.update(um);
 		session.flush();
 		session.close();
@@ -63,6 +66,7 @@ public class UnitMeasureDAO extends HibernateDaoSupport {
 	
 	public void delete(UnidadMedida um){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToDelete(um);
 		session.update(um);
 		session.flush();
 		session.close();

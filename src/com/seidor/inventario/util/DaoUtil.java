@@ -3,9 +3,11 @@ package com.seidor.inventario.util;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 @SuppressWarnings("unchecked")
 public class DaoUtil {
@@ -21,7 +23,7 @@ public class DaoUtil {
 			Method setLastUpdateUserMethod = objectClass.getMethod("setLuu", new Class[]{objectClass.getDeclaredField("luu").getType()});
 			Method setUpdateAtMethod = objectClass.getMethod("setUat", new Class[]{objectClass.getDeclaredField("uat").getType()});
 			
-			String userId = SessionUtil.getLoggedUserId().toString();
+			Integer userId = SessionUtil.getLoggedUserId();
 			
 			setFlgDltMethod.invoke(object, new Object[]{false});
 			setCreatedByUserMethod.invoke(object, new Object[]{userId});
@@ -30,22 +32,22 @@ public class DaoUtil {
 			setCreatedAtMethod.invoke(object, new Object[]{Calendar.getInstance(DateFormatUtil.getDefaultLocale()).getTime()});
 		} 
 		catch (NoSuchMethodException nsmex) {
-//			throw new RuntimeException(nsmex.getMessage());
+			throw new RuntimeException(nsmex.getMessage());
 		}
 		catch (SecurityException sex) {
-//			throw new RuntimeException(sex.getMessage());
+			throw new RuntimeException(sex.getMessage());
 		}
 		catch (NoSuchFieldException nsfex) {
-//			throw new RuntimeException(nsfex.getMessage());
+			throw new RuntimeException(nsfex.getMessage());
 		}
 		catch (IllegalArgumentException iaex) {
-//			throw new RuntimeException(iaex.getMessage());
+			throw new RuntimeException(iaex.getMessage());
 		} 
 		catch (IllegalAccessException iaex) {
-//			throw new RuntimeException(iaex.getMessage());
+			throw new RuntimeException(iaex.getMessage());
 		}
 		catch (InvocationTargetException itex) {
-//			throw new RuntimeException(itex.getMessage());
+			throw new RuntimeException(itex.getMessage());
 		}
 	}
 	
@@ -56,28 +58,28 @@ public class DaoUtil {
 			Method setLastUpdateUserMethod = objectClass.getMethod("setLuu", new Class[]{objectClass.getDeclaredField("luu").getType()});
 			Method setUpdateAtMethod = objectClass.getMethod("setUat", new Class[]{objectClass.getDeclaredField("uat").getType()});
 			
-			String userId = SessionUtil.getLoggedUserId().toString();
+			Integer userId = SessionUtil.getLoggedUserId();
 			
 			setLastUpdateUserMethod.invoke(object, new Object[]{userId});
 			setUpdateAtMethod.invoke(object, new Object[]{Calendar.getInstance(DateFormatUtil.getDefaultLocale()).getTime()});
 		} 
 		catch (NoSuchMethodException nsmex) {
-//			throw new RuntimeException(nsmex.getMessage());
+			throw new RuntimeException(nsmex.getMessage());
 		}
 		catch (SecurityException sex) {
-//			throw new RuntimeException(sex.getMessage());
+			throw new RuntimeException(sex.getMessage());
 		}
 		catch (NoSuchFieldException nsfex) {
-//			throw new RuntimeException(nsfex.getMessage());
+			throw new RuntimeException(nsfex.getMessage());
 		}
 		catch (IllegalArgumentException iaex) {
-//			throw new RuntimeException(iaex.getMessage());
+			throw new RuntimeException(iaex.getMessage());
 		} 
 		catch (IllegalAccessException iaex) {
-//			throw new RuntimeException(iaex.getMessage());
+			throw new RuntimeException(iaex.getMessage());
 		}
 		catch (InvocationTargetException itex) {
-//			throw new RuntimeException(itex.getMessage());
+			throw new RuntimeException(itex.getMessage());
 		}
 	}
 	
@@ -91,30 +93,30 @@ public class DaoUtil {
 			Method setLastUpdateUserMethod = objectClass.getMethod("setLuu", new Class[]{objectClass.getDeclaredField("luu").getType()});
 			Method setUpdateAtMethod = objectClass.getMethod("setUat", new Class[]{objectClass.getDeclaredField("uat").getType()});
 			
-			String userId = SessionUtil.getLoggedUserId().toString();
+			Integer userId = SessionUtil.getLoggedUserId();
 			
 			setFlagDeletedMethod.invoke(object, new Object[]{true});
 			setLastUpdateUserMethod.invoke(object, new Object[]{userId});
-			setUpdateAtMethod.invoke(object, new Object[]{Calendar.getInstance(DateFormatUtil.getDefaultLocale()).getTime()});
+			setUpdateAtMethod.invoke(object, new Object[] {Calendar.getInstance(DateFormatUtil.getDefaultLocale()).getTime()});
 			
 		} 
 		catch (NoSuchMethodException nsmex) {
-//			throw new RuntimeException(nsmex.getMessage());
+			throw new RuntimeException(nsmex.getMessage());
 		}
 		catch (SecurityException sex) {
-//			throw new RuntimeException(sex.getMessage());
+			throw new RuntimeException(sex.getMessage());
 		}
 		catch (NoSuchFieldException nsfex) {
-//			throw new RuntimeException(nsfex.getMessage());
+			throw new RuntimeException(nsfex.getMessage());
 		}
 		catch (IllegalArgumentException iaex) {
-//			throw new RuntimeException(iaex.getMessage());
+			throw new RuntimeException(iaex.getMessage());
 		} 
 		catch (IllegalAccessException iaex) {
-//			throw new RuntimeException(iaex.getMessage());
+			throw new RuntimeException(iaex.getMessage());
 		}
 		catch (InvocationTargetException itex) {
-//			throw new RuntimeException(itex.getMessage());
+			throw new RuntimeException(itex.getMessage());
 		}
 	}
 	
@@ -208,13 +210,13 @@ public class DaoUtil {
 	@SuppressWarnings("rawtypes")
 	public static Criteria getCriteria(Session session, Class clasz){
 		Criteria criteria = session.createCriteria(clasz);
-//		criteria.add(Restrictions.eq("fdl", false));
+		criteria.add(Restrictions.eq("fdl", false));
 		return criteria;
 	}
 	
 	public static Criteria getCriteria(Criteria criteria, String property){
 		Criteria cri = criteria.createCriteria(property);
-//		cri.add(Restrictions.eq("fdl", false));
+		cri.add(Restrictions.eq("fdl", false));
 		return cri;
 	}
 	

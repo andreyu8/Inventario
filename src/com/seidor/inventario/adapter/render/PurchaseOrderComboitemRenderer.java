@@ -16,7 +16,7 @@ public class PurchaseOrderComboitemRenderer implements ComboitemRenderer<OrdenCo
 	}
 	
 	public void render(Comboitem comboitem, OrdenCompra data, int index) throws Exception {
-		comboitem.setLabel(data.getDescripcion());
+		comboitem.setLabel(""+data.getIdOrdenCompra());
 		comboitem.setValue(data);
 	}
 	

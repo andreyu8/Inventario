@@ -34,6 +34,7 @@ import com.seidor.inventario.adapter.render.ReasignedListitemRenderer;
 import com.seidor.inventario.constants.SystemConstants;
 import com.seidor.inventario.inroweditablecomps.EditableListitem;
 import com.seidor.inventario.inroweditablecomps.IREditableCheckbox;
+import com.seidor.inventario.inroweditablecomps.IREditableDoublebox;
 import com.seidor.inventario.inroweditablecomps.IREditableIntbox;
 import com.seidor.inventario.manager.EntryManager;
 import com.seidor.inventario.manager.OutputManager;
@@ -285,7 +286,7 @@ public class CloseProjectController {
 		comp = comp.getNextSibling();
 		
 		Hlayout devCant= (Hlayout) comp.getFirstChild();
-		IREditableIntbox quantitybox = (IREditableIntbox) devCant.getFirstChild();
+		IREditableDoublebox quantitybox = (IREditableDoublebox) devCant.getFirstChild();
 		
 		System.out.println("cantidad a devolver: "+quantitybox.getValue());
 		System.out.println("id del producto: "+outBean.getIdProducto());
@@ -312,7 +313,8 @@ public class CloseProjectController {
 	public void save (CloseProjectAdapter ea, NavigationState state, Component win) {
 		
 		
-		Listbox lb = (Listbox) win.getFellowIfAny("oplb");
+		//Listbox lb = (Listbox) win.getFellowIfAny("oplb");
+		Listbox lb = (Listbox) win.getFellowIfAny("cplb");
 		ListModelList<CloseitemAdapter> lml = (ListModelList) lb.getModel();
 		
 		for (int i=0; i< lb.getItemCount(); i++ ) {
@@ -333,10 +335,10 @@ public class CloseProjectController {
 		ArrayList<CloseBean> listDevoluciones = (ArrayList<CloseBean>) SessionUtil.getSessionAttribute("listDevoluciones");
 			
 		
-		int stockdefault = 0;
-		int sobranteProyecto = 0;
-		int stock = 0;
-		int cantidad = 0;
+		double stockdefault = 0.0;
+		double sobranteProyecto = 0.0;
+		double stock = 0.0;
+		double cantidad = 0.0;
 		
 		for (CloseBean ob : listDevoluciones ) {
 			System.out.println("id_producto:"+ob.getIdProducto());
@@ -575,9 +577,9 @@ public class CloseProjectController {
 			 * listReasignacion
 			 * */
 		
-		int stockdefault = 0;
-		int sobranteProyecto = 0;
-		int cantidad = 0;
+		double stockdefault = 0;
+		double sobranteProyecto = 0;
+		double cantidad = 0;
 		
 		for (ReasignedBean ob : listReasignacion ) {
 			System.out.println("id_producto:"+ob.getIdProducto());

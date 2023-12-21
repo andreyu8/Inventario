@@ -359,11 +359,11 @@ public class StockController {
 			 Label faFecha = (Label) win.getFellowIfAny("faFecha");
 			 faFecha.setValue(DateFormatUtil.getFormatedDate(fa.getFecha(), Boolean.FALSE));
 			 
-			 Label faRFC = (Label) win.getFellowIfAny("faRFC");
+			 /*Label faRFC = (Label) win.getFellowIfAny("faRFC");
 			 faRFC.setValue(fa.getProveedor().getRfc());
 			 
 			 Label faNom = (Label) win.getFellowIfAny("faNom");
-			 faNom.setValue(fa.getProveedor().getNombre());
+			 faNom.setValue(fa.getProveedor().getNombre());*/
 			 
 			 Label faTotal = (Label) win.getFellowIfAny("faTotal");
 			 faTotal.setValue(NumberFormatUtil.format(fa.getTotal(), 2));

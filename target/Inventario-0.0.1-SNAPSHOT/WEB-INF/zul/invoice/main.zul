@@ -35,7 +35,7 @@
 		public void create(){
 			state.setDetailList(null);
 			state.setDetailIndex(null);
-			state.appendBreadCrumbsPath("Nueva factura");
+			state.appendBreadCrumbsPath("Entrada al almacen");
 			state.setUri("/WEB-INF/zul/invoice/new.zul");
 			navigationControl.changeView(winC, state);
 		}
@@ -83,11 +83,11 @@
 		<listbox id="catlb" emptyMessage="No se encontrarón categorías para mostrar" >
 			<listhead>
 				<listheader label="Ver" width="50px" />
-				<listheader label="id" hflex="3" sort="auto(lower(categoria))" />
-				<listheader label="Proveedor" hflex="3" sort="auto(lower(descripcion))" />
-				<listheader label="Numero" hflex="3" sort="auto(lower(descripcion))" />
-				<listheader label="Fecha" hflex="3" sort="auto(lower(descripcion))" />
-				<listheader label="Total" hflex="3" sort="auto(lower(descripcion))" />
+				<listheader label="id" hflex="3" sort="auto(lower(idFactura))" />
+				<listheader label="Orden compra" hflex="3" sort="auto(lower(ordenCompra.descripcion))" />
+				<listheader label="Numero" hflex="3" sort="auto(lower(numeroFactura))" />
+				<listheader label="Fecha" hflex="3" sort="auto(lower(fecha))" />
+				<listheader label="Faltante" hflex="3" sort="auto(lower(total))" />
 				<listheader label="Descripción" hflex="3" sort="auto(lower(descripcion))" />
 			</listhead>
 			<template name="model" >
@@ -96,7 +96,7 @@
 						<a iconSclass="z-icon-eye" onClick="show();" />
 					</listcell>
 					<listcell label="${each.idFactura}" />
-					<listcell label="${each.proveedor.nombre}" />
+					<listcell label="${each.ordenCompra.descripcion}" />
 					<listcell label="${each.numeroFactura}" />
 					<listcell label="${each.fecha}" />
 					<listcell label="${each.total}" />

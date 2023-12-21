@@ -84,7 +84,7 @@
 			<listhead>
 				<listheader label="Ver" width="50px" />
 				<listheader label="Nombre" hflex="3" sort="auto(lower(categoria))" />
-				<listheader label="Rfc" hflex="3" sort="auto(lower(descripcion))" />
+				<listheader label="RFC" hflex="3" sort="auto(lower(descripcion))" />
 				<listheader label="Dirección" hflex="3" sort="auto(lower(descripcion))" />
 				<listheader label="Telefono" hflex="3" sort="auto(lower(descripcion))" />
 				<listheader label="Extensión" hflex="3" sort="auto(lower(descripcion))" />

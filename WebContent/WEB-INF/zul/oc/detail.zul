@@ -22,6 +22,12 @@
 			state.setDetailLabels(null);
 			navigationControl.changeView(winInv, state);
 		}
+		
+		
+		public void printPDFoc() {
+			purchaseOrderController.createReportData(ocDetail, winInv);
+		}	
+		
 	</zscript>
 	
 	<div class="row sectionBox animated aniFadeIn">
@@ -37,7 +43,7 @@
 	
 	<div class="row subBox animated aniFadeIn">
 		<div class="col-md-12">
-			<label value="Datos generales" />
+			<label value="Datos de la Orden Compra" />
 		</div>
 	</div>
 	<div class="row container animated aniFadeIn" >
@@ -45,36 +51,40 @@
 			<label value="Id de la orden de compra" sclass="detailField" />
 			<h:p> <label value="${ocDetail.orderCompra.idOrdenCompra}" sclass="detailData" /> </h:p>
 		</div>
-		<div class="col-md-3">
+		<!-- <div class="col-md-3">
 			<label value="Número de la OC*" sclass="detailField" />
 			<h:p> <label value="${ocDetail.orderCompra.numeroOc}" sclass="detailData" /> </h:p>
-		</div>
+		</div> -->
 		<div class="col-md-3">
 			<label value="Area" sclass="detailField" />
-			<h:p> <label value="${ocDetail.orderCompra.area.descripcion}" sclass="detailData" /> </h:p>
+			<h:p> <label value="${ocDetail.orderCompra.area.area}" sclass="detailData" /> </h:p>
 		</div>
 		<div class="col-md-3">
 			<label value="Cliente" sclass="detailField" />
 			<h:p> <label value="${ocDetail.orderCompra.cliente.nombre}" sclass="detailData" /> </h:p>
 		</div>
 		<div class="col-md-3">
-			<label value="Descripción" sclass="detailField" />
+			<label value="Proveedor" sclass="detailField" />
+			<h:p> <label value="${ocDetail.orderCompra.proveedor.nombre}" sclass="detailData" /> </h:p>
+		</div>
+		<div class="col-md-3">
+			<label value="Observaciones" sclass="detailField" />
 			<h:p> <label value="${ocDetail.orderCompra.descripcion}" sclass="detailData" /> </h:p>
 		</div>
 		<div class="col-md-3">
-			<label value="Nombre" sclass="detailField" />
-			<h:p> <label value="${ocDetail.orderCompra.empleado.nombre}" sclass="detailData" /> </h:p>
+			<label value="Nombre responsable" sclass="detailField" />
+			<h:p> <label value="${ocDetail.orderCompra.empleado.nombre} ${ocDetail.orderCompra.empleado.APaterno} ${ocDetail.orderCompra.empleado.APaterno} ${ocDetail.orderCompra.empleado.AMaterno}" sclass="detailData" /> </h:p>
 		</div>
 		<div class="col-md-3">
 			<label value="Etapa" sclass="detailField" />
 			<h:p> <label value="${ocDetail.orderCompra.etapa.descripcion}" sclass="detailData" /> </h:p>
 		</div>
-		<div class="col-md-3">
+		<!-- <div class="col-md-3">
 			<label value="Factura" sclass="detailField" />
 			<h:p> <label value="${ocDetail.orderCompra.factura.numeroFactura}" sclass="detailData" /> </h:p>
-		</div>
+		</div> -->
 		<div class="col-md-3">
-			<label value="Descripción" sclass="detailField" />
+			<label value="Fecha" sclass="detailField" />
 			<h:p> <label value="${ocDetail.orderCompra.fecha}" sclass="detailData" /> </h:p>
 		</div>
 		
@@ -89,16 +99,79 @@
 		</div>
 		
 		
-		<div class="col-md-3">
+		<!-- <div class="col-md-3">
 			<label value="Estatus orden de compra" sclass="detailField" />
 			<h:p> <label value="${ocDetail.orderCompra.estatusOrdenCompra.estatusOrdenCompra}" sclass="detailData" /> </h:p>
-		</div>
+		</div> -->
 		
 		<div class="col-md-3">
 			<label value="Tipo de pago" sclass="detailField" />
-			<h:p> <label value="${ocDetail.orderCompra.tipoPago.tipoPago}" sclass="detailData" /> </h:p>
+			<h:p> <label value="${ocDetail.orderCompra.proveedor.tipoPago.tipoPago}" sclass="detailData" /> </h:p>
 		</div>
 		
+		<div class="col-md-3">
+			<label value="Días de crédito" sclass="detailField" />
+			<h:p> <label value="${ocDetail.orderCompra.proveedor.diasCredito}" sclass="detailData" /> </h:p>
+		</div>
+		
+		
+		<div class="col-md-3">
+			<label value="No. requisición" sclass="detailField" />
+			<h:p> <label value="${ocDetail.orderCompra.noRequisicion}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="No. presupuesto" sclass="detailField" />
+			<h:p> <label value="${ocDetail.orderCompra.noPresupuesto}" sclass="detailData" /> </h:p>
+		</div>
+		
+		
+		<separator spacing="10px" />
+	
+		<div class="col-md-12">
+			<label value="Detalle de Productos" />
+		</div>
+		
+		<div class="col-md-6" align="right" >
+			<button label="PDF" onClick="printPDFoc();" iconSclass="z-icon-pencil" />
+		</div>
+		
+		
+		<div class="animated aniFadeIn" >	
+			<listbox id="catcbp" onCreate="purchaseOrderController.obtieneDOC(ocDetail, catcbp, idtcoin)" emptyMessage="No se encontrarón categorías para mostrar" >
+				<listhead>
+					<listheader label="Codigo" hflex="3" sort="auto(lower(producto.codigo))" />
+					<listheader label="Producto" hflex="6" sort="auto(lower(producto.nombre))" />
+					<listheader label="Cantidad" hflex="3" sort="auto(lower(cantidad))" />
+					<listheader label="Precio" hflex="3" sort="auto(lower(precioUnitario))" />
+					<listheader label="Cantidad Almacen" hflex="3" sort="auto(lower(cantidadFactura))" />
+				</listhead>
+				<template name="model" >
+					<listitem >
+						<listcell label="${each.producto.codigo}" />
+						<listcell label="${each.producto.nombre}" />
+						<listcell label="${each.cantidad}" />
+						<listcell label="${each.precioUnitario}" />
+						<listcell label="${each.cantidadFactura}" />
+					</listitem>
+				</template>
+				
+				<listfoot>
+					<listfooter></listfooter>
+					<listfooter></listfooter>
+					<listfooter></listfooter>
+					<listfooter></listfooter>
+					<listfooter align="right" width="100%">
+						<label id="idtcoin" value="0.0"/>
+					</listfooter>
+				</listfoot>	
+				
+			</listbox>
+			<pagingsize />
+		</div>
+	
+		
+		<separator spacing="10px" />
 		
 		
 	</div>

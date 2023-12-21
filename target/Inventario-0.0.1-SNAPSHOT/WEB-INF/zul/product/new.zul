@@ -41,7 +41,7 @@
 	
 	<div class="row subBoxAlt animated aniFadeIn" >
 		<div class="col-md-12">
-			<label value="Datos del producto" />
+			<label value="" />
 		</div>
 	</div>
 	<div class="container animated aniFadeIn" >
@@ -60,7 +60,7 @@
 			</div>
 		
 			<div class="col-md-4">
-				<label value="Nombre*" sclass="editField" />
+				<label value="Descripción*" sclass="editField" />
 				<h:p> <textbox value="@bind(productSave.producto.nombre)" constraint="${tmv}" /> </h:p>
 			</div>
 			
@@ -84,10 +84,10 @@
 				<h:p> <doublebox value="@bind(productSave.producto.precioCompra)" /> </h:p>
 			</div>
 			
-			<div class="col-md-4">
+			<!-- <div class="col-md-4">
 				<label value="Precio de venta" sclass="editField" />
 				<h:p> <doublebox value="@bind(productSave.producto.precioVenta)" /> </h:p>
-			</div>
+			</div> -->
 			
 			
 			<div class="col-md-4">

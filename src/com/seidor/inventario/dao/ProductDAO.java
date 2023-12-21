@@ -2,6 +2,7 @@ package com.seidor.inventario.dao;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -66,6 +67,24 @@ public class ProductDAO extends HibernateDaoSupport{
 	}
 	
 	@SuppressWarnings("unchecked")
+	public ArrayList<Producto> getAll(Integer almacenId) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = DaoUtil.getCriteria(session, Producto.class);
+		
+		criteria.setFetchMode("categoria", FetchMode.JOIN);
+		criteria.setFetchMode("unidadMedida", FetchMode.JOIN);
+		
+		criteria.add(Restrictions.eq("almacen.idAlmacen", almacenId));
+		
+		criteria.addOrder(Order.asc("nombre"));
+		List<Producto> result = criteria.list();
+		session.flush();
+		session.close();
+		
+		return new ArrayList<Producto>(result);
+	}
+	
+	@SuppressWarnings("unchecked")
 	public void save(Producto p){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		
@@ -73,6 +92,7 @@ public class ProductDAO extends HibernateDaoSupport{
 		criteria.add(Restrictions.eq("nombre", p.getNombre()));
 		List<Producto> result = criteria.list();
 		if (result.size() == 0) { 
+			DaoUtil.prepareToSave(p);
 			session.save(p);
 		}
 		
@@ -82,6 +102,7 @@ public class ProductDAO extends HibernateDaoSupport{
 	
 	public void update(Producto p){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToUpdate(p);
 		session.update(p);
 		session.flush();
 		session.close();
@@ -89,6 +110,7 @@ public class ProductDAO extends HibernateDaoSupport{
 	
 	public void delete(Producto p){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToDelete(p);
 		session.update(p);
 		session.flush();
 		session.close();
@@ -144,7 +166,7 @@ public class ProductDAO extends HibernateDaoSupport{
 		}
 		
 		//if el usuaio != 1 tomo el almacen
-		//criteria.add(Restrictions.eq("id_almacen", criteria));
+		//criteria.add(Restrictions.eq("almacen.idAlmacen", criteria));
 		
 		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		
@@ -713,6 +735,42 @@ public class ProductDAO extends HibernateDaoSupport{
 
 			
 	}
+
+	public Producto getCodigo(String codigo, Integer sucursalId) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = session.createCriteria(Producto.class);
+		
+		criteria.setFetchMode("categoria", FetchMode.JOIN);
+		criteria.setFetchMode("unidadMedida", FetchMode.JOIN);
+		criteria.setFetchMode("almacen", FetchMode.JOIN);
+		
+		criteria.add(Restrictions.eq("codigo", codigo));
+		criteria.add(Restrictions.eq("almacen.idAlmacen", sucursalId));
+		Producto result = (Producto)criteria.uniqueResult();
+		session.flush();
+		session.close();
+		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Producto> getAllCodigo(Integer almacenId) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = DaoUtil.getCriteria(session, Producto.class);
+		
+		criteria.setFetchMode("categoria", FetchMode.JOIN);
+		criteria.setFetchMode("unidadMedida", FetchMode.JOIN);
+		
+		criteria.add(Restrictions.eq("almacen.idAlmacen", almacenId));
+		
+		criteria.addOrder(Order.asc("nombre"));
+		List<Producto> result = criteria.list();
+		session.flush();
+		session.close();
+		
+		return new ArrayList<Producto>(result);
+	}
+
+	
 	
 	
 }

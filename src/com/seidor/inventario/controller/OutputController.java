@@ -130,7 +130,7 @@ public class OutputController {
 		Entrada entryProduct = getCantidadEntrada(entryManager.getIdProjectProduct(oa.getSalida().getProyecto().getIdProyecto(),  oa.getSalida().getProducto().getIdProducto()));
 		Salida outputProduct = getCantidadSalida (entryManager.getIdProjectProductS(oa.getSalida().getProyecto().getIdProyecto(),  oa.getSalida().getProducto().getIdProducto()));
 		
-		int cantidadProducto = entryProduct.getCantidad() - outputProduct.getCantidad();
+		double cantidadProducto = entryProduct.getCantidad() - outputProduct.getCantidad();
 
 		//resta a productos la cantidad
 		oa.getSalida().getProducto().setCantidad(cantidadProducto - oa.getSalida().getCantidad());
@@ -160,7 +160,7 @@ public class OutputController {
 	
 	
 	private Salida getCantidadSalida(ArrayList<Salida> idProjectProduct) {
-		int cantidad =0 ;
+		double cantidad =0 ;
 		Salida salida = new Salida();
 		
 		for (Salida s : idProjectProduct) {
@@ -172,7 +172,7 @@ public class OutputController {
 	}
 
 	private Entrada getCantidadEntrada(ArrayList<Entrada> idProjectProduct) {
-		int cantidad =0 ;
+		double cantidad =0 ;
 		Entrada entrada = new Entrada();
 		
 		for (Entrada e : idProjectProduct) {

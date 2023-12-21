@@ -21,6 +21,11 @@
 			fcv.validate(win);
 			invoiceController.update(invoiceEdit, state, win);
 		}
+		
+		public void printPDFoc() {
+			invoiceController.createReportData(invoiceEdit, win);
+		}	
+		
 	</zscript>
 	
 	<div class="row sectionBoxAlt animated aniFadeIn" >
@@ -51,50 +56,62 @@
 				<h:p> <textbox value="@bind(invoiceEdit.factura.numeroFactura)" constraint="${tmv}" /> </h:p>
 			</div>
 			
-			
 			<div class="col-md-4">
 				<label value="Fecha*" sclass="editField" />
 				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(invoiceEdit.factura.fecha)"  /> </h:p>
 			</div>
 			
-			<div class="col-md-4">
-				<label value="Proveedor*" sclass="editField" />
-				<h:p> <combobox value="@bind(invoiceEdit.factura.proveedor.nombre)"
-							 		onCreate="providerController.loadProvider(self);" 
-						 			id="provcb" constraint="${cmv}"/> </h:p>
-			</div>		
-		
-		
-			<div class="col-md-4">
-				<label value="Subtotal*" sclass="editField" />
-				<h:p> <doublebox value="@bind(invoiceEdit.factura.subtotal)" /> </h:p>
-			</div>
-			
-			
-		
-			<div class="col-md-4">
-				<label value="IVA*" sclass="editField" />
-				<h:p> <doublebox value="@bind(invoiceEdit.factura.iva)" /> </h:p>
-			</div>
-			
-			
-			<div class="col-md-4">
-				<label value="Total*" sclass="editField" />
-				<h:p> <doublebox value="@bind(invoiceEdit.factura.total)" /> </h:p>
-			</div>
-			
-			
-			<div class="col-md-4">
-				<label value="Descrpción*" sclass="editField" />
-				<h:p> <textbox value="@bind(invoiceEdit.factura.descripcion)" constraint="${tmv}" /> </h:p>
-			</div>
 			
 			<div class="col-md-4">
 				<label value="Nota*" sclass="editField" />
 				<h:p>
 			 		<textbox rows="6" value="@bind(invoiceEdit.factura.notas)" width="370px;" tabindex="11" />
                  </h:p>   	        
+			</div>
+			
+		
+			<div class="col-md-12">
+					<label value="Datos de la Orden de compra" />
 			</div>	
+			
+			<div class="col-md-4">
+				<label value="Id de orden de compra" sclass="editField" />
+				<h:p>
+					<label value="@bind(invoiceEdit.ordenCompra.idOrdenCompra)" />
+				</h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Proyecto" sclass="editField" />
+				<h:p>
+					<label  value="@bind(invoiceEdit.ordenCompra.proyecto.nombre)" />
+				</h:p>
+			</div>
+			
+			<div class="col-md-6" align="right" >
+				<button label="PDF" onClick="printPDFoc();" iconSclass="z-icon-pencil" />
+			</div>
+			
+			<div class="animated aniFadeIn" >	
+				<listbox id="oclb" onCreate="invoiceController.obtenerOrdenCompraEdit (invoiceEdit, oclb);" emptyMessage="No se encontrarón productos para mostrar">
+				 	<auxhead>
+		            	<auxheader colspan="6" align="center" style=" background: green;">Productos OC</auxheader>
+		            	<auxheader colspan="2" align="center">Entrada Almacen</auxheader>
+		        	</auxhead>
+					<listhead>
+						<listheader label="Código" hflex="3" />
+						<listheader label="Producto" hflex="3" />
+						<listheader label="Cantidad" hflex="2" />
+						<listheader label="U.medida" hflex="3" />
+						<listheader label="Precio" hflex="3" />
+						<listheader label="Total" hflex="2" />
+						<listheader label="Entrada" hflex="2" />
+						<listheader label="Acción" hflex="2" />
+					</listhead>
+				</listbox>
+				<pagingsize />
+			</div>
+				
 			
 		</div>
 	</div>

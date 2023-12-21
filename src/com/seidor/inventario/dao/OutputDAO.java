@@ -19,6 +19,8 @@ public class OutputDAO extends HibernateDaoSupport{
 	
 	public void update (Salida s) {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		
+		DaoUtil.prepareToUpdate(s);
 		session.update(s);
 		
 		session.flush();
@@ -32,7 +34,10 @@ public class OutputDAO extends HibernateDaoSupport{
 			
 			session.beginTransaction();
 			
+			DaoUtil.prepareToSave(s);
 			session.save(s);
+			
+			DaoUtil.prepareToUpdate(p);
 			session.update(p);
 		
 			session.getTransaction().commit();

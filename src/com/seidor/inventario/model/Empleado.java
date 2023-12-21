@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 22 may. 2023 18:00:34 by Hibernate Tools 4.3.5.Final
+// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -12,6 +12,7 @@ public class Empleado implements java.io.Serializable {
 
 	private Integer idEmpleado;
 	private Almacen almacen;
+	private Area area;
 	private String nombre;
 	private String APaterno;
 	private String AMaterno;
@@ -26,6 +27,11 @@ public class Empleado implements java.io.Serializable {
 	private Date fechaRegistro;
 	private String cargo;
 	private int activo;
+	private boolean fdl;
+	private int cbu;
+	private Date cat;
+	private int luu;
+	private Date uat;
 	private Set ordenCompras = new HashSet(0);
 	private Set proyectos = new HashSet(0);
 	private Set entradas = new HashSet(0);
@@ -35,17 +41,23 @@ public class Empleado implements java.io.Serializable {
 	public Empleado() {
 	}
 
-	public Empleado(Date fechaRegistro, String cargo, int activo) {
+	public Empleado(Date fechaRegistro, String cargo, int activo, boolean fdl, int cbu, Date cat, int luu, Date uat) {
 		this.fechaRegistro = fechaRegistro;
 		this.cargo = cargo;
 		this.activo = activo;
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
 	}
 
-	public Empleado(Almacen almacen, String nombre, String APaterno, String AMaterno, String curp, String rfc,
-			String numeroEmpleado, String telefono, String extension, String celular, String EMail,
-			String numeroSegSocial, Date fechaRegistro, String cargo, int activo, Set ordenCompras, Set proyectos,
-			Set entradas, Set salidas, Set usuarios) {
+	public Empleado(Almacen almacen, Area area, String nombre, String APaterno, String AMaterno, String curp,
+			String rfc, String numeroEmpleado, String telefono, String extension, String celular, String EMail,
+			String numeroSegSocial, Date fechaRegistro, String cargo, int activo, boolean fdl, int cbu, Date cat,
+			int luu, Date uat, Set ordenCompras, Set proyectos, Set entradas, Set salidas, Set usuarios) {
 		this.almacen = almacen;
+		this.area = area;
 		this.nombre = nombre;
 		this.APaterno = APaterno;
 		this.AMaterno = AMaterno;
@@ -60,6 +72,11 @@ public class Empleado implements java.io.Serializable {
 		this.fechaRegistro = fechaRegistro;
 		this.cargo = cargo;
 		this.activo = activo;
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
 		this.ordenCompras = ordenCompras;
 		this.proyectos = proyectos;
 		this.entradas = entradas;
@@ -81,6 +98,14 @@ public class Empleado implements java.io.Serializable {
 
 	public void setAlmacen(Almacen almacen) {
 		this.almacen = almacen;
+	}
+
+	public Area getArea() {
+		return this.area;
+	}
+
+	public void setArea(Area area) {
+		this.area = area;
 	}
 
 	public String getNombre() {
@@ -193,6 +218,46 @@ public class Empleado implements java.io.Serializable {
 
 	public void setActivo(int activo) {
 		this.activo = activo;
+	}
+
+	public boolean isFdl() {
+		return this.fdl;
+	}
+
+	public void setFdl(boolean fdl) {
+		this.fdl = fdl;
+	}
+
+	public int getCbu() {
+		return this.cbu;
+	}
+
+	public void setCbu(int cbu) {
+		this.cbu = cbu;
+	}
+
+	public Date getCat() {
+		return this.cat;
+	}
+
+	public void setCat(Date cat) {
+		this.cat = cat;
+	}
+
+	public int getLuu() {
+		return this.luu;
+	}
+
+	public void setLuu(int luu) {
+		this.luu = luu;
+	}
+
+	public Date getUat() {
+		return this.uat;
+	}
+
+	public void setUat(Date uat) {
+		this.uat = uat;
 	}
 
 	public Set getOrdenCompras() {

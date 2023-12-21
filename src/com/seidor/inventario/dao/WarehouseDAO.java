@@ -44,6 +44,7 @@ public class WarehouseDAO extends HibernateDaoSupport {
 		criteria.add(Restrictions.eq("almacen", a.getAlmacen()));
 		List<Almacen> result = criteria.list();
 		if (result.size() == 0) { 
+			DaoUtil.prepareToSave(a);
 			session.save(a);
 		}
 		
@@ -53,6 +54,7 @@ public class WarehouseDAO extends HibernateDaoSupport {
 	
 	public void update(Almacen a){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToUpdate(a);
 		session.update(a);
 		session.flush();
 		session.close();
@@ -60,6 +62,7 @@ public class WarehouseDAO extends HibernateDaoSupport {
 	
 	public void delete(Almacen a){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToDelete(a);
 		session.update(a);
 		session.flush();
 		session.close();

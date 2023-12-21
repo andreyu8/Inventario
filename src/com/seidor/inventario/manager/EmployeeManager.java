@@ -46,6 +46,10 @@ public class EmployeeManager {
 	public ArrayList<Empleado> getAllProject() {
 		return this.employeeDao.getAllProject();
 	}
+
+	public ArrayList<Empleado> getByParentId(Integer idArea, Integer id_almacen) {
+		return this.employeeDao.getByParentId(idArea, id_almacen);
+	}
 	
 	
 }

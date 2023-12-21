@@ -23,6 +23,7 @@ public class StockDAO extends HibernateDaoSupport{
 	
 	public void save (MovimientosStock s) {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToSave(s);
 		session.save(s);
 		
 		session.flush();
@@ -31,6 +32,7 @@ public class StockDAO extends HibernateDaoSupport{
 	
 	public void update (MovimientosStock s) {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToUpdate(s);
 		session.update(s);
 		
 		session.flush();
@@ -44,8 +46,13 @@ public class StockDAO extends HibernateDaoSupport{
 			
 			session.beginTransaction();
 			
+			DaoUtil.prepareToSave(s);
 			session.save(s);
+			
+			DaoUtil.prepareToSave(e);
 			session.save(e);
+			
+			DaoUtil.prepareToSave(p);
 			session.update(p);
 		
 			session.getTransaction().commit();
@@ -69,12 +76,13 @@ public class StockDAO extends HibernateDaoSupport{
 		
 		criteria.setFetchMode("categoria", FetchMode.JOIN);
 		criteria.setFetchMode("unidadMedida", FetchMode.JOIN);
+		criteria.setFetchMode("almacen", FetchMode.JOIN);
 		
 		if (psa.getNombre() != null && psa.getNombre().trim().length() > 0){
 			criteria.add(Restrictions.ilike("nombre", psa.getNombre().trim(), MatchMode.ANYWHERE));
 		}
 		
-		criteria.add(Restrictions.gt("stock", 0));
+		criteria.add(Restrictions.gt("stock", 0.0));
 		
 		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		
@@ -120,8 +128,13 @@ public class StockDAO extends HibernateDaoSupport{
 			
 			session.beginTransaction();
 			
+			DaoUtil.prepareToSave(movSctock);
 			session.save(movSctock);
+			
+			DaoUtil.prepareToSave(salida);
 			session.save(salida);
+			
+			DaoUtil.prepareToUpdate(product);
 			session.update(product);
 		
 			session.getTransaction().commit();

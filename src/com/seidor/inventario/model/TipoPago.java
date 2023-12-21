@@ -1,6 +1,7 @@
 package com.seidor.inventario.model;
-// Generated 22 may. 2023 18:00:34 by Hibernate Tools 4.3.5.Final
+// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,16 +14,35 @@ public class TipoPago implements java.io.Serializable {
 	private String tipoPago;
 	private String descripcion;
 	private Integer activo;
-	private Set ordenCompras = new HashSet(0);
+	private boolean fdl;
+	private int cbu;
+	private Date cat;
+	private int luu;
+	private Date uat;
+	private Set proveedors = new HashSet(0);
 
 	public TipoPago() {
 	}
 
-	public TipoPago(String tipoPago, String descripcion, Integer activo, Set ordenCompras) {
+	public TipoPago(boolean fdl, int cbu, Date cat, int luu, Date uat) {
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
+	}
+
+	public TipoPago(String tipoPago, String descripcion, Integer activo, boolean fdl, int cbu, Date cat, int luu,
+			Date uat, Set proveedors) {
 		this.tipoPago = tipoPago;
 		this.descripcion = descripcion;
 		this.activo = activo;
-		this.ordenCompras = ordenCompras;
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
+		this.proveedors = proveedors;
 	}
 
 	public Integer getIdTipoPago() {
@@ -57,12 +77,52 @@ public class TipoPago implements java.io.Serializable {
 		this.activo = activo;
 	}
 
-	public Set getOrdenCompras() {
-		return this.ordenCompras;
+	public boolean isFdl() {
+		return this.fdl;
 	}
 
-	public void setOrdenCompras(Set ordenCompras) {
-		this.ordenCompras = ordenCompras;
+	public void setFdl(boolean fdl) {
+		this.fdl = fdl;
+	}
+
+	public int getCbu() {
+		return this.cbu;
+	}
+
+	public void setCbu(int cbu) {
+		this.cbu = cbu;
+	}
+
+	public Date getCat() {
+		return this.cat;
+	}
+
+	public void setCat(Date cat) {
+		this.cat = cat;
+	}
+
+	public int getLuu() {
+		return this.luu;
+	}
+
+	public void setLuu(int luu) {
+		this.luu = luu;
+	}
+
+	public Date getUat() {
+		return this.uat;
+	}
+
+	public void setUat(Date uat) {
+		this.uat = uat;
+	}
+
+	public Set getProveedors() {
+		return this.proveedors;
+	}
+
+	public void setProveedors(Set proveedors) {
+		this.proveedors = proveedors;
 	}
 
 }

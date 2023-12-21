@@ -52,6 +52,6 @@ public class EntryManager {
 		this.entryDao.saveReasignedEntryProyect(entrada, salida, product);
 	}
 
-
+	
 	
 }

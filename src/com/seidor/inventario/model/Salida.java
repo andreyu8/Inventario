@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 22 may. 2023 18:00:34 by Hibernate Tools 4.3.5.Final
+// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 
@@ -16,21 +16,31 @@ public class Salida implements java.io.Serializable {
 	private UnidadMedida unidadMedida;
 	private String ordenTrabajo;
 	private String modeloMueble;
-	private Integer cantidad;
+	private Double cantidad;
 	private Date fecha;
 	private Integer estatus;
+	private boolean fdl;
+	private int cbu;
+	private Date cat;
+	private int luu;
+	private Date uat;
 
 	public Salida() {
 	}
 
-	public Salida(Producto producto, TipoTrabajo tipoTrabajo) {
+	public Salida(Producto producto, TipoTrabajo tipoTrabajo, boolean fdl, int cbu, Date cat, int luu, Date uat) {
 		this.producto = producto;
 		this.tipoTrabajo = tipoTrabajo;
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
 	}
 
 	public Salida(Empleado empleado, Producto producto, Proyecto proyecto, TipoTrabajo tipoTrabajo,
-			UnidadMedida unidadMedida, String ordenTrabajo, String modeloMueble, Integer cantidad, Date fecha,
-			Integer estatus) {
+			UnidadMedida unidadMedida, String ordenTrabajo, String modeloMueble, Double cantidad, Date fecha,
+			Integer estatus, boolean fdl, int cbu, Date cat, int luu, Date uat) {
 		this.empleado = empleado;
 		this.producto = producto;
 		this.proyecto = proyecto;
@@ -41,6 +51,11 @@ public class Salida implements java.io.Serializable {
 		this.cantidad = cantidad;
 		this.fecha = fecha;
 		this.estatus = estatus;
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
 	}
 
 	public Integer getIdSalida() {
@@ -107,11 +122,11 @@ public class Salida implements java.io.Serializable {
 		this.modeloMueble = modeloMueble;
 	}
 
-	public Integer getCantidad() {
+	public Double getCantidad() {
 		return this.cantidad;
 	}
 
-	public void setCantidad(Integer cantidad) {
+	public void setCantidad(Double cantidad) {
 		this.cantidad = cantidad;
 	}
 
@@ -129,6 +144,46 @@ public class Salida implements java.io.Serializable {
 
 	public void setEstatus(Integer estatus) {
 		this.estatus = estatus;
+	}
+
+	public boolean isFdl() {
+		return this.fdl;
+	}
+
+	public void setFdl(boolean fdl) {
+		this.fdl = fdl;
+	}
+
+	public int getCbu() {
+		return this.cbu;
+	}
+
+	public void setCbu(int cbu) {
+		this.cbu = cbu;
+	}
+
+	public Date getCat() {
+		return this.cat;
+	}
+
+	public void setCat(Date cat) {
+		this.cat = cat;
+	}
+
+	public int getLuu() {
+		return this.luu;
+	}
+
+	public void setLuu(int luu) {
+		this.luu = luu;
+	}
+
+	public Date getUat() {
+		return this.uat;
+	}
+
+	public void setUat(Date uat) {
+		this.uat = uat;
 	}
 
 }

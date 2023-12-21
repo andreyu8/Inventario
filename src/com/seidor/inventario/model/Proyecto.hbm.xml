@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 22 may. 2023 18:00:35 by Hibernate Tools 4.3.5.Final -->
+<!-- Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
     <class name="com.seidor.inventario.model.Proyecto" table="proyecto" catalog="bd_inventario" optimistic-lock="version">
         <id name="idProyecto" type="java.lang.Integer">
@@ -25,6 +25,31 @@
         </property>
         <property name="numeroPresupuesto" type="string">
             <column name="numero_presupuesto" length="200" />
+        </property>
+        <property name="fdl" type="boolean">
+            <column name="fdl" not-null="true">
+                <comment>flag delete</comment>
+            </column>
+        </property>
+        <property name="cbu" type="int">
+            <column name="cbu" not-null="true">
+                <comment>create by update</comment>
+            </column>
+        </property>
+        <property name="cat" type="timestamp">
+            <column name="cat" length="19" not-null="true">
+                <comment>create at timestamp</comment>
+            </column>
+        </property>
+        <property name="luu" type="int">
+            <column name="luu" not-null="true">
+                <comment>last update user</comment>
+            </column>
+        </property>
+        <property name="uat" type="timestamp">
+            <column name="uat" length="19" not-null="true">
+                <comment>update at timestamp</comment>
+            </column>
         </property>
         <set name="salidas" table="salida" inverse="true" lazy="true" fetch="select">
             <key>

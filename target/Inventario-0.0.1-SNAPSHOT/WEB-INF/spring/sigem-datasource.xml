@@ -19,7 +19,7 @@
 		<property name="minPoolSize" value="1"/>
 		<property name="maxStatements" value="200"/>
 		<property name="maxIdleTime" value="300"/>
-		<property name="acquireIncrement"  value="10"/> -->   
+		<property name="acquireIncrement"  value="10"/> -->            
 		
 		<!-- ======== Propiedades para el servidor local ============== -->
 		
@@ -30,10 +30,10 @@
 		<property name="initialPoolSize" value="2"/>
 		<property name="minPoolSize" value="1"/>
 		<property name="maxStatements" value="200"/>
-		<property name="maxIdleTime" value="300"/>
+		<property name="maxIdleTime" value="300"/> 
 		<property name="acquireIncrement"  value="10"/>
 		<property name="unreturnedConnectionTimeout" value="90"/>
-		<property name="maxConnectionAge" value="120"/>    
+		<property name="maxConnectionAge" value="120"/>         
 		
 	</bean>
 	

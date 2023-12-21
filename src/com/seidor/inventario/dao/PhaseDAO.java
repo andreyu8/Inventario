@@ -41,6 +41,7 @@ public class PhaseDAO  extends HibernateDaoSupport {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		
 		Criteria criteria = DaoUtil.getCriteria(session, Etapa.class);
+		DaoUtil.prepareToSave(e);
 		session.save(e);
 		
 		session.flush();
@@ -49,14 +50,16 @@ public class PhaseDAO  extends HibernateDaoSupport {
 	
 	public void update(Etapa e){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToUpdate(e);
 		session.update(e);
 		session.flush();
 		session.close();
 	}
 	
-	public void delete(Etapa c){
+	public void delete(Etapa e){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
-		session.update(c);
+		DaoUtil.prepareToDelete(e);
+		session.update(e);
 		session.flush();
 		session.close();
 	}

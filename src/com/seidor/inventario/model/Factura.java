@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 22 may. 2023 18:00:34 by Hibernate Tools 4.3.5.Final
+// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -12,27 +12,40 @@ import java.util.Set;
 public class Factura implements java.io.Serializable {
 
 	private Integer idFactura;
-	private Proveedor proveedor;
+	private Almacen almacen;
+	private OrdenCompra ordenCompra;
 	private String numeroFactura;
 	private Date fecha;
 	private BigDecimal subtotal;
-	private Double iva;
+	private BigDecimal iva;
 	private BigDecimal total;
 	private String descripcion;
 	private String notas;
+	private Integer estatus;
+	private boolean fdl;
+	private int cbu;
+	private Date cat;
+	private int luu;
+	private Date uat;
 	private Set entradas = new HashSet(0);
-	private Set ordenCompras = new HashSet(0);
+	private Set movimientoses = new HashSet(0);
 
 	public Factura() {
 	}
 
-	public Factura(Proveedor proveedor) {
-		this.proveedor = proveedor;
+	public Factura(boolean fdl, int cbu, Date cat, int luu, Date uat) {
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
 	}
 
-	public Factura(Proveedor proveedor, String numeroFactura, Date fecha, BigDecimal subtotal, Double iva,
-			BigDecimal total, String descripcion, String notas, Set entradas, Set ordenCompras) {
-		this.proveedor = proveedor;
+	public Factura(Almacen almacen, OrdenCompra ordenCompra, String numeroFactura, Date fecha, BigDecimal subtotal,
+			BigDecimal iva, BigDecimal total, String descripcion, String notas, Integer estatus, boolean fdl, int cbu,
+			Date cat, int luu, Date uat, Set entradas, Set movimientoses) {
+		this.almacen = almacen;
+		this.ordenCompra = ordenCompra;
 		this.numeroFactura = numeroFactura;
 		this.fecha = fecha;
 		this.subtotal = subtotal;
@@ -40,8 +53,14 @@ public class Factura implements java.io.Serializable {
 		this.total = total;
 		this.descripcion = descripcion;
 		this.notas = notas;
+		this.estatus = estatus;
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
 		this.entradas = entradas;
-		this.ordenCompras = ordenCompras;
+		this.movimientoses = movimientoses;
 	}
 
 	public Integer getIdFactura() {
@@ -52,12 +71,20 @@ public class Factura implements java.io.Serializable {
 		this.idFactura = idFactura;
 	}
 
-	public Proveedor getProveedor() {
-		return this.proveedor;
+	public Almacen getAlmacen() {
+		return this.almacen;
 	}
 
-	public void setProveedor(Proveedor proveedor) {
-		this.proveedor = proveedor;
+	public void setAlmacen(Almacen almacen) {
+		this.almacen = almacen;
+	}
+
+	public OrdenCompra getOrdenCompra() {
+		return this.ordenCompra;
+	}
+
+	public void setOrdenCompra(OrdenCompra ordenCompra) {
+		this.ordenCompra = ordenCompra;
 	}
 
 	public String getNumeroFactura() {
@@ -84,11 +111,11 @@ public class Factura implements java.io.Serializable {
 		this.subtotal = subtotal;
 	}
 
-	public Double getIva() {
+	public BigDecimal getIva() {
 		return this.iva;
 	}
 
-	public void setIva(Double iva) {
+	public void setIva(BigDecimal iva) {
 		this.iva = iva;
 	}
 
@@ -116,6 +143,54 @@ public class Factura implements java.io.Serializable {
 		this.notas = notas;
 	}
 
+	public Integer getEstatus() {
+		return this.estatus;
+	}
+
+	public void setEstatus(Integer estatus) {
+		this.estatus = estatus;
+	}
+
+	public boolean isFdl() {
+		return this.fdl;
+	}
+
+	public void setFdl(boolean fdl) {
+		this.fdl = fdl;
+	}
+
+	public int getCbu() {
+		return this.cbu;
+	}
+
+	public void setCbu(int cbu) {
+		this.cbu = cbu;
+	}
+
+	public Date getCat() {
+		return this.cat;
+	}
+
+	public void setCat(Date cat) {
+		this.cat = cat;
+	}
+
+	public int getLuu() {
+		return this.luu;
+	}
+
+	public void setLuu(int luu) {
+		this.luu = luu;
+	}
+
+	public Date getUat() {
+		return this.uat;
+	}
+
+	public void setUat(Date uat) {
+		this.uat = uat;
+	}
+
 	public Set getEntradas() {
 		return this.entradas;
 	}
@@ -124,12 +199,12 @@ public class Factura implements java.io.Serializable {
 		this.entradas = entradas;
 	}
 
-	public Set getOrdenCompras() {
-		return this.ordenCompras;
+	public Set getMovimientoses() {
+		return this.movimientoses;
 	}
 
-	public void setOrdenCompras(Set ordenCompras) {
-		this.ordenCompras = ordenCompras;
+	public void setMovimientoses(Set movimientoses) {
+		this.movimientoses = movimientoses;
 	}
 
 }

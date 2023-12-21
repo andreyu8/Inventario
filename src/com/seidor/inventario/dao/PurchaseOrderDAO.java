@@ -16,22 +16,24 @@ import com.seidor.inventario.model.EstatusOrdenCompra;
 import com.seidor.inventario.model.OrdenCompra;
 import com.seidor.inventario.model.TipoPago;
 import com.seidor.inventario.util.DaoUtil;
+import com.seidor.inventario.util.SessionUtil;
 
 public class PurchaseOrderDAO extends HibernateDaoSupport{
 	
 	public OrdenCompra get(Integer id){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(OrdenCompra.class);
+		Criteria criteria = DaoUtil.getCriteria(session, OrdenCompra.class);
 		
 		criteria.setFetchMode("cliente", FetchMode.JOIN);
 		criteria.setFetchMode("empleado", FetchMode.JOIN);
 		criteria.setFetchMode("etapa", FetchMode.JOIN);
 		criteria.setFetchMode("tipoOrdenCompra", FetchMode.JOIN);
 		criteria.setFetchMode("area", FetchMode.JOIN);
-		criteria.setFetchMode("factura", FetchMode.JOIN);
+		criteria.setFetchMode("proveedor", FetchMode.JOIN);
+		criteria.setFetchMode("almacen", FetchMode.JOIN);
+		criteria.setFetchMode("proveedor.tipoPago", FetchMode.JOIN);
 		criteria.setFetchMode("proyecto", FetchMode.JOIN);
 		criteria.setFetchMode("estatusOrdenCompra", FetchMode.JOIN);
-		criteria.setFetchMode("tipoPago", FetchMode.JOIN);
 		
 		criteria.add(Restrictions.eq("idOrdenCompra", id));
 		OrdenCompra result = (OrdenCompra)criteria.uniqueResult();
@@ -44,6 +46,7 @@ public class PurchaseOrderDAO extends HibernateDaoSupport{
 	public ArrayList<OrdenCompra> getAll(){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		Criteria criteria = DaoUtil.getCriteria(session, OrdenCompra.class);
+		criteria.add(Restrictions.eq("almacen.idAlmacen", SessionUtil.getSucursalId()));
 		criteria.addOrder(Order.asc("fecha"));
 		List<OrdenCompra> result = criteria.list();
 		session.flush();
@@ -56,6 +59,7 @@ public class PurchaseOrderDAO extends HibernateDaoSupport{
 	public void save(OrdenCompra oc){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		
+		DaoUtil.prepareToSave(oc);
 		session.save(oc);
 		
 		session.flush();
@@ -64,6 +68,7 @@ public class PurchaseOrderDAO extends HibernateDaoSupport{
 	
 	public void update(OrdenCompra oc){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToUpdate(oc);
 		session.update(oc);
 		session.flush();
 		session.close();
@@ -71,6 +76,7 @@ public class PurchaseOrderDAO extends HibernateDaoSupport{
 	
 	public void delete(OrdenCompra oc){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToDelete(oc);
 		session.update(oc);
 		session.flush();
 		session.close();
@@ -82,8 +88,9 @@ public class PurchaseOrderDAO extends HibernateDaoSupport{
 		Criteria criteria = DaoUtil.getCriteria(session, OrdenCompra.class);
 		
 		criteria.setFetchMode("cliente", FetchMode.JOIN);
-		criteria.setFetchMode("factura", FetchMode.JOIN);
+		criteria.setFetchMode("proveedor", FetchMode.JOIN);
 		criteria.setFetchMode("empleado", FetchMode.JOIN);
+		criteria.setFetchMode("almacen", FetchMode.JOIN);
 		
 		if (psa.getName() != null && psa.getName().trim().length() > 0){
 			criteria.add(Restrictions.ilike("nombre", psa.getName().trim(), MatchMode.ANYWHERE));
@@ -92,6 +99,8 @@ public class PurchaseOrderDAO extends HibernateDaoSupport{
 		if (psa.getNoOrden() != null && psa.getNoOrden().trim().length() > 0){
 			criteria.add(Restrictions.ilike("numeroOc", psa.getNoOrden().trim(), MatchMode.ANYWHERE));
 		}
+		
+		criteria.addOrder(Order.desc("idOrdenCompra"));
 		
 		List<OrdenCompra> result = criteria.list();
 		session.flush();

@@ -43,6 +43,7 @@ public class ClientDAO extends HibernateDaoSupport {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		
 		Criteria criteria = DaoUtil.getCriteria(session, Cliente.class);
+		DaoUtil.prepareToSave(c);
 		session.save(c);
 		
 		session.flush();
@@ -51,6 +52,7 @@ public class ClientDAO extends HibernateDaoSupport {
 	
 	public void update(Cliente c){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToUpdate(c);
 		session.update(c);
 		session.flush();
 		session.close();
@@ -58,6 +60,7 @@ public class ClientDAO extends HibernateDaoSupport {
 	
 	public void delete(Cliente c){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToDelete(c);
 		session.update(c);
 		session.flush();
 		session.close();

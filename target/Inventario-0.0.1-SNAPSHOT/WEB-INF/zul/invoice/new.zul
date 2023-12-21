@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
 <window id="win" border="none" apply="org.zkoss.bind.BindComposer" >
@@ -7,6 +8,7 @@
 	<zscript>
 		import com.seidor.inventario.adapter.InvoiceAdapter;
 		import com.seidor.inventario.navigation.*;
+		import java.math.BigDecimal;
 		
 		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
 		
@@ -20,6 +22,25 @@
 			fcv.validate(win);
 			invoiceController.save(invoiceSave, state, win);
 		}
+		
+		public void getTotal() {
+			
+			Doublebox subd= (Doublebox) win.getFellowIfAny("subtotal");
+			Doublebox ivad= (Doublebox) win.getFellowIfAny("iva");
+			Doublebox totald= (Doublebox) win.getFellowIfAny("total");
+			
+			ivad.setValue( ((Double)subd.getValue()).doubleValue() * 0.16);
+			invoiceSave.getFactura().setIva(ivad.getValue());
+			totald.setValue( ((Double)subd.getValue()).doubleValue() * 1.16);
+			invoiceSave.getFactura().setTotal(new BigDecimal(totald.getValue()));
+		
+		}
+		
+		public void viewInfoOrdenCompra (){
+			invoiceController.obtenerOrdenCompra (invoiceSave, win);
+		}
+		
+		
 	</zscript>
 	
 	<div class="row sectionBoxAlt animated aniFadeIn">
@@ -41,11 +62,20 @@
 	
 	<div class="row subBoxAlt animated aniFadeIn" >
 		<div class="col-md-12">
-			<label value="Datos de la factura" />
+			<label value="" />
 		</div>
 	</div>
 	<div class="container animated aniFadeIn" >
 		<div class="row editBox">
+		
+		
+			<div class="col-md-4">
+				<label value="Orden de compra*" sclass="editField" />
+				<h:p> <combobox value="@bind(invoiceSave.factura.ordenCompra.descripcion)"
+							 		onCreate="purchaseOrderController.loadPurchaseOrder(self);" 
+							 		onChange="viewInfoOrdenCompra ();"
+						 			id="cboc" /> </h:p>
+			</div>
 			
 			<div class="col-md-4">
 				<label value="Número de factura*" sclass="editField" />
@@ -58,37 +88,38 @@
 				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(invoiceSave.factura.fecha)"  /> </h:p>
 			</div>
 			
-			<div class="col-md-4">
-				<label value="Proveedor*" sclass="editField" />
-				<h:p> <combobox value="@bind(invoiceSave.factura.proveedor.nombre)"
-							 		onCreate="providerController.loadProvider(self);" 
-						 			id="provcb" constraint="${cmv}"/> </h:p>
-			</div>		
-		
-		
-			<div class="col-md-4">
+			<!--  <div class="col-md-4">
 				<label value="Subtotal*" sclass="editField" />
-				<h:p> <doublebox value="@bind(invoiceSave.factura.subtotal)" /> </h:p>
+				<h:p> <doublebox id="subtotal" value="@bind(invoiceSave.factura.subtotal)" onChange='getTotal();' /> </h:p>
 			</div>
 			
 			
 		
 			<div class="col-md-4">
 				<label value="IVA*" sclass="editField" />
-				<h:p> <doublebox value="@bind(invoiceSave.factura.iva)" /> </h:p>
+				<h:p> <doublebox id="iva" value="@bind(invoiceSave.factura.iva)" /> </h:p>
 			</div>
 			
 			
 			<div class="col-md-4">
 				<label value="Total*" sclass="editField" />
-				<h:p> <doublebox value="@bind(invoiceSave.factura.total)" /> </h:p>
+				<h:p> <doublebox id="total" value="@bind(invoiceSave.factura.total)" /> </h:p>
 			</div>
 			
 			
 			<div class="col-md-4">
-				<label value="Descrpción*" sclass="editField" />
+				<label value="Descripción*" sclass="editField" />
 				<h:p> <textbox value="@bind(invoiceSave.factura.descripcion)" constraint="${tmv}" /> </h:p>
-			</div>
+			</div>  -->
+			
+					
+			<div class="col-md-4">
+				<label value="Estatus de orden compra*" sclass="editField" />
+				<h:p> <combobox value="@bind(invoiceSave.ordenCompra.estatusOrdenCompra.estatusOrdenCompra)"
+							 		onCreate="purchaseOrderController.loadStateTypeOrder(self);" 
+						 			id="soccb" constraint="${cmv}"/>
+				</h:p>
+			</div>							 			
 			
 			<div class="col-md-4">
 				<label value="Nota*" sclass="editField" />
@@ -96,6 +127,77 @@
 			 		<textbox rows="6" value="@bind(invoiceSave.factura.notas)" width="370px;" tabindex="11" />
                  </h:p>   	        
 			</div>	
+				
+					
+			
+			
+			<div class="row editBox" id="sectionOrden" visible="false" >	
+				
+				<div class="col-md-12">
+						<label value="Datos de la Orden de compra" />
+				</div>	
+				
+				
+				<div class="col-md-4">
+					<label value="Proyecto" sclass="editField" />
+					<h:p>
+						<label id="ocPro" value="" />
+					</h:p>
+				</div>
+				
+				<div class="col-md-4">
+					<label value="Cliente" sclass="editField" />
+					<h:p>
+						<label id="ocCli" value="" />
+					</h:p>
+				</div>
+				
+				<div class="col-md-4">
+					<label value="Etapa" sclass="editField" />
+					<h:p>
+						<label id="ocEta" value="" />
+					</h:p>
+				</div>
+				
+				
+				<div class="col-md-4">
+					<label value="Area" sclass="editField" />
+					<h:p>
+						<label id="ocAre" value="" />
+					</h:p>
+				</div>
+				
+				<div class="col-md-4">
+					<label value="Tipo de orden" sclass="editField" />
+					<h:p>
+						<label id="ocTO" value="" />
+					</h:p>
+				</div>
+				
+				
+				<div class="animated aniFadeIn" >	
+					<listbox id="oclb" emptyMessage="No se encontrarón productos para mostrar" width="90%">
+					 	<auxhead>
+			            	<auxheader colspan="6" align="center" style=" background: green;">Productos OC</auxheader>
+			            	<auxheader colspan="2" align="center">Entrada Almacen</auxheader>
+			        	</auxhead>
+						<listhead>
+							<listheader label="Código" hflex="3" />
+							<listheader label="Producto" hflex="3" />
+							<listheader label="Cantidad" hflex="2" />
+							<listheader label="U.medida" hflex="3" />
+							<listheader label="Precio" hflex="3" />
+							<listheader label="Total" hflex="2" />
+							<listheader label="Entrada" hflex="2" />
+							<listheader label="Acción" hflex="2" />
+						</listhead>
+					</listbox>
+					<pagingsize />
+				</div>
+				
+				
+			</div>	
+				
 				
 		</div>
 		

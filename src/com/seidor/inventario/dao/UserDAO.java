@@ -31,6 +31,8 @@ public class UserDAO extends HibernateDaoSupport {
 			criteria.add(Restrictions.eq("usuario", ua.getUsuario().getEmpleado().getNombre()));
 			List<Usuario> result = criteria.list();
 			if (result.size() == 0) { 
+				
+				DaoUtil.prepareToSave(ua.getUsuario());
 				session.save(ua.getUsuario());
 			}
 			else {
@@ -40,6 +42,7 @@ public class UserDAO extends HibernateDaoSupport {
 			
 			ArrayList<PerfilUsuario> profiles = ua.getProfiles();
 			for (PerfilUsuario p : profiles){
+				DaoUtil.prepareToSave(p);
 				session.save(p);
 			}
 			
@@ -66,6 +69,8 @@ public class UserDAO extends HibernateDaoSupport {
 		SessionImpl session = (SessionImpl)this.getHibernateTemplate().getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 		try {
+			
+			DaoUtil.prepareToUpdate(u);
 			session.update(u);
 			
 			//Profiles
@@ -90,6 +95,7 @@ public class UserDAO extends HibernateDaoSupport {
 	
 	public void update(Usuario u){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToUpdate(u);
 		session.update(u);
 		session.flush();
 		session.close();
@@ -97,6 +103,7 @@ public class UserDAO extends HibernateDaoSupport {
 	
 	public void delete(Usuario u){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToDelete(u);
 		session.update(u);
 		session.flush();
 		session.close();
@@ -184,6 +191,7 @@ public class UserDAO extends HibernateDaoSupport {
 	public void insertProfile(ArrayList<PerfilUsuario> profilesAdd) {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		for (PerfilUsuario p: profilesAdd) {
+			DaoUtil.prepareToSave(p);
 			session.save(p);
 		}	
 		session.flush();
@@ -194,6 +202,7 @@ public class UserDAO extends HibernateDaoSupport {
 	public void deleteProfile(ArrayList<PerfilUsuario> profilesDeleted) {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		for (PerfilUsuario p: profilesDeleted) {
+			DaoUtil.prepareToUpdate(p);
 			session.update(profilesDeleted);
 		}	
 		session.flush();

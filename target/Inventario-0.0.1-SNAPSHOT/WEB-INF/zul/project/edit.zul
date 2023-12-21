@@ -63,7 +63,8 @@
 				<label value="Estatus*" sclass="editField" />
 				<h:p> <combobox value="@bind(projectEdit.proyecto.estatusProyecto.descripcion)"
 							 		onCreate="projectController.loadEstatus(self);" 
-						 			id="escb" constraint="${cmv}"/> </h:p>
+						 			id="escb" constraint="${cmv}"/>
+				</h:p>
 			</div>	
 			
 			<div class="col-md-4">

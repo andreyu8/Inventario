@@ -14,6 +14,7 @@ import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Constraint;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 
@@ -22,6 +23,8 @@ import com.seidor.inventario.adapter.beans.ProductReporBean;
 import com.seidor.inventario.adapter.beans.ProveedoresBean;
 import com.seidor.inventario.adapter.beans.ReportCostoInventario;
 import com.seidor.inventario.adapter.beans.ReportCostoInventarioGBean;
+import com.seidor.inventario.adapter.render.ProductComboitemRenderer;
+import com.seidor.inventario.adapter.render.ProductNameComboitemRenderer;
 import com.seidor.inventario.adapter.search.ProductSearchAdapter;
 import com.seidor.inventario.manager.ProductManager;
 import com.seidor.inventario.model.Almacen;
@@ -174,7 +177,7 @@ public class ProductController {
 		a.setAlmacen(SessionUtil.getSucursaldUserId());
 		
 		pa.getProducto().setAlmacen(a);
-		pa.getProducto().setCantidad(0);
+		pa.getProducto().setCantidad(0.0);
 		
 		this.productManager.save(pa.getProducto());
 		
@@ -374,6 +377,38 @@ public class ProductController {
 		}
 		return array;
 	}
+	
+	
+	public void loadProduct(Combobox combo) {
+		ArrayList<Producto> products = this.productManager.getAll();
+		if (products != null) {
+			ListModelList<Producto> model = new ListModelList<Producto>(products);
+			combo.setItemRenderer(new ProductComboitemRenderer());
+			combo.setModel(model);
+		}
+	}
+	
+	public void loadNameProduct(Combobox combo) {
+		ArrayList<Producto> products = this.productManager.getAll(SessionUtil.getSucursalId());
+		if (products != null) {
+			ListModelList<Producto> model = new ListModelList<Producto>(products);
+			combo.setItemRenderer(new ProductNameComboitemRenderer());
+			combo.setModel(model);
+		}
+	}
+		
+	
+	public void clearCombo(Combobox combo, String value, Boolean cleanModel){
+		if (combo != null) {
+			Constraint cons = combo.getConstraint();
+			combo.setConstraint((Constraint)null);
+			if (value != null && value.trim().length() > 0) combo.setValue(value);
+			else combo.setValue(null);
+			if (cleanModel != null && cleanModel) combo.setModel(new ListModelList<Object>());
+			combo.setConstraint(cons);
+		}
+	}
+
 	
 	
 }

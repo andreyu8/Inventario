@@ -45,6 +45,7 @@ public class RoleDAO extends HibernateDaoSupport {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		
 		Criteria criteria = DaoUtil.getCriteria(session, Perfil.class);
+		DaoUtil.prepareToSave(p);
 		session.save(p);
 		
 		session.flush();
@@ -53,6 +54,7 @@ public class RoleDAO extends HibernateDaoSupport {
 	
 	public void update(Perfil p){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToUpdate(p);
 		session.update(p);
 		session.flush();
 		session.close();
@@ -60,6 +62,7 @@ public class RoleDAO extends HibernateDaoSupport {
 	
 	public void delete(Perfil p){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToDelete(p);
 		session.update(p);
 		session.flush();
 		session.close();

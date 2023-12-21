@@ -53,6 +53,10 @@
 				<label value="Descripción*" sclass="editField" />
 				<h:p> <textbox value="@bind(unitMeasureEdit.unidadMedida.descripcion)"  sclass="detailData" constraint="${tmv}" /> </h:p>
 			</div>
+			<div class="col-md-4">
+				<label value="Abrev*" sclass="editField" />
+				<h:p> <textbox value="@bind(unitMeasureEdit.unidadMedida.abrev)" sclass="detailData" constraint="${tmv}"/> </h:p>
+			</div>
 			
 		</div>
 	</div>

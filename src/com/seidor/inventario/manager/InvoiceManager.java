@@ -8,39 +8,48 @@ import com.seidor.inventario.model.Factura;
 
 public class InvoiceManager {
 	
-	private InvoiceDAO InvoiceDao;
+	private InvoiceDAO invoiceDao;
 	
+
 	public InvoiceDAO getInvoiceDao() {
-		return InvoiceDao;
+		return invoiceDao;
 	}
 
 	public void setInvoiceDao(InvoiceDAO invoiceDao) {
-		InvoiceDao = invoiceDao;
+		this.invoiceDao = invoiceDao;
 	}
 
 	//Business logic
 	public Factura get(Integer id){
-		return this.InvoiceDao.get(id);
+		return this.invoiceDao.get(id);
 	}
 	
 	public ArrayList<Factura> getAll(){
-		return this.InvoiceDao.getAll();
+		return this.invoiceDao.getAll();
 	}
 	
 	public void save (Factura f) {
-		this.InvoiceDao.save(f);
+		this.invoiceDao.save(f);
 	}
 	
 	public void update (Factura f) {
-		this.InvoiceDao.update(f);
+		this.invoiceDao.update(f);
 	}
 	
 	public void delete (Factura f) {
-		this.InvoiceDao.delete(f);
+		this.invoiceDao.delete(f);
 	}
 
 	public ArrayList<Factura> search(InvoiceSearchAdapter isa) {
-		return this.InvoiceDao.search(isa);
+		return this.invoiceDao.search(isa);
+	}
+
+	public Factura getOC(Integer idOrdenCompra) {
+		return this.invoiceDao.getOC(idOrdenCompra);
+	}
+
+	public Factura getNoFactura(String numeroFactura) {
+		return this.invoiceDao.getNoFactura(numeroFactura);
 	}
 
 }

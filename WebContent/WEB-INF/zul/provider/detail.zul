@@ -76,6 +76,17 @@
             </h:p>	
          </div>
          
+         
+        <div class="col-md-3">
+			<label value="Tipo de pago" sclass="detailField" />
+			<h:p> <label value="${providerDetail.proveedor.tipoPago.tipoPago}" sclass="detailData" /> </h:p>
+		</div>
+         	
+		<div class="col-md-2">
+			<label value="Días de crédito" sclass="editField" />
+			<h:p> <label value="${providerDetail.proveedor.diasCredito}" sclass="detailData"/> </h:p>
+		</div>	
+        
        <div class="col-md-3">
        		<h:p> 
 				<label value="Nota" sclass="detailField" />
@@ -89,6 +100,31 @@
 	</div>
 	
 	<separator spacing="10px" />
+	
+	<div class="col-md-12">
+		<label value="Datos bancarios" />
+	</div>
+	
+	<div class="animated aniFadeIn" >	
+		<listbox id="catcbp" onCreate="providerController.obtieneDBP (providerDetail, catcbp)" emptyMessage="No se encontrarón categorías para mostrar" >
+			<listhead>
+				<listheader label="Banco" hflex="3" sort="auto(lower(categoria))" />
+				<listheader label="Cuenta" hflex="3" sort="auto(lower(descripcion))" />
+				<listheader label="Clabe" hflex="3" sort="auto(lower(descripcion))" />
+			</listhead>
+			<template name="model" >
+				<listitem >
+					<listcell label="${each.banco}" />
+					<listcell label="${each.cta}" />
+					<listcell label="${each.clabe}" />
+				</listitem>
+			</template>
+		</listbox>
+		<pagingsize />
+	</div>
+	
+	<separator spacing="10px" />
+	
 	
 </window>
 </zk>

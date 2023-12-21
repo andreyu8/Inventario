@@ -1,6 +1,7 @@
 package com.seidor.inventario.model;
-// Generated 22 may. 2023 18:00:34 by Hibernate Tools 4.3.5.Final
+// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,25 +14,50 @@ public class Almacen implements java.io.Serializable {
 	private String almacen;
 	private String descripcion;
 	private int activo;
+	private boolean fdl;
+	private int cbu;
+	private Date cat;
+	private int luu;
+	private Date uat;
+	private Set movimientoses = new HashSet(0);
 	private Set empleados = new HashSet(0);
 	private Set entradas = new HashSet(0);
+	private Set facturas = new HashSet(0);
 	private Set productos = new HashSet(0);
+	private Set detalleOrdenCompras = new HashSet(0);
+	private Set ordenCompras = new HashSet(0);
 
 	public Almacen() {
 	}
 
-	public Almacen(String almacen, int activo) {
+	public Almacen(String almacen, int activo, boolean fdl, int cbu, Date cat, int luu, Date uat) {
 		this.almacen = almacen;
 		this.activo = activo;
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
 	}
 
-	public Almacen(String almacen, String descripcion, int activo, Set empleados, Set entradas, Set productos) {
+	public Almacen(String almacen, String descripcion, int activo, boolean fdl, int cbu, Date cat, int luu, Date uat,
+			Set movimientoses, Set empleados, Set entradas, Set facturas, Set productos, Set detalleOrdenCompras,
+			Set ordenCompras) {
 		this.almacen = almacen;
 		this.descripcion = descripcion;
 		this.activo = activo;
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
+		this.movimientoses = movimientoses;
 		this.empleados = empleados;
 		this.entradas = entradas;
+		this.facturas = facturas;
 		this.productos = productos;
+		this.detalleOrdenCompras = detalleOrdenCompras;
+		this.ordenCompras = ordenCompras;
 	}
 
 	public Integer getIdAlmacen() {
@@ -66,6 +92,54 @@ public class Almacen implements java.io.Serializable {
 		this.activo = activo;
 	}
 
+	public boolean isFdl() {
+		return this.fdl;
+	}
+
+	public void setFdl(boolean fdl) {
+		this.fdl = fdl;
+	}
+
+	public int getCbu() {
+		return this.cbu;
+	}
+
+	public void setCbu(int cbu) {
+		this.cbu = cbu;
+	}
+
+	public Date getCat() {
+		return this.cat;
+	}
+
+	public void setCat(Date cat) {
+		this.cat = cat;
+	}
+
+	public int getLuu() {
+		return this.luu;
+	}
+
+	public void setLuu(int luu) {
+		this.luu = luu;
+	}
+
+	public Date getUat() {
+		return this.uat;
+	}
+
+	public void setUat(Date uat) {
+		this.uat = uat;
+	}
+
+	public Set getMovimientoses() {
+		return this.movimientoses;
+	}
+
+	public void setMovimientoses(Set movimientoses) {
+		this.movimientoses = movimientoses;
+	}
+
 	public Set getEmpleados() {
 		return this.empleados;
 	}
@@ -82,12 +156,36 @@ public class Almacen implements java.io.Serializable {
 		this.entradas = entradas;
 	}
 
+	public Set getFacturas() {
+		return this.facturas;
+	}
+
+	public void setFacturas(Set facturas) {
+		this.facturas = facturas;
+	}
+
 	public Set getProductos() {
 		return this.productos;
 	}
 
 	public void setProductos(Set productos) {
 		this.productos = productos;
+	}
+
+	public Set getDetalleOrdenCompras() {
+		return this.detalleOrdenCompras;
+	}
+
+	public void setDetalleOrdenCompras(Set detalleOrdenCompras) {
+		this.detalleOrdenCompras = detalleOrdenCompras;
+	}
+
+	public Set getOrdenCompras() {
+		return this.ordenCompras;
+	}
+
+	public void setOrdenCompras(Set ordenCompras) {
+		this.ordenCompras = ordenCompras;
 	}
 
 }

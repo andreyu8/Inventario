@@ -24,6 +24,12 @@
 	<bean id="areaDao" class="com.seidor.inventario.dao.AreaDAO" autowire="byName" />
 	<bean id="typeOrderDao" class="com.seidor.inventario.dao.TypeOrderDAO" autowire="byName" />
 	<bean id="roleDao" class="com.seidor.inventario.dao.RoleDAO" autowire="byName" />
+	<bean id="detailOCDao" class="com.seidor.inventario.dao.DetailOCDAO" autowire="byName" />
+	<bean id="datosBancariosDao" class="com.seidor.inventario.dao.DatosBancariosDAO" autowire="byName" />
+	<bean id="transactionDao" class="com.seidor.inventario.dao.TransactionDAO" autowire="byName" />
+	<bean id="transactionDetailDao" class="com.seidor.inventario.dao.TransactionDetailDAO" autowire="byName" />
+	<bean id="foliosDao" class="com.seidor.inventario.dao.FoliosDAO" autowire="byName" />
+	<bean id="tipoMovimientoDao" class="com.seidor.inventario.dao.TipoMovimientoDAO" autowire="byName" />
 	
 		
 	<bean id="userManager" class="com.seidor.inventario.manager.UserManager" autowire="byName" />
@@ -46,6 +52,13 @@
 	<bean id="areaManager" class="com.seidor.inventario.manager.AreaManager" autowire="byName" />
 	<bean id="typeOrderManager" class="com.seidor.inventario.manager.TypeOrderManager" autowire="byName" />
 	<bean id="roleManager" class="com.seidor.inventario.manager.RoleManager" autowire="byName" />
+	<bean id="detailOCManager" class="com.seidor.inventario.manager.DetailOCManager" autowire="byName" />
+	<bean id="datosBancariosManager" class="com.seidor.inventario.manager.DatosBancariosManager" autowire="byName" />
+	<bean id="transactionManager" class="com.seidor.inventario.manager.TransactionManager" autowire="byName" />
+	<bean id="transactionDetailManager" class="com.seidor.inventario.manager.TransactionDetailManager" autowire="byName" />
+	<bean id="foliosManager" class="com.seidor.inventario.manager.FoliosManager" autowire="byName" />
+	<bean id="tipoMovimientoManager" class="com.seidor.inventario.manager.TipoMovimientoManager" autowire="byName" />
+	
 	
 	<bean id="userController" class="com.seidor.inventario.controller.UserController" autowire="byName" />
 	<bean id="categoryController" class="com.seidor.inventario.controller.CategoryController" autowire="byName" />
@@ -68,5 +81,9 @@
 	<bean id="areaController" class="com.seidor.inventario.controller.AreaController" autowire="byName" />
 	<bean id="typeOrderController" class="com.seidor.inventario.controller.TypeOrderController" autowire="byName" />
 	<bean id="roleController" class="com.seidor.inventario.controller.RoleController" autowire="byName" />
+	<bean id="transactionController" class="com.seidor.inventario.controller.TransactionController" autowire="byName" />
+	<bean id="transactionDetailController" class="com.seidor.inventario.controller.TransactionDetailController" autowire="byName" />
+	<bean id="foliosController" class="com.seidor.inventario.controller.FoliosController" autowire="byName" />
+	<bean id="tipoMovimientoController" class="com.seidor.inventario.controller.TipoMovimientoController" autowire="byName" />
 	
 </beans>

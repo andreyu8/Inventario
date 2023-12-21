@@ -41,7 +41,7 @@
 	
 	<div class="row subBoxAlt animated aniFadeIn" >
 		<div class="col-md-12">
-			<label value="Datos de la Familia" />
+			<label value="" />
 		</div>
 	</div>
 	<div class="container animated aniFadeIn" >

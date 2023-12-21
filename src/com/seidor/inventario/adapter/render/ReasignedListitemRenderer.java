@@ -12,6 +12,7 @@ import com.seidor.inventario.adapter.listitem.ReasigneditemAdapter;
 import com.seidor.inventario.controller.CloseProjectController;
 import com.seidor.inventario.inroweditablecomps.EditableListitem;
 import com.seidor.inventario.inroweditablecomps.EditableListitemRenderer;
+import com.seidor.inventario.inroweditablecomps.IREditableDoublebox;
 import com.seidor.inventario.inroweditablecomps.IREditableIntbox;
 import com.seidor.inventario.navigation.Action;
 
@@ -80,7 +81,7 @@ public class ReasignedListitemRenderer extends EditableListitemRenderer{
 		hl11.setParent(this.newListcell(editListitem));
 		
 		Hlayout hl12= new Hlayout();
-		new IREditableIntbox(ob.getReasignacion()).setParent(hl12);
+		new IREditableDoublebox(ob.getReasignacion()).setParent(hl12);
 		hl12.setParent(this.newListcell(editListitem));
 		
 		

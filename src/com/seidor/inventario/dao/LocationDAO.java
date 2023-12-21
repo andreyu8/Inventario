@@ -45,6 +45,8 @@ public class LocationDAO extends HibernateDaoSupport{
 		criteria.add(Restrictions.eq("categoria", u.getUbicacion()));
 		List<Ubicacion> result = criteria.list();
 		if (result.size() == 0) { 
+			
+			DaoUtil.prepareToSave(u);
 			session.save(u);
 		}
 		
@@ -54,6 +56,8 @@ public class LocationDAO extends HibernateDaoSupport{
 	
 	public void update(Ubicacion u){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		
+		DaoUtil.prepareToUpdate(u);
 		session.update(u);
 		session.flush();
 		session.close();
@@ -61,6 +65,8 @@ public class LocationDAO extends HibernateDaoSupport{
 	
 	public void delete(Ubicacion u){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		
+		DaoUtil.prepareToDelete(u);
 		session.update(u);
 		session.flush();
 		session.close();

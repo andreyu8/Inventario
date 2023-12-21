@@ -1,6 +1,7 @@
 package com.seidor.inventario.model;
-// Generated 22 may. 2023 18:00:34 by Hibernate Tools 4.3.5.Final
+// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,20 +14,36 @@ public class TipoTrabajo implements java.io.Serializable {
 	private String tipoTrabajo;
 	private String descripcion;
 	private int activo;
+	private boolean fdl;
+	private int cbu;
+	private Date cat;
+	private int luu;
+	private Date uat;
 	private Set salidas = new HashSet(0);
 
 	public TipoTrabajo() {
 	}
 
-	public TipoTrabajo(String tipoTrabajo, int activo) {
+	public TipoTrabajo(String tipoTrabajo, int activo, boolean fdl, int cbu, Date cat, int luu, Date uat) {
 		this.tipoTrabajo = tipoTrabajo;
 		this.activo = activo;
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
 	}
 
-	public TipoTrabajo(String tipoTrabajo, String descripcion, int activo, Set salidas) {
+	public TipoTrabajo(String tipoTrabajo, String descripcion, int activo, boolean fdl, int cbu, Date cat, int luu,
+			Date uat, Set salidas) {
 		this.tipoTrabajo = tipoTrabajo;
 		this.descripcion = descripcion;
 		this.activo = activo;
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
 		this.salidas = salidas;
 	}
 
@@ -60,6 +77,46 @@ public class TipoTrabajo implements java.io.Serializable {
 
 	public void setActivo(int activo) {
 		this.activo = activo;
+	}
+
+	public boolean isFdl() {
+		return this.fdl;
+	}
+
+	public void setFdl(boolean fdl) {
+		this.fdl = fdl;
+	}
+
+	public int getCbu() {
+		return this.cbu;
+	}
+
+	public void setCbu(int cbu) {
+		this.cbu = cbu;
+	}
+
+	public Date getCat() {
+		return this.cat;
+	}
+
+	public void setCat(Date cat) {
+		this.cat = cat;
+	}
+
+	public int getLuu() {
+		return this.luu;
+	}
+
+	public void setLuu(int luu) {
+		this.luu = luu;
+	}
+
+	public Date getUat() {
+		return this.uat;
+	}
+
+	public void setUat(Date uat) {
+		this.uat = uat;
 	}
 
 	public Set getSalidas() {

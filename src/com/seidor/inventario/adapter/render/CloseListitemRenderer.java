@@ -21,6 +21,7 @@ import com.seidor.inventario.controller.ProductController;
 import com.seidor.inventario.inroweditablecomps.EditableListitem;
 import com.seidor.inventario.inroweditablecomps.EditableListitemRenderer;
 import com.seidor.inventario.inroweditablecomps.IREditableCheckbox;
+import com.seidor.inventario.inroweditablecomps.IREditableDoublebox;
 import com.seidor.inventario.inroweditablecomps.IREditableIntbox;
 import com.seidor.inventario.manager.ProductManager;
 import com.seidor.inventario.navigation.Action;
@@ -91,7 +92,7 @@ public class CloseListitemRenderer extends EditableListitemRenderer{
 		hl11.setParent(this.newListcell(editListitem));
 		
 		Hlayout hl12= new Hlayout();
-		new IREditableIntbox(ob.getDevoluciones()).setParent(hl12);
+		new IREditableDoublebox(ob.getDevoluciones()).setParent(hl12);
 		hl12.setParent(this.newListcell(editListitem));
 		
 		

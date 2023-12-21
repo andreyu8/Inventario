@@ -43,6 +43,7 @@ public class EmployeeDAO extends HibernateDaoSupport{
 	public void save(Empleado e){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		
+		DaoUtil.prepareToSave(e);
 		session.save(e);
 		
 		session.flush();
@@ -51,6 +52,7 @@ public class EmployeeDAO extends HibernateDaoSupport{
 	
 	public void update(Empleado e){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToUpdate(e);
 		session.update(e);
 		session.flush();
 		session.close();
@@ -58,6 +60,7 @@ public class EmployeeDAO extends HibernateDaoSupport{
 	
 	public void delete(Empleado e){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToDelete(e);
 		session.update(e);
 		session.flush();
 		session.close();
@@ -87,6 +90,21 @@ public class EmployeeDAO extends HibernateDaoSupport{
 		Criteria criteria = DaoUtil.getCriteria(session, Empleado.class);
 		criteria.add(Restrictions.eq("cargo", "JEFE DE PROYECTO"));
 		criteria.addOrder(Order.asc("nombre"));
+		List<Empleado> result = criteria.list();
+		session.flush();
+		session.close();
+		
+		return new ArrayList<Empleado>(result);
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Empleado> getByParentId(Integer idArea, Integer id_almacen) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = DaoUtil.getCriteria(session, Empleado.class);
+		
+		criteria.add(Restrictions.eq("almacen.idAlmacen", id_almacen));
+		criteria.add(Restrictions.eq("area.idArea", idArea));
+		
 		List<Empleado> result = criteria.list();
 		session.flush();
 		session.close();

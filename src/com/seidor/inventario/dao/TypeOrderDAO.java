@@ -41,6 +41,7 @@ public class TypeOrderDAO extends HibernateDaoSupport {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		
 		Criteria criteria = DaoUtil.getCriteria(session, TipoOrdenCompra.class);
+		DaoUtil.prepareToSave(toc);
 		session.save(toc);
 		
 		session.flush();
@@ -49,6 +50,8 @@ public class TypeOrderDAO extends HibernateDaoSupport {
 	
 	public void update(TipoOrdenCompra toc){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		
+		DaoUtil.prepareToSave(toc);
 		session.update(toc);
 		session.flush();
 		session.close();
@@ -56,6 +59,7 @@ public class TypeOrderDAO extends HibernateDaoSupport {
 	
 	public void delete(TipoOrdenCompra toc){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		DaoUtil.prepareToDelete(toc);
 		session.update(toc);
 		session.flush();
 		session.close();

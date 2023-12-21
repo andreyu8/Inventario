@@ -1,6 +1,7 @@
 package com.seidor.inventario.model;
-// Generated 22 may. 2023 18:00:34 by Hibernate Tools 4.3.5.Final
+// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,6 +11,7 @@ import java.util.Set;
 public class Proveedor implements java.io.Serializable {
 
 	private Integer idProveedor;
+	private TipoPago tipoPago;
 	private String nombre;
 	private String rfc;
 	private String direccion;
@@ -18,18 +20,32 @@ public class Proveedor implements java.io.Serializable {
 	private String EMail;
 	private int activo;
 	private String notas;
-	private Set facturas = new HashSet(0);
+	private Integer diasCredito;
+	private boolean fdl;
+	private int cbu;
+	private Date cat;
+	private int luu;
+	private Date uat;
+	private Set ordenCompras = new HashSet(0);
+	private Set datosBancarioses = new HashSet(0);
 
 	public Proveedor() {
 	}
 
-	public Proveedor(String nombre, int activo) {
+	public Proveedor(String nombre, int activo, boolean fdl, int cbu, Date cat, int luu, Date uat) {
 		this.nombre = nombre;
 		this.activo = activo;
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
 	}
 
-	public Proveedor(String nombre, String rfc, String direccion, String telefono, String extension, String EMail,
-			int activo, String notas, Set facturas) {
+	public Proveedor(TipoPago tipoPago, String nombre, String rfc, String direccion, String telefono, String extension,
+			String EMail, int activo, String notas, Integer diasCredito, boolean fdl, int cbu, Date cat, int luu,
+			Date uat, Set ordenCompras, Set datosBancarioses) {
+		this.tipoPago = tipoPago;
 		this.nombre = nombre;
 		this.rfc = rfc;
 		this.direccion = direccion;
@@ -38,7 +54,14 @@ public class Proveedor implements java.io.Serializable {
 		this.EMail = EMail;
 		this.activo = activo;
 		this.notas = notas;
-		this.facturas = facturas;
+		this.diasCredito = diasCredito;
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
+		this.ordenCompras = ordenCompras;
+		this.datosBancarioses = datosBancarioses;
 	}
 
 	public Integer getIdProveedor() {
@@ -47,6 +70,14 @@ public class Proveedor implements java.io.Serializable {
 
 	public void setIdProveedor(Integer idProveedor) {
 		this.idProveedor = idProveedor;
+	}
+
+	public TipoPago getTipoPago() {
+		return this.tipoPago;
+	}
+
+	public void setTipoPago(TipoPago tipoPago) {
+		this.tipoPago = tipoPago;
 	}
 
 	public String getNombre() {
@@ -113,12 +144,68 @@ public class Proveedor implements java.io.Serializable {
 		this.notas = notas;
 	}
 
-	public Set getFacturas() {
-		return this.facturas;
+	public Integer getDiasCredito() {
+		return this.diasCredito;
 	}
 
-	public void setFacturas(Set facturas) {
-		this.facturas = facturas;
+	public void setDiasCredito(Integer diasCredito) {
+		this.diasCredito = diasCredito;
+	}
+
+	public boolean isFdl() {
+		return this.fdl;
+	}
+
+	public void setFdl(boolean fdl) {
+		this.fdl = fdl;
+	}
+
+	public int getCbu() {
+		return this.cbu;
+	}
+
+	public void setCbu(int cbu) {
+		this.cbu = cbu;
+	}
+
+	public Date getCat() {
+		return this.cat;
+	}
+
+	public void setCat(Date cat) {
+		this.cat = cat;
+	}
+
+	public int getLuu() {
+		return this.luu;
+	}
+
+	public void setLuu(int luu) {
+		this.luu = luu;
+	}
+
+	public Date getUat() {
+		return this.uat;
+	}
+
+	public void setUat(Date uat) {
+		this.uat = uat;
+	}
+
+	public Set getOrdenCompras() {
+		return this.ordenCompras;
+	}
+
+	public void setOrdenCompras(Set ordenCompras) {
+		this.ordenCompras = ordenCompras;
+	}
+
+	public Set getDatosBancarioses() {
+		return this.datosBancarioses;
+	}
+
+	public void setDatosBancarioses(Set datosBancarioses) {
+		this.datosBancarioses = datosBancarioses;
 	}
 
 }

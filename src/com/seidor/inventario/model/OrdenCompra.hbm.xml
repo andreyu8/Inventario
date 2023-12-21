@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 22 may. 2023 18:00:35 by Hibernate Tools 4.3.5.Final -->
+<!-- Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
     <class name="com.seidor.inventario.model.OrdenCompra" table="orden_compra" catalog="bd_inventario" optimistic-lock="version">
         <id name="idOrdenCompra" type="java.lang.Integer">
             <column name="id_orden_compra" />
             <generator class="identity" />
         </id>
+        <many-to-one name="almacen" class="com.seidor.inventario.model.Almacen" fetch="select">
+            <column name="id_almacen" />
+        </many-to-one>
         <many-to-one name="area" class="com.seidor.inventario.model.Area" fetch="select">
             <column name="id_area" not-null="true" />
         </many-to-one>
@@ -15,7 +18,9 @@
             <column name="id_cliente" not-null="true" />
         </many-to-one>
         <many-to-one name="empleado" class="com.seidor.inventario.model.Empleado" fetch="select">
-            <column name="id_empleado" not-null="true" />
+            <column name="id_empleado" not-null="true">
+                <comment>empleado requisici&#243;n</comment>
+            </column>
         </many-to-one>
         <many-to-one name="estatusOrdenCompra" class="com.seidor.inventario.model.EstatusOrdenCompra" fetch="select">
             <column name="id_estatus_orden_compra">
@@ -25,17 +30,14 @@
         <many-to-one name="etapa" class="com.seidor.inventario.model.Etapa" fetch="select">
             <column name="id_etapa" not-null="true" />
         </many-to-one>
-        <many-to-one name="factura" class="com.seidor.inventario.model.Factura" fetch="select">
-            <column name="id_factura" />
+        <many-to-one name="proveedor" class="com.seidor.inventario.model.Proveedor" fetch="select">
+            <column name="id_proveedor" />
         </many-to-one>
         <many-to-one name="proyecto" class="com.seidor.inventario.model.Proyecto" fetch="select">
             <column name="id_proyecto" />
         </many-to-one>
         <many-to-one name="tipoOrdenCompra" class="com.seidor.inventario.model.TipoOrdenCompra" fetch="select">
             <column name="id_tipo_orden_compra" not-null="true" />
-        </many-to-one>
-        <many-to-one name="tipoPago" class="com.seidor.inventario.model.TipoPago" fetch="select">
-            <column name="id_tipo_pago" />
         </many-to-one>
         <property name="numeroOc" type="string">
             <column name="numero_oc" length="100" />
@@ -49,11 +51,63 @@
         <property name="fechaRecepAlmacen" type="timestamp">
             <column name="fecha_recep_almacen" length="19" />
         </property>
+        <property name="noPresupuesto" type="string">
+            <column name="no_presupuesto" length="50" />
+        </property>
+        <property name="noRequisicion" type="string">
+            <column name="no_requisicion" length="50" />
+        </property>
+        <property name="lugarEntrega" type="string">
+            <column name="lugar_entrega" length="100" />
+        </property>
+        <property name="fdl" type="boolean">
+            <column name="fdl" not-null="true">
+                <comment>flag delete</comment>
+            </column>
+        </property>
+        <property name="cbu" type="int">
+            <column name="cbu" not-null="true">
+                <comment>create by update</comment>
+            </column>
+        </property>
+        <property name="cat" type="timestamp">
+            <column name="cat" length="19" not-null="true">
+                <comment>create at timestamp</comment>
+            </column>
+        </property>
+        <property name="luu" type="int">
+            <column name="luu" not-null="true">
+                <comment>last update user</comment>
+            </column>
+        </property>
+        <property name="uat" type="timestamp">
+            <column name="uat" length="19" not-null="true">
+                <comment>update at timestamp</comment>
+            </column>
+        </property>
+        <set name="facturas" table="factura" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_orden_compra" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.Factura" />
+        </set>
+        <set name="movimientoses" table="movimientos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_orden_compra" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.Movimientos" />
+        </set>
         <set name="entradas" table="entrada" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_orden_compra" />
             </key>
             <one-to-many class="com.seidor.inventario.model.Entrada" />
+        </set>
+        <set name="detalleOrdenCompras" table="detalle_orden_compra" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_orden_compra" not-null="true" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.DetalleOrdenCompra" />
         </set>
     </class>
 </hibernate-mapping>

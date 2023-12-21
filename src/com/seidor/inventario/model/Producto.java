@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 22 may. 2023 18:00:34 by Hibernate Tools 4.3.5.Final
+// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -17,7 +17,7 @@ public class Producto implements java.io.Serializable {
 	private UnidadMedida unidadMedida;
 	private String codigo;
 	private String nombre;
-	private int cantidad;
+	private Double cantidad;
 	private BigDecimal precioCompra;
 	private BigDecimal precioVenta;
 	private String urlImagen;
@@ -25,25 +25,39 @@ public class Producto implements java.io.Serializable {
 	private Integer maximo;
 	private Date fecha;
 	private String observaciones;
-	private Integer stock;
+	private Double stock;
+	private boolean fdl;
+	private int cbu;
+	private Date cat;
+	private int luu;
+	private Date uat;
+	private Set detalleOrdenCompras = new HashSet(0);
 	private Set movimientosStocks = new HashSet(0);
 	private Set entradas = new HashSet(0);
+	private Set detalleMovimientos = new HashSet(0);
 	private Set salidas = new HashSet(0);
 
 	public Producto() {
 	}
 
-	public Producto(Categoria categoria, UnidadMedida unidadMedida, String codigo, String nombre, int cantidad) {
+	public Producto(Almacen almacen, Categoria categoria, UnidadMedida unidadMedida, String codigo, String nombre,
+			boolean fdl, int cbu, Date cat, int luu, Date uat) {
+		this.almacen = almacen;
 		this.categoria = categoria;
 		this.unidadMedida = unidadMedida;
 		this.codigo = codigo;
 		this.nombre = nombre;
-		this.cantidad = cantidad;
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
 	}
 
 	public Producto(Almacen almacen, Categoria categoria, UnidadMedida unidadMedida, String codigo, String nombre,
-			int cantidad, BigDecimal precioCompra, BigDecimal precioVenta, String urlImagen, Integer minimo,
-			Integer maximo, Date fecha, String observaciones, Integer stock, Set movimientosStocks, Set entradas,
+			Double cantidad, BigDecimal precioCompra, BigDecimal precioVenta, String urlImagen, Integer minimo,
+			Integer maximo, Date fecha, String observaciones, Double stock, boolean fdl, int cbu, Date cat, int luu,
+			Date uat, Set detalleOrdenCompras, Set movimientosStocks, Set entradas, Set detalleMovimientos,
 			Set salidas) {
 		this.almacen = almacen;
 		this.categoria = categoria;
@@ -59,8 +73,15 @@ public class Producto implements java.io.Serializable {
 		this.fecha = fecha;
 		this.observaciones = observaciones;
 		this.stock = stock;
+		this.fdl = fdl;
+		this.cbu = cbu;
+		this.cat = cat;
+		this.luu = luu;
+		this.uat = uat;
+		this.detalleOrdenCompras = detalleOrdenCompras;
 		this.movimientosStocks = movimientosStocks;
 		this.entradas = entradas;
+		this.detalleMovimientos = detalleMovimientos;
 		this.salidas = salidas;
 	}
 
@@ -112,11 +133,11 @@ public class Producto implements java.io.Serializable {
 		this.nombre = nombre;
 	}
 
-	public int getCantidad() {
+	public Double getCantidad() {
 		return this.cantidad;
 	}
 
-	public void setCantidad(int cantidad) {
+	public void setCantidad(Double cantidad) {
 		this.cantidad = cantidad;
 	}
 
@@ -176,12 +197,60 @@ public class Producto implements java.io.Serializable {
 		this.observaciones = observaciones;
 	}
 
-	public Integer getStock() {
+	public Double getStock() {
 		return this.stock;
 	}
 
-	public void setStock(Integer stock) {
+	public void setStock(Double stock) {
 		this.stock = stock;
+	}
+
+	public boolean isFdl() {
+		return this.fdl;
+	}
+
+	public void setFdl(boolean fdl) {
+		this.fdl = fdl;
+	}
+
+	public int getCbu() {
+		return this.cbu;
+	}
+
+	public void setCbu(int cbu) {
+		this.cbu = cbu;
+	}
+
+	public Date getCat() {
+		return this.cat;
+	}
+
+	public void setCat(Date cat) {
+		this.cat = cat;
+	}
+
+	public int getLuu() {
+		return this.luu;
+	}
+
+	public void setLuu(int luu) {
+		this.luu = luu;
+	}
+
+	public Date getUat() {
+		return this.uat;
+	}
+
+	public void setUat(Date uat) {
+		this.uat = uat;
+	}
+
+	public Set getDetalleOrdenCompras() {
+		return this.detalleOrdenCompras;
+	}
+
+	public void setDetalleOrdenCompras(Set detalleOrdenCompras) {
+		this.detalleOrdenCompras = detalleOrdenCompras;
 	}
 
 	public Set getMovimientosStocks() {
@@ -198,6 +267,14 @@ public class Producto implements java.io.Serializable {
 
 	public void setEntradas(Set entradas) {
 		this.entradas = entradas;
+	}
+
+	public Set getDetalleMovimientos() {
+		return this.detalleMovimientos;
+	}
+
+	public void setDetalleMovimientos(Set detalleMovimientos) {
+		this.detalleMovimientos = detalleMovimientos;
 	}
 
 	public Set getSalidas() {
