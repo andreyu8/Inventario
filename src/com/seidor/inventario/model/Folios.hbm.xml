@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="com.seidor.inventario.model.Folios" table="folios" catalog="bd_inventario" optimistic-lock="version">
+        <id name="idFolio" type="java.lang.Integer">
+            <column name="id_folio" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="tiposMovimiento" class="com.seidor.inventario.model.TiposMovimiento" fetch="select">
+            <column name="id_tipo_movimiento" />
+        </many-to-one>
+        <property name="consecutivo" type="int">
+            <column name="consecutivo" not-null="true" />
+        </property>
+        <property name="abrev" type="string">
+            <column name="abrev" length="10" />
+        </property>
+        <property name="fdl" type="java.lang.Boolean">
+            <column name="fdl">
+                <comment>flag delete</comment>
+            </column>
+        </property>
+        <property name="cbu" type="java.lang.Integer">
+            <column name="cbu">
+                <comment>create by update</comment>
+            </column>
+        </property>
+        <property name="cat" type="timestamp">
+            <column name="cat" length="19">
+                <comment>create at timestamp</comment>
+            </column>
+        </property>
+        <property name="luu" type="java.lang.Integer">
+            <column name="luu">
+                <comment>last update user</comment>
+            </column>
+        </property>
+        <property name="uat" type="timestamp">
+            <column name="uat" length="19">
+                <comment>update at timestamp</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

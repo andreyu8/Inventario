@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="com.seidor.inventario.model.DetalleMovimiento" table="detalle_movimiento" catalog="bd_inventario" optimistic-lock="version">
+        <id name="idDetalleMovimiento" type="java.lang.Integer">
+            <column name="id_detalle_movimiento" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="detalleOrdenCompra" class="com.seidor.inventario.model.DetalleOrdenCompra" fetch="select">
+            <column name="id_detalle_oc" />
+        </many-to-one>
+        <many-to-one name="movimientos" class="com.seidor.inventario.model.Movimientos" fetch="select">
+            <column name="id_movimiento" />
+        </many-to-one>
+        <many-to-one name="producto" class="com.seidor.inventario.model.Producto" fetch="select">
+            <column name="id_producto" not-null="true" />
+        </many-to-one>
+        <property name="fecha" type="timestamp">
+            <column name="fecha" length="19" not-null="true" />
+        </property>
+        <property name="cantidadTotal" type="java.lang.Double">
+            <column name="cantidad_total" precision="22" scale="0" />
+        </property>
+        <property name="cantidad" type="double">
+            <column name="cantidad" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="precioUnitario" type="big_decimal">
+            <column name="precio_unitario" precision="16" />
+        </property>
+        <property name="estatus" type="int">
+            <column name="estatus" not-null="true" />
+        </property>
+        <property name="fdl" type="boolean">
+            <column name="fdl" not-null="true">
+                <comment>flag delete</comment>
+            </column>
+        </property>
+        <property name="cbu" type="int">
+            <column name="cbu" not-null="true">
+                <comment>create by update</comment>
+            </column>
+        </property>
+        <property name="cat" type="timestamp">
+            <column name="cat" length="19" not-null="true">
+                <comment>create at timestamp</comment>
+            </column>
+        </property>
+        <property name="luu" type="int">
+            <column name="luu" not-null="true">
+                <comment>last update user</comment>
+            </column>
+        </property>
+        <property name="uat" type="timestamp">
+            <column name="uat" length="19" not-null="true">
+                <comment>update at timestamp</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

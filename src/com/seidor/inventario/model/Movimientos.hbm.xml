@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="com.seidor.inventario.model.Movimientos" table="movimientos" catalog="bd_inventario" optimistic-lock="version">
+        <id name="idMovimiento" type="java.lang.Integer">
+            <column name="id_movimiento" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="almacen" class="com.seidor.inventario.model.Almacen" fetch="select">
+            <column name="id_almacen" />
+        </many-to-one>
+        <many-to-one name="factura" class="com.seidor.inventario.model.Factura" fetch="select">
+            <column name="id_factura" />
+        </many-to-one>
+        <many-to-one name="ordenCompra" class="com.seidor.inventario.model.OrdenCompra" fetch="select">
+            <column name="id_orden_compra" />
+        </many-to-one>
+        <many-to-one name="tiposMovimiento" class="com.seidor.inventario.model.TiposMovimiento" fetch="select">
+            <column name="id_tipo_movimiento" />
+        </many-to-one>
+        <property name="folio" type="string">
+            <column name="folio" length="50">
+                <comment>Folio por almacen y (vale, entrada, salida, devoluciones)</comment>
+            </column>
+        </property>
+        <property name="fecha" type="timestamp">
+            <column name="fecha" length="19" />
+        </property>
+        <property name="estatus" type="java.lang.Integer">
+            <column name="estatus">
+                <comment>Catalogo en el properties</comment>
+            </column>
+        </property>
+        <property name="fdl" type="java.lang.Boolean">
+            <column name="fdl">
+                <comment>flag delete</comment>
+            </column>
+        </property>
+        <property name="cbu" type="java.lang.Integer">
+            <column name="cbu">
+                <comment>create by update</comment>
+            </column>
+        </property>
+        <property name="cat" type="timestamp">
+            <column name="cat" length="19">
+                <comment>create at timestamp</comment>
+            </column>
+        </property>
+        <property name="luu" type="java.lang.Integer">
+            <column name="luu">
+                <comment>last update user</comment>
+            </column>
+        </property>
+        <property name="uat" type="timestamp">
+            <column name="uat" length="19">
+                <comment>update at timestamp</comment>
+            </column>
+        </property>
+        <set name="detalleMovimientos" table="detalle_movimiento" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_movimiento" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.DetalleMovimiento" />
+        </set>
+    </class>
+</hibernate-mapping>

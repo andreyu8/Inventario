@@ -1,0 +1,22 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./viewer"?>
+<zk>
+ <window  id="viewer">
+	<div class="container">
+		<div class="col-md-12" >
+			<div class="row sysBox" style="background: #F1F2F4; border: 1px solid #C1C2C4;" >
+				<div class="row editHeader">
+					<div class="col-md-12" >
+						<a sclass="confirmIcon" iconSclass="fa fa-file-pdf-o" />
+						<label value="${arg.name}"  sclass="sysTitle" />
+						<button id="closebtn" label="X" onClick="viewer.detach();" style="padding-top: 2px; padding-bottom: 2px; float: right;" focus="true" />
+					</div>
+				</div>	
+				<div class="row subBox animated aniFadeIn" >
+			    	<iframe id="iframe" height="800px" width="100%" style="border: 1px solid gray" content="${arg.media}"></iframe>
+			    </div>
+			</div>	 
+		</div>
+    </div>   	
+</window>
+</zk>
