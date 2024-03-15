@@ -100,6 +100,7 @@ public class UserController {
 		
 		SessionUtil.setEmpleadoId (user.getEmpleado());
 		
+		
 		ArrayList<PerfilUsuario> roles = roleManager.getProfileUser(user);
 		SessionUtil.setUserRoles (roles);
 		

@@ -55,7 +55,7 @@
 			<div class="col-md-4">
 				<div align="right" sclass="btn-group" style="float: right;" >
 					<button label="detalle" onClick="show();" iconSclass="z-icon-eye" />
-					<button label="nuevo" onClick="create();" iconSclass="z-icon-plus-circle" />
+					<!-- <button label="nuevo" onClick="create();" iconSclass="z-icon-plus-circle" />-->
 				</div>
 				
 				<div align="right" style="float: right;" >

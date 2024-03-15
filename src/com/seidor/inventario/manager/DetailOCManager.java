@@ -52,4 +52,8 @@ public class DetailOCManager {
 		return this.detailOCDao.getIdOCAll(idOrdenCompra);
 	}
 
+	public ArrayList<DetalleOrdenCompra> getProductCode(Integer[] idsProduct) {
+		return this.detailOCDao.getProductCode(idsProduct);
+	}
+
 }

@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
+// Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 
@@ -9,7 +9,9 @@ import java.util.Date;
 public class Salida implements java.io.Serializable {
 
 	private Integer idSalida;
+	private Area area;
 	private Empleado empleado;
+	private Movimientos movimientos;
 	private Producto producto;
 	private Proyecto proyecto;
 	private TipoTrabajo tipoTrabajo;
@@ -28,9 +30,8 @@ public class Salida implements java.io.Serializable {
 	public Salida() {
 	}
 
-	public Salida(Producto producto, TipoTrabajo tipoTrabajo, boolean fdl, int cbu, Date cat, int luu, Date uat) {
+	public Salida(Producto producto, boolean fdl, int cbu, Date cat, int luu, Date uat) {
 		this.producto = producto;
-		this.tipoTrabajo = tipoTrabajo;
 		this.fdl = fdl;
 		this.cbu = cbu;
 		this.cat = cat;
@@ -38,10 +39,12 @@ public class Salida implements java.io.Serializable {
 		this.uat = uat;
 	}
 
-	public Salida(Empleado empleado, Producto producto, Proyecto proyecto, TipoTrabajo tipoTrabajo,
-			UnidadMedida unidadMedida, String ordenTrabajo, String modeloMueble, Double cantidad, Date fecha,
-			Integer estatus, boolean fdl, int cbu, Date cat, int luu, Date uat) {
+	public Salida(Area area, Empleado empleado, Movimientos movimientos, Producto producto, Proyecto proyecto,
+			TipoTrabajo tipoTrabajo, UnidadMedida unidadMedida, String ordenTrabajo, String modeloMueble,
+			Double cantidad, Date fecha, Integer estatus, boolean fdl, int cbu, Date cat, int luu, Date uat) {
+		this.area = area;
 		this.empleado = empleado;
+		this.movimientos = movimientos;
 		this.producto = producto;
 		this.proyecto = proyecto;
 		this.tipoTrabajo = tipoTrabajo;
@@ -66,12 +69,28 @@ public class Salida implements java.io.Serializable {
 		this.idSalida = idSalida;
 	}
 
+	public Area getArea() {
+		return this.area;
+	}
+
+	public void setArea(Area area) {
+		this.area = area;
+	}
+
 	public Empleado getEmpleado() {
 		return this.empleado;
 	}
 
 	public void setEmpleado(Empleado empleado) {
 		this.empleado = empleado;
+	}
+
+	public Movimientos getMovimientos() {
+		return this.movimientos;
+	}
+
+	public void setMovimientos(Movimientos movimientos) {
+		this.movimientos = movimientos;
 	}
 
 	public Producto getProducto() {

@@ -1,10 +1,10 @@
 package com.seidor.inventario.manager;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import com.seidor.inventario.adapter.beans.CierreBean;
 import com.seidor.inventario.adapter.beans.CloseBean;
+import com.seidor.inventario.adapter.beans.DevolucionBean;
 import com.seidor.inventario.adapter.beans.EntradasProyectoBean;
 import com.seidor.inventario.adapter.beans.ProveedoresBean;
 import com.seidor.inventario.adapter.beans.ReasignedBean;
@@ -84,6 +84,14 @@ public class ProductManager {
 		return this.productDao.getCloseProyecto (projectId);
 	}
 	
+	public ArrayList<DevolucionBean> getDevolucionesProyecto (Integer projectId, Integer almacenId) {
+		return this.productDao.getDevolucionesProyecto(projectId, almacenId);
+	}
+	
+	public ArrayList<DevolucionBean> getDevolucionesProyectoSalidas (Integer projectId, Integer almacenId) {
+		return this.productDao.getDevolucionesProyectoSalidas(projectId, almacenId);
+	}
+	
 	public ArrayList<ReasignedBean> getReasignedProyecto (Integer projectId) {
 		return this.productDao.getReasignedProyecto (projectId);
 	}
@@ -103,5 +111,18 @@ public class ProductManager {
 	public  ArrayList<Producto> getAllCodigo(Integer almacenId) {
 		return this.productDao.getAllCodigo(almacenId);
 	}
+
+	public String getMaxProductCode(Integer idCategoria) {
+		return this.productDao.getMaxProductCode (idCategoria);
+	}
+
+	public ArrayList<Producto> getCodigoProduct(String codigo) {
+		return this.productDao.getCodigoProduct (codigo);	
+	}
+
+	public ArrayList<Producto> getAllProduct() {
+		return this.productDao.getAllProduct ();
+	}
+	
 
 }

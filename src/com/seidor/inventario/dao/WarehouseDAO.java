@@ -68,4 +68,22 @@ public class WarehouseDAO extends HibernateDaoSupport {
 		session.close();
 	}
 
+	@SuppressWarnings("unchecked")
+	public ArrayList<Almacen> getAlmacenes(Integer idAlmacen) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		
+		Criteria criteria = DaoUtil.getCriteria(session, Almacen.class);
+		
+		criteria.add(Restrictions.not(Restrictions.in("idAlmacen", new Integer[] {idAlmacen})));
+		
+		criteria.addOrder(Order.asc("almacen"));
+		
+		List<Almacen> result = criteria.list();
+		
+		session.flush();
+		session.close();
+		
+		return new ArrayList<Almacen>(result);
+	}
+
 }

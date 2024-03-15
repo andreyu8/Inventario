@@ -37,6 +37,10 @@ public class WarehouseManager {
 	public void delete (Almacen a) {
 		this.warehouseDao.delete(a);
 	}
+
+	public ArrayList<Almacen> getAlmacenes(Integer idAlmacen) {
+		return this.warehouseDao.getAlmacenes (idAlmacen);
+	}
 	
 
 }

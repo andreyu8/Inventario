@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final -->
+<!-- Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
     <class name="com.seidor.inventario.model.TipoTrabajo" table="tipo_trabajo" catalog="bd_inventario" optimistic-lock="version">
         <id name="idTipoTrabajo" type="java.lang.Integer">
@@ -44,7 +44,7 @@
         </property>
         <set name="salidas" table="salida" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="id_tipo_trabajo" not-null="true" />
+                <column name="id_tipo_trabajo" />
             </key>
             <one-to-many class="com.seidor.inventario.model.Salida" />
         </set>

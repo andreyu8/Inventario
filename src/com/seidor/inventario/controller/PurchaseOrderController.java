@@ -29,7 +29,6 @@ import com.seidor.inventario.adapter.PurcharseAdapter;
 import com.seidor.inventario.adapter.beans.CuentasBean;
 import com.seidor.inventario.adapter.beans.DetailProductBean;
 import com.seidor.inventario.adapter.beans.ProjectReportBean;
-import com.seidor.inventario.adapter.listitem.DataBankListitemAdapter;
 import com.seidor.inventario.adapter.listitem.DetailOCitemAdapter;
 import com.seidor.inventario.adapter.listitem.ProductListitemAdapter;
 import com.seidor.inventario.adapter.render.DetailOCListitemRenderer;
@@ -39,12 +38,9 @@ import com.seidor.inventario.adapter.render.StatusTypeOrderComboitemRenderer;
 import com.seidor.inventario.adapter.render.TypePaymentComboitemRenderer;
 import com.seidor.inventario.adapter.search.PurchaseOrderSearchAdapter;
 import com.seidor.inventario.constants.SystemConstants;
-import com.seidor.inventario.exception.BusinessException;
 import com.seidor.inventario.inroweditablecomps.EditableListitem;
 import com.seidor.inventario.inroweditablecomps.IREditableCombobox;
 import com.seidor.inventario.inroweditablecomps.IREditableDoublebox;
-import com.seidor.inventario.inroweditablecomps.IREditableIntbox;
-import com.seidor.inventario.inroweditablecomps.IREditableTextbox;
 import com.seidor.inventario.manager.DatosBancariosManager;
 import com.seidor.inventario.manager.DetailOCManager;
 import com.seidor.inventario.manager.InvoiceManager;
@@ -65,18 +61,16 @@ import com.seidor.inventario.model.OrdenCompra;
 import com.seidor.inventario.model.Producto;
 import com.seidor.inventario.model.Proveedor;
 import com.seidor.inventario.model.Proyecto;
+import com.seidor.inventario.model.TipoMoneda;
 import com.seidor.inventario.model.TipoOrdenCompra;
 import com.seidor.inventario.model.TipoPago;
 import com.seidor.inventario.model.UnidadMedida;
-import com.seidor.inventario.model.Usuario;
 import com.seidor.inventario.navigation.NavigationControl;
 import com.seidor.inventario.navigation.NavigationState;
 import com.seidor.inventario.navigation.NavigationStates;
 import com.seidor.inventario.util.DateFormatUtil;
-import com.seidor.inventario.util.DateUtil;
 import com.seidor.inventario.util.NumberFormatUtil;
 import com.seidor.inventario.util.ReportUtil;
-import com.seidor.inventario.util.ResourceServletClient;
 import com.seidor.inventario.util.SessionUtil;
 
 public class PurchaseOrderController {
@@ -219,12 +213,15 @@ public class PurchaseOrderController {
 		oc.setArea(new Area());
 		oc.setCliente(new Cliente());
 		oc.setEmpleado(new Empleado());
+		oc.setTipoMoneda(new TipoMoneda());
 		oc.setEtapa(new Etapa());
 		oc.setProveedor(new Proveedor());
 		oc.setProyecto(new Proyecto());
 		oc.setTipoOrdenCompra(new TipoOrdenCompra());
 		oc.setEstatusOrdenCompra(new EstatusOrdenCompra());
 		oc.setAlmacen(new Almacen());
+		oc.setIsIva(Boolean.TRUE);
+		oc.setIsIsr(Boolean.FALSE);
 		
 		ArrayList<DetalleOrdenCompra> doc = new ArrayList<DetalleOrdenCompra>();
 		
@@ -267,7 +264,14 @@ public class PurchaseOrderController {
 			pa.getOrderCompra().setProveedor((Proveedor) prov.getSelectedItem().getValue());
 		else 
 			throw new WrongValueException(prov, "Debe de seleccionar un proveedor");
-					
+		
+		
+		Combobox tmoccb = (Combobox) win.getFellowIfAny("tmoccb");
+		if (tmoccb != null && tmoccb.getSelectedItem()!=null )
+			pa.getOrderCompra().setTipoMoneda((TipoMoneda) tmoccb.getSelectedItem().getValue());
+		else 
+			throw new WrongValueException(tmoccb, "Debe de seleccionar un tipo de moneda");
+		
 		
 		Combobox etapa = (Combobox) win.getFellowIfAny("etapcb");
 		if (etapa != null && etapa.getSelectedItem()!=null )
@@ -310,13 +314,16 @@ public class PurchaseOrderController {
 		pa.getOrderCompra().setFechaRecepAlmacen(new Date());
 		
 		EstatusOrdenCompra eoc = new EstatusOrdenCompra();
-		eoc.setIdEstatusOrdenCompra(1);
+		eoc.setIdEstatusOrdenCompra(SystemConstants.ESTATUS_OC_INCOMPLETA);
 		
 		Almacen almacen= new Almacen();
 		almacen.setIdAlmacen(SessionUtil.getSucursalId());
 		pa.getOrderCompra().setAlmacen(almacen);
 		
 		pa.getOrderCompra().setEstatusOrdenCompra(eoc);
+		
+		if (pa.getOrderCompra().getDescripcion() == null)
+			pa.getOrderCompra().setDescripcion("-");
 		
 		this.purchaseOrderManager.save(pa.getOrderCompra());
 		
@@ -349,13 +356,15 @@ public class PurchaseOrderController {
         	e.setAlmacen(a);
         	e.setCantidad(p.getCantidad());
         	e.setPrecioUnitario(p.getPrecioCompra());
+        	e.setPrecioUnitarioMxn(p.getPrecioCompra().multiply(pa.getOrderCompra().getTipoCambio() == null ? new BigDecimal(1.0) : pa.getOrderCompra().getTipoCambio()));
+        	e.setTipoMoneda(pa.getOrderCompra().getTipoMoneda());
         	e.setEstatus(SystemConstants.ENTRADA_POR_COMPRA);
         	e.setFecha(new Date());
         	e.setOrdenCompra(pa.getOrderCompra());
         	
         	//suma a productos la cantidad
         	pe.setCantidad(pe.getCantidad() + e.getCantidad());
-    		pe.setPrecioCompra(e.getPrecioUnitario());
+        	pe.setPrecioCompra(e.getPrecioUnitario());
     		
         	
         	detailOCManager.save(e);
@@ -394,6 +403,11 @@ public class PurchaseOrderController {
 		else 
 			throw new WrongValueException(etapa, "Debe de seleccionar una etapa");
 		
+		Combobox tmoccb = (Combobox) win.getFellowIfAny("tmoccb");
+		if (tmoccb != null && tmoccb.getSelectedItem()!=null )
+			pa.getOrderCompra().setTipoMoneda((TipoMoneda) tmoccb.getSelectedItem().getValue());
+		else 
+			throw new WrongValueException(tmoccb, "Debe de seleccionar un tipo de moneda");
 		
 		
 		Combobox areacb = (Combobox) win.getFellowIfAny("areacb");
@@ -535,6 +549,10 @@ public class PurchaseOrderController {
 		if (oc.getProveedor() == null)
 			oc.setProveedor(new Proveedor());
 		
+		if (oc.getTipoMoneda() == null)
+			oc.setTipoMoneda(new TipoMoneda());
+		
+	
 		pa.setOrderCompra(oc);
 		pa.setDetailtOC(doc);
 		
@@ -890,8 +908,14 @@ public class PurchaseOrderController {
 		}
 		
 		pBeanReport.setSubtotal(NumberFormatUtil.format(subtotal,2));
+		if (purcharseAdapter.getOrderCompra().isIsIsr())
+			pBeanReport.setIsr(NumberFormatUtil.format(subtotal.multiply(new BigDecimal(0.0125)),2));
+		
 		pBeanReport.setIva(NumberFormatUtil.format(subtotal.multiply(new BigDecimal(0.16)),2));
 		pBeanReport.setTotal(NumberFormatUtil.format(subtotal.multiply(new BigDecimal(1.16)),2));
+		
+		if (purcharseAdapter.getOrderCompra().isIsIsr())
+			pBeanReport.setTotal(NumberFormatUtil.format( (subtotal.multiply(new BigDecimal(1.16)).subtract(subtotal.multiply(new BigDecimal(0.0125)))),2));
 		
 		
 		CuentasBean ctasBean = new CuentasBean();
@@ -993,9 +1017,11 @@ public class PurchaseOrderController {
 			parametters.put("rfc_cliente", pBeanReport.getCliente().getRfc());
 			parametters.put("telefono_cliente", pBeanReport.getCliente().getTelefono());
 			
+			parametters.put("isISR", pBeanReport.getOrdenCompra().isIsIsr());
 			
 			parametters.put("subtotal", pBeanReport.getSubtotal());
 			parametters.put("iva", pBeanReport.getIva());
+			parametters.put("isr", pBeanReport.getIsr());
 			parametters.put("total", pBeanReport.getTotal());
 			
 			parametters.put("proyecto", pBeanReport.getProyecto().getNombre());
@@ -1008,13 +1034,19 @@ public class PurchaseOrderController {
 			parametters.put("metodoPago", pBeanReport.getProveedor().getTipoPago().getTipoPago());
 			parametters.put("diasCredito", pBeanReport.getProveedor().getDiasCredito() == null ? "0" : ""+pBeanReport.getProveedor().getDiasCredito());
 			parametters.put("condicionesPago", "" );
-			parametters.put("lugarEntrega", pBeanReport.getOrdenCompra().getLugarEntrega());
-			parametters.put("observaciones", pBeanReport.getOrdenCompra().getDescripcion());
+			parametters.put("lugarEntrega", pBeanReport.getOrdenCompra().getLugarEntrega() == null ? "" : pBeanReport.getOrdenCompra().getLugarEntrega());
+			parametters.put("tiempoEntrega", pBeanReport.getOrdenCompra().getTiempoEntrega() == null ? "" : pBeanReport.getOrdenCompra().getTiempoEntrega());
+		
+			parametters.put("observaciones", pBeanReport.getOrdenCompra().getDescripcion() == null ? "" : pBeanReport.getOrdenCompra().getDescripcion() );
+			
 			
 			parametters.put("responsable", pBeanReport.getOrdenCompra().getEmpleado().getNombre()+" "+pBeanReport.getOrdenCompra().getEmpleado().getAPaterno()+" "+pBeanReport.getOrdenCompra().getEmpleado().getAMaterno());
+
+			parametters.put("responsableOC", SessionUtil.getEmpleadoId().getNombre().trim()+" "+SessionUtil.getEmpleadoId().getAPaterno().trim()+" "+SessionUtil.getEmpleadoId().getAMaterno().trim());
 			
+			parametters.put("vendedor",pBeanReport.getProveedor().getVendedor());
 			
-			
+			parametters.put("tipoMoneda", pBeanReport.getOrdenCompra().getTipoMoneda() == null ? "MXN" : pBeanReport.getOrdenCompra().getTipoMoneda().getMoneda() );
 			
 			try {
 				List dataSource = new ArrayList();
@@ -1160,6 +1192,11 @@ public class PurchaseOrderController {
 			 
 			 Label diasProv = (Label) win.getFellowIfAny("diasProv");
 			 diasProv.setValue(prov.getDiasCredito() == null ? "" : ""+prov.getDiasCredito());
+			 
+			 if (prov.getTipoMoneda() != null) {
+				 Combobox tmoccb = (Combobox) win.getFellowIfAny("tmoccb");
+				 tmoccb.setValue(prov.getTipoMoneda().getMoneda());
+			 }								
 			 
 			 Div divProv = (Div) win.getFellowIfAny("sectionProv");
 			 divProv.setVisible(true);

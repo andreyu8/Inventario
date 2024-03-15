@@ -2,7 +2,6 @@ package com.seidor.inventario.dao;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -17,12 +16,14 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.BigDecimalType;
 import org.hibernate.type.DateType;
+import org.hibernate.type.DoubleType;
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.StringType;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import com.seidor.inventario.adapter.beans.CierreBean;
 import com.seidor.inventario.adapter.beans.CloseBean;
+import com.seidor.inventario.adapter.beans.DevolucionBean;
 import com.seidor.inventario.adapter.beans.EntradasProyectoBean;
 import com.seidor.inventario.adapter.beans.ProveedoresBean;
 import com.seidor.inventario.adapter.beans.ReasignedBean;
@@ -30,6 +31,7 @@ import com.seidor.inventario.adapter.beans.ReportCostoInventario;
 import com.seidor.inventario.adapter.beans.ReportCostoInventarioGBean;
 import com.seidor.inventario.adapter.beans.SalidaProyectoBean;
 import com.seidor.inventario.adapter.search.ProductSearchAdapter;
+import com.seidor.inventario.constants.SystemConstants;
 import com.seidor.inventario.model.Producto;
 import com.seidor.inventario.util.DaoUtil;
 
@@ -90,6 +92,7 @@ public class ProductDAO extends HibernateDaoSupport{
 		
 		Criteria criteria = DaoUtil.getCriteria(session, Producto.class);
 		criteria.add(Restrictions.eq("nombre", p.getNombre()));
+		criteria.add(Restrictions.eq("almacen.idAlmacen", p.getAlmacen().getIdAlmacen()));
 		List<Producto> result = criteria.list();
 		if (result.size() == 0) { 
 			DaoUtil.prepareToSave(p);
@@ -152,6 +155,7 @@ public class ProductDAO extends HibernateDaoSupport{
 		
 		criteria.setFetchMode("categoria", FetchMode.JOIN);
 		criteria.setFetchMode("unidadMedida", FetchMode.JOIN);
+		criteria.setFetchMode("almacen", FetchMode.JOIN);
 		
 		if (psa.getNombre() != null && psa.getNombre().trim().length() > 0){
 			criteria.add(Restrictions.ilike("nombre", psa.getNombre().trim(), MatchMode.ANYWHERE));
@@ -166,7 +170,7 @@ public class ProductDAO extends HibernateDaoSupport{
 		}
 		
 		//if el usuaio != 1 tomo el almacen
-		//criteria.add(Restrictions.eq("almacen.idAlmacen", criteria));
+		//criteria.add(Restrictions.eq("almacen.idAlmacen", SessionUtil.getSucursalId()));
 		
 		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		
@@ -177,6 +181,257 @@ public class ProductDAO extends HibernateDaoSupport{
 		return new ArrayList<Producto>(result);
 	}
 	
+	
+	
+	
+	//getdevoluciones de productos
+	@SuppressWarnings("unchecked")
+	public ArrayList<DevolucionBean> getDevolucionesProyecto (Integer projectId, Integer almacenId) {
+		
+		
+		ArrayList<DevolucionBean> result = new ArrayList<DevolucionBean>();
+		DevolucionBean devolucionBean = new DevolucionBean();
+		
+		List<Object[]> rows = new ArrayList<Object[]>();
+		
+		StringBuilder sb = new  StringBuilder(); 
+
+			sb.append(" SELECT "); 
+			sb.append(" a.id_producto, ");
+			sb.append(" a.categoria, ");
+			sb.append(" a.codigo,  ");
+			sb.append(" a.nombre, ");
+			sb.append(" a.unidad_medida, ");
+			sb.append(" IFNULL (a.cant_entrada, 0) AS cant_entrada, ");
+			sb.append(" IFNULL (b.cant_salida, 0) AS cant_salida, ");
+			sb.append(" IFNULL (a.cant_entrada, 0) - IFNULL (b.cant_salida, 0) AS diferencia ");
+			sb.append(" FROM  ");
+			sb.append(" (SELECT  ");
+			sb.append(" dm.id_producto, ");
+			sb.append(" c.categoria, ");
+			sb.append(" p.codigo,  ");
+			sb.append(" p.nombre, ");
+			sb.append(" um.unidad_medida,	 ");
+			sb.append(" sum(dm.cantidad) AS cant_entrada ");
+			sb.append(" FROM  ");
+			sb.append(" movimientos m ");
+			sb.append(" INNER JOIN 	detalle_movimiento dm ON  ");
+			sb.append(" m.id_movimiento= dm.id_movimiento ");
+			sb.append(" INNER JOIN producto p ON  ");
+			sb.append(" dm.id_producto = p.id_producto	 ");
+			sb.append(" INNER JOIN categoria c ON ");
+			sb.append(" p.id_categoria = c.id_categoria ");
+			sb.append(" INNER JOIN unidad_medida um ON ");
+			sb.append(" p.id_unidad_medida= um.id_unidad_medida	");
+			sb.append(" WHERE  ");
+			sb.append(" m.id_proyecto=:project AND ");
+			sb.append(" m.id_tipo_movimiento in ("+SystemConstants.ENTRADA_COMPRA +","+SystemConstants.ENTRADA_REASIGNACIÓN+") AND ");
+			sb.append(" m.id_almacen=:almacen AND "); 
+			sb.append(" m.fdl=0 AND  ");
+			sb.append(" dm.fdl=0 AND  ");
+			sb.append(" dm.cantidad > 0 ");
+			sb.append(" GROUP BY  c.categoria, ");
+			sb.append(" dm.id_producto, ");
+			sb.append(" p.codigo,  ");
+			sb.append(" p.nombre, ");
+			sb.append(" um.unidad_medida)  a	");	
+			sb.append(" LEFT JOIN  ");
+			sb.append(" (SELECT  ");
+			sb.append(" dm.id_producto, ");
+			sb.append(" c.categoria, ");
+			sb.append(" p.codigo,  ");
+			sb.append(" p.nombre, ");
+			sb.append(" um.unidad_medida,	 ");
+			sb.append(" SUM(dm.cantidad) AS cant_salida ");
+			sb.append(" FROM  ");
+			sb.append(" movimientos m ");
+			sb.append(" INNER JOIN 	detalle_movimiento dm ON  ");
+			sb.append(" m.id_movimiento= dm.id_movimiento ");
+			sb.append(" INNER JOIN producto p ON  ");
+			sb.append(" dm.id_producto = p.id_producto	 ");
+			sb.append(" INNER JOIN categoria c ON ");
+			sb.append(" p.id_categoria = c.id_categoria ");
+			sb.append(" INNER JOIN unidad_medida um ON ");
+			sb.append(" p.id_unidad_medida= um.id_unidad_medida ");		
+			sb.append(" WHERE "); 
+			sb.append(" m.id_proyecto=:project AND ");
+			sb.append(" m.id_tipo_movimiento in ("+SystemConstants.SALIDA_VALE +","+SystemConstants.SALIDA_REASIGNACION+") AND ");
+			sb.append(" m.id_almacen=:almacen AND ");
+			sb.append(" m.fdl=0 AND  ");
+			sb.append(" dm.fdl=0 AND  ");
+			sb.append(" dm.cantidad > 0	 ");
+			sb.append(" GROUP BY  c.categoria, ");
+			sb.append(" dm.id_producto, ");
+			sb.append(" p.codigo,  ");
+			sb.append(" p.nombre, ");
+			sb.append(" um.unidad_medida)	b ON  ");
+			sb.append(" a.id_producto = b.id_producto  ");
+	
+			Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+			
+			SQLQuery query = session.createSQLQuery(sb.toString());
+			query.addScalar("id_producto", IntegerType.INSTANCE);
+			query.addScalar("categoria", StringType.INSTANCE);
+			query.addScalar("codigo", StringType.INSTANCE);
+			query.addScalar("nombre", StringType.INSTANCE);
+			query.addScalar("unidad_medida", StringType.INSTANCE);
+			query.addScalar("cant_entrada", DoubleType.INSTANCE);
+			query.addScalar("cant_salida", DoubleType.INSTANCE);
+			query.addScalar("diferencia", DoubleType.INSTANCE);
+			
+			query.setParameter("project", projectId);
+			query.setParameter("almacen", almacenId);
+			
+			rows = query.list();
+			
+			for (Object[] cp : rows) {
+				
+				devolucionBean = new DevolucionBean();
+				
+				devolucionBean.setIdProducto((int) cp[0]);
+				devolucionBean.setFamilia(cp[1] == null ? "" : (String) cp[1]);
+				devolucionBean.setCodigo(cp[2] == null ? "" : (String) cp[2]);
+				devolucionBean.setProducto(cp[3] == null ? "" : (String) cp[3]);
+				devolucionBean.setUnidadMedida(cp[4] == null ? "" : (String) cp[4]);
+				devolucionBean.setCantidadEntrada(cp[5] == null ? 0.0 : (double) cp[5]);
+				devolucionBean.setCantidadSalida(cp[6] == null ? 0.0 : (double) cp[6] );
+				devolucionBean.setDiferencia(cp[7] == null ? 0.0 : (double) cp[7]);
+				
+				result.add(devolucionBean);
+			}	
+			
+			session.flush();
+			session.close();
+			
+			
+			return result;
+	}
+	
+	
+	//salida sin entrada en la oc
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<DevolucionBean> getDevolucionesProyectoSalidas (Integer projectId, Integer almacenId) {
+		
+		
+		ArrayList<DevolucionBean> result = new ArrayList<DevolucionBean>();
+		DevolucionBean devolucionBean = new DevolucionBean();
+		
+		List<Object[]> rows = new ArrayList<Object[]>();
+		
+		StringBuilder sb = new  StringBuilder(); 
+		sb.append(" SELECT "); 
+		sb.append(" 	b.id_producto, "); 
+		sb.append(" 	b.categoria, "); 
+		sb.append(" 	b.codigo,  ");
+		sb.append(" 	b.nombre, ");
+		sb.append(" 	b.unidad_medida, ");
+		sb.append("  	IFNULL (a.cant_entrada, 0) AS cant_entrada, ");
+		sb.append(" 	IFNULL (b.cant_salida, 0) AS cant_salida, ");
+		sb.append("  	 	IFNULL (a.cant_entrada, 0) - IFNULL (b.cant_salida, 0) AS diferencia ");
+		sb.append("	FROM  ");
+		sb.append(" (SELECT  ");
+		sb.append("	  dm.id_producto, ");
+		sb.append("	  c.categoria, ");
+		sb.append("	  p.codigo,  ");
+		sb.append("	  p.nombre, ");
+		sb.append("	  um.unidad_medida,	 ");
+		sb.append("	  sum(dm.cantidad) AS cant_entrada ");
+		sb.append("	FROM  ");
+		sb.append("	movimientos m ");
+		sb.append("		INNER JOIN 	detalle_movimiento dm ON  ");
+		sb.append("			m.id_movimiento= dm.id_movimiento ");
+		sb.append("		INNER JOIN producto p ON  ");
+		sb.append("			dm.id_producto = p.id_producto	 ");
+		sb.append("		INNER JOIN categoria c ON ");
+		sb.append("			p.id_categoria = c.id_categoria ");
+		sb.append("		INNER JOIN unidad_medida um ON ");
+		sb.append("			p.id_unidad_medida= um.id_unidad_medida		 ");
+		sb.append("		 WHERE  ");
+		sb.append("		 	m.id_proyecto=:project AND ");
+		sb.append("		 	m.id_tipo_movimiento in ("+SystemConstants.ENTRADA_COMPRA +","+SystemConstants.ENTRADA_REASIGNACIÓN+") AND ");
+		sb.append(" m.id_almacen=:almacen AND "); 
+		sb.append("		 	m.fdl=0 AND  ");
+		sb.append("		 	dm.fdl=0 AND  ");
+		sb.append("		 	dm.cantidad > 0 ");
+		sb.append("	GROUP BY  c.categoria, ");
+		sb.append("	  dm.id_producto, ");
+		sb.append("	  p.codigo,  ");
+		sb.append("	  p.nombre, ");
+		sb.append("	  um.unidad_medida)  a	");
+		sb.append(" RIGHT JOIN  ");
+		sb.append(" (SELECT  ");
+		sb.append("	 dm.id_producto, ");
+		sb.append("	  c.categoria, ");
+		sb.append("	  p.codigo,  ");
+		sb.append("	  p.nombre, ");
+		sb.append("	  um.unidad_medida, ");	
+		sb.append("	  SUM(dm.cantidad) AS cant_salida ");
+		sb.append("	FROM  ");
+		sb.append("	movimientos m ");
+		sb.append("		INNER JOIN 	detalle_movimiento dm ON  ");
+		sb.append("			m.id_movimiento= dm.id_movimiento ");
+		sb.append("		INNER JOIN producto p ON  ");
+		sb.append("		dm.id_producto = p.id_producto	 ");
+		sb.append("		INNER JOIN categoria c ON ");
+		sb.append("		p.id_categoria = c.id_categoria ");
+		sb.append("		INNER JOIN unidad_medida um ON ");
+		sb.append("			p.id_unidad_medida= um.id_unidad_medida	 ");
+		sb.append("		 WHERE  ");
+		sb.append("		 	m.id_proyecto=:project AND ");
+		sb.append("		 	m.id_tipo_movimiento in ("+SystemConstants.SALIDA_VALE +","+SystemConstants.SALIDA_REASIGNACION+") AND ");
+		sb.append(" 	    m.id_almacen=:almacen AND "); 
+		sb.append("		 	m.fdl=0 AND  ");
+		sb.append("		 	dm.fdl=0 AND  ");
+		sb.append("		 	dm.cantidad > 0	 ");
+		sb.append("	GROUP BY  c.categoria, ");
+		sb.append("	  dm.id_producto, ");
+		sb.append("	  p.codigo,  ");
+		sb.append("	  p.nombre, ");
+		sb.append("	  um.unidad_medida)	b ON  ");
+		sb.append("	a.id_producto = b.id_producto  ");
+		sb.append("	WHERE  ");
+		sb.append("	 a.id_producto IS NULL   ");
+		
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		
+		SQLQuery query = session.createSQLQuery(sb.toString());
+		query.addScalar("id_producto", IntegerType.INSTANCE);
+		query.addScalar("categoria", StringType.INSTANCE);
+		query.addScalar("codigo", StringType.INSTANCE);
+		query.addScalar("nombre", StringType.INSTANCE);
+		query.addScalar("unidad_medida", StringType.INSTANCE);
+		query.addScalar("cant_entrada", DoubleType.INSTANCE);
+		query.addScalar("cant_salida", DoubleType.INSTANCE);
+		query.addScalar("diferencia", DoubleType.INSTANCE);
+		
+		query.setParameter("project", projectId);
+		query.setParameter("almacen", almacenId);
+		
+		rows = query.list();
+		
+		for (Object[] cp : rows) {
+			
+			devolucionBean = new DevolucionBean();
+			
+			devolucionBean.setIdProducto((int) cp[0]);
+			devolucionBean.setFamilia(cp[1] == null ? "" : (String) cp[1]);
+			devolucionBean.setCodigo(cp[2] == null ? "" : (String) cp[2]);
+			devolucionBean.setProducto(cp[3] == null ? "" : (String) cp[3]);
+			devolucionBean.setUnidadMedida(cp[4] == null ? "" : (String) cp[4]);
+			devolucionBean.setCantidadEntrada(cp[5] == null ? 0.0 : (double) cp[5]);
+			devolucionBean.setCantidadSalida(cp[6] == null ? 0.0 : (double) cp[6] );
+			devolucionBean.setDiferencia(cp[7] == null ? 0.0 : (double) cp[7]);
+			
+			result.add(devolucionBean);
+		}	
+		
+		session.flush();
+		session.close();
+		
+		
+		return result;
+	}
 	
 	
 	@SuppressWarnings("unchecked")
@@ -738,7 +993,7 @@ public class ProductDAO extends HibernateDaoSupport{
 
 	public Producto getCodigo(String codigo, Integer sucursalId) {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(Producto.class);
+		Criteria criteria = DaoUtil.getCriteria(session, Producto.class);
 		
 		criteria.setFetchMode("categoria", FetchMode.JOIN);
 		criteria.setFetchMode("unidadMedida", FetchMode.JOIN);
@@ -759,6 +1014,7 @@ public class ProductDAO extends HibernateDaoSupport{
 		
 		criteria.setFetchMode("categoria", FetchMode.JOIN);
 		criteria.setFetchMode("unidadMedida", FetchMode.JOIN);
+		criteria.setFetchMode("almacen", FetchMode.JOIN);
 		
 		criteria.add(Restrictions.eq("almacen.idAlmacen", almacenId));
 		
@@ -770,7 +1026,67 @@ public class ProductDAO extends HibernateDaoSupport{
 		return new ArrayList<Producto>(result);
 	}
 
+	@SuppressWarnings({ "rawtypes" })
+	public String getMaxProductCode(Integer idCategoria) {
+		StringBuilder sb = new StringBuilder();
 	
-	
-	
+		
+		sb.append("	SELECT MAX(codigo) AS maxCode FROM producto WHERE id_categoria= :categoryId AND fdl=0 ");
+		
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		
+		SQLQuery query = session.createSQLQuery(sb.toString());
+		query.addScalar("maxCode", StringType.INSTANCE);
+		query.setParameter("categoryId", idCategoria);
+		
+		List row = query.list();
+		
+		String result="";
+		
+		result= (String) row.get(0);
+			
+		
+		session.flush();
+		session.close();
+		
+		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Producto> getCodigoProduct(String codigo) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = DaoUtil.getCriteria(session, Producto.class);
+		
+		criteria.setFetchMode("categoria", FetchMode.JOIN);
+		criteria.setFetchMode("unidadMedida", FetchMode.JOIN);
+		criteria.setFetchMode("almacen", FetchMode.JOIN);
+		
+		criteria.add(Restrictions.eq("codigo", codigo));
+		
+		
+		List<Producto> result = criteria.list();
+		session.flush();
+		session.close();
+		
+		return new ArrayList<Producto>(result);
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Producto> getAllProduct() {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = DaoUtil.getCriteria(session, Producto.class);
+		
+		criteria.setFetchMode("categoria", FetchMode.JOIN);
+		criteria.setFetchMode("unidadMedida", FetchMode.JOIN);
+		criteria.setFetchMode("almacen", FetchMode.JOIN);
+		
+		criteria.addOrder(Order.asc("nombre"));
+		List<Producto> result = criteria.list();
+		session.flush();
+		session.close();
+		
+		return new ArrayList<Producto>(result);
+	}
+
+
 }

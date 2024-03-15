@@ -23,6 +23,7 @@ import org.zkoss.zul.Listbox;
 import com.google.gson.Gson;
 import com.seidor.inventario.adapter.InvoiceAdapter;
 import com.seidor.inventario.adapter.PurcharseAdapter;
+import com.seidor.inventario.adapter.TransactionAdapter;
 import com.seidor.inventario.adapter.beans.CuentasBean;
 import com.seidor.inventario.adapter.beans.DetailProductBean;
 import com.seidor.inventario.adapter.beans.ProjectReportBean;
@@ -163,6 +164,19 @@ public class InvoiceController {
 			}
 			
 			ListModelList<Factura> model = new ListModelList<Factura>(invoicesFinal);
+			combo.setItemRenderer(new InvoiceComboitemRenderer());
+			combo.setModel(model);
+		}
+	}
+	
+	public void loadInvoiceOC(Combobox combo, TransactionAdapter ta) {
+		
+		System.out.println("idOrden"+ta.getOrdenCompra().getIdOrdenCompra());
+		ArrayList<Factura> invoices = this.invoiceManager.getAll(ta.getFactura().getOrdenCompra().getIdOrdenCompra());
+		
+		if (invoices != null) {
+					
+			ListModelList<Factura> model = new ListModelList<Factura>(invoices);
 			combo.setItemRenderer(new InvoiceComboitemRenderer());
 			combo.setModel(model);
 		}

@@ -316,7 +316,7 @@ public class EntryController {
 			 
 						 
 			 Label faTotal = (Label) win.getFellowIfAny("faTotal");
-			 faTotal.setValue(NumberFormatUtil.format(fa.getTotal(), 2));
+			 faTotal.setValue(NumberFormatUtil.format(fa.getTotal(), 4));
 			
 			 
 			 Div divDataInvoice = (Div) win.getFellowIfAny("sectionFactura");

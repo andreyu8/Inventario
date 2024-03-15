@@ -1,10 +1,23 @@
 package com.seidor.inventario.controller;
 
+
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +28,8 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Constraint;
+import org.zkoss.zul.Div;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 
@@ -26,9 +41,13 @@ import com.seidor.inventario.adapter.beans.ReportCostoInventarioGBean;
 import com.seidor.inventario.adapter.render.ProductComboitemRenderer;
 import com.seidor.inventario.adapter.render.ProductNameComboitemRenderer;
 import com.seidor.inventario.adapter.search.ProductSearchAdapter;
+import com.seidor.inventario.manager.CategoryManager;
+import com.seidor.inventario.manager.DetailOCManager;
 import com.seidor.inventario.manager.ProductManager;
+import com.seidor.inventario.manager.WarehouseManager;
 import com.seidor.inventario.model.Almacen;
 import com.seidor.inventario.model.Categoria;
+import com.seidor.inventario.model.DetalleOrdenCompra;
 import com.seidor.inventario.model.Producto;
 import com.seidor.inventario.model.UnidadMedida;
 import com.seidor.inventario.navigation.NavigationControl;
@@ -36,12 +55,20 @@ import com.seidor.inventario.navigation.NavigationState;
 import com.seidor.inventario.navigation.NavigationStates;
 import com.seidor.inventario.util.ReportUtil;
 import com.seidor.inventario.util.SessionUtil;
+import com.seidor.inventario.util.StringUtil;
 
 public class ProductController {
 	
 	@Autowired
 	private ProductManager productManager;
+	@Autowired
 	private NavigationControl navigationControl;
+	@Autowired
+	private CategoryManager categoryManager;
+	@Autowired
+	private WarehouseManager warehouseManager;
+	@Autowired
+	private DetailOCManager detailOCManager;
 	
 	
 	public ProductManager getProductManager() {
@@ -60,8 +87,30 @@ public class ProductController {
 		this.navigationControl = navigationControl;
 	}
 	
+	public CategoryManager getCategoryManager() {
+		return categoryManager;
+	}
+
+	public void setCategoryManager(CategoryManager categoryManager) {
+		this.categoryManager = categoryManager;
+	}
 	
+	public WarehouseManager getWarehouseManager() {
+		return warehouseManager;
+	}
+
+	public void setWarehouseManager(WarehouseManager warehouseManager) {
+		this.warehouseManager = warehouseManager;
+	}
 	
+	public DetailOCManager getDetailOCManager() {
+		return detailOCManager;
+	}
+
+	public void setDetailOCManager(DetailOCManager detailOCManager) {
+		this.detailOCManager = detailOCManager;
+	}
+
 	// logic search
 	public void search(Listbox lb, ProductSearchAdapter psa, NavigationState state){
 	
@@ -178,8 +227,20 @@ public class ProductController {
 		
 		pa.getProducto().setAlmacen(a);
 		pa.getProducto().setCantidad(0.0);
+		pa.getProducto().setStock(0.0);
+		if (pa.getProducto().getPrecioCompra() == null)
+			pa.getProducto().setPrecioCompra(new BigDecimal(0.0));
+		pa.getProducto().setPrecioVenta(new BigDecimal(0.0));
+		pa.getProducto().setFecha(new Date());
 		
-		this.productManager.save(pa.getProducto());
+		pa.getProducto().setCodigo(getProductCode (pa.getProducto().getCategoria().getCodigo(), pa.getProducto().getCategoria().getIdCategoria()));
+		
+		ArrayList<Almacen> almacenes =  this.warehouseManager.getAll();
+		
+		for (Almacen als:almacenes) {
+			pa.getProducto().setAlmacen(als);
+			this.productManager.save(pa.getProducto());
+		}
 		
 		state.setDetailIdentifier(pa.getProducto().getIdProducto());
 		state.setUri("/WEB-INF/zul/product/main.zul");
@@ -188,6 +249,27 @@ public class ProductController {
 		this.navigationControl.changeView(win, state);
 	}
 	
+	private String getProductCode(String codigo, Integer idCategoria) {
+		
+		String maxCode= productManager.getMaxProductCode (idCategoria);
+		String codeCurrent="";
+		
+		if (maxCode != null) {
+			int numero= Integer.parseInt((String) maxCode.substring(4,8));
+			System.out.println("max prod "+numero);
+			int consecutive= numero+1;
+						
+			codeCurrent= StringUtil.fillWithZeros (""+consecutive, 4);
+			System.out.println("codecurrent "+codeCurrent);
+			
+		} else {
+			codeCurrent="0001"; 
+		}
+		
+		
+		return codigo+""+codeCurrent;
+	}
+
 	public void update(ProductAdapter pa, NavigationState state, Component win){
 		
 		Combobox cbCategory = (Combobox) win.getFellowIfAny("catcb");
@@ -205,7 +287,21 @@ public class ProductController {
 		
 		
 		this.productManager.update(pa.getProducto());
+		
+		ArrayList<Almacen> almacenes = warehouseManager.getAlmacenes(pa.getProducto().getAlmacen().getIdAlmacen());
+		
+		for (Almacen als:almacenes) {
 			
+			Producto p= productManager.getCodigo(pa.getProducto().getCodigo(),  als.getIdAlmacen());
+			p.setUnidadMedida(pa.getProducto().getUnidadMedida());
+			p.setNombre(pa.getProducto().getNombre());
+			p.setCategoria(pa.getProducto().getCategoria());
+			p.setMaximo(pa.getProducto().getMaximo());
+			p.setMinimo(pa.getProducto().getMinimo());
+			p.setPrecioCompra(pa.getProducto().getPrecioCompra());
+			
+			this.productManager.update(p);
+		}
 			
 		NavigationStates navStates = (NavigationStates)SpringUtil.getBean("navigationStates");
 		NavigationState prev = navStates.getPreviousOriginal();
@@ -218,8 +314,26 @@ public class ProductController {
 		
 	}
 	
-	public void delete(ProductAdapter pa, NavigationState state, Component win){		
-		this.productManager.delete(pa.getProducto());
+	public void delete(ProductAdapter pa, NavigationState state, Component win){	
+		
+		
+		ArrayList<Producto> lpc= productManager.getCodigoProduct(pa.getProducto().getCodigo());
+		Integer[] idsProduct = convertInteger (lpc);
+		
+		ArrayList<DetalleOrdenCompra> dp=  detailOCManager.getProductCode(idsProduct);
+		
+		if (dp.size() == 0) {	
+			this.productManager.delete(pa.getProducto());
+			
+			ArrayList<Almacen> almacenes = warehouseManager.getAlmacenes(pa.getProducto().getAlmacen().getIdAlmacen());
+			
+			for (Almacen als:almacenes) {
+				Producto p= productManager.getCodigo(pa.getProducto().getCodigo(),  als.getIdAlmacen());
+				this.productManager.delete(p);
+			}
+			
+			this.productManager.delete(pa.getProducto());
+		}	
 		
 		state.setUri("/WEB-INF/zul/product/main.zul");
 		state.setDetailIdentifier(null);
@@ -230,6 +344,20 @@ public class ProductController {
 	
 	
 	
+
+	
+	private Integer[] convertInteger(ArrayList<Producto> lpc) {
+
+		Integer[] ids = new Integer[lpc.size()];
+		int i=0;
+		
+		for (Producto p : lpc) {
+			ids[i]= p.getIdProducto();
+			i++;
+		}
+		
+		return ids;
+	}
 
 	public void inProduct(Listbox lb, NavigationState state, Component win){
 		if (lb.getSelectedIndex() >= 0) {
@@ -410,5 +538,129 @@ public class ProductController {
 	}
 
 	
+	public void viewProductCode (ProductAdapter pa,  Component win) {
+		
+		Combobox catcb = (Combobox) win.getFellowIfAny("catcb");
+		if (catcb != null &&catcb.getSelectedItem()!=null ) {
+			pa.getProducto().setCategoria((Categoria) catcb.getSelectedItem().getValue());
+					
+			 Label codePro = (Label) win.getFellowIfAny("codePro");
+			 codePro.setValue(pa.getProducto().getCategoria().getCodigo());
+			
+			 Div sectionOrden = (Div) win.getFellowIfAny("sectionCode");
+			 sectionOrden.setVisible(true);
+		}
+		
+	}
 	
+	
+	public void exportProductExcel(Listbox lisbox) throws IOException{
+		
+		//ExporterUtil.excel(lisbox);
+		
+		ArrayList<Producto> products = this.productManager.getAllProduct();
+		
+		ArrayList<String> asb = new ArrayList<>();
+		StringBuilder sb= null;
+		
+		
+		for (Producto p : products) {
+			
+			sb = new StringBuilder();
+			
+			sb.append(p.getCodigo());
+			sb.append("|");
+			sb.append(p.getNombre());
+			sb.append("|");
+			sb.append(p.getAlmacen().getAlmacen());
+			sb.append("|");
+			sb.append(p.getCategoria().getCategoria());
+			sb.append("|");
+			sb.append(p.getUnidadMedida().getDescripcion());
+			sb.append("|");
+			sb.append(p.getCantidad());
+			sb.append("|");
+			sb.append(p.getPrecioCompra());
+			
+			asb.add(sb.toString());
+		}
+		
+		//exportFileExcel (asb);
+		//prueba();
+	}
+	
+	/*private void exportFileExcel (ArrayList<String> cadenas) throws IOException {
+		
+		// creating workbook
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		
+		
+		// creating sheet with name "Report" in workbook
+		HSSFSheet sheet = workbook.createSheet("Reporte");
+
+		
+		// Creamos un formato para las celdas
+        HSSFCellStyle style = workbook.createCellStyle();        
+
+        // Especificamente que *siempre* muestre dos digitos enteros y dos decimales
+        style.setDataFormat(workbook.createDataFormat().getFormat("00.00"));
+		
+		// headers
+		createHeader(sheet, workbook);
+		
+		int rowCount = 0;
+		for (String value : cadenas) {
+			
+			// creating row 
+			Row row = sheet.createRow(++rowCount);
+			
+			StringTokenizer multiTokenizer = new StringTokenizer(value, "|");
+			
+				int rowCell = 0;
+				
+			while (multiTokenizer.hasMoreTokens()) {
+				
+				// adding first cell to the row
+				Cell idCell = row.createCell(rowCell);
+			
+				if (rowCell == 0 || rowCell == 1 || rowCell == 2 || rowCell == 3 || rowCell == 4) 
+					idCell.setCellValue(multiTokenizer.nextToken());
+				else 
+					idCell.setCellValue(Double.parseDouble(multiTokenizer.nextToken()));
+					
+				
+				if (rowCell > 4 && rowCell != 5) {
+					idCell.setCellStyle(style);
+				}
+			
+				rowCell ++;
+			}
+				
+		}
+		
+		//crear reporte
+	 *  ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+	    workbook.write(outByteStream);
+	    byte[] outArray = outByteStream.toByteArray();
+	    
+	    AMedia amedia = new AMedia("ReporteProductos.xlsx", "xls", "application/file", outArray);
+		Filedownload.save(amedia);
+	    
+		outByteStream.close();
+		
+	}
+	
+	private void createHeader(HSSFSheet sheet, HSSFWorkbook workbook) {
+		Row encabezado  = sheet.createRow(0);
+		encabezado.createCell(1).setCellValue("Codigo");
+		encabezado.createCell(2).setCellValue("Nombre");
+		encabezado.createCell(3).setCellValue("Almacen");
+		encabezado.createCell(4).setCellValue("Categoria");
+		encabezado.createCell(5).setCellValue("Unidad de medida");
+		encabezado.createCell(6).setCellValue("Cantidad");
+		encabezado.createCell(7).setCellValue("Precio unitario");
+		
+	}*/
+	
+		
 }

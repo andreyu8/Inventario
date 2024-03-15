@@ -33,6 +33,7 @@
 	<bean id="cmv" class="com.seidor.inventario.validation.ComboboxMandatoryValidator" />
 	<bean id="cov" class="com.seidor.inventario.validation.ComboboxValidator" />
 	<bean id="umv" class="com.seidor.inventario.validation.UserMandatoryValidator" />
+	<bean id="rfcv" class="com.seidor.inventario.validation.RFCMandatoryValidator" />
 	<!--========================================== /Validators Area =========================================-->
 	
 </beans>

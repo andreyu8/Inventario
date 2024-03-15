@@ -28,6 +28,10 @@ public class InvoiceManager {
 		return this.invoiceDao.getAll();
 	}
 	
+	public ArrayList<Factura> getAll(Integer idOC){
+		return this.invoiceDao.getAll(idOC);
+	}
+	
 	public void save (Factura f) {
 		this.invoiceDao.save(f);
 	}
@@ -52,4 +56,9 @@ public class InvoiceManager {
 		return this.invoiceDao.getNoFactura(numeroFactura);
 	}
 
+	public ArrayList<Factura> getByParentId(Integer idOrdenCompra, Integer id_almacen) {
+		return this.invoiceDao.getByParentId(idOrdenCompra, id_almacen);
+	}
+
+	
 }

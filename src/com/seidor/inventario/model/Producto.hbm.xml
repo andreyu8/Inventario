@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final -->
+<!-- Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
     <class name="com.seidor.inventario.model.Producto" table="producto" catalog="bd_inventario" optimistic-lock="version">
         <id name="idProducto" type="java.lang.Integer">
@@ -27,10 +27,10 @@
             <column name="cantidad" precision="22" scale="0" />
         </property>
         <property name="precioCompra" type="big_decimal">
-            <column name="precio_compra" precision="25" />
+            <column name="precio_compra" precision="16" scale="4" />
         </property>
         <property name="precioVenta" type="big_decimal">
-            <column name="precio_venta" precision="25" />
+            <column name="precio_venta" precision="16" scale="4" />
         </property>
         <property name="urlImagen" type="string">
             <column name="url_imagen" length="150" />

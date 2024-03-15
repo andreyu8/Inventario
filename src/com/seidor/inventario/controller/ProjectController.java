@@ -20,6 +20,7 @@ import com.seidor.inventario.model.Proyecto;
 import com.seidor.inventario.navigation.NavigationControl;
 import com.seidor.inventario.navigation.NavigationState;
 import com.seidor.inventario.navigation.NavigationStates;
+import com.seidor.inventario.util.SessionUtil;
 
 public class ProjectController {
 
@@ -127,7 +128,6 @@ public class ProjectController {
 		else 
 			throw new WrongValueException(empcb, "Debe de seleccionar un empleado");
 		
-		
 		this.projectManager.save(pa.getProyecto());
 		
 		state.setDetailIdentifier(pa.getProyecto().getIdProyecto());
@@ -145,8 +145,9 @@ public class ProjectController {
 		else 
 			throw new WrongValueException(escb, "Debe de seleccionar una estatus");
 		
+		
 		Combobox empcb = (Combobox) win.getFellowIfAny("cbemp");
-		if (empcb != null && escb.getSelectedItem()!=null )
+		if (empcb != null && empcb.getSelectedItem()!=null )
 			pa.getProyecto().setEmpleado((Empleado) empcb.getSelectedItem().getValue());
 		else 
 			throw new WrongValueException(empcb, "Debe de seleccionar un empleado");
@@ -187,6 +188,13 @@ public class ProjectController {
 	
 	public void loadOpenProjects(Combobox combo) {
 		ArrayList<Proyecto> projects = this.projectManager.getAllOpen();
+		
+		/*ArrayList<Proyecto> projectsAlmacen = new ArrayList<Proyecto>();
+		for (Proyecto p : projects) {
+			if (p.getEmpleado().getAlmacen().getIdAlmacen() == SessionUtil.getSucursalId())
+				projectsAlmacen.add(p);
+		}*/
+		
 		if (projects != null) {
 			ListModelList<Proyecto> model = new ListModelList<Proyecto>(projects);
 			combo.setItemRenderer(new ProjectComboitemRenderer());

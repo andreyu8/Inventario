@@ -33,7 +33,7 @@
 	<div class="row sectionBox animated aniFadeIn">
 		<div class="col-md-6" align="left" >
 			<h:span style="padding-top: 5px; display: block;" />
-			<label value="Detalle del la factura" sclass="sectionTitle" />
+			<label value="Detalle de la entrada" sclass="sectionTitle" />
 			<label value="(${transactionDetail.factura.numeroFactura})" style="font-size: 12px;" />
 		</div>
 		<div class="col-md-6" align="right" >

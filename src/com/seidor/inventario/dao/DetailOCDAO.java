@@ -1,7 +1,6 @@
 package com.seidor.inventario.dao;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -16,7 +15,6 @@ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import com.seidor.inventario.adapter.search.ProductSearchAdapter;
 import com.seidor.inventario.model.DetalleOrdenCompra;
 import com.seidor.inventario.util.DaoUtil;
-import com.seidor.inventario.util.SessionUtil;
 
 public class DetailOCDAO extends HibernateDaoSupport {
 	
@@ -26,6 +24,7 @@ public class DetailOCDAO extends HibernateDaoSupport {
 		
 		criteria.setFetchMode("almacen", FetchMode.JOIN);
 		criteria.setFetchMode("ordenCompra", FetchMode.JOIN);
+		criteria.setFetchMode("tipoMoneda", FetchMode.JOIN);
 		criteria.setFetchMode("producto", FetchMode.JOIN);
 		
 		criteria.add(Restrictions.eq("idDetalleOc", id));
@@ -42,6 +41,7 @@ public class DetailOCDAO extends HibernateDaoSupport {
 		
 		criteria.setFetchMode("almacen", FetchMode.JOIN);
 		criteria.setFetchMode("ordenCompra", FetchMode.JOIN);
+		criteria.setFetchMode("tipoMoneda", FetchMode.JOIN);
 		criteria.setFetchMode("producto", FetchMode.JOIN);
 		
 		criteria.addOrder(Order.asc("idDetalleOc"));
@@ -89,6 +89,7 @@ public class DetailOCDAO extends HibernateDaoSupport {
 		
 		criteria.setFetchMode("categoria", FetchMode.JOIN);
 		criteria.setFetchMode("unidadMedida", FetchMode.JOIN);
+		criteria.setFetchMode("tipoMoneda", FetchMode.JOIN);
 		criteria.setFetchMode("almacen", FetchMode.JOIN);
 		
 		if (psa.getNombre() != null && psa.getNombre().trim().length() > 0){
@@ -117,6 +118,7 @@ public class DetailOCDAO extends HibernateDaoSupport {
 		
 		criteria.setFetchMode("almacen", FetchMode.JOIN);
 		criteria.setFetchMode("ordenCompra", FetchMode.JOIN);
+		criteria.setFetchMode("tipoMoneda", FetchMode.JOIN);
 		criteria.setFetchMode("producto", FetchMode.JOIN);
 		criteria.setFetchMode("producto.unidadMedida", FetchMode.JOIN);
 		
@@ -135,10 +137,30 @@ public class DetailOCDAO extends HibernateDaoSupport {
 		
 		criteria.setFetchMode("almacen", FetchMode.JOIN);
 		criteria.setFetchMode("ordenCompra", FetchMode.JOIN);
+		criteria.setFetchMode("tipoMoneda", FetchMode.JOIN);
 		criteria.setFetchMode("producto", FetchMode.JOIN);
 		criteria.setFetchMode("producto.unidadMedida", FetchMode.JOIN);
 		
 		criteria.add(Restrictions.eq("ordenCompra.idOrdenCompra", idOrdenCompra));
+		List<DetalleOrdenCompra> result = criteria.list();
+		session.flush();
+		session.close();
+		
+		return new ArrayList<DetalleOrdenCompra>(result);
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<DetalleOrdenCompra> getProductCode(Integer[] idsProduct) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = DaoUtil.getCriteria(session, DetalleOrdenCompra.class);
+		
+		criteria.setFetchMode("almacen", FetchMode.JOIN);
+		criteria.setFetchMode("ordenCompra", FetchMode.JOIN);
+		criteria.setFetchMode("tipoMoneda", FetchMode.JOIN);
+		criteria.setFetchMode("producto", FetchMode.JOIN);
+		criteria.setFetchMode("producto.unidadMedida", FetchMode.JOIN);
+		
+		criteria.add(Restrictions.in("producto.idProducto", idsProduct));
 		List<DetalleOrdenCompra> result = criteria.list();
 		session.flush();
 		session.close();

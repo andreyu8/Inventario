@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final -->
+<!-- Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
     <class name="com.seidor.inventario.model.Proveedor" table="proveedor" catalog="bd_inventario" optimistic-lock="version">
         <id name="idProveedor" type="java.lang.Integer">
             <column name="id_proveedor" />
             <generator class="identity" />
         </id>
+        <many-to-one name="tipoMoneda" class="com.seidor.inventario.model.TipoMoneda" fetch="select">
+            <column name="id_moneda" />
+        </many-to-one>
         <many-to-one name="tipoPago" class="com.seidor.inventario.model.TipoPago" fetch="select">
             <column name="id_tipo_pago" />
         </many-to-one>
@@ -37,6 +40,9 @@
         </property>
         <property name="diasCredito" type="java.lang.Integer">
             <column name="dias_credito" />
+        </property>
+        <property name="vendedor" type="string">
+            <column name="vendedor" length="200" />
         </property>
         <property name="fdl" type="boolean">
             <column name="fdl" not-null="true">

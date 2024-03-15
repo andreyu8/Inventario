@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final -->
+<!-- Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
     <class name="com.seidor.inventario.model.Entrada" table="entrada" catalog="bd_inventario" optimistic-lock="version">
         <id name="idEntrada" type="java.lang.Integer">
@@ -16,6 +16,9 @@
         </many-to-one>
         <many-to-one name="factura" class="com.seidor.inventario.model.Factura" fetch="select">
             <column name="id_factura" />
+        </many-to-one>
+        <many-to-one name="movimientos" class="com.seidor.inventario.model.Movimientos" fetch="select">
+            <column name="id_movimiento" />
         </many-to-one>
         <many-to-one name="ordenCompra" class="com.seidor.inventario.model.OrdenCompra" fetch="select">
             <column name="id_orden_compra" />
@@ -39,7 +42,7 @@
             <column name="cantidad" precision="22" scale="0" />
         </property>
         <property name="precioUnitario" type="big_decimal">
-            <column name="precio_unitario" precision="16" />
+            <column name="precio_unitario" precision="16" scale="4" />
         </property>
         <property name="estatus" type="java.lang.Integer">
             <column name="estatus">

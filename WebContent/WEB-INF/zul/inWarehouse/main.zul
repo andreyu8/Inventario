@@ -71,6 +71,17 @@
 					<label value="Número de folio" sclass="editField" />
 					<h:p> <textbox value="@bind(transactionSearch.numeroFolio)" /> </h:p>
 				</div>
+				
+				<div sclass="col-md-4" >
+					<label value="Número de la Orden de compra" sclass="editField" />
+					<h:p> <textbox value="@bind(transactionSearch.numeroOC)" /> </h:p>
+				</div>
+				
+				<div sclass="col-md-4" >
+					<label value="Número de Factura" sclass="editField" />
+					<h:p> <textbox value="@bind(transactionSearch.numeroFactura)" /> </h:p>
+				</div>
+				
 			</div>
 			
 			<div class="row">
@@ -80,7 +91,7 @@
 	</div>
 	
 	<div class="animated aniFadeIn" >	
-		<listbox id="entrylb" emptyMessage="No se encontrarón categorías para mostrar" >
+		<listbox id="entrylb" emptyMessage="No se encontrarón entradas para mostrar" >
 			<listhead>
 				<listheader label="Ver" width="50px" />
 				<!-- <listheader label="Id movimiento" hflex="3" sort="auto(lower(idFactura))" /> -->

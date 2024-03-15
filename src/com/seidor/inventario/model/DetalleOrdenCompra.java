@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
+// Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -15,9 +15,11 @@ public class DetalleOrdenCompra implements java.io.Serializable {
 	private Almacen almacen;
 	private OrdenCompra ordenCompra;
 	private Producto producto;
+	private TipoMoneda tipoMoneda;
 	private Date fecha;
 	private double cantidad;
 	private BigDecimal precioUnitario;
+	private BigDecimal precioUnitarioMxn;
 	private double cantidadFactura;
 	private int estatus;
 	private boolean fdl;
@@ -46,15 +48,18 @@ public class DetalleOrdenCompra implements java.io.Serializable {
 		this.uat = uat;
 	}
 
-	public DetalleOrdenCompra(Almacen almacen, OrdenCompra ordenCompra, Producto producto, Date fecha, double cantidad,
-			BigDecimal precioUnitario, double cantidadFactura, int estatus, boolean fdl, int cbu, Date cat, int luu,
-			Date uat, Set detalleMovimientos) {
+	public DetalleOrdenCompra(Almacen almacen, OrdenCompra ordenCompra, Producto producto, TipoMoneda tipoMoneda,
+			Date fecha, double cantidad, BigDecimal precioUnitario, BigDecimal precioUnitarioMxn,
+			double cantidadFactura, int estatus, boolean fdl, int cbu, Date cat, int luu, Date uat,
+			Set detalleMovimientos) {
 		this.almacen = almacen;
 		this.ordenCompra = ordenCompra;
 		this.producto = producto;
+		this.tipoMoneda = tipoMoneda;
 		this.fecha = fecha;
 		this.cantidad = cantidad;
 		this.precioUnitario = precioUnitario;
+		this.precioUnitarioMxn = precioUnitarioMxn;
 		this.cantidadFactura = cantidadFactura;
 		this.estatus = estatus;
 		this.fdl = fdl;
@@ -97,6 +102,14 @@ public class DetalleOrdenCompra implements java.io.Serializable {
 		this.producto = producto;
 	}
 
+	public TipoMoneda getTipoMoneda() {
+		return this.tipoMoneda;
+	}
+
+	public void setTipoMoneda(TipoMoneda tipoMoneda) {
+		this.tipoMoneda = tipoMoneda;
+	}
+
 	public Date getFecha() {
 		return this.fecha;
 	}
@@ -119,6 +132,14 @@ public class DetalleOrdenCompra implements java.io.Serializable {
 
 	public void setPrecioUnitario(BigDecimal precioUnitario) {
 		this.precioUnitario = precioUnitario;
+	}
+
+	public BigDecimal getPrecioUnitarioMxn() {
+		return this.precioUnitarioMxn;
+	}
+
+	public void setPrecioUnitarioMxn(BigDecimal precioUnitarioMxn) {
+		this.precioUnitarioMxn = precioUnitarioMxn;
 	}
 
 	public double getCantidadFactura() {

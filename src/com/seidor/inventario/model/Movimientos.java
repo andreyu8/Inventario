@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
+// Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -12,38 +12,53 @@ public class Movimientos implements java.io.Serializable {
 
 	private Integer idMovimiento;
 	private Almacen almacen;
+	private Area area;
+	private Empleado empleado;
 	private Factura factura;
 	private OrdenCompra ordenCompra;
+	private Proyecto proyecto;
 	private TiposMovimiento tiposMovimiento;
 	private String folio;
 	private Date fecha;
 	private Integer estatus;
+	private String ordenTrabajo;
+	private String cveMueble;
 	private Boolean fdl;
 	private Integer cbu;
 	private Date cat;
 	private Integer luu;
 	private Date uat;
 	private Set detalleMovimientos = new HashSet(0);
+	private Set entradas = new HashSet(0);
+	private Set salidas = new HashSet(0);
 
 	public Movimientos() {
 	}
 
-	public Movimientos(Almacen almacen, Factura factura, OrdenCompra ordenCompra, TiposMovimiento tiposMovimiento,
-			String folio, Date fecha, Integer estatus, Boolean fdl, Integer cbu, Date cat, Integer luu, Date uat,
-			Set detalleMovimientos) {
+	public Movimientos(Almacen almacen, Area area, Empleado empleado, Factura factura, OrdenCompra ordenCompra,
+			Proyecto proyecto, TiposMovimiento tiposMovimiento, String folio, Date fecha, Integer estatus,
+			String ordenTrabajo, String cveMueble, Boolean fdl, Integer cbu, Date cat, Integer luu, Date uat,
+			Set detalleMovimientos, Set entradas, Set salidas) {
 		this.almacen = almacen;
+		this.area = area;
+		this.empleado = empleado;
 		this.factura = factura;
 		this.ordenCompra = ordenCompra;
+		this.proyecto = proyecto;
 		this.tiposMovimiento = tiposMovimiento;
 		this.folio = folio;
 		this.fecha = fecha;
 		this.estatus = estatus;
+		this.ordenTrabajo = ordenTrabajo;
+		this.cveMueble = cveMueble;
 		this.fdl = fdl;
 		this.cbu = cbu;
 		this.cat = cat;
 		this.luu = luu;
 		this.uat = uat;
 		this.detalleMovimientos = detalleMovimientos;
+		this.entradas = entradas;
+		this.salidas = salidas;
 	}
 
 	public Integer getIdMovimiento() {
@@ -62,6 +77,22 @@ public class Movimientos implements java.io.Serializable {
 		this.almacen = almacen;
 	}
 
+	public Area getArea() {
+		return this.area;
+	}
+
+	public void setArea(Area area) {
+		this.area = area;
+	}
+
+	public Empleado getEmpleado() {
+		return this.empleado;
+	}
+
+	public void setEmpleado(Empleado empleado) {
+		this.empleado = empleado;
+	}
+
 	public Factura getFactura() {
 		return this.factura;
 	}
@@ -76,6 +107,14 @@ public class Movimientos implements java.io.Serializable {
 
 	public void setOrdenCompra(OrdenCompra ordenCompra) {
 		this.ordenCompra = ordenCompra;
+	}
+
+	public Proyecto getProyecto() {
+		return this.proyecto;
+	}
+
+	public void setProyecto(Proyecto proyecto) {
+		this.proyecto = proyecto;
 	}
 
 	public TiposMovimiento getTiposMovimiento() {
@@ -108,6 +147,22 @@ public class Movimientos implements java.io.Serializable {
 
 	public void setEstatus(Integer estatus) {
 		this.estatus = estatus;
+	}
+
+	public String getOrdenTrabajo() {
+		return this.ordenTrabajo;
+	}
+
+	public void setOrdenTrabajo(String ordenTrabajo) {
+		this.ordenTrabajo = ordenTrabajo;
+	}
+
+	public String getCveMueble() {
+		return this.cveMueble;
+	}
+
+	public void setCveMueble(String cveMueble) {
+		this.cveMueble = cveMueble;
 	}
 
 	public Boolean getFdl() {
@@ -156,6 +211,22 @@ public class Movimientos implements java.io.Serializable {
 
 	public void setDetalleMovimientos(Set detalleMovimientos) {
 		this.detalleMovimientos = detalleMovimientos;
+	}
+
+	public Set getEntradas() {
+		return this.entradas;
+	}
+
+	public void setEntradas(Set entradas) {
+		this.entradas = entradas;
+	}
+
+	public Set getSalidas() {
+		return this.salidas;
+	}
+
+	public void setSalidas(Set salidas) {
+		this.salidas = salidas;
 	}
 
 }

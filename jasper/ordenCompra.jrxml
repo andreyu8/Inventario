@@ -103,6 +103,12 @@
 	<parameter name="total" class="java.lang.String"/>
 	<parameter name="diasCredito" class="java.lang.String"/>
 	<parameter name="responsable" class="java.lang.String"/>
+	<parameter name="tiempoEntrega" class="java.lang.String"/>
+	<parameter name="vendedor" class="java.lang.String"/>
+	<parameter name="responsableOC" class="java.lang.String"/>
+	<parameter name="tipoMoneda" class="java.lang.String"/>
+	<parameter name="isr" class="java.lang.String"/>
+	<parameter name="isISR" class="java.lang.Boolean"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -179,7 +185,7 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{nombre_proveedor}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["NOMBRE: "+$P{nombre_proveedor}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="10" y="98" width="270" height="15" uuid="4c46c094-c428-4820-b56b-ab642c0cb325">
@@ -197,7 +203,7 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{email_proveedor}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["EMAIL: "+$P{email_proveedor}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="10" y="129" width="270" height="15" uuid="14b096ac-7061-4895-8852-cdd21ee9edd0">
@@ -206,7 +212,7 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{direccion_proveedor}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["DIRECCIÓN: "+$P{direccion_proveedor}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="10" y="149" width="270" height="15" uuid="fa98e10f-f365-4430-8f95-32a455611f63">
@@ -215,7 +221,7 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{rfc_proveedor}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["RFC: "+$P{rfc_proveedor}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="10" y="165" width="270" height="15" uuid="e2ae1daf-6405-481b-a084-c10a80ed0829">
@@ -224,7 +230,7 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{telefono_proveedor}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["TEL: "+$P{telefono_proveedor}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="284" y="84" width="270" height="15" uuid="c5b9386b-6c92-4717-8309-ddd8007f20f3">
@@ -536,9 +542,9 @@
 				</jr:table>
 			</componentElement>
 		</band>
-		<band height="144">
+		<band height="167">
 			<componentElement>
-				<reportElement x="7" y="40" width="374" height="60" uuid="9b299e4d-0adf-4fff-a27a-22151827c8b6">
+				<reportElement x="7" y="30" width="374" height="60" uuid="9b299e4d-0adf-4fff-a27a-22151827c8b6">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table 1_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table 1_CH"/>
@@ -636,7 +642,7 @@
 				<textFieldExpression><![CDATA["IVA: "+$P{iva}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="400" y="32" width="140" height="15" uuid="9bc90da2-59cf-4292-a844-95ab1cc25c06">
+				<reportElement x="400" y="48" width="140" height="15" uuid="9bc90da2-59cf-4292-a844-95ab1cc25c06">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -644,8 +650,8 @@
 				</textElement>
 				<textFieldExpression><![CDATA["TOTAL: "+$P{total}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="7" y="104" width="531" height="15" uuid="7592ef83-1419-41d2-88c1-9044c80b349c">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="7" y="111" width="531" height="15" uuid="7592ef83-1419-41d2-88c1-9044c80b349c">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
@@ -653,14 +659,50 @@
 				</textElement>
 				<textFieldExpression><![CDATA["LUGAR DE ENTREGA: "+$P{lugarEntrega}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="7" y="119" width="531" height="15" uuid="6adefb64-6278-44ae-822e-5e1167616549">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="7" y="142" width="531" height="15" uuid="6adefb64-6278-44ae-822e-5e1167616549">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA["OBSERVACIONES: "+$P{observaciones}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="7" y="126" width="531" height="15" uuid="813a4c13-2d14-4e53-88d5-bcc73c918e93">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TIEMPO DE ENTREGA: "+$P{tiempoEntrega}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="8" y="94" width="531" height="15" uuid="2be7aa8f-c412-4b99-a453-38c1c1d1c60f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["VENDEDOR: "+$P{vendedor}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="239" y="2" width="142" height="15" uuid="05f293ad-103e-478a-8328-e1a777d1575a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TIPO DE MONEDA: "+$P{tipoMoneda}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="31" width="140" height="15" uuid="5ad57e9d-18d5-4189-a717-37db515be188">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{isISR}.equals(Boolean.TRUE) ?  "ISR: "+ $P{isr} : ""]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -682,15 +724,6 @@
 			<line>
 				<reportElement x="9" y="70" width="151" height="1" uuid="a89a0288-a619-475f-b2bc-8a3b1d733417"/>
 			</line>
-			<staticText>
-				<reportElement x="8" y="75" width="151" height="15" uuid="62c98ffe-49ec-49a0-bd3b-e401d10952ec">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Center">
-					<font size="8" isBold="false"/>
-				</textElement>
-				<text><![CDATA[NIDIA ROSALES]]></text>
-			</staticText>
 			<staticText>
 				<reportElement x="8" y="91" width="151" height="15" uuid="a17328c0-6890-49ff-9f4b-a062b7e8394a">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -759,6 +792,15 @@
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{area}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="6" y="75" width="154" height="15" uuid="415529f1-2560-4e43-a4e3-093dfad53045">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{responsableOC}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

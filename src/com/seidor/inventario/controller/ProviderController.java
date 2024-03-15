@@ -19,8 +19,10 @@ import com.seidor.inventario.constants.SystemConstants;
 import com.seidor.inventario.inroweditablecomps.IREditableTextbox;
 import com.seidor.inventario.manager.DatosBancariosManager;
 import com.seidor.inventario.manager.ProviderManager;
+import com.seidor.inventario.manager.PurchaseOrderManager;
 import com.seidor.inventario.model.DatosBancarios;
 import com.seidor.inventario.model.Proveedor;
+import com.seidor.inventario.model.TipoMoneda;
 import com.seidor.inventario.model.TipoPago;
 import com.seidor.inventario.navigation.NavigationControl;
 import com.seidor.inventario.navigation.NavigationState;
@@ -32,6 +34,7 @@ public class ProviderController {
 	
 	private ProviderManager providerManager;
 	private DatosBancariosManager datosBancariosManager;
+	private PurchaseOrderManager purchaseOrderManager;
 	private NavigationControl navigationControl;
 
 	public ProviderManager getProviderManager() {
@@ -58,8 +61,15 @@ public class ProviderController {
 	public void setDatosBancariosManager(DatosBancariosManager datosBancariosManager) {
 		this.datosBancariosManager = datosBancariosManager;
 	}
-
 	
+	public PurchaseOrderManager getPurchaseOrderManager() {
+		return purchaseOrderManager;
+	}
+
+	public void setPurchaseOrderManager(PurchaseOrderManager purchaseOrderManager) {
+		this.purchaseOrderManager = purchaseOrderManager;
+	}
+
 	//read the provider
 	public void loadProvider(Combobox combo) {
 		ArrayList<Proveedor> provider = this.providerManager.getAll();
@@ -92,6 +102,7 @@ public class ProviderController {
 		ProviderAdapter p = new ProviderAdapter();	
 		p.setProveedor(new Proveedor());
 		p.getProveedor().setTipoPago(new TipoPago());
+		p.getProveedor().setTipoMoneda(new TipoMoneda());
 		return p;
 	}
 	
@@ -104,6 +115,12 @@ public class ProviderController {
 			pa.getProveedor().setTipoPago((TipoPago) cli.getSelectedItem().getValue());
 		else 
 			throw new WrongValueException(cli, "Debe de seleccionar un tipo de pago");
+		
+		Combobox tmcb = (Combobox) win.getFellowIfAny("tmcb");
+		if (tmcb != null && tmcb.getSelectedItem()!=null )
+			pa.getProveedor().setTipoMoneda((TipoMoneda) tmcb.getSelectedItem().getValue());
+		else 
+			throw new WrongValueException(tmcb, "Debe de seleccionar un tipo de moneda");
 		
 		if (pa.getProveedor().getDiasCredito() == null)
 			pa.getProveedor().setDiasCredito(0);
@@ -145,6 +162,12 @@ public class ProviderController {
 			pa.getProveedor().setTipoPago((TipoPago) cli.getSelectedItem().getValue());
 		else 
 			throw new WrongValueException(cli, "Debe de seleccionar un tipo de pago");
+		
+		Combobox tmcb = (Combobox) win.getFellowIfAny("tmcb");
+		if (tmcb != null && tmcb.getSelectedItem()!=null )
+			pa.getProveedor().setTipoMoneda((TipoMoneda) tmcb.getSelectedItem().getValue());
+		else 
+			throw new WrongValueException(tmcb, "Debe de seleccionar un tipo de moneda");
 		
 		if (pa.getProveedor().getDiasCredito() == null)
 			pa.getProveedor().setDiasCredito(0);
@@ -224,6 +247,8 @@ public class ProviderController {
 		ProviderAdapter pa = new ProviderAdapter();
 		
 		Proveedor p = this.providerManager.get(providerId);
+		if (p.getTipoMoneda() == null)
+			p.setTipoMoneda(new TipoMoneda());	
 		ArrayList<DatosBancarios> dbp= this.datosBancariosManager.getDatosBancarios(providerId);
 		pa.setProveedor(p);
 		pa.setDatosBancarios(dbp);
@@ -362,6 +387,20 @@ public class ProviderController {
 		
 		SessionUtil.setSessionAttribute("listDataBank", listDataBank);
 		
+	}
+	
+	public void delete (ProviderAdapter pa, NavigationState state, Component win){		
+		
+		Boolean flagExist=  purchaseOrderManager.getProviderExist(pa.getProveedor().getIdProveedor()).size() > 0 ? Boolean.TRUE : Boolean.FALSE;
+	
+		if (!flagExist)
+			this.providerManager.delete(pa.getProveedor());
+		
+		state.setUri("/WEB-INF/zul/provider/main.zul");
+		state.setDetailIdentifier(null);
+		state.removeLastBreadCrumbs();
+		state.removeLastBreadCrumbs();
+		this.navigationControl.changeView(win, state);
 	}
 	
 	

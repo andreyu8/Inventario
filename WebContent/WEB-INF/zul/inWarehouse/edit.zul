@@ -1,6 +1,78 @@
-<?page title="new page title" contentType="text/html;charset=UTF-8"?>
-<zk>
-<window title="new page title" border="normal">
-New Content Here!
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="winEE" border="none" apply="org.zkoss.bind.BindComposer" >
+	
+	<zscript>
+		import com.seidor.inventario.adapter.TransactionAdapter;
+		import com.seidor.inventario.navigation.*;
+		
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		
+		TransactionAdapter transactionEditAdapter = transactionController.readForEdit(state.getDetailIdentifier());
+		
+		
+		public void cancel(){
+			navigationControl.changeToPrevious(winEE);
+		}
+		
+		public void update(){
+			fcv.validate(winEE);
+			transactionController.updateEntrada(transactionEditAdapter, state, winEE);
+		}
+	</zscript>
+	
+	<div class="row sectionBoxAlt animated aniFadeIn" >
+		<div class="col-md-6">
+			<h:span style="padding-top: 5px; display: block;" />
+			<div align="left" >
+				<label value="${transactionEditAdapter.movimientos.folio}" sclass="sectionTitle" />
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div align="right" >
+				<button label="cancelar" sclass="btn btn-warning" onClick="cancel();" iconSclass="z-icon-times" />
+				<button label="aceptar" sclass="btn btn-success" onClick="update();" iconSclass="z-icon-check" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="row subBoxAlt animated aniFadeIn" >
+		<div class="col-md-12">
+			<label value="Datos generales" />
+		</div>
+	</div>
+	<div class="container animated aniFadeIn" >
+		<div class="row editBox">
+			
+			
+			
+	
+		
+		</div>
+	</div>
+	
+	
+	<div class="row subBoxAlt animated aniFadeIn" >
+		<div class="col-md-12">
+			<div align="right" >
+				<button label="Eliminar categoría" sclass="btn btn-danger" onClick="delete();" iconSclass="z-icon-trash-o" />
+			</div>
+		</div>
+	</div>
+	
+	<zscript>
+		public void delete(){
+			Action deleteAction = new Action() {
+				public void execute(){
+					productController.delete(transactionEditAdapter, state, winEE);
+				}
+			};
+			NavigationControl.openModalWindowWithMessage("¿Está seguro de eliminar la entrada?", deleteAction);
+		}
+	</zscript>
+	
 </window>
 </zk>

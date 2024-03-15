@@ -1,6 +1,7 @@
 package com.seidor.inventario.adapter.beans;
 
 import com.seidor.inventario.model.Cliente;
+import com.seidor.inventario.model.Factura;
 import com.seidor.inventario.model.OrdenCompra;
 import com.seidor.inventario.model.Proveedor;
 import com.seidor.inventario.model.Proyecto;
@@ -11,11 +12,13 @@ public class ProjectReportBean {
 	private Proveedor proveedor;
 	private Cliente cliente;
 	private Proyecto proyecto;
+	private Factura factura;
 	private String jsonListProducts;
 	private String jsonListCtas;
 	private String subtotal;
 	private String iva;
 	private String total;
+	private String isr;
 	
 
 	public OrdenCompra getOrdenCompra() {
@@ -89,7 +92,21 @@ public class ProjectReportBean {
 	public void setTotal(String total) {
 		this.total = total;
 	}
-	
-	
 
+	public Factura getFactura() {
+		return factura;
+	}
+
+	public void setFactura(Factura factura) {
+		this.factura = factura;
+	}
+
+	public String getIsr() {
+		return isr;
+	}
+
+	public void setIsr(String isr) {
+		this.isr = isr;
+	}
+	
 }

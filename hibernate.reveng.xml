@@ -33,4 +33,10 @@
   <table-filter match-catalog="bd_inventario" match-name="detalle_movimiento"/>
   <table-filter match-catalog="bd_inventario" match-name="folios"/>
   
+  <table-filter match-catalog="bd_inventario" match-name="tipo_moneda"/>
+  <table-filter match-catalog="bd_inventario" match-name="regimen_fiscal"/>
+  <table-filter match-catalog="bd_inventario" match-name="uso_cfdi"/>
+  <table-filter match-catalog="bd_inventario" match-name="impuestos"/>
+  <table-filter match-catalog="bd_inventario" match-name="tasa_cuota_iva"/>
+  
 </hibernate-reverse-engineering>

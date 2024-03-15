@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
+// Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -23,6 +23,7 @@ public class Proyecto implements java.io.Serializable {
 	private int luu;
 	private Date uat;
 	private Set salidas = new HashSet(0);
+	private Set movimientoses = new HashSet(0);
 	private Set entradas = new HashSet(0);
 	private Set movimientosStocks = new HashSet(0);
 	private Set ordenCompras = new HashSet(0);
@@ -42,7 +43,7 @@ public class Proyecto implements java.io.Serializable {
 
 	public Proyecto(Empleado empleado, EstatusProyecto estatusProyecto, String nombre, Date fechaInicio,
 			Date fechaFinal, String numeroPresupuesto, boolean fdl, int cbu, Date cat, int luu, Date uat, Set salidas,
-			Set entradas, Set movimientosStocks, Set ordenCompras) {
+			Set movimientoses, Set entradas, Set movimientosStocks, Set ordenCompras) {
 		this.empleado = empleado;
 		this.estatusProyecto = estatusProyecto;
 		this.nombre = nombre;
@@ -55,6 +56,7 @@ public class Proyecto implements java.io.Serializable {
 		this.luu = luu;
 		this.uat = uat;
 		this.salidas = salidas;
+		this.movimientoses = movimientoses;
 		this.entradas = entradas;
 		this.movimientosStocks = movimientosStocks;
 		this.ordenCompras = ordenCompras;
@@ -162,6 +164,14 @@ public class Proyecto implements java.io.Serializable {
 
 	public void setSalidas(Set salidas) {
 		this.salidas = salidas;
+	}
+
+	public Set getMovimientoses() {
+		return this.movimientoses;
+	}
+
+	public void setMovimientoses(Set movimientoses) {
+		this.movimientoses = movimientoses;
 	}
 
 	public Set getEntradas() {

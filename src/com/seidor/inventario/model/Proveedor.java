@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
+// Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -11,6 +11,7 @@ import java.util.Set;
 public class Proveedor implements java.io.Serializable {
 
 	private Integer idProveedor;
+	private TipoMoneda tipoMoneda;
 	private TipoPago tipoPago;
 	private String nombre;
 	private String rfc;
@@ -21,6 +22,7 @@ public class Proveedor implements java.io.Serializable {
 	private int activo;
 	private String notas;
 	private Integer diasCredito;
+	private String vendedor;
 	private boolean fdl;
 	private int cbu;
 	private Date cat;
@@ -42,9 +44,11 @@ public class Proveedor implements java.io.Serializable {
 		this.uat = uat;
 	}
 
-	public Proveedor(TipoPago tipoPago, String nombre, String rfc, String direccion, String telefono, String extension,
-			String EMail, int activo, String notas, Integer diasCredito, boolean fdl, int cbu, Date cat, int luu,
-			Date uat, Set ordenCompras, Set datosBancarioses) {
+	public Proveedor(TipoMoneda tipoMoneda, TipoPago tipoPago, String nombre, String rfc, String direccion,
+			String telefono, String extension, String EMail, int activo, String notas, Integer diasCredito,
+			String vendedor, boolean fdl, int cbu, Date cat, int luu, Date uat, Set ordenCompras,
+			Set datosBancarioses) {
+		this.tipoMoneda = tipoMoneda;
 		this.tipoPago = tipoPago;
 		this.nombre = nombre;
 		this.rfc = rfc;
@@ -55,6 +59,7 @@ public class Proveedor implements java.io.Serializable {
 		this.activo = activo;
 		this.notas = notas;
 		this.diasCredito = diasCredito;
+		this.vendedor = vendedor;
 		this.fdl = fdl;
 		this.cbu = cbu;
 		this.cat = cat;
@@ -70,6 +75,14 @@ public class Proveedor implements java.io.Serializable {
 
 	public void setIdProveedor(Integer idProveedor) {
 		this.idProveedor = idProveedor;
+	}
+
+	public TipoMoneda getTipoMoneda() {
+		return this.tipoMoneda;
+	}
+
+	public void setTipoMoneda(TipoMoneda tipoMoneda) {
+		this.tipoMoneda = tipoMoneda;
 	}
 
 	public TipoPago getTipoPago() {
@@ -150,6 +163,14 @@ public class Proveedor implements java.io.Serializable {
 
 	public void setDiasCredito(Integer diasCredito) {
 		this.diasCredito = diasCredito;
+	}
+
+	public String getVendedor() {
+		return this.vendedor;
+	}
+
+	public void setVendedor(String vendedor) {
+		this.vendedor = vendedor;
 	}
 
 	public boolean isFdl() {

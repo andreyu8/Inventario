@@ -20,7 +20,7 @@ public class ProviderDAO extends HibernateDaoSupport {
 		public Proveedor get(Integer id){
 			Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 			Criteria criteria = session.createCriteria(Proveedor.class);
-			
+			criteria.setFetchMode("tipoMoneda", FetchMode.JOIN);
 			criteria.setFetchMode("tipoPago", FetchMode.JOIN);
 			criteria.add(Restrictions.eq("idProveedor", id));
 			Proveedor result = (Proveedor)criteria.uniqueResult();
@@ -34,6 +34,7 @@ public class ProviderDAO extends HibernateDaoSupport {
 			Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 			Criteria criteria = DaoUtil.getCriteria(session, Proveedor.class);
 			criteria.setFetchMode("tipoPago", FetchMode.JOIN);
+			criteria.setFetchMode("tipoMoneda", FetchMode.JOIN);
 			criteria.addOrder(Order.asc("idProveedor"));
 			List<Proveedor> result = criteria.list();
 			session.flush();
@@ -67,6 +68,7 @@ public class ProviderDAO extends HibernateDaoSupport {
 			Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 			
 			DaoUtil.prepareToDelete(p);
+			
 			session.update(p);
 			session.flush();
 			session.close();
@@ -77,6 +79,7 @@ public class ProviderDAO extends HibernateDaoSupport {
 			Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 			Criteria criteria = DaoUtil.getCriteria(session, Proveedor.class);
 			
+			criteria.setFetchMode("tipoMoneda", FetchMode.JOIN);
 			criteria.setFetchMode("tipoPago", FetchMode.JOIN);
 			
 			if (psa.getName() != null && psa.getName().trim().length() > 0){

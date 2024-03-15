@@ -102,7 +102,7 @@ public class EmployeeDAO extends HibernateDaoSupport{
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		Criteria criteria = DaoUtil.getCriteria(session, Empleado.class);
 		
-		criteria.add(Restrictions.eq("almacen.idAlmacen", id_almacen));
+		//criteria.add(Restrictions.eq("almacen.idAlmacen", id_almacen));
 		criteria.add(Restrictions.eq("area.idArea", idArea));
 		
 		List<Empleado> result = criteria.list();

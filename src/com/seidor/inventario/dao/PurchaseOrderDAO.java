@@ -31,6 +31,7 @@ public class PurchaseOrderDAO extends HibernateDaoSupport{
 		criteria.setFetchMode("area", FetchMode.JOIN);
 		criteria.setFetchMode("proveedor", FetchMode.JOIN);
 		criteria.setFetchMode("almacen", FetchMode.JOIN);
+		criteria.setFetchMode("tipoMoneda", FetchMode.JOIN);
 		criteria.setFetchMode("proveedor.tipoPago", FetchMode.JOIN);
 		criteria.setFetchMode("proyecto", FetchMode.JOIN);
 		criteria.setFetchMode("estatusOrdenCompra", FetchMode.JOIN);
@@ -97,7 +98,7 @@ public class PurchaseOrderDAO extends HibernateDaoSupport{
 		}
 		
 		if (psa.getNoOrden() != null && psa.getNoOrden().trim().length() > 0){
-			criteria.add(Restrictions.ilike("numeroOc", psa.getNoOrden().trim(), MatchMode.ANYWHERE));
+			criteria.add(Restrictions.eq("idOrdenCompra", Integer.parseInt((String) psa.getNoOrden().trim())));
 		}
 		
 		criteria.addOrder(Order.desc("idOrdenCompra"));
@@ -132,6 +133,27 @@ public class PurchaseOrderDAO extends HibernateDaoSupport{
 		session.close();
 		
 		return new ArrayList<TipoPago>(result);
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<OrdenCompra> getProviderExist(Integer idProveedor) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = DaoUtil.getCriteria(session, OrdenCompra.class);
+		
+		criteria.setFetchMode("proveedor", FetchMode.JOIN);
+		
+		criteria.add(Restrictions.eq("proveedor.idProveedor", idProveedor));
+		
+		List<OrdenCompra> result = criteria.list();
+		session.flush();
+		session.close();
+		
+		return new ArrayList<OrdenCompra>(result);
+	}
+
+	public ArrayList<OrdenCompra> getAllnotComplete() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

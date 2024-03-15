@@ -13,7 +13,6 @@
 		
 		PurcharseAdapter ocEdit = purchaseOrderController.readForEdit(state.getDetailIdentifier());
 		
-		
 		public void cancel(){
 			navigationControl.changeToPrevious(win);
 		}
@@ -32,6 +31,14 @@
 			};
 			NavigationControl.openModalWindowWithMessage("¿Está seguro de actualizar la OC?", deleteAction);
 		}
+		
+		 void doCheckedIVA() {
+		 	ocEdit.getOrderCompra().setIsIva(ivacbox.isChecked());
+		 }	
+         
+         void doCheckedISR() {
+		 	ocEdit.getOrderCompra().setIsIsr(isrcbox.isChecked());
+         }
 		
 	</zscript>
 	
@@ -94,6 +101,23 @@
 							 		onCreate="providerController.loadProvider(self);" 
 						 			id="provcb" constraint="${cmv}"/> </h:p>
 			</div> 
+			
+			<div class="col-md-4">
+				<label value="Tipo de moneda*" sclass="editField" />
+				<h:p> <combobox value="@bind(ocEdit.orderCompra.tipoMoneda.moneda)"
+							 		onCreate="coinController.loadTypeCion(self);" 
+						 			id="tmoccb" constraint="${cmv}"/> </h:p>
+			</div>	
+			
+			<div class="col-md-2">
+				<label value="Fecha TC" sclass="editField" />
+				<h:p> <datebox id="dbtc" cols="12" format="short" value="@bind(ocEdit.orderCompra.fechaCambio)"  /> </h:p>
+			</div> 
+			
+			<div class="col-md-4">
+				<label value="Monto tipo de cambio" sclass="editField" />
+				<h:p> <textbox value="@bind(ocEdit.orderCompra.tipoCambio)" /> </h:p>
+			</div>
 				
 			
 			<div class="col-md-4">
@@ -138,7 +162,7 @@
 			<div class="col-md-4">
 				<label value="Proyecto*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocEdit.orderCompra.proyecto.nombre)"
-							 		onCreate="projectController.loadProjects(self);" 
+							 		onCreate="projectController.loadOpenProjects(self);" 
 						 			id="prcb" /> </h:p>
 			</div>	
 				
@@ -173,6 +197,23 @@
 				<h:p> <textbox value="@bind(ocEdit.orderCompra.noPresupuesto)" /> </h:p>
 			</div>
 			
+			<div class="col-md-4">
+				<label value="Lugar de entrega*" sclass="editField" />
+				<h:p> <textbox value="@bind(ocEdit.orderCompra.lugarEntrega)" /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Tiempo de entrega*" sclass="editField" />
+				<h:p> <textbox value="@bind(ocEdit.orderCompra.tiempoEntrega)" /> </h:p>
+			</div>
+			
+			<div class="col-md-2">
+				<h:p>
+					<checkbox id="ivacbox" label="IVA" checked="${ocEdit.orderCompra.isIva}" onCheck="doCheckedIVA()"/> 
+					<checkbox id="isrcbox" label="ISR" checked="${ocEdit.orderCompra.isIsr}" onCheck="doCheckedISR()"/> 
+				</h:p>
+			</div>
+		
 			
 			<div  class="col-md-12" align="right">
 		  		<label value="Producto " />

@@ -12,8 +12,10 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import com.seidor.inventario.adapter.search.InvoiceSearchAdapter;
+import com.seidor.inventario.constants.SystemConstants;
 import com.seidor.inventario.model.Factura;
 import com.seidor.inventario.util.DaoUtil;
+import com.seidor.inventario.util.SessionUtil;
 
 public class InvoiceDAO extends HibernateDaoSupport{
 	
@@ -36,6 +38,8 @@ public class InvoiceDAO extends HibernateDaoSupport{
 		criteria.setFetchMode("ordenCompra", FetchMode.JOIN);
 		criteria.setFetchMode("almacen", FetchMode.JOIN);
 		criteria.add(Restrictions.eq("numeroFactura", noFactura));
+		criteria.add(Restrictions.eq("almacen.idAlmacen", SessionUtil.getSucursalId()));
+		
 		Factura result = (Factura)criteria.uniqueResult();
 		session.flush();
 		session.close();
@@ -115,6 +119,38 @@ public class InvoiceDAO extends HibernateDaoSupport{
 		session.close();
 		return result;
 	}
-	
+
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Factura> getAll(Integer idOC) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = DaoUtil.getCriteria(session, Factura.class);
+		criteria.setFetchMode("ordenCompra", FetchMode.JOIN);
+		criteria.setFetchMode("almacen", FetchMode.JOIN);
+		criteria.add(Restrictions.eq("ordenCompra.idOrdenCompra", idOC));
+		
+		List<Factura> result = criteria.list();
+		session.flush();
+		session.close();
+		
+		return new ArrayList<Factura>(result);
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Factura> getByParentId(Integer idOrdenCompra, Integer id_almacen) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = DaoUtil.getCriteria(session, Factura.class);
+		criteria.setFetchMode("ordenCompra", FetchMode.JOIN);
+		criteria.setFetchMode("almacen", FetchMode.JOIN);
+		criteria.add(Restrictions.eq("ordenCompra.idOrdenCompra", idOrdenCompra));
+		
+		List<Factura> result = criteria.list();
+		session.flush();
+		session.close();
+		
+		return new ArrayList<Factura>(result);
+	}
+
 
 }

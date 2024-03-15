@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final -->
+<!-- Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
     <class name="com.seidor.inventario.model.Factura" table="factura" catalog="bd_inventario" optimistic-lock="version">
         <id name="idFactura" type="java.lang.Integer">
@@ -21,13 +21,13 @@
             <column name="fecha" length="19" />
         </property>
         <property name="subtotal" type="big_decimal">
-            <column name="subtotal" precision="20" scale="6" />
+            <column name="subtotal" precision="16" scale="4" />
         </property>
         <property name="iva" type="big_decimal">
-            <column name="iva" precision="20" scale="6" />
+            <column name="iva" precision="16" scale="4" />
         </property>
         <property name="total" type="big_decimal">
-            <column name="total" precision="20" scale="6" />
+            <column name="total" precision="16" scale="4" />
         </property>
         <property name="descripcion" type="string">
             <column name="descripcion" length="50" />

@@ -6,7 +6,6 @@ import com.seidor.inventario.adapter.search.PurchaseOrderSearchAdapter;
 import com.seidor.inventario.dao.PurchaseOrderDAO;
 import com.seidor.inventario.model.EstatusOrdenCompra;
 import com.seidor.inventario.model.OrdenCompra;
-import com.seidor.inventario.model.TipoOrdenCompra;
 import com.seidor.inventario.model.TipoPago;
 
 public class PurchaseOrderManager {
@@ -52,6 +51,10 @@ public class PurchaseOrderManager {
 	
 	public ArrayList<TipoPago> getAllTypePayment() {
 		return this.purchaseOrderDao.getAllTypePayment();
+	}
+
+	public ArrayList<OrdenCompra> getProviderExist(Integer idProveedor) {
+		return this.purchaseOrderDao.getProviderExist(idProveedor);
 	}
 
 	

@@ -41,6 +41,14 @@
 		}
 		
 		
+		 void doCheckedIVA() {
+		 	ocSave.getOrderCompra().setIsIva(ivacbox.isChecked());
+		 }	
+         
+         void doCheckedISR() {
+		 	ocSave.getOrderCompra().setIsIsr(isrcbox.isChecked());
+         }
+		 		
 	</zscript>
 	
 	<div class="row sectionBoxAlt animated aniFadeIn">
@@ -98,7 +106,28 @@
 					</h:p>
 				</div>
 				
+				
 			</div>	  
+			
+			
+			<div class="col-md-4">
+				<label value="Tipo de moneda*" sclass="editField" />
+				<h:p> <combobox value="@bind(ocSave.orderCompra.tipoMoneda.moneda)"
+							 		onCreate="coinController.loadTypeCion(self);" 
+						 			id="tmoccb" constraint="${cmv}"/> </h:p>
+			</div>	
+			
+			<div class="col-md-2">
+				<label value="Fecha TC" sclass="editField" />
+				<h:p> <datebox id="dbtc" cols="12" format="short" value="@bind(ocSave.orderCompra.fechaCambio)"  /> </h:p>
+			</div> 
+			
+			<div class="col-md-4">
+				<label value="Monto tipo de cambio" sclass="editField" />
+				<h:p> <textbox value="@bind(ocSave.orderCompra.tipoCambio)" /> </h:p>
+			</div>
+			
+			
 			
 			<!--  <div class="col-md-2">
 				<label value="Fecha*" sclass="editField" />
@@ -175,7 +204,7 @@
 			<div class="col-md-4">
 				<label value="Proyecto*" sclass="editField" />
 				<h:p> <combobox value="@bind(ocSave.orderCompra.proyecto.nombre)"
-							 		onCreate="projectController.loadProjects(self);" 
+							 		onCreate="projectController.loadOpenProjects(self);" 
 							 		onChange="viewPresupuesto ();"
 						 			id="prcb" /> </h:p>
 			</div>	
@@ -216,12 +245,25 @@
 				<label value="Lugar de entrega*" sclass="editField" />
 				<h:p> <textbox value="@bind(ocSave.orderCompra.lugarEntrega)" /> </h:p>
 			</div>
+			
+			<div class="col-md-4">
+				<label value="Tiempo de entrega*" sclass="editField" />
+				<h:p> <textbox value="@bind(ocSave.orderCompra.tiempoEntrega)" /> </h:p>
+			</div>
+			
+			<div class="col-md-2">
+				<h:p>
+					<checkbox id="ivacbox" label="IVA" checked="true" onCheck="doCheckedIVA()"/> 
+					<checkbox id="isrcbox" label="ISR" onCheck="doCheckedISR()"/> 
+				</h:p>
+			</div>
+			
+			
 				
 		</div>
+		 
 		
-		
-		
-		  <div>
+		 <div>
 		
 		  
 		  

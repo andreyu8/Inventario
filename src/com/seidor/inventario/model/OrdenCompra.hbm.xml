@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final -->
+<!-- Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
     <class name="com.seidor.inventario.model.OrdenCompra" table="orden_compra" catalog="bd_inventario" optimistic-lock="version">
         <id name="idOrdenCompra" type="java.lang.Integer">
@@ -36,12 +36,12 @@
         <many-to-one name="proyecto" class="com.seidor.inventario.model.Proyecto" fetch="select">
             <column name="id_proyecto" />
         </many-to-one>
+        <many-to-one name="tipoMoneda" class="com.seidor.inventario.model.TipoMoneda" fetch="select">
+            <column name="id_moneda" />
+        </many-to-one>
         <many-to-one name="tipoOrdenCompra" class="com.seidor.inventario.model.TipoOrdenCompra" fetch="select">
             <column name="id_tipo_orden_compra" not-null="true" />
         </many-to-one>
-        <property name="numeroOc" type="string">
-            <column name="numero_oc" length="100" />
-        </property>
         <property name="descripcion" type="string">
             <column name="descripcion" length="200" />
         </property>
@@ -58,7 +58,22 @@
             <column name="no_requisicion" length="50" />
         </property>
         <property name="lugarEntrega" type="string">
-            <column name="lugar_entrega" length="100" />
+            <column name="lugar_entrega" length="200" />
+        </property>
+        <property name="tiempoEntrega" type="string">
+            <column name="tiempo_entrega" length="100" />
+        </property>
+        <property name="fechaCambio" type="date">
+            <column name="fecha_cambio" length="10" />
+        </property>
+        <property name="tipoCambio" type="big_decimal">
+            <column name="tipo_cambio" precision="16" scale="4" />
+        </property>
+        <property name="isIva" type="boolean">
+            <column name="isIVA" not-null="true" />
+        </property>
+        <property name="isIsr" type="boolean">
+            <column name="isISR" not-null="true" />
         </property>
         <property name="fdl" type="boolean">
             <column name="fdl" not-null="true">

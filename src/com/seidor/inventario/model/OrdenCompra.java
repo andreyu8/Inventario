@@ -1,6 +1,7 @@
 package com.seidor.inventario.model;
-// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
+// Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,14 +20,19 @@ public class OrdenCompra implements java.io.Serializable {
 	private Etapa etapa;
 	private Proveedor proveedor;
 	private Proyecto proyecto;
+	private TipoMoneda tipoMoneda;
 	private TipoOrdenCompra tipoOrdenCompra;
-	private String numeroOc;
 	private String descripcion;
 	private Date fecha;
 	private Date fechaRecepAlmacen;
 	private String noPresupuesto;
 	private String noRequisicion;
 	private String lugarEntrega;
+	private String tiempoEntrega;
+	private Date fechaCambio;
+	private BigDecimal tipoCambio;
+	private boolean isIva;
+	private boolean isIsr;
 	private boolean fdl;
 	private int cbu;
 	private Date cat;
@@ -41,12 +47,14 @@ public class OrdenCompra implements java.io.Serializable {
 	}
 
 	public OrdenCompra(Area area, Cliente cliente, Empleado empleado, Etapa etapa, TipoOrdenCompra tipoOrdenCompra,
-			boolean fdl, int cbu, Date cat, int luu, Date uat) {
+			boolean isIva, boolean isIsr, boolean fdl, int cbu, Date cat, int luu, Date uat) {
 		this.area = area;
 		this.cliente = cliente;
 		this.empleado = empleado;
 		this.etapa = etapa;
 		this.tipoOrdenCompra = tipoOrdenCompra;
+		this.isIva = isIva;
+		this.isIsr = isIsr;
 		this.fdl = fdl;
 		this.cbu = cbu;
 		this.cat = cat;
@@ -56,9 +64,11 @@ public class OrdenCompra implements java.io.Serializable {
 
 	public OrdenCompra(Almacen almacen, Area area, Cliente cliente, Empleado empleado,
 			EstatusOrdenCompra estatusOrdenCompra, Etapa etapa, Proveedor proveedor, Proyecto proyecto,
-			TipoOrdenCompra tipoOrdenCompra, String numeroOc, String descripcion, Date fecha, Date fechaRecepAlmacen,
-			String noPresupuesto, String noRequisicion, String lugarEntrega, boolean fdl, int cbu, Date cat, int luu,
-			Date uat, Set facturas, Set movimientoses, Set entradas, Set detalleOrdenCompras) {
+			TipoMoneda tipoMoneda, TipoOrdenCompra tipoOrdenCompra, String descripcion, Date fecha,
+			Date fechaRecepAlmacen, String noPresupuesto, String noRequisicion, String lugarEntrega,
+			String tiempoEntrega, Date fechaCambio, BigDecimal tipoCambio, boolean isIva, boolean isIsr, boolean fdl,
+			int cbu, Date cat, int luu, Date uat, Set facturas, Set movimientoses, Set entradas,
+			Set detalleOrdenCompras) {
 		this.almacen = almacen;
 		this.area = area;
 		this.cliente = cliente;
@@ -67,14 +77,19 @@ public class OrdenCompra implements java.io.Serializable {
 		this.etapa = etapa;
 		this.proveedor = proveedor;
 		this.proyecto = proyecto;
+		this.tipoMoneda = tipoMoneda;
 		this.tipoOrdenCompra = tipoOrdenCompra;
-		this.numeroOc = numeroOc;
 		this.descripcion = descripcion;
 		this.fecha = fecha;
 		this.fechaRecepAlmacen = fechaRecepAlmacen;
 		this.noPresupuesto = noPresupuesto;
 		this.noRequisicion = noRequisicion;
 		this.lugarEntrega = lugarEntrega;
+		this.tiempoEntrega = tiempoEntrega;
+		this.fechaCambio = fechaCambio;
+		this.tipoCambio = tipoCambio;
+		this.isIva = isIva;
+		this.isIsr = isIsr;
 		this.fdl = fdl;
 		this.cbu = cbu;
 		this.cat = cat;
@@ -158,20 +173,20 @@ public class OrdenCompra implements java.io.Serializable {
 		this.proyecto = proyecto;
 	}
 
+	public TipoMoneda getTipoMoneda() {
+		return this.tipoMoneda;
+	}
+
+	public void setTipoMoneda(TipoMoneda tipoMoneda) {
+		this.tipoMoneda = tipoMoneda;
+	}
+
 	public TipoOrdenCompra getTipoOrdenCompra() {
 		return this.tipoOrdenCompra;
 	}
 
 	public void setTipoOrdenCompra(TipoOrdenCompra tipoOrdenCompra) {
 		this.tipoOrdenCompra = tipoOrdenCompra;
-	}
-
-	public String getNumeroOc() {
-		return this.numeroOc;
-	}
-
-	public void setNumeroOc(String numeroOc) {
-		this.numeroOc = numeroOc;
 	}
 
 	public String getDescripcion() {
@@ -220,6 +235,46 @@ public class OrdenCompra implements java.io.Serializable {
 
 	public void setLugarEntrega(String lugarEntrega) {
 		this.lugarEntrega = lugarEntrega;
+	}
+
+	public String getTiempoEntrega() {
+		return this.tiempoEntrega;
+	}
+
+	public void setTiempoEntrega(String tiempoEntrega) {
+		this.tiempoEntrega = tiempoEntrega;
+	}
+
+	public Date getFechaCambio() {
+		return this.fechaCambio;
+	}
+
+	public void setFechaCambio(Date fechaCambio) {
+		this.fechaCambio = fechaCambio;
+	}
+
+	public BigDecimal getTipoCambio() {
+		return this.tipoCambio;
+	}
+
+	public void setTipoCambio(BigDecimal tipoCambio) {
+		this.tipoCambio = tipoCambio;
+	}
+
+	public boolean isIsIva() {
+		return this.isIva;
+	}
+
+	public void setIsIva(boolean isIva) {
+		this.isIva = isIva;
+	}
+
+	public boolean isIsIsr() {
+		return this.isIsr;
+	}
+
+	public void setIsIsr(boolean isIsr) {
+		this.isIsr = isIsr;
 	}
 
 	public boolean isFdl() {

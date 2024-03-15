@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final -->
+<!-- Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
     <class name="com.seidor.inventario.model.Movimientos" table="movimientos" catalog="bd_inventario" optimistic-lock="version">
         <id name="idMovimiento" type="java.lang.Integer">
@@ -11,11 +11,20 @@
         <many-to-one name="almacen" class="com.seidor.inventario.model.Almacen" fetch="select">
             <column name="id_almacen" />
         </many-to-one>
+        <many-to-one name="area" class="com.seidor.inventario.model.Area" fetch="select">
+            <column name="id_area" />
+        </many-to-one>
+        <many-to-one name="empleado" class="com.seidor.inventario.model.Empleado" fetch="select">
+            <column name="id_empleado" />
+        </many-to-one>
         <many-to-one name="factura" class="com.seidor.inventario.model.Factura" fetch="select">
             <column name="id_factura" />
         </many-to-one>
         <many-to-one name="ordenCompra" class="com.seidor.inventario.model.OrdenCompra" fetch="select">
             <column name="id_orden_compra" />
+        </many-to-one>
+        <many-to-one name="proyecto" class="com.seidor.inventario.model.Proyecto" fetch="select">
+            <column name="id_proyecto" />
         </many-to-one>
         <many-to-one name="tiposMovimiento" class="com.seidor.inventario.model.TiposMovimiento" fetch="select">
             <column name="id_tipo_movimiento" />
@@ -32,6 +41,12 @@
             <column name="estatus">
                 <comment>Catalogo en el properties</comment>
             </column>
+        </property>
+        <property name="ordenTrabajo" type="string">
+            <column name="orden_trabajo" length="50" />
+        </property>
+        <property name="cveMueble" type="string">
+            <column name="cve_mueble" length="50" />
         </property>
         <property name="fdl" type="java.lang.Boolean">
             <column name="fdl">
@@ -63,6 +78,18 @@
                 <column name="id_movimiento" />
             </key>
             <one-to-many class="com.seidor.inventario.model.DetalleMovimiento" />
+        </set>
+        <set name="entradas" table="entrada" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_movimiento" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.Entrada" />
+        </set>
+        <set name="salidas" table="salida" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_movimiento" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.Salida" />
         </set>
     </class>
 </hibernate-mapping>

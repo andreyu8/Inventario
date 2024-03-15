@@ -16,12 +16,15 @@
         <mapping resource="com/seidor/inventario/model/DatosBancarios.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/Ubicacion.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/Proyecto.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/UsoCfdi.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/Perfil.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/RegimenFiscal.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/TipoTrabajo.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/DetalleMovimiento.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/Producto.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/Area.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/MovimientosStock.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/Impuestos.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/Movimientos.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/TipoPago.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/Almacen.hbm.xml" />
@@ -33,9 +36,11 @@
         <mapping resource="com/seidor/inventario/model/Salida.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/Etapa.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/Categoria.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/TipoMoneda.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/Folios.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/PerfilUsuario.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/Empleado.hbm.xml" />
+        <mapping resource="com/seidor/inventario/model/TasaCuotaIva.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/Cliente.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/OrdenCompra.hbm.xml" />
         <mapping resource="com/seidor/inventario/model/Entrada.hbm.xml" />

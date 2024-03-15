@@ -49,6 +49,10 @@
 			<h:p> <label value="${categoryDetail.categoria.categoria}" sclass="detailData" /> </h:p>
 		</div>
 		<div class="col-md-3">
+			<label value="Código" sclass="detailField" />
+			<h:p> <label value="${categoryDetail.categoria.codigo}" sclass="detailData" /> </h:p>
+		</div>
+		<div class="col-md-3">
 			<label value="Descripción" sclass="detailField" />
 			<h:p> <label value="${categoryDetail.categoria.descripcion}" sclass="detailData" /> </h:p>
 		</div>

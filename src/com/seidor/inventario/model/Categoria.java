@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
+// Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -13,6 +13,7 @@ public class Categoria implements java.io.Serializable {
 	private Integer idCategoria;
 	private String categoria;
 	private String descripcion;
+	private String codigo;
 	private int activo;
 	private boolean fdl;
 	private int cbu;
@@ -34,10 +35,11 @@ public class Categoria implements java.io.Serializable {
 		this.uat = uat;
 	}
 
-	public Categoria(String categoria, String descripcion, int activo, boolean fdl, int cbu, Date cat, int luu,
-			Date uat, Set productos) {
+	public Categoria(String categoria, String descripcion, String codigo, int activo, boolean fdl, int cbu, Date cat,
+			int luu, Date uat, Set productos) {
 		this.categoria = categoria;
 		this.descripcion = descripcion;
+		this.codigo = codigo;
 		this.activo = activo;
 		this.fdl = fdl;
 		this.cbu = cbu;
@@ -69,6 +71,14 @@ public class Categoria implements java.io.Serializable {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public String getCodigo() {
+		return this.codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 	public int getActivo() {

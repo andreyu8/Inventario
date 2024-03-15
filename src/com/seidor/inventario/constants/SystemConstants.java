@@ -46,7 +46,7 @@ public class SystemConstants {
 	public static final Integer ENTRADA_REASIGNACIÓN= 2;
 	public static final Integer DEVOLUCION_REASIGNACION= 3;
 	public static final Integer SALIDA_VALE= 4;
-	public static final Integer SALIDA_REASIGNACIÓN= 5;
+	public static final Integer SALIDA_REASIGNACION= 5;
 	public static final Integer ENTRADA_STOCK= 6;
 	public static final Integer SALIDA_STOCK= 7;
 
@@ -54,5 +54,13 @@ public class SystemConstants {
 	//status movimientos 
 	public static final Integer ESTATUS_MOVIMIENTO_ACTIVO = 1;
 	public static final Integer ESTATUS_MOVIMIENTO_INACTIVO = 2;
+	
+	
+	//status orden compra 
+	public static final Integer ESTATUS_OC_COMPLETA = 1;
+	public static final Integer ESTATUS_OC_INCOMPLETA = 2;
+	public static final Integer ESTATUS_OC_PARCIAL = 3;
+	
+	
 	
 }

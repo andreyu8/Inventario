@@ -40,6 +40,9 @@
 			navigationControl.changeView(win, state);
 		}
 		
+		public void reportProduct (){
+			productController.exportProductExcel (prodlb);
+		}
 		
 		
 	</zscript>
@@ -56,6 +59,7 @@
 				
 				<div align="right" style="float: right;" >
 					<button label="buscar" onClick="search();" iconSclass="z-icon-search" style="margin-right: 20px;" />
+					<button label="reporte" onClick="reportProduct();" iconSclass="z-icon-print" style="margin-right: 20px;" />
 				</div>
 			</div>
 		</div>
@@ -96,6 +100,7 @@
 				<listheader label="Código" hflex="3" sort="auto(lower(codigo))" />
 				<listheader label="Nombre" hflex="3" sort="auto(lower(nombre))" />
 				<listheader label="Categoría" hflex="3" sort="auto(lower(categoria.categoria))" />
+				<listheader label="Almacen" hflex="3" sort="auto(lower(almacen.almacen))" />
 				<listheader label="U.Medida" hflex="3" />
 				<listheader label="Cantidad" hflex="3" />
 				<listheader label="Minimo" hflex="3" />
@@ -106,6 +111,7 @@
 					<listcell label="${each.codigo}" />
 					<listcell label="${each.nombre}" />
 					<listcell label="${each.categoria.categoria}" />
+					<listcell label="${each.almacen.almacen}" />
 					<listcell label="${each.unidadMedida.unidadMedida}" />
 					<listcell label="${each.cantidad}" />
 					<listcell label="${each.minimo}" />

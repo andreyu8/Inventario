@@ -3,8 +3,10 @@ package com.seidor.inventario.adapter.search;
 public class TransactionSearchAdapter {
 
 	private String name;
+	private Integer idFactura;
 	private String numeroFactura;
 	private String numeroFolio;
+	private Integer numeroOC;
 
 	public String getName() {
 		return name;
@@ -28,6 +30,22 @@ public class TransactionSearchAdapter {
 
 	public void setNumeroFolio(String numeroFolio) {
 		this.numeroFolio = numeroFolio;
+	}
+
+	public Integer getNumeroOC() {
+		return numeroOC;
+	}
+
+	public void setNumeroOC(Integer numeroOC) {
+		this.numeroOC = numeroOC;
+	}
+
+	public Integer getIdFactura() {
+		return idFactura;
+	}
+
+	public void setIdFactura(Integer idFactura) {
+		this.idFactura = idFactura;
 	}
 	
 }

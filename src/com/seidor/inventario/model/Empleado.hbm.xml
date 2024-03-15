@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final -->
+<!-- Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
     <class name="com.seidor.inventario.model.Empleado" table="empleado" catalog="bd_inventario" optimistic-lock="version">
         <id name="idEmpleado" type="java.lang.Integer">
@@ -81,6 +81,12 @@
                 <comment>update at timestamp</comment>
             </column>
         </property>
+        <set name="movimientoses" table="movimientos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_empleado" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.Movimientos" />
+        </set>
         <set name="ordenCompras" table="orden_compra" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_empleado" not-null="true">

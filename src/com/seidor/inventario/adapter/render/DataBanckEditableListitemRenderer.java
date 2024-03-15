@@ -6,6 +6,7 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.A;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Constraint;
 import org.zkoss.zul.Doublebox;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Label;
@@ -51,7 +52,7 @@ public class DataBanckEditableListitemRenderer  extends EditableListitemRenderer
 		IREditableTextbox cta= new IREditableTextbox((datosBancarios.getCta()));
 		cta.setParent(this.newListcell(editListitem));
 		
-		IREditableTextbox clabe= new IREditableTextbox((datosBancarios.getClabe()));
+		IREditableTextbox clabe= new IREditableTextbox((datosBancarios.getClabe()), new BigintboxMandatoryValidator(), 18);
 		clabe.setParent(this.newListcell(editListitem));
 		
 		

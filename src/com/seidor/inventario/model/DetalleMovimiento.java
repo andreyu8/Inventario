@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
+// Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -13,10 +13,12 @@ public class DetalleMovimiento implements java.io.Serializable {
 	private DetalleOrdenCompra detalleOrdenCompra;
 	private Movimientos movimientos;
 	private Producto producto;
+	private TipoMoneda tipoMoneda;
 	private Date fecha;
 	private Double cantidadTotal;
 	private double cantidad;
 	private BigDecimal precioUnitario;
+	private BigDecimal precioUnitarioMxn;
 	private int estatus;
 	private boolean fdl;
 	private int cbu;
@@ -41,15 +43,17 @@ public class DetalleMovimiento implements java.io.Serializable {
 	}
 
 	public DetalleMovimiento(DetalleOrdenCompra detalleOrdenCompra, Movimientos movimientos, Producto producto,
-			Date fecha, Double cantidadTotal, double cantidad, BigDecimal precioUnitario, int estatus, boolean fdl,
-			int cbu, Date cat, int luu, Date uat) {
+			TipoMoneda tipoMoneda, Date fecha, Double cantidadTotal, double cantidad, BigDecimal precioUnitario,
+			BigDecimal precioUnitarioMxn, int estatus, boolean fdl, int cbu, Date cat, int luu, Date uat) {
 		this.detalleOrdenCompra = detalleOrdenCompra;
 		this.movimientos = movimientos;
 		this.producto = producto;
+		this.tipoMoneda = tipoMoneda;
 		this.fecha = fecha;
 		this.cantidadTotal = cantidadTotal;
 		this.cantidad = cantidad;
 		this.precioUnitario = precioUnitario;
+		this.precioUnitarioMxn = precioUnitarioMxn;
 		this.estatus = estatus;
 		this.fdl = fdl;
 		this.cbu = cbu;
@@ -90,6 +94,14 @@ public class DetalleMovimiento implements java.io.Serializable {
 		this.producto = producto;
 	}
 
+	public TipoMoneda getTipoMoneda() {
+		return this.tipoMoneda;
+	}
+
+	public void setTipoMoneda(TipoMoneda tipoMoneda) {
+		this.tipoMoneda = tipoMoneda;
+	}
+
 	public Date getFecha() {
 		return this.fecha;
 	}
@@ -120,6 +132,14 @@ public class DetalleMovimiento implements java.io.Serializable {
 
 	public void setPrecioUnitario(BigDecimal precioUnitario) {
 		this.precioUnitario = precioUnitario;
+	}
+
+	public BigDecimal getPrecioUnitarioMxn() {
+		return this.precioUnitarioMxn;
+	}
+
+	public void setPrecioUnitarioMxn(BigDecimal precioUnitarioMxn) {
+		this.precioUnitarioMxn = precioUnitarioMxn;
 	}
 
 	public int getEstatus() {

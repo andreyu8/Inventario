@@ -20,6 +20,11 @@
 			fcv.validate(win);
 			productController.save(productSave, state, win);
 		}
+		
+		public void viewProductCode() {
+			productController.viewProductCode (productSave, win);
+		}
+		
 	</zscript>
 	
 	<div class="row sectionBoxAlt animated aniFadeIn">
@@ -50,13 +55,18 @@
 				<label value="Categoría*" sclass="editField" />
 				<h:p> <combobox value="@bind(productSave.producto.categoria.categoria)"
 							 		onCreate="categoryController.loadCategory(self);" 
+							 		onChange="viewProductCode();"
 						 			id="catcb" constraint="${cmv}"/> </h:p>
 			</div>		
 		
 		
-			<div class="col-md-4">
-				<label value="Codigo*" sclass="editField" />
-				<h:p> <textbox value="@bind(productSave.producto.codigo)" constraint="${tmv}" /> </h:p>
+			<div class="row editBox" id="sectionCode" visible="false" >
+				<div class="col-md-4">
+					<label value="Codigo" sclass="editField" />
+					<h:p>
+						<label id="codePro" value="" />
+					</h:p>
+				</div>
 			</div>
 		
 			<div class="col-md-4">
@@ -81,7 +91,7 @@
 			
 			<div class="col-md-4">
 				<label value="Precio compra" sclass="editField" />
-				<h:p> <doublebox value="@bind(productSave.producto.precioCompra)" /> </h:p>
+				<h:p> <doublebox value="@bind(productSave.producto.precioCompra)" format="###,###,###.####" /> </h:p>
 			</div>
 			
 			<!-- <div class="col-md-4">

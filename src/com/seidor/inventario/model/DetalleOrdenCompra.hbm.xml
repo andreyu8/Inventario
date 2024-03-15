@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final -->
+<!-- Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
     <class name="com.seidor.inventario.model.DetalleOrdenCompra" table="detalle_orden_compra" catalog="bd_inventario" optimistic-lock="version">
         <id name="idDetalleOc" type="java.lang.Integer">
@@ -17,6 +17,9 @@
         <many-to-one name="producto" class="com.seidor.inventario.model.Producto" fetch="select">
             <column name="id_producto" not-null="true" />
         </many-to-one>
+        <many-to-one name="tipoMoneda" class="com.seidor.inventario.model.TipoMoneda" fetch="select">
+            <column name="id_moneda" />
+        </many-to-one>
         <property name="fecha" type="timestamp">
             <column name="fecha" length="19" not-null="true" />
         </property>
@@ -24,7 +27,10 @@
             <column name="cantidad" precision="22" scale="0" not-null="true" />
         </property>
         <property name="precioUnitario" type="big_decimal">
-            <column name="precio_unitario" precision="16" />
+            <column name="precio_unitario" precision="16" scale="4" />
+        </property>
+        <property name="precioUnitarioMxn" type="big_decimal">
+            <column name="precio_unitarioMXN" precision="16" scale="4" />
         </property>
         <property name="cantidadFactura" type="double">
             <column name="cantidad_factura" precision="22" scale="0" not-null="true" />

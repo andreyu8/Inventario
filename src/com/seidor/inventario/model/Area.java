@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
+// Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -19,7 +19,9 @@ public class Area implements java.io.Serializable {
 	private Date cat;
 	private int luu;
 	private Date uat;
+	private Set movimientoses = new HashSet(0);
 	private Set ordenCompras = new HashSet(0);
+	private Set salidas = new HashSet(0);
 	private Set empleados = new HashSet(0);
 
 	public Area() {
@@ -37,7 +39,7 @@ public class Area implements java.io.Serializable {
 	}
 
 	public Area(String area, String descripcion, int activo, boolean fdl, int cbu, Date cat, int luu, Date uat,
-			Set ordenCompras, Set empleados) {
+			Set movimientoses, Set ordenCompras, Set salidas, Set empleados) {
 		this.area = area;
 		this.descripcion = descripcion;
 		this.activo = activo;
@@ -46,7 +48,9 @@ public class Area implements java.io.Serializable {
 		this.cat = cat;
 		this.luu = luu;
 		this.uat = uat;
+		this.movimientoses = movimientoses;
 		this.ordenCompras = ordenCompras;
+		this.salidas = salidas;
 		this.empleados = empleados;
 	}
 
@@ -122,12 +126,28 @@ public class Area implements java.io.Serializable {
 		this.uat = uat;
 	}
 
+	public Set getMovimientoses() {
+		return this.movimientoses;
+	}
+
+	public void setMovimientoses(Set movimientoses) {
+		this.movimientoses = movimientoses;
+	}
+
 	public Set getOrdenCompras() {
 		return this.ordenCompras;
 	}
 
 	public void setOrdenCompras(Set ordenCompras) {
 		this.ordenCompras = ordenCompras;
+	}
+
+	public Set getSalidas() {
+		return this.salidas;
+	}
+
+	public void setSalidas(Set salidas) {
+		this.salidas = salidas;
 	}
 
 	public Set getEmpleados() {

@@ -16,7 +16,7 @@ public class AreaDAO  extends HibernateDaoSupport {
 
 	public Area get(Integer id){
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(Area.class);
+		Criteria criteria =  session.createCriteria(Area.class);
 		criteria.add(Restrictions.eq("idArea", id));
 		Area result = (Area)criteria.uniqueResult();
 		session.flush();

@@ -12,6 +12,7 @@ import com.seidor.inventario.model.Factura;
 import com.seidor.inventario.model.Folios;
 import com.seidor.inventario.model.Movimientos;
 import com.seidor.inventario.model.Producto;
+import com.seidor.inventario.model.Salida;
 
 public class TransactionManager {
 	
@@ -58,6 +59,25 @@ public class TransactionManager {
 	public void saveEntrada(Factura factura, Movimientos movimiento,
 			ArrayList<DetalleMovimiento> listDetailTransactionENT, Folios fte, ArrayList<Entrada> listEntrada, ArrayList<Producto> listProducto) {
 		this.transactionDao.saveEntrada(factura, movimiento, listDetailTransactionENT, fte, listEntrada, listProducto);
+		
+	}
+
+	public ArrayList<Movimientos> searchOutput(TransactionSearchAdapter tsa) {
+		return this.transactionDao.searchOutput (tsa);
+	}
+
+	public void saveSalida(Movimientos movimientos, ArrayList<DetalleMovimiento> listDetailTransactionSAL, Folios fte,
+			ArrayList<Salida> listSalida, ArrayList<Producto> listProducto) {
+		this.transactionDao.saveSalida(movimientos, listDetailTransactionSAL, fte, listSalida, listProducto);
+	}
+
+	public Movimientos getSalida(Integer idMovimiento) {
+		return this.transactionDao.getSalida (idMovimiento);
+	}
+
+	public void saveDevoluciones(ArrayList<Producto> listProducto, Movimientos movimientoEntradaStock, ArrayList<DetalleMovimiento> listEntradaStock,
+			Folios fes, Movimientos movimientoSalidaReasignacion, ArrayList<DetalleMovimiento> listSalidaReasignacion, Folios fsr) {
+		this.transactionDao.saveDevoluciones (listProducto, movimientoEntradaStock, listEntradaStock, fes, movimientoSalidaReasignacion, listSalidaReasignacion, fsr);
 		
 	}
 

@@ -44,6 +44,7 @@ public class TransactionDetailManager {
 	public ArrayList<DetalleMovimiento> getDetails(Integer idMovimiento) {
 		return this.transactionDetailDao.getDetails (idMovimiento);
 	}
+
 	
 	
 }

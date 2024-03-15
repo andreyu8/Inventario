@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
+// Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -32,6 +32,7 @@ public class Empleado implements java.io.Serializable {
 	private Date cat;
 	private int luu;
 	private Date uat;
+	private Set movimientoses = new HashSet(0);
 	private Set ordenCompras = new HashSet(0);
 	private Set proyectos = new HashSet(0);
 	private Set entradas = new HashSet(0);
@@ -55,7 +56,8 @@ public class Empleado implements java.io.Serializable {
 	public Empleado(Almacen almacen, Area area, String nombre, String APaterno, String AMaterno, String curp,
 			String rfc, String numeroEmpleado, String telefono, String extension, String celular, String EMail,
 			String numeroSegSocial, Date fechaRegistro, String cargo, int activo, boolean fdl, int cbu, Date cat,
-			int luu, Date uat, Set ordenCompras, Set proyectos, Set entradas, Set salidas, Set usuarios) {
+			int luu, Date uat, Set movimientoses, Set ordenCompras, Set proyectos, Set entradas, Set salidas,
+			Set usuarios) {
 		this.almacen = almacen;
 		this.area = area;
 		this.nombre = nombre;
@@ -77,6 +79,7 @@ public class Empleado implements java.io.Serializable {
 		this.cat = cat;
 		this.luu = luu;
 		this.uat = uat;
+		this.movimientoses = movimientoses;
 		this.ordenCompras = ordenCompras;
 		this.proyectos = proyectos;
 		this.entradas = entradas;
@@ -258,6 +261,14 @@ public class Empleado implements java.io.Serializable {
 
 	public void setUat(Date uat) {
 		this.uat = uat;
+	}
+
+	public Set getMovimientoses() {
+		return this.movimientoses;
+	}
+
+	public void setMovimientoses(Set movimientoses) {
+		this.movimientoses = movimientoses;
 	}
 
 	public Set getOrdenCompras() {

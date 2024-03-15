@@ -16,6 +16,7 @@ import com.seidor.inventario.constants.SystemConstants;
 import com.seidor.inventario.model.EstatusProyecto;
 import com.seidor.inventario.model.Proyecto;
 import com.seidor.inventario.util.DaoUtil;
+import com.seidor.inventario.util.SessionUtil;
 
 public class ProjectDAO extends HibernateDaoSupport {
 	
@@ -116,6 +117,8 @@ public class ProjectDAO extends HibernateDaoSupport {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		Criteria criteria = DaoUtil.getCriteria(session, Proyecto.class);
 		criteria.setFetchMode("estatusProyecto", FetchMode.JOIN);
+		criteria.setFetchMode("empleado", FetchMode.JOIN);
+		criteria.setFetchMode("empleado.almacen", FetchMode.JOIN);
 		criteria.add(Restrictions.eq("estatusProyecto.idEstatusProyecto", SystemConstants.PROYECTO_ABIERTO));
 		criteria.addOrder(Order.asc("fechaInicio"));
 		List<Proyecto> result = criteria.list();

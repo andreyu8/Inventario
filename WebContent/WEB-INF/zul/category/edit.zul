@@ -50,6 +50,10 @@
 				<h:p> <textbox value="@bind(categoryEdit.categoria.categoria)" constraint="${tmv}" /> </h:p>
 			</div>
 			<div class="col-md-4">
+				<label value="Código*" sclass="editField" />
+				<h:p> <textbox value="@bind(categoryEdit.categoria.codigo)" constraint="${tmv}" /> </h:p>
+			</div>
+			<div class="col-md-4">
 				<label value="Descripción*" sclass="editField" />
 				<h:p> <textbox value="@bind(categoryEdit.categoria.descripcion)" constraint="${tmv}" /> </h:p>
 			</div>

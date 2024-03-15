@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 21 dic. 2023 9:34:58 by Hibernate Tools 4.3.5.Final
+// Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -13,6 +13,7 @@ public class Entrada implements java.io.Serializable {
 	private Almacen almacen;
 	private Empleado empleado;
 	private Factura factura;
+	private Movimientos movimientos;
 	private OrdenCompra ordenCompra;
 	private Producto producto;
 	private Proyecto proyecto;
@@ -39,12 +40,14 @@ public class Entrada implements java.io.Serializable {
 		this.uat = uat;
 	}
 
-	public Entrada(Almacen almacen, Empleado empleado, Factura factura, OrdenCompra ordenCompra, Producto producto,
-			Proyecto proyecto, Ubicacion ubicacion, UnidadMedida unidadMedida, Date fecha, Double cantidad,
-			BigDecimal precioUnitario, Integer estatus, boolean fdl, int cbu, Date cat, int luu, Date uat) {
+	public Entrada(Almacen almacen, Empleado empleado, Factura factura, Movimientos movimientos,
+			OrdenCompra ordenCompra, Producto producto, Proyecto proyecto, Ubicacion ubicacion,
+			UnidadMedida unidadMedida, Date fecha, Double cantidad, BigDecimal precioUnitario, Integer estatus,
+			boolean fdl, int cbu, Date cat, int luu, Date uat) {
 		this.almacen = almacen;
 		this.empleado = empleado;
 		this.factura = factura;
+		this.movimientos = movimientos;
 		this.ordenCompra = ordenCompra;
 		this.producto = producto;
 		this.proyecto = proyecto;
@@ -91,6 +94,14 @@ public class Entrada implements java.io.Serializable {
 
 	public void setFactura(Factura factura) {
 		this.factura = factura;
+	}
+
+	public Movimientos getMovimientos() {
+		return this.movimientos;
+	}
+
+	public void setMovimientos(Movimientos movimientos) {
+		this.movimientos = movimientos;
 	}
 
 	public OrdenCompra getOrdenCompra() {

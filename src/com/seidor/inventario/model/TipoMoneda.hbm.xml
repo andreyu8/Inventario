@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="com.seidor.inventario.model.TipoMoneda" table="tipo_moneda" catalog="bd_inventario" optimistic-lock="version">
+        <id name="idMoneda" type="java.lang.Integer">
+            <column name="id_moneda" />
+            <generator class="identity" />
+        </id>
+        <property name="moneda" type="string">
+            <column name="moneda" length="20" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="50" />
+        </property>
+        <property name="fdl" type="java.lang.Boolean">
+            <column name="fdl" />
+        </property>
+        <property name="cbu" type="java.lang.Integer">
+            <column name="cbu" />
+        </property>
+        <property name="cat" type="timestamp">
+            <column name="cat" length="19" />
+        </property>
+        <property name="luu" type="java.lang.Integer">
+            <column name="luu" />
+        </property>
+        <property name="uat" type="timestamp">
+            <column name="uat" length="19" />
+        </property>
+        <set name="detalleMovimientos" table="detalle_movimiento" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_moneda" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.DetalleMovimiento" />
+        </set>
+        <set name="tasaCuotaIvas" table="tasa_cuota_iva" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_moneda" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.TasaCuotaIva" />
+        </set>
+        <set name="detalleOrdenCompras" table="detalle_orden_compra" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_moneda" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.DetalleOrdenCompra" />
+        </set>
+        <set name="ordenCompras" table="orden_compra" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_moneda" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.OrdenCompra" />
+        </set>
+        <set name="proveedors" table="proveedor" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_moneda" />
+            </key>
+            <one-to-many class="com.seidor.inventario.model.Proveedor" />
+        </set>
+    </class>
+</hibernate-mapping>
