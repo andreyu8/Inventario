@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 4 mar. 2024 12:06:49 by Hibernate Tools 4.3.5.Final
+// Generated 12 abr. 2024 12:10:56 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -23,6 +23,7 @@ public class Movimientos implements java.io.Serializable {
 	private Integer estatus;
 	private String ordenTrabajo;
 	private String cveMueble;
+	private String observaciones;
 	private Boolean fdl;
 	private Integer cbu;
 	private Date cat;
@@ -37,8 +38,8 @@ public class Movimientos implements java.io.Serializable {
 
 	public Movimientos(Almacen almacen, Area area, Empleado empleado, Factura factura, OrdenCompra ordenCompra,
 			Proyecto proyecto, TiposMovimiento tiposMovimiento, String folio, Date fecha, Integer estatus,
-			String ordenTrabajo, String cveMueble, Boolean fdl, Integer cbu, Date cat, Integer luu, Date uat,
-			Set detalleMovimientos, Set entradas, Set salidas) {
+			String ordenTrabajo, String cveMueble, String observaciones, Boolean fdl, Integer cbu, Date cat,
+			Integer luu, Date uat, Set detalleMovimientos, Set entradas, Set salidas) {
 		this.almacen = almacen;
 		this.area = area;
 		this.empleado = empleado;
@@ -51,6 +52,7 @@ public class Movimientos implements java.io.Serializable {
 		this.estatus = estatus;
 		this.ordenTrabajo = ordenTrabajo;
 		this.cveMueble = cveMueble;
+		this.observaciones = observaciones;
 		this.fdl = fdl;
 		this.cbu = cbu;
 		this.cat = cat;
@@ -163,6 +165,14 @@ public class Movimientos implements java.io.Serializable {
 
 	public void setCveMueble(String cveMueble) {
 		this.cveMueble = cveMueble;
+	}
+
+	public String getObservaciones() {
+		return this.observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
 	}
 
 	public Boolean getFdl() {

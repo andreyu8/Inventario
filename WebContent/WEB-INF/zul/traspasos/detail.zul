@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="winInfTa" border="none" apply="org.zkoss.bind.BindComposer" >
+	
+	<zscript>
+		import com.seidor.inventario.adapter.TraspasosAdapter;
+		import com.seidor.inventario.navigation.*;
+		
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		
+		TraspasosAdapter traspasosDetail = traspasosController.readTraspasos(state.getDetailIdentifier());
+		
+		
+		public void modify(){
+			state.setUri("/WEB-INF/zul/traspasos/edit.zul");
+			state.appendBreadCrumbsPath("Editar");
+			state.setDetailIndex(null);
+			state.setDetailList(null);
+			state.setDetailLabels(null);
+			navigationControl.changeView(winInfTa, state);
+		}
+		
+		public void printPDFmov() {
+			traspasosController.createReportTraspasos(traspasosDetail, winInfTa);
+		}	
+		
+		
+	</zscript>
+	
+	<div class="row sectionBox animated aniFadeIn">
+		<div class="col-md-6" align="left" >
+			<h:span style="padding-top: 5px; display: block;" />
+			<label value="Detalle devolución" sclass="sectionTitle" />
+			<label value="(${transactionDetail.movimientos.folio})" style="font-size: 12px;" />
+		</div>
+		<div class="col-md-6" align="right" >
+			<button label="modificar" onClick="modify();" iconSclass="z-icon-pencil" />
+		</div>
+	</div>
+	
+	<div class="row subBox animated aniFadeIn">
+		<div class="col-md-12">
+			<label value="" />
+		</div>
+	</div>
+	<div class="row container animated aniFadeIn" >
+	
+		
+		<div class="col-md-3">
+			<label value="Area" sclass="detailField" />
+			<h:p> <label value="${traspasosDetail.movimiento.area.area}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Empleado" sclass="detailField" />
+			<h:p> <label value="${traspasosDetail.movimiento.empleado.nombre}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-6" align="right" >
+			<button label="PDF" onClick="printPDFmov();" iconSclass="z-icon-pencil" />
+		</div>
+		
+		
+		<div class="animated aniFadeIn" >	
+			<listbox id="ocinvlb" onCreate="traspasosController.getDetailMovimientos (traspasosDetail, ocinvlb, idtcoin)" emptyMessage="No se encontrarón devoluciones para mostrar" >
+				<auxhead>
+	            	<auxheader colspan="6" align="center" style=" background: green;">Productos Almacen</auxheader>
+	            	<auxheader colspan="2" align="center">Traspaso Almacen</auxheader>
+	        	</auxhead>
+				<listhead>
+					<listheader label="Código" hflex="3" />
+					<listheader label="Producto" hflex="3" />
+					<listheader label="Cantidad" hflex="2" />
+					<listheader label="U.medida" hflex="3" />
+					<listheader label="Precio" hflex="3" />
+					<listheader label="Total" hflex="2" />
+					<listheader label="Salida" hflex="2" />
+					<listheader label="Existencia" hflex="2" />
+				</listhead>
+				<template name="model" >
+					<listitem >
+						<listcell label="${each.producto.codigo}" />
+						<listcell label="${each.producto.nombre}" />
+						<listcell label="${each.cantidadTotal}" />
+						<listcell label="${each.producto.unidadMedida.descripcion}" />
+						<listcell label="${each.precioUnitario}" />
+						<listcell label="${each.cantidad * each.precioUnitario}" />
+						<listcell label="${each.cantidad}" />
+						<listcell label="${each.cantidadTotal - each.cantidad}" />
+					</listitem>
+				</template>
+				<listfoot>
+					<listfooter></listfooter>
+					<listfooter></listfooter>
+					<listfooter></listfooter>
+					<listfooter></listfooter>
+					<listfooter align="right" width="100%">
+						<label id="idtcoin" value="0.0"/>
+					</listfooter>
+				</listfoot>	
+				
+			</listbox>
+			<pagingsize />
+		</div>
+		
+	</div>
+	
+	<separator spacing="10px" />
+	
+</window>
+</zk>

@@ -25,6 +25,7 @@ import com.seidor.inventario.adapter.beans.CierreBean;
 import com.seidor.inventario.adapter.beans.CloseBean;
 import com.seidor.inventario.adapter.beans.DevolucionBean;
 import com.seidor.inventario.adapter.beans.EntradasProyectoBean;
+import com.seidor.inventario.adapter.beans.GroupByProyectOrdreIdBean;
 import com.seidor.inventario.adapter.beans.ProveedoresBean;
 import com.seidor.inventario.adapter.beans.ReasignedBean;
 import com.seidor.inventario.adapter.beans.ReportCostoInventario;
@@ -742,6 +743,51 @@ public class ProductDAO extends HibernateDaoSupport{
 		
 		return result;
 		
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<GroupByProyectOrdreIdBean> groupByProyectOrderId (int ordenId) {
+				
+		ArrayList<GroupByProyectOrdreIdBean> result = new ArrayList<GroupByProyectOrdreIdBean>();
+		GroupByProyectOrdreIdBean resultBean = new GroupByProyectOrdreIdBean();
+		
+		List<Object[]> rows = new ArrayList<Object[]>();
+		
+		StringBuilder sb = new  StringBuilder(); 
+		
+		sb.append("	SELECT id_orden_compra, id_almacen, id_producto, COUNT(*) as count FROM detalle_orden_compra "); 
+		sb.append("	WHERE fdl= 0 AND id_orden_compra=:orden ");
+		sb.append("	GROUP BY id_orden_compra, id_almacen, id_producto ");
+		sb.append("	HAVING COUNT(*) > 1 ");
+		
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		
+		SQLQuery query = session.createSQLQuery(sb.toString());
+		query.addScalar("id_orden_compra", IntegerType.INSTANCE);
+		query.addScalar("id_almacen", IntegerType.INSTANCE);
+		query.addScalar("id_producto", IntegerType.INSTANCE);
+		query.addScalar("count", IntegerType.INSTANCE);
+		query.setParameter("orden", ordenId);
+		
+		rows = query.list();
+		
+		for (Object[] cp : rows) {
+			
+			resultBean = new GroupByProyectOrdreIdBean();
+				
+			resultBean.setOrdenId((int) cp[0]);
+			resultBean.setAlmacenId((int) cp[1]);
+			resultBean.setProductoId((int) cp[2]);
+			resultBean.setCountProduct((int) cp[3]);
+
+			result.add(resultBean);
+		}	
+		
+		session.flush();
+		session.close();
+		
+		return result;
 	}
 
 

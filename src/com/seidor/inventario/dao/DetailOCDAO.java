@@ -9,7 +9,10 @@ import org.hibernate.Session;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import com.seidor.inventario.adapter.search.ProductSearchAdapter;
@@ -123,6 +126,15 @@ public class DetailOCDAO extends HibernateDaoSupport {
 		criteria.setFetchMode("producto.unidadMedida", FetchMode.JOIN);
 		
 		criteria.add(Restrictions.eq("ordenCompra.idOrdenCompra", id));
+		
+		/*ProjectionList projectionList = Projections.projectionList();
+		projectionList.add(Projections.sum("cantidad"));
+	    projectionList.add(Projections.sum("precioUnitario"));
+	    projectionList.add(Projections.sum("cantidadFactura"));
+	    projectionList.add(Projections.groupProperty("producto"));
+	    criteria.setProjection(projectionList);*/
+		
+		criteria.addOrder(Order.desc("producto"));
 		List<DetalleOrdenCompra> result = criteria.list();
 		session.flush();
 		session.close();

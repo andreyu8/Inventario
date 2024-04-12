@@ -1,42 +1,61 @@
 package com.seidor.inventario.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Hlayout;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
 
-import com.seidor.inventario.adapter.DevolucionesProjectAdapter;
+import com.google.gson.Gson;
+import com.seidor.inventario.adapter.DevolucionesAdapter;
+import com.seidor.inventario.adapter.beans.DetailProductBean;
 import com.seidor.inventario.adapter.beans.DevolucionBean;
-import com.seidor.inventario.adapter.beans.OutBean;
+import com.seidor.inventario.adapter.beans.ProjectReportBean;
+import com.seidor.inventario.adapter.listitem.DetailTransactionitemAdapter;
 import com.seidor.inventario.adapter.listitem.DevolucionitemAdapter;
+import com.seidor.inventario.adapter.render.DetailTransactionDevListitemRenderer;
 import com.seidor.inventario.adapter.render.DevolucionListitemRenderer;
+import com.seidor.inventario.adapter.search.DevolcionSearchAdapter;
 import com.seidor.inventario.constants.SystemConstants;
+import com.seidor.inventario.inroweditablecomps.EditableListitem;
 import com.seidor.inventario.inroweditablecomps.IREditableDoublebox;
 import com.seidor.inventario.manager.EntryManager;
 import com.seidor.inventario.manager.FoliosManager;
 import com.seidor.inventario.manager.OutputManager;
 import com.seidor.inventario.manager.ProductManager;
 import com.seidor.inventario.manager.ProjectManager;
-import com.seidor.inventario.manager.StockManager;
+import com.seidor.inventario.manager.TransactionDetailManager;
 import com.seidor.inventario.manager.TransactionManager;
 import com.seidor.inventario.model.Almacen;
+import com.seidor.inventario.model.Area;
 import com.seidor.inventario.model.DetalleMovimiento;
-import com.seidor.inventario.model.Entrada;
+import com.seidor.inventario.model.Empleado;
 import com.seidor.inventario.model.EstatusProyecto;
 import com.seidor.inventario.model.Folios;
 import com.seidor.inventario.model.Movimientos;
 import com.seidor.inventario.model.Producto;
 import com.seidor.inventario.model.Proyecto;
 import com.seidor.inventario.model.TiposMovimiento;
+import com.seidor.inventario.model.UnidadMedida;
 import com.seidor.inventario.navigation.NavigationControl;
 import com.seidor.inventario.navigation.NavigationState;
+import com.seidor.inventario.util.DateFormatUtil;
+import com.seidor.inventario.util.NumberFormatUtil;
+import com.seidor.inventario.util.ReportUtil;
 import com.seidor.inventario.util.SessionUtil;
 
 public class DevolucionesController {
@@ -63,6 +82,9 @@ public class DevolucionesController {
 	@Autowired
 	private FoliosManager foliosManager;
 	
+	
+	@Autowired
+	private TransactionDetailManager transactionDetailManager;
 	
 	public OutputManager getOutputManager() {
 		return outputManager;
@@ -119,23 +141,353 @@ public class DevolucionesController {
 	public void setFoliosManager(FoliosManager foliosManager) {
 		this.foliosManager = foliosManager;
 	}
+	
+	public TransactionDetailManager getTransactionDetailManager() {
+		return transactionDetailManager;
+	}
+
+	public void setTransactionDetailManager(TransactionDetailManager transactionDetailManager) {
+		this.transactionDetailManager = transactionDetailManager;
+	}
 
 	//logic
-	public DevolucionesProjectAdapter read () {
+	public DevolucionesAdapter read () {
 		
-		DevolucionesProjectAdapter cpa = new DevolucionesProjectAdapter ();
+		DevolucionesAdapter cpa = new DevolucionesAdapter ();
 		
-		cpa.setProyecto(new Proyecto ());
-		cpa.setEntrada(new ArrayList<Entrada>());
-		cpa.setSalida(new ArrayList<OutBean>());
-		cpa.setDevolucionBean(new DevolucionBean());
+		cpa.setProyecto(new Proyecto());
+		Movimientos m= new Movimientos();
+		m.setProyecto(new Proyecto());
+		m.setArea(new Area());
+		m.setEmpleado(new Empleado());
+		cpa.setMovimiento(m);
+		cpa.setDetalleMovimientos(new ArrayList<DetalleMovimiento>());
 		
 		return cpa;
 	}
 	
 	
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void addProduct(Combobox pcb,  Listbox lbr) {
+		
+		if (pcb == null || pcb.getSelectedItem() == null) {			
+			throw new WrongValueException(pcb, "Debes de seleccionar un producto.");
+		} else {
+			
+			Producto productSelect = (Producto) pcb.getSelectedItem().getValue();
+			
+			//realizar la busqueda del producto en detalle_movimientos con salidas
+			
+			DetalleMovimiento  dm= new DetalleMovimiento();
+			dm.setIdDetalleMovimiento(0);
+			dm.setProducto(productSelect);
+			dm.setCantidadTotal(productSelect.getCantidad());
+			dm.setCantidad(0.0);
+			dm.setPrecioUnitario(productSelect.getPrecioCompra());
+			
+			
+			ListModelList<DetailTransactionitemAdapter> model = (ListModelList) lbr.getModel();
+			DetailTransactionitemAdapter adapter = new DetailTransactionitemAdapter(dm);
+			model.add(adapter);
+			
+		}	
+									
+	}
+	
+	public void loadProducts(Listbox lb, Label idtotalcoin, boolean edit){
+		
+		ArrayList<DetalleMovimiento> ldm= new ArrayList<DetalleMovimiento>();
+		DetalleMovimiento dm= new DetalleMovimiento();
+		ldm.add(dm);
+		
+		SessionUtil.setSessionAttribute("listDetailTransactionDEV", new ArrayList<DetalleMovimiento>());
+		
+		ListModelList<DetailTransactionitemAdapter> lml = new ListModelList<DetailTransactionitemAdapter>();
+		if(edit) {
+			lb.setItemRenderer(new DetailTransactionDevListitemRenderer(SystemConstants.DEVOLUCION));
+		}
+		lb.setModel(lml);
+		
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public void saveOrUpdateDevolucionAlmacen(EditableListitem listitem, Integer idStatusMovimiento) {
+		
+		Listbox lb = (Listbox) listitem.getParent();	
+		Integer selectedIndex = lb.getIndexOfItem(listitem);
+		DetailTransactionitemAdapter adapter = (DetailTransactionitemAdapter) lb.getModel().getElementAt(selectedIndex);
+		DetalleMovimiento doc = adapter.getDetalleMovimiento();
+		
+		Component comp = listitem.getFirstChild();
+		
+		comp = comp.getNextSibling();
+		comp = comp.getNextSibling();
+		comp = comp.getNextSibling();
+		comp = comp.getNextSibling();
+		comp = comp.getNextSibling();
+		comp = comp.getNextSibling();
+		
+		Hlayout devCant= (Hlayout) comp.getFirstChild();
+		IREditableDoublebox quantitybox = (IREditableDoublebox) devCant.getFirstChild();
+		
+		System.out.println("cantidad devolucion: "+quantitybox.getValue() +" cantidad: "+doc.getCantidad());
+		System.out.println("id del producto: "+doc.getProducto().getIdProducto());
+		
+		
+		//double compCant = doc.getCantidadTotal() - (doc.getCantidad() + quantitybox.getValue());
+		Boolean flagUpdateOC = Boolean.FALSE; 
+		
+		if(quantitybox.getValue() > 0) {
+			flagUpdateOC = Boolean.TRUE;
+		} else
+		if (quantitybox.getValue() ==  0) {
+			throw new WrongValueException(quantitybox, "La cantidad de devolucion a almacen tiene que ser mayor a 0");
+		}	
+		
+	    if (flagUpdateOC) {
+			doc.setCantidad(quantitybox.getValue());
+			doc.setFecha(new Date());
+			doc.setEstatus(SystemConstants.ESTATUS_MOVIMIENTO_ACTIVO);
+			
+			System.out.println("Realiza devolucion");
+			
+			//actualizar el detalle de las movimientos
+			if (doc.getIdDetalleMovimiento() == 0) {
+				
+				//listDetailTransaction
+				ArrayList<DetalleMovimiento> listDetailTransactionDEV = (ArrayList<DetalleMovimiento>) SessionUtil.getSessionAttribute("listDetailTransactionDEV");
+				listDetailTransactionDEV.add(doc);
+				SessionUtil.setSessionAttribute("listDetailTransactionDEV", listDetailTransactionDEV);	
+				
+			}	
+			
+			
+		}
+		
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public void saveTransactionDev(DevolucionesAdapter ta, NavigationState state, Component win){
+					
+		Combobox areacb = (Combobox) win.getFellowIfAny("areacb");
+		if (areacb != null && areacb.getSelectedItem()!=null )
+			ta.getMovimiento().setArea((Area) areacb.getSelectedItem().getValue());
+		else 
+			throw new WrongValueException(areacb, "Debe de seleccionar un area");
+		
+		/*Combobox areaempcb = (Combobox) win.getFellowIfAny("areaempcb");
+		if (areaempcb != null && areaempcb.getSelectedItem()!=null )
+			ta.getMovimiento().setEmpleado((Empleado) areaempcb.getSelectedItem().getValue());
+		else 
+			throw new WrongValueException(areaempcb, "Debe de seleccionar un empleado");*/
+		
+		
+		Combobox prcb = (Combobox) win.getFellowIfAny("prcb");
+		if (prcb != null && prcb.getSelectedItem()!=null )
+			ta.getMovimiento().setProyecto((Proyecto) prcb.getSelectedItem().getValue());
+		else 
+			throw new WrongValueException(prcb, "Debe de seleccionar un proyecto");
+		
+					
+		Almacen almacen= new Almacen();
+		almacen.setIdAlmacen(SessionUtil.getSucursalId());
+		
+		ta.getMovimiento().setEmpleado(SessionUtil.getEmpleadoId());
+		
+		//se genera el movimiento el detalle y se actualiza el folio
+		TiposMovimiento tm= new TiposMovimiento();
+		tm.setIdTipoMovimiento(SystemConstants.DEVOLUCION);
+		ta.getMovimiento().setTiposMovimiento(tm);
+		ta.getMovimiento().setAlmacen(almacen);
+		ta.getMovimiento().setProyecto(ta.getMovimiento().getProyecto());
+		ta.getMovimiento().setEstatus(SystemConstants.ESTATUS_MOVIMIENTO_ACTIVO);
+		ta.getMovimiento().setFecha(new Date());
+						
+		Folios fte= foliosManager.getFolioMax (SystemConstants.DEVOLUCION);
+		
+		ta.getMovimiento().setFolio(fte.getAbrev()+"-"+fte.getConsecutivo());
+		
+		ArrayList<DetalleMovimiento> listDetailTransactionSAL =  (ArrayList<DetalleMovimiento>) SessionUtil.getSessionAttribute("listDetailTransactionDEV");
+		
+		ArrayList<Producto> listProducto= new ArrayList<Producto>();
+		Producto p= new Producto();
+		
+		for (DetalleMovimiento doc : listDetailTransactionSAL) {
+			p = productManager.get(doc.getProducto().getIdProducto());	
+						
+			Proyecto proyecto= new Proyecto();
+			proyecto.setIdProyecto(ta.getMovimiento().getProyecto().getIdProyecto());
+			UnidadMedida um= new UnidadMedida();
+			um.setIdUnidadMedida(p.getUnidadMedida().getIdUnidadMedida());
+						
+			p.setCantidad(p.getCantidad() + doc.getCantidad());
+			p.setPrecioCompra(doc.getPrecioUnitario());
+			
+			listProducto.add(p);
+		}
+		
+		this.transactionManager.saveDevolucion(ta.getMovimiento(), listDetailTransactionSAL, fte, listProducto);
+		
+		SessionUtil.setSessionAttribute("listDetailTransactionDEV", new ArrayList<DetalleMovimiento>());
+		
+		state.setDetailIdentifier(ta.getMovimiento().getFolio());
+		state.setUri("/WEB-INF/zul/devoluciones/main.zul");
+		state.removeLastBreadCrumbs();
+		state.appendBreadCrumbsPath(ta.getMovimiento().getFolio());
+		this.navigationControl.changeView(win, state);
+	}
+	
+	public DevolucionesAdapter readDevolucion (Integer idMovimiento) {
+		DevolucionesAdapter ta= new DevolucionesAdapter();
+		
+		ta.setMovimiento(transactionManager.getSalida(idMovimiento));
+		ta.setDetalleMovimientos(transactionDetailManager.getDetails (ta.getMovimiento().getIdMovimiento()));
+		
+		return ta;
+	}
+	
+	public void getDetailMovimientos (DevolucionesAdapter ta, Listbox lb, Label total) {
+		ListModelList<DetalleMovimiento> model = new ListModelList<DetalleMovimiento>(ta.getDetalleMovimientos());
+		lb.setModel(model);
+		
+		total.setValue(getDetalleTotal(ta.getDetalleMovimientos()));
+	
+	}
+	
+	private String getDetalleTotal(ArrayList<DetalleMovimiento> detalleMovimientos) {
+		StringBuilder sb= new StringBuilder();
+
+		BigDecimal total= new BigDecimal(0.0);
+		BigDecimal totalTmp= new BigDecimal(0.0);
+		
+		for (DetalleMovimiento p: detalleMovimientos) {
+			totalTmp = new BigDecimal(p.getCantidad()).multiply(p.getPrecioUnitario());
+			total = total.add(totalTmp);
+		}
+		
+		sb.append("SubTotal: $ " +NumberFormatUtil.format(total, 2));
+		sb.append("\n");
+		sb.append("IVA: $ " +NumberFormatUtil.format(total.multiply(new BigDecimal(0.16)), 2));
+		sb.append("\n");
+		sb.append("Total: $ " +NumberFormatUtil.format(total.multiply(new BigDecimal(1.16)), 2));
+		
+		return sb.toString();
+	}
+
+	
+	public void createReportDevolucion (DevolucionesAdapter ta, Component mtwin){
+		
+		ProjectReportBean pBeanReport= new ProjectReportBean();
+		
+		ArrayList<DetailProductBean> listadpb = new ArrayList<DetailProductBean>();
+		DetailProductBean dpb = new DetailProductBean();
+		int i=1;
+		BigDecimal subtotal= new BigDecimal(0.0);
+		BigDecimal subtotalTmp= new BigDecimal(0.0);
+	
+		for (DetalleMovimiento doc : ta.getDetalleMovimientos()) {
+			dpb = new DetailProductBean();
+			
+			dpb.setItem(""+i);
+			dpb.setArticulo(doc.getProducto().getCodigo());
+			dpb.setDescripcion(doc.getProducto().getNombre());
+			dpb.setCantidad(""+doc.getCantidad());
+			dpb.setUnidad(doc.getProducto().getUnidadMedida().getDescripcion());
+			dpb.setPrecioUnitario(NumberFormatUtil.format(doc.getPrecioUnitario(),2));
+			dpb.setSubtotal(NumberFormatUtil.format(doc.getPrecioUnitario().multiply(new BigDecimal(doc.getCantidad())),2));
+			
+			subtotal = subtotalTmp.add(doc.getPrecioUnitario().multiply(new BigDecimal(doc.getCantidad())));
+			
+			listadpb.add(dpb);
+			i++;
+			subtotalTmp = subtotal;
+		}
+		
+		pBeanReport.setSubtotal(NumberFormatUtil.format(subtotal,2));
+		pBeanReport.setIva(NumberFormatUtil.format(subtotal.multiply(new BigDecimal(0.16)),2));
+		pBeanReport.setTotal(NumberFormatUtil.format(subtotal.multiply(new BigDecimal(1.16)),2));
+		
+		
+		
+		Gson gson = new Gson();
+		pBeanReport.setJsonListProducts(gson.toJson(listadpb));
+		
+		pBeanReport.setProyecto(ta.getProyecto());
+				
+		
+		exportToPdfDevolucion (pBeanReport, ta);
+	}	
+	
+	 @SuppressWarnings({ "rawtypes", "unchecked" })
+	private void exportToPdfDevolucion(ProjectReportBean pBeanReport, DevolucionesAdapter ta) {
+	 
+    	HashMap<String, Object> parametters = new HashMap<String, Object>();
+		parametters.put("REPORT_TITLE", "VALE DE DEVOLUCION");
+		parametters.put("REPORT_DATE", DateFormatUtil.getFormatedDate(new Date(), false));
+		
+		parametters.put("folioMovimiento", ta.getMovimiento().getFolio());
+		parametters.put("ListFromJsonGeneric[jsonListProducts]", getListFromJsonGeneric(pBeanReport.getJsonListProducts()));
+		parametters.put("fecha", DateFormatUtil.getFormatedDate(ta.getMovimiento().getFecha(), true));
+		
+		parametters.put("subtotal", pBeanReport.getSubtotal());
+		parametters.put("iva", pBeanReport.getIva());
+		parametters.put("total", pBeanReport.getTotal());
+		
+		parametters.put("proyecto", ta.getMovimiento().getProyecto().getNombre());
+		parametters.put("area", ta.getMovimiento().getArea().getArea());
+		parametters.put("observaciones", ta.getMovimiento().getObservaciones() == null ? "" : ta.getMovimiento().getObservaciones().trim());
+		parametters.put("responsable", ta.getMovimiento().getEmpleado().getNombre()+" "+ta.getMovimiento().getEmpleado().getAPaterno()+" "+ta.getMovimiento().getEmpleado().getAMaterno());
+		
+		
+		try {
+			List dataSource = new ArrayList();
+			dataSource.add(pBeanReport);
+			String tname = "reporteDevolucion";
+			Media mediaReport = ReportUtil.generateReport(dataSource, "valeDevolucion.jasper", ReportUtil.TASK_PDF, parametters, tname);
+			org.zkoss.zul.Filedownload.save(mediaReport);
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		
+	}
+	
+	 
+	 public static List<HashMap<String, Object>> getListFromJsonGeneric(String json) {
+		List<HashMap<String, Object>> array = new ArrayList<HashMap<String, Object>>();
+		try {
+			JSONArray jsonarray = new JSONArray(json);
+			for (int i = 0; i < jsonarray.length(); i++) {
+				String jsondata = jsonarray.get(i).toString();
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				JSONObject jObject = new JSONObject(jsondata);
+				Iterator<?> keys = jObject.keys();
+
+				while (keys.hasNext()) {
+					String key = (String) keys.next();
+					String value = jObject.getString(key);
+					map.put(key, value);
+				}
+				array.add(map);
+			}
+		} catch (Exception ex) {
+			ex.getCause();
+		}
+		return array;
+ 	}
+	
+	////-----
+	
+	
+	
+	
+
+
+	
 	//devolciones de productos por proyecto entradas y salidas
-	public void loadInOutputProject (Listbox lb, DevolucionesProjectAdapter da, Component win) {
+	public void loadInOutputProject (Listbox lb, DevolucionesAdapter da, Component win) {
 		
 		Combobox prcb = (Combobox) win.getFellowIfAny("prcb");
 		if (prcb != null && prcb.getSelectedItem()!=null ) 
@@ -203,7 +555,7 @@ public class DevolucionesController {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void save (DevolucionesProjectAdapter ea, NavigationState state, Component win) {
+	public void save (DevolucionesAdapter ea, NavigationState state, Component win) {
 		
 		
 		//Listbox lb = (Listbox) win.getFellowIfAny("oplb");
@@ -239,7 +591,7 @@ public class DevolucionesController {
 		Almacen almacen= new Almacen();
 		almacen.setIdAlmacen(SessionUtil.getSucursalId());
 		TiposMovimiento tm= new TiposMovimiento();
-		tm.setIdTipoMovimiento(SystemConstants.ENTRADA_STOCK);
+		//tm.setIdTipoMovimiento(SystemConstants.ENTRADA_STOCK);
 		movimientoEntradaStock.setAlmacen(almacen);
 		movimientoEntradaStock.setTiposMovimiento(tm);
 		movimientoEntradaStock.setFactura(null);
@@ -251,7 +603,7 @@ public class DevolucionesController {
 		movimientoEntradaStock.setArea(null);
 		movimientoEntradaStock.setEmpleado(SessionUtil.getEmpleadoId());
 		
-		Folios fes= foliosManager.getFolioMax (SystemConstants.ENTRADA_STOCK);
+		Folios fes= foliosManager.getFolioMax (SystemConstants.DEVOLUCION);
 		movimientoEntradaStock.setFolio(fes.getAbrev()+"-"+fes.getConsecutivo());
 		
 		ArrayList<DetalleMovimiento> listEntradaStock= new ArrayList<DetalleMovimiento>();
@@ -342,8 +694,40 @@ public class DevolucionesController {
 		state.setUri("/WEB-INF/zul/devoluciones/devoluciones.zul");
 		state.startBreadCrumbsPathFromHome("Devoluciones Proyectos");
 		navigationControl.changeView(win, state);
-		 
 		
 	}
+	
+	
+	public void searchDevolucion(Listbox lb, DevolcionSearchAdapter dsa, NavigationState state){
+		ArrayList<Movimientos> movimientos = this.transactionManager.searchDevolucion(dsa);
+		
+		ListModelList<Movimientos> model = new ListModelList<Movimientos>(movimientos);
+		lb.setModel(model);
+	}
+
+	public void showDev(Listbox lb, NavigationState state, Component win){
+		if (lb.getSelectedIndex() >= 0) {
+			Movimientos movimiento = (Movimientos)lb.getModel().getElementAt(lb.getSelectedIndex());
+			
+			state.setDetailIdentifier(movimiento.getIdMovimiento());
+			state.setUri("/WEB-INF/zul/devoluciones/detail.zul");
+			state.appendBreadCrumbsPath(movimiento.getFolio());
+			
+			
+			ArrayList<Integer> detailList = new ArrayList<Integer>();
+			ArrayList<String> detailLabels = new ArrayList<String>();
+			for (int i = 0; i < lb.getModel().getSize(); i++) {
+				Movimientos in = (Movimientos)lb.getModel().getElementAt(i);
+				detailList.add(in.getIdMovimiento());
+				detailLabels.add(in.getFolio());
+				if (in.getIdMovimiento().equals(movimiento.getIdMovimiento())) state.setDetailIndex(detailList.size() - 1);
+			}
+			state.setDetailList(detailList);
+			state.setDetailLabels(detailLabels);
+			this.navigationControl.changeView(win, state);
+		}
+	}
+	
+	
 
 }

@@ -44,11 +44,14 @@ public class SystemConstants {
 	// movimientos almacen
 	public static final Integer ENTRADA_COMPRA= 1;
 	public static final Integer ENTRADA_REASIGNACIÓN= 2;
-	public static final Integer DEVOLUCION_REASIGNACION= 3;
+	public static final Integer DEVOLUCION= 3;
 	public static final Integer SALIDA_VALE= 4;
 	public static final Integer SALIDA_REASIGNACION= 5;
-	public static final Integer ENTRADA_STOCK= 6;
-	public static final Integer SALIDA_STOCK= 7;
+	//public static final Integer ENTRADA_STOCK= 6;
+	//public static final Integer SALIDA_STOCK= 7;
+	public static final Integer TRASPASO_ALMACEN= 8;
+	
+	
 
 	
 	//status movimientos 
@@ -60,6 +63,13 @@ public class SystemConstants {
 	public static final Integer ESTATUS_OC_COMPLETA = 1;
 	public static final Integer ESTATUS_OC_INCOMPLETA = 2;
 	public static final Integer ESTATUS_OC_PARCIAL = 3;
+	
+	
+
+	//status orden compra 
+	public static final Integer ALMACEN_TOLUCA = 1;
+	public static final Integer ALMACEN_TEPALCATES = 2;
+	
 	
 	
 	

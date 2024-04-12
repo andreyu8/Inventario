@@ -112,5 +112,7 @@
 	<!-- iva moneda -->
 	<bean id="ivaController" class="com.seidor.inventario.controller.IvaController" autowire="byName" />
 	<bean id="devolucionesController" class="com.seidor.inventario.controller.DevolucionesController" autowire="byName" />
+	<bean id="traspasosController" class="com.seidor.inventario.controller.TraspasosController" autowire="byName" />
+		
 	
 </beans>

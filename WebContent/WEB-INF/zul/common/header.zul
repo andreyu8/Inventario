@@ -167,13 +167,13 @@
 		}
 		
 		void devolucionesProductos () {
-			state.setUri("/WEB-INF/zul/devoluciones/devoluciones.zul");
+			state.setUri("/WEB-INF/zul/devoluciones/main.zul");
 			state.startBreadCrumbsPathFromHome("Devoluciones");
 			navigationControl.changeView(headerwin, state);
 		}
 		
 		void tranpasosAlmacen () {
-			state.setUri("/WEB-INF/zul/traspasos/traspasos.zul");
+			state.setUri("/WEB-INF/zul/traspasos/main.zul");
 			state.startBreadCrumbsPathFromHome("Traspasos Almacén");
 			navigationControl.changeView(headerwin, state);
 		}	
@@ -229,12 +229,12 @@
 							<custom-attributes roleList="ADMIN" />
 						</menuitem>
 						<menuseparator/>
-						<menuitem label="Productos stock" onClick="productStock();" iconSclass="fas fa-warehouse" >
+						<!-- <menuitem label="Productos stock" onClick="productStock();" iconSclass="fas fa-warehouse" >
 							<custom-attributes roleList="ADMIN" />
 						</menuitem>
 						<menuseparator >
 							<custom-attributes roleList="ADMIN" />
-						</menuseparator>
+						</menuseparator>-->
 						
 						<!--  <menuitem label="Reasignación" onClick="changeProduct();" iconSclass="fas fa-undo" >
 							<custom-attributes roleList="ADMIN" />

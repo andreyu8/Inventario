@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,6 +27,7 @@ import com.google.gson.Gson;
 import com.seidor.inventario.adapter.TransactionAdapter;
 import com.seidor.inventario.adapter.beans.CuentasBean;
 import com.seidor.inventario.adapter.beans.DetailProductBean;
+import com.seidor.inventario.adapter.beans.GroupByProyectOrdreIdBean;
 import com.seidor.inventario.adapter.beans.ProjectReportBean;
 import com.seidor.inventario.adapter.listitem.DetailTransactionitemAdapter;
 import com.seidor.inventario.adapter.render.DetailTransactionListitemRenderer;
@@ -593,6 +596,8 @@ public class TransactionController {
 		Entrada e= new Entrada();
 		Producto p= new Producto();
 		
+		ArrayList<GroupByProyectOrdreIdBean> listProyectOrderId= this.productManager.groupByProyectOrderId(ta.getMovimientos().getOrdenCompra().getIdOrdenCompra());
+		
 		for (DetalleMovimiento doc : listDetailTransactionENT) {
 			
 			e= new Entrada();
@@ -622,11 +627,14 @@ public class TransactionController {
 			p.setCantidad(p.getCantidad() + doc.getCantidad());
 			p.setPrecioCompra(doc.getPrecioUnitario());
 			
+			
 			listEntrada.add(e);
 			listProducto.add(p);
+			
+			
 		}
 		
-		this.transactionManager.saveEntrada(ta.getFactura(), ta.getMovimientos(), listDetailTransactionENT, fte, listEntrada, listProducto);
+		this.transactionManager.saveEntrada(ta.getFactura(), ta.getMovimientos(), listDetailTransactionENT, fte, listEntrada, agruparEntradas(listProducto, listProyectOrderId));
 		
 		SessionUtil.setSessionAttribute("listDetailTransactionENT", new ArrayList<DetalleMovimiento>());
 		
@@ -639,6 +647,81 @@ public class TransactionController {
 	
 	
 	
+	private ArrayList<Producto> agruparEntradas(ArrayList<Producto> listProducto, ArrayList<GroupByProyectOrdreIdBean> listProyectOrderId) {
+
+		if (listProyectOrderId.size() > 0) {
+		
+			ArrayList<Producto> p= new ArrayList<Producto>();
+			ArrayList<Producto> Pduplicado= new ArrayList<Producto>();
+						
+			Boolean duplicadoFlag= Boolean.FALSE;
+			
+			
+			for (Producto po : listProducto) {
+				
+				duplicadoFlag= validaDuplicado(po, listProyectOrderId);
+				
+				if (duplicadoFlag)
+					Pduplicado.add(po);
+				
+				if (!duplicadoFlag)
+					p.add(po);
+			}
+			
+			
+			for (GroupByProyectOrdreIdBean gpo : listProyectOrderId) {
+
+				Double cantidadTmp=0.0;
+				Producto pfinal= new Producto();
+				Producto pCantidad= productManager.get(gpo.getProductoId());
+				
+				System.out.println("cantidad producto real: " +pCantidad.getCantidad());
+												
+				for (Producto pd : Pduplicado ) {
+					
+					if (pd.getIdProducto() == gpo.getProductoId()) {
+						pd.setCantidad((pd.getCantidad() - pCantidad.getCantidad())+cantidadTmp);
+						cantidadTmp= pd.getCantidad();
+						pfinal= pd;
+						System.out.println("cantidad tmp: "+ cantidadTmp+" cant ent: " +pd.getCantidad());
+					}
+					
+				}
+				
+				System.out.println("cantidad: " +pfinal.getCantidad());
+				
+				pfinal.setCantidad(pCantidad.getCantidad() + pfinal.getCantidad());
+				p.add(pfinal);
+			}
+			
+			
+			
+			 return p;
+		 
+		} 
+		else
+			return listProducto;
+	
+	}
+
+	private Boolean validaDuplicado(Producto po, ArrayList<GroupByProyectOrdreIdBean> listProyectOrderId) {
+	
+		Boolean dupicadoFlag= Boolean.FALSE;
+		
+		for (GroupByProyectOrdreIdBean gpo : listProyectOrderId) {
+			
+			if (po.getIdProducto() == gpo.getProductoId()) {
+				dupicadoFlag= Boolean.TRUE;
+				break;
+			}	
+			
+		}
+		
+		return dupicadoFlag;
+	}
+	
+	
+
 	@SuppressWarnings("unchecked")
 	public void updateSalida(TransactionAdapter ta, NavigationState state, Component win){
 		

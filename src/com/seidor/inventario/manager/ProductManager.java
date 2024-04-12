@@ -6,6 +6,7 @@ import com.seidor.inventario.adapter.beans.CierreBean;
 import com.seidor.inventario.adapter.beans.CloseBean;
 import com.seidor.inventario.adapter.beans.DevolucionBean;
 import com.seidor.inventario.adapter.beans.EntradasProyectoBean;
+import com.seidor.inventario.adapter.beans.GroupByProyectOrdreIdBean;
 import com.seidor.inventario.adapter.beans.ProveedoresBean;
 import com.seidor.inventario.adapter.beans.ReasignedBean;
 import com.seidor.inventario.adapter.beans.ReportCostoInventario;
@@ -124,5 +125,8 @@ public class ProductManager {
 		return this.productDao.getAllProduct ();
 	}
 	
+	public ArrayList<GroupByProyectOrdreIdBean> groupByProyectOrderId (int ordenId) {
+		return this.productDao.groupByProyectOrderId (ordenId);
+	}
 
 }

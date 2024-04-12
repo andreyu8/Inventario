@@ -12,7 +12,9 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
+import com.seidor.inventario.adapter.search.DevolcionSearchAdapter;
 import com.seidor.inventario.adapter.search.TransactionSearchAdapter;
+import com.seidor.inventario.adapter.search.TraspasoSearchAdapter;
 import com.seidor.inventario.constants.SystemConstants;
 import com.seidor.inventario.model.DetalleMovimiento;
 import com.seidor.inventario.model.Entrada;
@@ -333,6 +335,97 @@ public class TransactionDAO extends HibernateDaoSupport{
 			throw new RuntimeException(ex);
 		}	
 		
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Movimientos> searchDevolucion(DevolcionSearchAdapter dsa) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = DaoUtil.getCriteria(session, Movimientos.class);
+		
+		criteria.setFetchMode("almacen", FetchMode.JOIN);
+		criteria.setFetchMode("factura", FetchMode.JOIN);
+		criteria.setFetchMode("ordenCompra", FetchMode.JOIN);
+		criteria.setFetchMode("tiposMovimiento", FetchMode.JOIN);
+		criteria.setFetchMode("proyecto", FetchMode.JOIN);
+		criteria.setFetchMode("area", FetchMode.JOIN);
+		criteria.setFetchMode("empleado", FetchMode.JOIN);
+
+		
+		if (dsa.getNumeroFolio() != null)
+			criteria.add(Restrictions.ilike("folio", dsa.getNumeroFolio(), MatchMode.ANYWHERE));
+		
+		criteria.add(Restrictions.eq("tiposMovimiento.idTipoMovimiento", SystemConstants.DEVOLUCION));
+		criteria.add(Restrictions.eq("almacen.idAlmacen", SessionUtil.getSucursalId()));
+		
+		criteria.addOrder(Order.asc("idMovimiento"));
+		List<Movimientos> result = criteria.list();
+		session.flush();
+		session.close();
+		
+		return new ArrayList<Movimientos>(result);
+	}
+
+	public void saveDevolucion(Movimientos movimiento, ArrayList<DetalleMovimiento> listDetailTransactionDEV, Folios fte, ArrayList<Producto> listProducto) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		
+		Transaction transaction = session.beginTransaction();
+		
+		try {
+
+			DaoUtil.prepareToSave(movimiento);
+			session.save(movimiento);
+			
+			for (DetalleMovimiento dm : listDetailTransactionDEV) {
+				dm.setMovimientos(movimiento);
+				DaoUtil.prepareToSave(dm);
+				session.save(dm);
+			}
+			
+			fte.setConsecutivo(fte.getConsecutivo()+1);
+			DaoUtil.prepareToUpdate(fte);
+			session.update(fte);
+			
+			for (Producto p : listProducto) {
+				DaoUtil.prepareToUpdate(p);
+				session.update(p);
+			}
+			
+			transaction.commit();
+			session.flush();
+			session.close();
+		} catch (Exception ex) {
+			transaction.rollback();
+			session.close();
+			throw new RuntimeException(ex);
+		}	
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Movimientos> searchTraspasos(TraspasoSearchAdapter dsa) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = DaoUtil.getCriteria(session, Movimientos.class);
+		
+		criteria.setFetchMode("almacen", FetchMode.JOIN);
+		criteria.setFetchMode("factura", FetchMode.JOIN);
+		criteria.setFetchMode("ordenCompra", FetchMode.JOIN);
+		criteria.setFetchMode("tiposMovimiento", FetchMode.JOIN);
+		criteria.setFetchMode("proyecto", FetchMode.JOIN);
+		criteria.setFetchMode("area", FetchMode.JOIN);
+		criteria.setFetchMode("empleado", FetchMode.JOIN);
+
+		
+		if (dsa.getNumeroFolio() != null)
+			criteria.add(Restrictions.ilike("folio", dsa.getNumeroFolio(), MatchMode.ANYWHERE));
+		
+		criteria.add(Restrictions.eq("tiposMovimiento.idTipoMovimiento", SystemConstants.TRASPASO_ALMACEN));
+		criteria.add(Restrictions.eq("almacen.idAlmacen", SessionUtil.getSucursalId()));
+		
+		criteria.addOrder(Order.asc("idMovimiento"));
+		List<Movimientos> result = criteria.list();
+		session.flush();
+		session.close();
+		
+		return new ArrayList<Movimientos>(result);
 	}
 	
 

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.seidor.inventario.adapter.search.DevolcionSearchAdapter;
 import com.seidor.inventario.adapter.search.TransactionSearchAdapter;
+import com.seidor.inventario.adapter.search.TraspasoSearchAdapter;
 import com.seidor.inventario.dao.TransactionDAO;
 import com.seidor.inventario.model.DetalleMovimiento;
 import com.seidor.inventario.model.Entrada;
@@ -79,6 +81,18 @@ public class TransactionManager {
 			Folios fes, Movimientos movimientoSalidaReasignacion, ArrayList<DetalleMovimiento> listSalidaReasignacion, Folios fsr) {
 		this.transactionDao.saveDevoluciones (listProducto, movimientoEntradaStock, listEntradaStock, fes, movimientoSalidaReasignacion, listSalidaReasignacion, fsr);
 		
+	}
+
+	public ArrayList<Movimientos> searchDevolucion(DevolcionSearchAdapter dsa) {
+		return this.transactionDao.searchDevolucion (dsa);
+	}
+
+	public void saveDevolucion(Movimientos movimiento, ArrayList<DetalleMovimiento> listDetailTransactionDEV, Folios fte, ArrayList<Producto> listProducto) {
+		this.transactionDao.saveDevolucion(movimiento, listDetailTransactionDEV, fte, listProducto);
+	}
+
+	public ArrayList<Movimientos> searchTraspasos(TraspasoSearchAdapter dsa) {
+		return this.transactionDao.searchTraspasos (dsa);
 	}
 
 

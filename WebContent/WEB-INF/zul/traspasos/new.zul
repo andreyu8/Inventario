@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="winTras" border="none" apply="org.zkoss.bind.BindComposer" >
+	
+	<zscript>
+		import com.seidor.inventario.adapter.TraspasosAdapter;
+		import com.seidor.inventario.navigation.*;
+		import java.math.BigDecimal;
+		
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		
+		TraspasosAdapter traspasosAdapter = traspasosController.read();
+		
+		
+		public void cancel(){
+			navigationControl.changeToPrevious(winTras);
+		}
+		
+		public void save(){
+			fcv.validate(winTras);
+			traspasosController.saveTransactionTras(traspasosAdapter, state, winTras);
+		}
+				
+	</zscript>
+	
+	<div class="row sectionBoxAlt animated aniFadeIn">
+		<div class="row">
+			<div class="col-md-8">
+				<h:span style="padding-top: 5px; display: block;" />
+				<div align="left" style="float: left;" >
+					<label value="" sclass="sectionTitle" />
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div align="right" style="float: right;" >
+					<button label="cancelar" sclass="btn btn-warning" onClick="cancel();" iconSclass="z-icon-times" />
+					<button label="guardar" sclass="btn btn-success" onClick="save();" iconSclass="z-icon-check" />
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row subBoxAlt animated aniFadeIn" >
+		<div class="col-md-12">
+			<label value="" />
+		</div>
+	</div>
+	<div class="container animated aniFadeIn" >
+		<div class="row editBox">
+		
+			
+			<div class="col-md-4">
+				<label value="Area*" sclass="editField" />
+				<h:p> <combobox value="@bind(traspasosAdapter.movimiento.area.area)"
+									onChange="employeeController.loadCatalogChild(self, areaempcb)"
+							 		onCreate="areaController.loadArea(self);" 
+						 			id="areacb" constraint="${cmv}"/> </h:p>
+			</div>	
+			
+			
+			<div class="col-md-4">
+				<label value="Solicitante*" sclass="editField" />
+				<h:p> <combobox value="@bind(traspasosAdapter.movimiento.empleado.nombre)"
+						 			id="areaempcb" constraint="${cmv}"/> </h:p>
+			</div>	
+			
+			<div class="col-md-6">
+				<label value="Almacen Origen " sclass="editField" />
+				<h:p>
+					 <textbox value="@bind(traspasosAdapter.desAlmacenOrigen)" readonly="true"/> 
+				</h:p>
+			</div>	
+			
+			<div class="col-md-6">
+				<label value="Almacen Destino " sclass="editField" />
+				<h:p>
+					 <textbox value="@bind(traspasosAdapter.desAlmacenDestino)"  readonly="true"/> 
+				</h:p>
+			</div>
+			
+			
+				
+			<div  class="col-md-12" align="right">
+		  		<label value="Producto " />
+		  		<combobox onCreate="productController.loadNameProduct(self);" id="productcb" width="600px"/>
+		  
+		    	<button tooltiptext="Añadir producto" iconSclass="z-icon-plus-circle"  onClick="traspasosController.addProduct(productcb, prolb);" />
+		  	
+		  	</div>
+			  		
+		  
+	        <div class="col-md-12" style="padding: 0px;" >
+				<listbox id="prolb" onCreate="traspasosController.loadProducts(self,idtcoin, true)" emptyMessage="" style="margin: 0; height: 100%; padding: 1% 0 1% 0;" >
+					<custom-attributes pa="@{ocSave}" />
+					<listhead>
+						<listheader label="Código" hflex="5" align="center" />
+						<listheader label="Producto" hflex="5" align="center" />
+						<listheader label="Cantidad Total" hflex="2" align="center" />
+						<listheader label="Unidad de medida" hflex="5" align="center" />
+						<listheader label="Precio Unitario" hflex="3" align="center" />
+						<listheader label="Subtotal" hflex="2" align="center" />
+						<listheader label="Cant.Tras." hflex="2" align="center" />
+						<listheader label="Acciones" hflex="2"  align="center" />
+					</listhead>	
+					<listfoot>
+						<listfooter></listfooter>
+						<listfooter></listfooter>
+						<listfooter></listfooter>
+						<listfooter></listfooter>
+						<listfooter align="right" width="100%">
+							<label id="idtcoin" value="0.0"/>
+						</listfooter>
+					</listfoot>	
+				</listbox>
+			</div>
+		
+			<separator spacing="10px" />	
+				
+				
+		</div>
+		
+		
+		
+		
+	</div>
+	
+		
+</window>
+</zk>
