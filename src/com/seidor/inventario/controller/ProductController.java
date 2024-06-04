@@ -1,19 +1,10 @@
 package com.seidor.inventario.controller;
 
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -53,6 +44,7 @@ import com.seidor.inventario.model.UnidadMedida;
 import com.seidor.inventario.navigation.NavigationControl;
 import com.seidor.inventario.navigation.NavigationState;
 import com.seidor.inventario.navigation.NavigationStates;
+import com.seidor.inventario.util.ExportExcelFiles;
 import com.seidor.inventario.util.ReportUtil;
 import com.seidor.inventario.util.SessionUtil;
 import com.seidor.inventario.util.StringUtil;
@@ -556,111 +548,11 @@ public class ProductController {
 	
 	public void exportProductExcel(Listbox lisbox) throws IOException{
 		
-		//ExporterUtil.excel(lisbox);
-		
 		ArrayList<Producto> products = this.productManager.getAllProduct();
-		
-		ArrayList<String> asb = new ArrayList<>();
-		StringBuilder sb= null;
-		
-		
-		for (Producto p : products) {
-			
-			sb = new StringBuilder();
-			
-			sb.append(p.getCodigo());
-			sb.append("|");
-			sb.append(p.getNombre());
-			sb.append("|");
-			sb.append(p.getAlmacen().getAlmacen());
-			sb.append("|");
-			sb.append(p.getCategoria().getCategoria());
-			sb.append("|");
-			sb.append(p.getUnidadMedida().getDescripcion());
-			sb.append("|");
-			sb.append(p.getCantidad());
-			sb.append("|");
-			sb.append(p.getPrecioCompra());
-			
-			asb.add(sb.toString());
-		}
-		
-		//exportFileExcel (asb);
-		//prueba();
-	}
-	
-	/*private void exportFileExcel (ArrayList<String> cadenas) throws IOException {
-		
-		// creating workbook
-		HSSFWorkbook workbook = new HSSFWorkbook();
-		
-		
-		// creating sheet with name "Report" in workbook
-		HSSFSheet sheet = workbook.createSheet("Reporte");
-
-		
-		// Creamos un formato para las celdas
-        HSSFCellStyle style = workbook.createCellStyle();        
-
-        // Especificamente que *siempre* muestre dos digitos enteros y dos decimales
-        style.setDataFormat(workbook.createDataFormat().getFormat("00.00"));
-		
-		// headers
-		createHeader(sheet, workbook);
-		
-		int rowCount = 0;
-		for (String value : cadenas) {
-			
-			// creating row 
-			Row row = sheet.createRow(++rowCount);
-			
-			StringTokenizer multiTokenizer = new StringTokenizer(value, "|");
-			
-				int rowCell = 0;
 				
-			while (multiTokenizer.hasMoreTokens()) {
-				
-				// adding first cell to the row
-				Cell idCell = row.createCell(rowCell);
-			
-				if (rowCell == 0 || rowCell == 1 || rowCell == 2 || rowCell == 3 || rowCell == 4) 
-					idCell.setCellValue(multiTokenizer.nextToken());
-				else 
-					idCell.setCellValue(Double.parseDouble(multiTokenizer.nextToken()));
-					
-				
-				if (rowCell > 4 && rowCell != 5) {
-					idCell.setCellStyle(style);
-				}
-			
-				rowCell ++;
-			}
-				
-		}
-		
-		//crear reporte
-	 *  ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
-	    workbook.write(outByteStream);
-	    byte[] outArray = outByteStream.toByteArray();
-	    
-	    AMedia amedia = new AMedia("ReporteProductos.xlsx", "xls", "application/file", outArray);
-		Filedownload.save(amedia);
-	    
-		outByteStream.close();
+		ExportExcelFiles.exportFileExcel (products);
 		
 	}
-	
-	private void createHeader(HSSFSheet sheet, HSSFWorkbook workbook) {
-		Row encabezado  = sheet.createRow(0);
-		encabezado.createCell(1).setCellValue("Codigo");
-		encabezado.createCell(2).setCellValue("Nombre");
-		encabezado.createCell(3).setCellValue("Almacen");
-		encabezado.createCell(4).setCellValue("Categoria");
-		encabezado.createCell(5).setCellValue("Unidad de medida");
-		encabezado.createCell(6).setCellValue("Cantidad");
-		encabezado.createCell(7).setCellValue("Precio unitario");
 		
-	}*/
-	
 		
 }

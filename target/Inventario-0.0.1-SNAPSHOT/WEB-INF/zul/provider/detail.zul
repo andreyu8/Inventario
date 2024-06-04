@@ -86,6 +86,16 @@
 			<label value="Días de crédito" sclass="editField" />
 			<h:p> <label value="${providerDetail.proveedor.diasCredito}" sclass="detailData"/> </h:p>
 		</div>	
+		
+		<div class="col-md-2">
+			<label value="Vendedor" sclass="editField" />
+			<h:p> <label value="${providerDetail.proveedor.vendedor}" sclass="detailData"/> </h:p>
+		</div>	
+		
+		<div class="col-md-3">
+			<label value="Tipo de moneda" sclass="detailField" />
+			<h:p> <label value="${providerDetail.proveedor.tipoMoneda.moneda}" sclass="detailData" /> </h:p>
+		</div>
         
        <div class="col-md-3">
        		<h:p> 

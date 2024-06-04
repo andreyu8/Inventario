@@ -54,7 +54,7 @@
 			
 			<div class="col-md-4">
 				<label value="RFC*" sclass="editField" />
-				<h:p> <textbox value="@bind(providerSave.proveedor.rfc)" constraint="${tmv}" /> </h:p>
+				<h:p> <textbox value="@bind(providerSave.proveedor.rfc)" constraint="${rfcv}" /> </h:p>
 			</div>
 			
 			<div class="col-md-4">
@@ -102,6 +102,19 @@
 				<label value="Días de crédito" sclass="editField" />
 				<h:p> <intbox value="@bind(providerSave.proveedor.diasCredito)" /> </h:p>
 			</div>	
+			
+			<div class="col-md-4">
+				<label value="Vendedor*" sclass="editField" />
+				<h:p> <textbox value="@bind(providerSave.proveedor.vendedor)" /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+				<label value="Tipo de moneda*" sclass="editField" />
+				<h:p> <combobox value="@bind(providerSave.proveedor.tipoMoneda.moneda)"
+							 		onCreate="coinController.loadTypeCion(self);" 
+						 			id="tmcb" constraint="${cmv}"/> </h:p>
+			</div>	
+			
 			
 			<div class="col-md-12">
 				<label value="Datos bancarios" />

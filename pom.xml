@@ -297,8 +297,16 @@
 	            <artifactId>poi-scratchpad</artifactId>
 	            <version>3.10.1</version>
 	            <scope>provided</scope>
-	        </dependency>
-	        
+	        </dependency> 
+	     
+	     
+	     	<!-- https://mvnrepository.com/artifact/org.apache.xmlbeans/xmlbeans -->
+			<dependency>
+			    <groupId>org.apache.xmlbeans</groupId>
+			    <artifactId>xmlbeans</artifactId>
+			    <version>3.1.0</version>
+			</dependency>
+
 	        
 	        <!-- itext - Exportación a PDF de ZK-->
 			<!-- https://mvnrepository.com/artifact/com.lowagie/itext -->

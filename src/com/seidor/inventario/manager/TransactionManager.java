@@ -95,5 +95,9 @@ public class TransactionManager {
 		return this.transactionDao.searchTraspasos (dsa);
 	}
 
+	public Movimientos getExistOC(Integer idOrdenCompra) {
+		return this.transactionDao.getExistOC (idOrdenCompra);
+	}
+
 
 }

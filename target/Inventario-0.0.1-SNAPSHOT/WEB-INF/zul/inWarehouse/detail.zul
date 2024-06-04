@@ -1,6 +1,174 @@
-<?page title="new page title" contentType="text/html;charset=UTF-8"?>
-<zk>
-<window title="new page title" border="normal">
-New Content Here!
+<!DOCTYPE html>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
+<window id="winInv" border="none" apply="org.zkoss.bind.BindComposer" >
+	
+	<zscript>
+		import com.seidor.inventario.adapter.TransactionAdapter;
+		import com.seidor.inventario.navigation.*;
+		
+		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
+		
+		TransactionAdapter transactionDetail = transactionController.read(state.getDetailIdentifier());
+		
+		
+		public void modify(){
+			state.setUri("/WEB-INF/zul/inWarehouse/edit.zul");
+			state.appendBreadCrumbsPath("Editar");
+			state.setDetailIndex(null);
+			state.setDetailList(null);
+			state.setDetailLabels(null);
+			navigationControl.changeView(winInv, state);
+		}
+		
+		public void printPDFmov() {
+			transactionController.createReportData(transactionDetail, winInv);
+		}	
+		
+		
+	</zscript>
+	
+	<div class="row sectionBox animated aniFadeIn">
+		<div class="col-md-6" align="left" >
+			<h:span style="padding-top: 5px; display: block;" />
+			<label value="Detalle de la entrada" sclass="sectionTitle" />
+			<label value="(${transactionDetail.factura.numeroFactura})" style="font-size: 12px;" />
+		</div>
+		<div class="col-md-6" align="right" >
+			<button label="modificar" onClick="modify();" iconSclass="z-icon-pencil" />
+		</div>
+	</div>
+	
+	<div class="row subBox animated aniFadeIn">
+		<div class="col-md-12">
+			<label value="" />
+		</div>
+	</div>
+	<div class="row container animated aniFadeIn" >
+	
+		<!-- <div class="col-md-3">
+			<label value="Id movimiento" sclass="detailField" />
+			<h:p> <label value="${transactionDetail.movimientos.idMovimiento}" sclass="detailData" /> </h:p>
+		</div> -->
+		
+		<div class="col-md-3">
+			<label value="Folio" sclass="detailField" />
+			<h:p> <label value="${transactionDetail.movimientos.folio}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Tipo movimiento" sclass="detailField" />
+			<h:p> <label value="${transactionDetail.movimientos.tiposMovimiento.descripcion}" sclass="detailData" /> </h:p>
+		</div>
+	
+		<!-- <div class="col-md-3">
+			<label value="Id factura" sclass="detailField" />
+			<h:p> <label value="${transactionDetail.factura.idFactura}" sclass="detailData" /> </h:p>
+		</div> -->
+		<div class="col-md-3">
+			<label value="Número de factura" sclass="detailField" />
+			<h:p> <label value="${transactionDetail.factura.numeroFactura}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Fecha" sclass="detailField" />
+			<h:p> <label value="${transactionDetail.factura.fecha}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<separator spacing="10px" />
+		
+		 <div class="col-md-6">
+       		<h:p> 
+				<label value="Nota" sclass="detailField" />
+			</h:p>	
+			<h:p> 
+				<label value="${transactionDetail.factura.notas}" class="alert alert-success"  /> 
+			</h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="No Orden de compra" sclass="detailField" />
+			<h:p> <label value="${transactionDetail.ordenCompra.idOrdenCompra}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Descripción Orden de compra" sclass="detailField" />
+			<h:p> <label value="${transactionDetail.ordenCompra.descripcion}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Proyecto" sclass="detailField" />
+			<h:p> <label value="${transactionDetail.ordenCompra.proyecto.nombre}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="No. presupuesto" sclass="detailField" />
+			<h:p> <label value="${transactionDetail.ordenCompra.proyecto.numeroPresupuesto}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Lugar de entrega" sclass="detailField" />
+			<h:p> <label value="${transactionDetail.ordenCompra.lugarEntrega}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Estatus de la orden de compra" sclass="detailField" />
+			<h:p> <label value="${transactionDetail.ordenCompra.estatusOrdenCompra.descripcion}" sclass="detailData" /> </h:p>
+		</div>
+		
+		
+		<div class="col-md-6" align="right" >
+			<button label="PDF" onClick="printPDFmov();" iconSclass="z-icon-pencil" />
+		</div>
+		
+		
+		<div class="animated aniFadeIn" >	
+			<listbox id="ocinvlb" onCreate="transactionController.getDetailMovimientos (transactionDetail, ocinvlb, idtcoin)" emptyMessage="No se encontrarón categorías para mostrar" >
+				<auxhead>
+	            	<auxheader colspan="6" align="center" style=" background: green;">Productos OC</auxheader>
+	            	<auxheader colspan="2" align="center">Entrada Almacen</auxheader>
+	        	</auxhead>
+				<listhead>
+					<listheader label="Código" hflex="3" />
+					<listheader label="Producto" hflex="3" />
+					<listheader label="Cantidad" hflex="2" />
+					<listheader label="U.medida" hflex="3" />
+					<listheader label="Precio" hflex="3" />
+					<listheader label="Total" hflex="2" />
+					<listheader label="Entrada" hflex="2" />
+					<listheader label="Faltante" hflex="2" />
+				</listhead>
+				<template name="model" >
+					<listitem >
+						<listcell label="${each.producto.codigo}" />
+						<listcell label="${each.producto.nombre}" />
+						<listcell label="${each.cantidadTotal}" />
+						<listcell label="${each.producto.unidadMedida.descripcion}" />
+						<listcell label="${each.precioUnitario}" />
+						<listcell label="${each.cantidad * each.precioUnitario}" />
+						<listcell label="${each.cantidad}" />
+						<listcell label="${each.cantidadTotal - each.cantidad}" />
+					</listitem>
+				</template>
+				<listfoot>
+					<listfooter></listfooter>
+					<listfooter></listfooter>
+					<listfooter></listfooter>
+					<listfooter></listfooter>
+					<listfooter align="right" width="100%">
+						<label id="idtcoin" value="0.0"/>
+					</listfooter>
+				</listfoot>	
+				
+			</listbox>
+			<pagingsize />
+		</div>
+		
+	</div>
+	
+	<separator spacing="10px" />
+	
 </window>
 </zk>

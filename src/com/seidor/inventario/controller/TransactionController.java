@@ -509,6 +509,7 @@ public class TransactionController {
 		comp = comp.getNextSibling();
 		comp = comp.getNextSibling();
 		comp = comp.getNextSibling();
+		comp = comp.getNextSibling();
 		
 		Hlayout devCant= (Hlayout) comp.getFirstChild();
 		IREditableDoublebox quantitybox = (IREditableDoublebox) devCant.getFirstChild();
@@ -520,7 +521,8 @@ public class TransactionController {
 		double compCant = doc.getCantidadTotal() - (doc.getCantidad() + quantitybox.getValue());
 		Boolean flagUpdateOC = Boolean.FALSE; 
 		
-		if(compCant >= 0) {
+		if(quantitybox.getValue() > 0 && compCant >= 0) {
+			
 			flagUpdateOC = Boolean.TRUE;
 		} else
 		if (compCant < 0) {
@@ -603,34 +605,35 @@ public class TransactionController {
 			e= new Entrada();
 			p = productManager.get(doc.getProducto().getIdProducto());	
 			 
-			e.setIdEntrada(0);
-			e.setCantidad(doc.getCantidad());
-			e.setEmpleado(SessionUtil.getEmpleadoId());
-			e.setFactura(ta.getFactura());
-			e.setAlmacen(doc.getProducto().getAlmacen());
-			e.setOrdenCompra(ta.getOrdenCompra());
-			System.out.println("oc id: "+ta.getOrdenCompra().getIdOrdenCompra());
-			Proyecto proyecto= new Proyecto();
-			proyecto.setIdProyecto(ta.getOrdenCompra().getProyecto().getIdProyecto());
-			e.setProyecto(proyecto);
-			e.setProducto(p);
-			Ubicacion u= new Ubicacion();
-			u.setIdUbicacion(SessionUtil.getSucursalId());
-			e.setUbicacion(u);
-			UnidadMedida um= new UnidadMedida();
-			um.setIdUnidadMedida(p.getUnidadMedida().getIdUnidadMedida());
-			e.setUnidadMedida(um);
-			e.setFecha(new Date());
-			e.setPrecioUnitario(doc.getPrecioUnitario());
-			e.setEstatus(SystemConstants.ENTRADA_POR_COMPRA);
-			
-			p.setCantidad(p.getCantidad() + doc.getCantidad());
-			p.setPrecioCompra(doc.getPrecioUnitario());
-			
-			
-			listEntrada.add(e);
-			listProducto.add(p);
-			
+			if (doc.getCantidad() > 0) {
+				e.setIdEntrada(0);
+				e.setCantidad(doc.getCantidad());
+				e.setEmpleado(SessionUtil.getEmpleadoId());
+				e.setFactura(ta.getFactura());
+				e.setAlmacen(doc.getProducto().getAlmacen());
+				e.setOrdenCompra(ta.getOrdenCompra());
+				System.out.println("oc id: "+ta.getOrdenCompra().getIdOrdenCompra());
+				Proyecto proyecto= new Proyecto();
+				proyecto.setIdProyecto(ta.getOrdenCompra().getProyecto().getIdProyecto());
+				e.setProyecto(proyecto);
+				e.setProducto(p);
+				Ubicacion u= new Ubicacion();
+				u.setIdUbicacion(SessionUtil.getSucursalId());
+				e.setUbicacion(u);
+				UnidadMedida um= new UnidadMedida();
+				um.setIdUnidadMedida(p.getUnidadMedida().getIdUnidadMedida());
+				e.setUnidadMedida(um);
+				e.setFecha(new Date());
+				e.setPrecioUnitario(doc.getPrecioUnitario());
+				e.setEstatus(SystemConstants.ENTRADA_POR_COMPRA);
+				
+				p.setCantidad(p.getCantidad() + doc.getCantidad());
+				p.setPrecioCompra(doc.getPrecioUnitario());
+				
+				
+				listEntrada.add(e);
+				listProducto.add(p);
+			}
 			
 		}
 		

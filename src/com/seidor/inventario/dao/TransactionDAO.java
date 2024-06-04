@@ -159,13 +159,15 @@ public class TransactionDAO extends HibernateDaoSupport{
 			session.save(movimiento);
 			
 			for (DetalleMovimiento dm : listDetailTransactionENT) {
-				dm.setMovimientos(movimiento);
-				DaoUtil.prepareToSave(dm);
-				session.save(dm);
-				
-				//se actualiza el valor sumandole el que tenia por default
-				dm.getDetalleOrdenCompra().setCantidadFactura(dm.getDetalleOrdenCompra().getCantidadFactura() + dm.getCantidad());
-				session.update(dm.getDetalleOrdenCompra());
+				if (dm.getCantidad() > 0.0) {
+					dm.setMovimientos(movimiento);
+					DaoUtil.prepareToSave(dm);
+					session.save(dm);
+					
+					//se actualiza el valor sumandole el que tenia por default
+					dm.getDetalleOrdenCompra().setCantidadFactura(dm.getDetalleOrdenCompra().getCantidadFactura() + dm.getCantidad());
+					session.update(dm.getDetalleOrdenCompra());
+				}	
 			}
 			
 			fte.setConsecutivo(fte.getConsecutivo()+1);
@@ -426,6 +428,20 @@ public class TransactionDAO extends HibernateDaoSupport{
 		session.close();
 		
 		return new ArrayList<Movimientos>(result);
+	}
+
+	public Movimientos getExistOC(Integer idOrdenCompra) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = DaoUtil.getCriteria(session, Movimientos.class);
+
+		criteria.setFetchMode("ordenCompra", FetchMode.JOIN);
+		
+		criteria.add(Restrictions.eq("ordenCompra.idOrdenCompra", idOrdenCompra));
+		
+		Movimientos result = (Movimientos)criteria.uniqueResult();
+		session.flush();
+		session.close();
+		return result;
 	}
 	
 

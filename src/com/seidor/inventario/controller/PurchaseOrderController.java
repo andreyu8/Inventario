@@ -15,9 +15,11 @@ import org.zkoss.util.media.AMedia;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.WrongValueException;
+import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Label;
+import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
@@ -48,6 +50,7 @@ import com.seidor.inventario.manager.ProductManager;
 import com.seidor.inventario.manager.ProjectManager;
 import com.seidor.inventario.manager.ProviderManager;
 import com.seidor.inventario.manager.PurchaseOrderManager;
+import com.seidor.inventario.manager.TransactionManager;
 import com.seidor.inventario.model.Almacen;
 import com.seidor.inventario.model.Area;
 import com.seidor.inventario.model.Cliente;
@@ -57,6 +60,7 @@ import com.seidor.inventario.model.Empleado;
 import com.seidor.inventario.model.EstatusOrdenCompra;
 import com.seidor.inventario.model.Etapa;
 import com.seidor.inventario.model.Factura;
+import com.seidor.inventario.model.Movimientos;
 import com.seidor.inventario.model.OrdenCompra;
 import com.seidor.inventario.model.Producto;
 import com.seidor.inventario.model.Proveedor;
@@ -98,6 +102,10 @@ public class PurchaseOrderController {
 	
 	@Autowired
 	private ProviderManager providerManager;
+	
+	@Autowired
+	private TransactionManager transactionManager;
+	
 	
 	
 	public PurchaseOrderManager getPurchaseOrderManager() {
@@ -165,6 +173,14 @@ public class PurchaseOrderController {
 	public void setProviderManager(ProviderManager providerManager) {
 		this.providerManager = providerManager;
 	}
+	
+	public TransactionManager getTransactionManager() {
+		return transactionManager;
+	}
+
+	public void setTransactionManager(TransactionManager transactionManager) {
+		this.transactionManager = transactionManager;
+	}
 
 	//business logic 
 	public void search(Listbox lb, PurchaseOrderSearchAdapter psa, NavigationState state){
@@ -212,6 +228,7 @@ public class PurchaseOrderController {
 		OrdenCompra oc = new OrdenCompra();
 		oc.setArea(new Area());
 		oc.setCliente(new Cliente());
+		oc.setTipoCambio(new BigDecimal(0.0));
 		oc.setEmpleado(new Empleado());
 		oc.setTipoMoneda(new TipoMoneda());
 		oc.setEtapa(new Etapa());
@@ -472,6 +489,35 @@ public class PurchaseOrderController {
 		}
 		
 		SessionUtil.setSessionAttribute("listDetailOC", new ArrayList<Producto>());
+		
+		NavigationStates navStates = (NavigationStates)SpringUtil.getBean("navigationStates");
+		NavigationState prev = navStates.getPreviousOriginal();
+		prev.removeLastBreadCrumbs();
+		prev.appendBreadCrumbsPath(pa.getOrderCompra().getDescripcion());
+		if (prev.getDetailLabels() != null) {
+			prev.getDetailLabels().set(prev.getDetailIndex(), pa.getOrderCompra().getDescripcion());
+		}
+		this.navigationControl.changeToPrevious(win);
+		
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public void delete(PurcharseAdapter pa, NavigationState state, Component win){
+		
+		
+		//orden de compra
+		Movimientos m= transactionManager.getExistOC (pa.getOrderCompra().getIdOrdenCompra());
+		
+		if (m == null) {
+			
+			this.purchaseOrderManager.delete(pa.getOrderCompra());
+			
+			for (DetalleOrdenCompra d : pa.getDetailtOC() ) {
+				detailOCManager.delete(d);
+			}
+			
+		}
 		
 		NavigationStates navStates = (NavigationStates)SpringUtil.getBean("navigationStates");
 		NavigationState prev = navStates.getPreviousOriginal();
@@ -1206,7 +1252,42 @@ public class PurchaseOrderController {
 
 	}
 
+	
+	public void suggestsProductConstruct(Component win, Listbox lb, String regex) {
+		ArrayList<Producto> p = this.productManager.getProductSuggestedConst(regex);
+			
+		ListModelList<Producto> model = new ListModelList<Producto>(p);
+		lb.setModel(model);
+		lb.setActivePage(0);
+	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void addProductbb(Bandbox bbj,  Listbox lb,  Listbox lbfinal) {
+		
+		if (bbj.getValue() != null || bbj.getValue().trim().length() > 0) {
+			
+		
+			Producto productSelect = (Producto) lb.getSelectedItem().getValue();
+			
+			ProductAdapter product = new ProductAdapter();
+			product.setProducto(productSelect);
+			product.getProducto().setCantidad(0.0);
+			product.getProducto().setPrecioCompra(new BigDecimal(0.0));
+						
+			ListModelList<ProductListitemAdapter> model = (ListModelList) lbfinal.getModel();
+			ProductListitemAdapter adapter = new ProductListitemAdapter(product.getProducto());
+			model.add(adapter);
+			
+			lb.setModel(new ListModelList<Producto>());
+	
+			bbj.setAttribute("recipient", null);
+			bbj.setValue("");
+			
+		}else{
+			throw new WrongValueException(bbj, "Antes debes de seleccionar un producto.");
+		}	
+								
+	}
 	
 	
 }

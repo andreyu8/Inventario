@@ -48,6 +48,22 @@
          void doCheckedISR() {
 		 	ocSave.getOrderCompra().setIsIsr(isrcbox.isChecked());
          }
+         
+         public void loadProduct(Listbox lb, Bandbox dobb) {
+			if(lb.getSelectedIndex() >= 0) {
+				Producto p = lb.getModel().getElementAt(lb.getSelectedIndex());
+				dobb.setText(p.getNombre());
+				dobb.setAttribute("prod", p);
+				dobb.close();
+			}
+		}
+		
+		public void clearBandbox(Bandbox bbj){
+			bbj.setText("");
+			bbj.getAttributes().clear();
+		}
+		
+         
 		 		
 	</zscript>
 	
@@ -267,13 +283,41 @@
 		
 		  
 		  
-	  	<div  class="col-md-12" align="right">
+	  	<!-- <div  class="col-md-12" align="right">
 	  		<label value="Producto " />
 	  		<combobox onCreate="productController.loadNameProduct(self);" id="productcb" width="600px"/>
 	  
-	    	<button tooltiptext="Añadir producto" iconSclass="z-icon-plus-circle"  onClick="purchaseOrderController.addProduct(productcb, prolb);" />
+	    	<button tooltiptext="Añadir producto" iconSclass="z-icon-plus-circle"  onClick="purchaseOrderController.addProduct(productcb, prolb);" /> -->  
 	  		<!-- <button iconSclass="fas fa-print" xmlns:w="http://www.zkoss.org/2005/zk/client" w:onClick="window.print();" style="padding-top: 2px; padding-bottom: 2px; float: right; color: gray; background: #ffff; " />-->
-	  	</div>
+	  	<!-- </div>  -->
+	  	
+	  	<div  class="col-md-12" align="right"> 	
+   			<label value="Producto " />
+			<bandbox id="pbb" autodrop="true" onChanging="purchaseOrderController.suggestsProductConstruct (win, plb, event.value);" width="50%" >
+				<bandpopup width="inherit" >
+					<listbox id="plb" width="580px" pageSize="10" mold="paging" autopaging="false" >
+						<listhead>
+							<listheader label="Coidgo" />
+							<listheader label="Nombre" />
+						</listhead>
+						<template name="model" >
+							<listitem onClick="loadProduct(plb, pbb);">
+								<listcell>
+									<label value="${each.codigo}" />
+								</listcell>
+								<listcell>
+									<label value="${each.nombre}" />
+								</listcell>
+							</listitem>
+						</template>	
+					</listbox>
+				</bandpopup>
+			</bandbox>
+			<span class="input-group-btn">
+				 <button tooltiptext="Añadir producto" iconSclass="z-icon-plus-circle"  onClick="purchaseOrderController.addProductbb(pbb, plb, prolb);" /> 
+			</span>
+			
+	  	</div> 
 		  		
 		  </div>
 		  

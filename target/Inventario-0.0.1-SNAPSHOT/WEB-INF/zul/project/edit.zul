@@ -76,7 +76,7 @@
 				<label value="Empleado*" sclass="editField" />
 				<h:p> <combobox value="@bind(projectEdit.proyecto.empleado.nombre)"
 							 		onCreate="employeeController.loadEmployeeProject(self);" 
-						 			id="cbemp"  />
+						 			id="cbemp"  constraint="${cmv}"/>
 				 </h:p>
 			</div>	
 			

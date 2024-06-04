@@ -35,6 +35,7 @@ import com.seidor.inventario.adapter.search.ProductSearchAdapter;
 import com.seidor.inventario.constants.SystemConstants;
 import com.seidor.inventario.model.Producto;
 import com.seidor.inventario.util.DaoUtil;
+import com.seidor.inventario.util.SessionUtil;
 
 public class ProductDAO extends HibernateDaoSupport{
 
@@ -1127,6 +1128,30 @@ public class ProductDAO extends HibernateDaoSupport{
 		criteria.setFetchMode("almacen", FetchMode.JOIN);
 		
 		criteria.addOrder(Order.asc("nombre"));
+		List<Producto> result = criteria.list();
+		session.flush();
+		session.close();
+		
+		return new ArrayList<Producto>(result);
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Producto> getProductSuggestedConst(String regex) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = DaoUtil.getCriteria(session, Producto.class);
+		
+		criteria.setFetchMode("categoria", FetchMode.JOIN);
+		criteria.setFetchMode("unidadMedida", FetchMode.JOIN);
+		criteria.setFetchMode("almacen", FetchMode.JOIN);
+		
+		if (regex != null && regex.trim().length() > 0){
+			criteria.add(Restrictions.ilike("nombre", regex.trim(), MatchMode.ANYWHERE));
+		}
+		
+		criteria.add(Restrictions.eq("almacen.idAlmacen", SessionUtil.getSucursalId()));
+		
+		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+		
 		List<Producto> result = criteria.list();
 		session.flush();
 		session.close();

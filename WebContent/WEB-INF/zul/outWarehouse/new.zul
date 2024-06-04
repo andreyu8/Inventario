@@ -8,6 +8,7 @@
 	<zscript>
 		import com.seidor.inventario.adapter.TransactionAdapter;
 		import com.seidor.inventario.adapter.OutputAdapter;
+		import com.seidor.inventario.model.Producto;
 		import com.seidor.inventario.navigation.*;
 		import java.math.BigDecimal;
 		
@@ -34,6 +35,21 @@
 		
 		public void viewInfoOrdenCompra (){
 			transactionController.obtenerOrdenCompraSalida (transactionAdapter, winOut);
+		}
+		
+		
+		public void loadProduct(Listbox lb, Bandbox dobb) {
+			if(lb.getSelectedIndex() >= 0) {
+				Producto p = lb.getModel().getElementAt(lb.getSelectedIndex());
+				dobb.setText(p.getNombre());
+				dobb.setAttribute("prod", p);
+				dobb.close();
+			}
+		}
+		
+		public void clearBandbox(Bandbox bbj){
+			bbj.setText("");
+			bbj.getAttributes().clear();
 		}
 		
 		
@@ -161,13 +177,42 @@
 				</div> -->
 			<!--  -->	
 				
-			<div  class="col-md-12" align="right">
+		   <div  class="col-md-12" align="right">
 		  		<label value="Producto " />
 		  		<combobox onCreate="productController.loadNameProduct(self);" id="productcb" width="600px"/>
 		  
 		    	<button tooltiptext="Añadir producto" iconSclass="z-icon-plus-circle"  onClick="transactionController.addProduct(productcb, prolb);" />
 		  	
-		  	</div>
+		  	</div> 
+		  	
+		  	
+		  	<!-- <div  class="col-md-12" align="right"> 	
+	   			<label value="Producto " />
+				<bandbox id="pbb" autodrop="true" onChanging="purchaseOrderController.suggestsProductConstruct (winOut, plb, event.value);" width="50%" >
+					<bandpopup width="inherit" >
+						<listbox id="plb" width="580px" pageSize="10" mold="paging" autopaging="false" >
+							<listhead>
+								<listheader label="Coidgo" />
+								<listheader label="Nombre" />
+							</listhead>
+							<template name="model" >
+								<listitem onClick="loadProduct(plb, pbb);">
+									<listcell>
+										<label value="${each.codigo}" />
+									</listcell>
+									<listcell>
+										<label value="${each.nombre}" />
+									</listcell>
+								</listitem>
+							</template>	
+						</listbox>
+					</bandpopup>
+				</bandbox>
+				<span class="input-group-btn">
+					 <button tooltiptext="Añadir producto" iconSclass="z-icon-plus-circle"  onClick="purchaseOrderController.addProductbb(pbb, plb, prolb);" /> 
+				</span>
+				
+		  	</div>-->
 			  		
 		  
 	        <div class="col-md-12" style="padding: 0px;" >

@@ -51,6 +51,10 @@
 				<h:p> <textbox value="@bind(categorySave.categoria.categoria)" constraint="${tmv}" /> </h:p>
 			</div>
 			<div class="col-md-4">
+				<label value="Codigo*" sclass="editField" />
+				<h:p> <textbox value="@bind(categorySave.categoria.código)" constraint="${tmv}" /> </h:p>
+			</div>
+			<div class="col-md-4">
 				<label value="Descripción*" sclass="editField" />
 				<h:p> <textbox value="@bind(categorySave.categoria.descripcion)" constraint="${tmv}" /> </h:p>
 			</div>

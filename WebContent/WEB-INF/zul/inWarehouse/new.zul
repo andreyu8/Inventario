@@ -140,7 +140,7 @@
 				<div class="animated aniFadeIn" >	
 					<listbox id="movlb" emptyMessage="No se encontrarón productos para mostrar" width="90%">
 					 	<auxhead>
-			            	<auxheader colspan="6" align="center" style=" background: green;">Productos OC</auxheader>
+			            	<auxheader colspan="7" align="center" style=" background: green;">Productos OC</auxheader>
 			            	<auxheader colspan="2" align="center">Entrada Almacen</auxheader>
 			        	</auxhead>
 						<listhead>
@@ -150,7 +150,8 @@
 							<listheader label="U.medida" hflex="3" />
 							<listheader label="Precio" hflex="3" />
 							<listheader label="Total" hflex="2" />
-							<listheader label="Entrada" hflex="2" />
+							<listheader label="Entradas" hflex="2" />
+							<listheader label="Cantidad" hflex="2" />
 							<listheader label="Acción" hflex="2" />
 						</listhead>
 					</listbox>

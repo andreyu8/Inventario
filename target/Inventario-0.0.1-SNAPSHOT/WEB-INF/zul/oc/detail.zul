@@ -67,6 +67,23 @@
 			<label value="Proveedor" sclass="detailField" />
 			<h:p> <label value="${ocDetail.orderCompra.proveedor.nombre}" sclass="detailData" /> </h:p>
 		</div>
+		
+		<div class="col-md-3">
+			<label value="Tipo de moneda" sclass="detailField" />
+			<h:p> <label value="${ocDetail.orderCompra.tipoMoneda.moneda}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Fecha TC" sclass="detailField" />
+			<h:p> <label value="${ocDetail.orderCompra.fechaCambio}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Monto tipo de cambio" sclass="detailField" />
+			<h:p> <label value="${ocDetail.orderCompra.tipoCambio}" sclass="detailData" /> </h:p>
+		</div>
+		
+		
 		<div class="col-md-3">
 			<label value="Observaciones" sclass="detailField" />
 			<h:p> <label value="${ocDetail.orderCompra.descripcion}" sclass="detailData" /> </h:p>
@@ -125,6 +142,23 @@
 			<h:p> <label value="${ocDetail.orderCompra.noPresupuesto}" sclass="detailData" /> </h:p>
 		</div>
 		
+		<div class="col-md-3">
+			<label value="Lugar de entrega" sclass="detailField" />
+			<h:p> <label value="${ocDetail.orderCompra.lugarEntrega}" sclass="detailData" /> </h:p>
+		</div>
+		
+		<div class="col-md-3">
+			<label value="Tiempo de entrega" sclass="detailField" />
+			<h:p> <label value="${ocDetail.orderCompra.tiempoEntrega}" sclass="detailData" /> </h:p>
+		</div>
+					
+		<div class="col-md-2">
+			<label value="IVA" sclass="detailField" />
+			<checkbox id="lliva" value="IVA" checked="${ocDetail.orderCompra.isIva}"/>
+			<label value="ISR" sclass="detailField" /> 
+			<checkbox id="llisr" value="ISR" checked="${ocDetail.orderCompra.isIsr}"/> 
+		</div>			
+					
 		
 		<separator spacing="10px" />
 	

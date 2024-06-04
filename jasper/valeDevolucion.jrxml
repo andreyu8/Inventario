@@ -167,7 +167,7 @@
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
-							<textField>
+							<textField isStretchWithOverflow="true">
 								<reportElement x="0" y="0" width="40" height="30" uuid="671f9d8a-3217-4687-9c05-e344609daebe"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
@@ -188,7 +188,7 @@
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
-							<textField>
+							<textField isStretchWithOverflow="true">
 								<reportElement x="0" y="0" width="50" height="30" uuid="66e61731-935a-42a8-ac11-ced7500a0896">
 									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 								</reportElement>
@@ -211,7 +211,7 @@
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
-							<textField>
+							<textField isStretchWithOverflow="true">
 								<reportElement x="0" y="0" width="190" height="30" uuid="7d385dc7-1002-4ca4-ab23-fedde8222a2e">
 									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 								</reportElement>
@@ -234,7 +234,7 @@
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
-							<textField>
+							<textField isStretchWithOverflow="true">
 								<reportElement x="0" y="0" width="50" height="30" uuid="fa523a5e-846d-44a3-bf2f-0784a3572759"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
@@ -255,7 +255,7 @@
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
-							<textField>
+							<textField isStretchWithOverflow="true">
 								<reportElement x="0" y="0" width="50" height="30" uuid="951c2d80-7e9d-4709-8b8d-3cb453de9acc"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
@@ -276,7 +276,7 @@
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
-							<textField>
+							<textField isStretchWithOverflow="true">
 								<reportElement x="0" y="0" width="70" height="30" uuid="4ba46bf0-338e-4246-b5bb-cfa42f72891a"/>
 								<textElement textAlignment="Right">
 									<font size="8"/>
@@ -297,7 +297,7 @@
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
-							<textField>
+							<textField isStretchWithOverflow="true">
 								<reportElement x="0" y="0" width="90" height="30" uuid="7fd8a8f6-c652-4a5a-9de4-85d1ec5e7e63"/>
 								<textElement textAlignment="Right">
 									<font size="8"/>

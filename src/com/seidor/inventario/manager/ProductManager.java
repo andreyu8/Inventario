@@ -129,4 +129,8 @@ public class ProductManager {
 		return this.productDao.groupByProyectOrderId (ordenId);
 	}
 
+	public ArrayList<Producto> getProductSuggestedConst(String regex) {
+		return this.productDao.getProductSuggestedConst(regex);
+	}
+
 }

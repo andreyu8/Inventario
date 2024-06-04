@@ -84,6 +84,7 @@
 			<listhead>
 				<listheader label="Ver" width="50px" />
 				<listheader label="Familia" hflex="3" sort="auto(lower(categoria))" />
+				<listheader label="Código" hflex="2" sort="auto(lower(codigo))" />
 				<listheader label="Descripción" hflex="3" sort="auto(lower(descripcion))" />
 			</listhead>
 			<template name="model" >
@@ -92,6 +93,7 @@
 						<a iconSclass="z-icon-eye" onClick="show();" />
 					</listcell>
 					<listcell label="${each.categoria}" />
+					<listcell label="${each.codigo}" />
 					<listcell label="${each.descripcion}" />
 				</listitem>
 			</template>

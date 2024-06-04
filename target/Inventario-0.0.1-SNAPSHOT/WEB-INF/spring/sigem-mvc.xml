@@ -30,6 +30,12 @@
 	<bean id="transactionDetailDao" class="com.seidor.inventario.dao.TransactionDetailDAO" autowire="byName" />
 	<bean id="foliosDao" class="com.seidor.inventario.dao.FoliosDAO" autowire="byName" />
 	<bean id="tipoMovimientoDao" class="com.seidor.inventario.dao.TipoMovimientoDAO" autowire="byName" />
+	<bean id="coinDao" class="com.seidor.inventario.dao.CoinDAO" autowire="byName" />
+	<bean id="taxRegimeDao" class="com.seidor.inventario.dao.TaxRegimeDAO" autowire="byName" />
+	<bean id="useCfdiDao" class="com.seidor.inventario.dao.UseCfdiDAO" autowire="byName" />
+	<bean id="taxDao" class="com.seidor.inventario.dao.TaxDAO" autowire="byName" />
+	<bean id="ivaDao" class="com.seidor.inventario.dao.IvaDAO" autowire="byName" />
+	
 	
 		
 	<bean id="userManager" class="com.seidor.inventario.manager.UserManager" autowire="byName" />
@@ -58,6 +64,16 @@
 	<bean id="transactionDetailManager" class="com.seidor.inventario.manager.TransactionDetailManager" autowire="byName" />
 	<bean id="foliosManager" class="com.seidor.inventario.manager.FoliosManager" autowire="byName" />
 	<bean id="tipoMovimientoManager" class="com.seidor.inventario.manager.TipoMovimientoManager" autowire="byName" />
+	<!-- tipo de moneda -->
+	<bean id="coinManager" class="com.seidor.inventario.manager.CoinManager" autowire="byName" />
+	<!-- regimen fiscal -->
+	<bean id="taxRegimeManager" class="com.seidor.inventario.manager.TaxRegimeManager" autowire="byName" />
+	<!-- uso cdfi -->
+	<bean id="useCfdiManager" class="com.seidor.inventario.manager.UseCfdiManager" autowire="byName" />
+	<!-- impuesto -->
+	<bean id="taxManager" class="com.seidor.inventario.manager.TaxManager" autowire="byName" />
+	<!-- iva moneda -->
+	<bean id="ivaManager" class="com.seidor.inventario.manager.IvaManager" autowire="byName" />
 	
 	
 	<bean id="userController" class="com.seidor.inventario.controller.UserController" autowire="byName" />
@@ -85,5 +101,18 @@
 	<bean id="transactionDetailController" class="com.seidor.inventario.controller.TransactionDetailController" autowire="byName" />
 	<bean id="foliosController" class="com.seidor.inventario.controller.FoliosController" autowire="byName" />
 	<bean id="tipoMovimientoController" class="com.seidor.inventario.controller.TipoMovimientoController" autowire="byName" />
+	<!-- tipo de moneda -->
+	<bean id="coinController" class="com.seidor.inventario.controller.CoinController" autowire="byName" />
+	<!-- regimen fiscal -->
+	<bean id="taxRegimenController" class="com.seidor.inventario.controller.TaxRegimeController" autowire="byName" />
+	<!-- uso cdfi -->
+	<bean id="useCfdiController" class="com.seidor.inventario.controller.UseCfdiController" autowire="byName" />
+	<!-- impuesto -->
+	<bean id="taxController" class="com.seidor.inventario.controller.TaxController" autowire="byName" />
+	<!-- iva moneda -->
+	<bean id="ivaController" class="com.seidor.inventario.controller.IvaController" autowire="byName" />
+	<bean id="devolucionesController" class="com.seidor.inventario.controller.DevolucionesController" autowire="byName" />
+	<bean id="traspasosController" class="com.seidor.inventario.controller.TraspasosController" autowire="byName" />
+		
 	
 </beans>

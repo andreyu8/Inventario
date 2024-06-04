@@ -102,6 +102,18 @@
 				<h:p> <intbox value="@bind(providerEdit.proveedor.diasCredito)" /> </h:p>
 			</div>	
 			
+			<div class="col-md-4">
+				<label value="Vendedor*" sclass="editField" />
+				<h:p> <textbox value="@bind(providerEdit.proveedor.vendedor)" /> </h:p>
+			</div>
+			
+			<div class="col-md-4">
+			<label value="Tipo de moneda*" sclass="editField" />
+			<h:p> <combobox value="@bind(providerEdit.proveedor.tipoMoneda.moneda)"
+						 		onCreate="coinController.loadTypeCion(self);" 
+					 			id="tmcb" constraint="${cmv}"/> </h:p>
+			</div>
+			
 			
 			<div class="col-md-12">
 				<label value="Datos bancarios" />

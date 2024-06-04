@@ -56,7 +56,7 @@
 		
 			<div class="col-md-4">
 				<label value="Codigo*" sclass="editField" />
-				<h:p> <textbox value="@bind(productEdit.producto.codigo)" constraint="${tmv}" /> </h:p>
+				<h:p> <label value="@bind(productEdit.producto.codigo)"/> </h:p>
 			</div>
 		
 			<div class="col-md-4">
@@ -64,10 +64,10 @@
 				<h:p> <textbox value="@bind(productEdit.producto.nombre)" constraint="${tmv}" /> </h:p>
 			</div>
 			
-			<!-- <div class="col-md-4">
+			<div class="col-md-4">
 				<label value="Cantidad*" sclass="editField" />
 				<h:p> <intbox value="@bind(productEdit.producto.cantidad)"  /> </h:p>
-			</div> -->
+			</div> 
 			
 				
 			<div class="col-md-4">
@@ -107,7 +107,7 @@
 	<div class="row subBoxAlt animated aniFadeIn" >
 		<div class="col-md-12">
 			<div align="right" >
-				<button label="Eliminar categoría" sclass="btn btn-danger" onClick="delete();" iconSclass="z-icon-trash-o" />
+				<button label="Eliminar producto" sclass="btn btn-danger" onClick="delete();" iconSclass="z-icon-trash-o" />
 			</div>
 		</div>
 	</div>

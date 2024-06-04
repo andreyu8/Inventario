@@ -3,7 +3,7 @@
 <?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
-<window id="winGE" border="none" apply="org.zkoss.bind.BindComposer" >
+<window id="winEntry" border="none" apply="org.zkoss.bind.BindComposer" >
 	
 	<zscript>
 		import com.seidor.inventario.adapter.TransactionAdapter;
@@ -15,15 +15,18 @@
 		TransactionAdapter transactionAdapter = transactionController.readForNew();
 		
 		public void cancel(){
-			navigationControl.changeToPrevious(winGE);
+			navigationControl.changeToPrevious(winEntry);
 		}
 		
 		public void save(){
-			fcv.validate(winGE);
-			transactionController.save(transactionAdapter, state, winGE);
+			fcv.validate(winEntry);
+			transactionController.saveTransactionEntry(transactionAdapter, state, winEntry);
+		}
+				
+		public void viewInfoOrdenCompra (){
+			transactionController.obtenerOrdenCompra (transactionAdapter, winEntry);
 		}
 		
-				
 		
 	</zscript>
 	
@@ -32,12 +35,11 @@
 			<div class="col-md-8">
 				<h:span style="padding-top: 5px; display: block;" />
 				<div align="left" style="float: left;" >
-					<label value="@bind(productSave.producto.nombre)" sclass="sectionTitle" />
+					<label value="" sclass="sectionTitle" />
 				</div>
 			</div>
 			<div class="col-md-4">
 				<div align="right" style="float: right;" >
-					<button label="buscar" onClick="transactionController.searchInvoice(transactionAdapter, winGE);" iconSclass="z-icon-search" />
 					<button label="cancelar" sclass="btn btn-warning" onClick="cancel();" iconSclass="z-icon-times" />
 					<button label="guardar" sclass="btn btn-success" onClick="save();" iconSclass="z-icon-check" />
 				</div>
@@ -53,10 +55,42 @@
 	<div class="container animated aniFadeIn" >
 		<div class="row editBox">
 		
+		
+			<div class="col-md-4">
+				<label value="Orden de compra*" sclass="editField" />
+				<h:p> <combobox value="@bind(transactionAdapter.factura.ordenCompra.descripcion)"
+							 		onCreate="transactionController.loadPurchaseOrder(self);" 
+							 		onChange="viewInfoOrdenCompra ();"
+						 			id="cboc" /> </h:p>
+			</div>
+			
 			<div class="col-md-4">
 				<label value="Número de factura*" sclass="editField" />
-				<h:p> <textbox value="@bind(transactionAdapter.factura.numeroFactura)" /> </h:p>
+				<h:p> <textbox value="@bind(transactionAdapter.factura.numeroFactura)" constraint="${tmv}" /> </h:p>
 			</div>
+			
+			
+			<div class="col-md-4">
+				<label value="Fecha*" sclass="editField" />
+				<h:p> <datebox id="db2" cols="12" format="short" value="@bind(transactionAdapter.factura.fecha)"  /> </h:p>
+			</div>
+					
+			<div class="col-md-4">
+				<label value="Estatus de orden compra*" sclass="editField" />
+				<h:p> <combobox value="@bind(transactionAdapter.ordenCompra.estatusOrdenCompra.estatusOrdenCompra)"
+							 		onCreate="purchaseOrderController.loadStateTypeOrder(self);" 
+						 			id="soccb" constraint="${cmv}"/>
+				</h:p>
+			</div>							 			
+			
+			<div class="col-md-4">
+				<label value="Nota*" sclass="editField" />
+				<h:p>
+			 		<textbox rows="6" value="@bind(transactionAdapter.factura.notas)" width="370px;" tabindex="11" />
+                 </h:p>   	        
+			</div>	
+				
+					
 			
 			
 			<div class="row editBox" id="sectionOrden" visible="false" >	

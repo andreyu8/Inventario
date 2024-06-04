@@ -16,7 +16,8 @@
 		Clients.evalJavaScript("var link = document.createElement('link'); link.type = 'image/x-icon'; link.rel = 'shortcut icon'; link.href = '" + stylesUrl + "images/logos/favicon.ico'; document.getElementsByTagName('head')[0].appendChild(link);")
 	</zscript>
 	
-	<h:link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous" />
+	<!-- <h:link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous" /> -->
+	<style src="/styles/css/bootstrap.min.css" />
 	
 	<h:link href="https://fonts.googleapis.com" rel="stylesheet"/>
 	<style src="/styles/zk-override.css" />

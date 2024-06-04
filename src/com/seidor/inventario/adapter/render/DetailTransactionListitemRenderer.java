@@ -1,5 +1,7 @@
 package com.seidor.inventario.adapter.render;
 
+import java.math.BigDecimal;
+
 import org.zkoss.spring.SpringUtil;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -17,6 +19,7 @@ import com.seidor.inventario.inroweditablecomps.IREditableDoublebox;
 import com.seidor.inventario.model.DetalleMovimiento;
 import com.seidor.inventario.navigation.Action;
 import com.seidor.inventario.navigation.NavigationControl;
+import com.seidor.inventario.util.NumberFormatUtil;
 
 public class DetailTransactionListitemRenderer  extends EditableListitemRenderer{
 	
@@ -49,7 +52,7 @@ public class DetailTransactionListitemRenderer  extends EditableListitemRenderer
 		
 		
 		Hlayout hl3= new Hlayout();
-		new Label (""+ocd.getCantidadTotal()).setParent(hl3);
+		new Label (""+NumberFormatUtil.format(ocd.getCantidadTotal(),2)).setParent(hl3);
 		hl3.setParent(this.newListcell(editListitem));
 		
 		Hlayout hl4= new Hlayout();
@@ -57,18 +60,23 @@ public class DetailTransactionListitemRenderer  extends EditableListitemRenderer
 		hl4.setParent(this.newListcell(editListitem));
 		
 		Hlayout hl5= new Hlayout();
-		new Label (""+ocd.getPrecioUnitario()).setParent(hl5);
+		new Label (""+NumberFormatUtil.format(ocd.getPrecioUnitario(),4)).setParent(hl5);
 		hl5.setParent(this.newListcell(editListitem));
 		
 		//salida
 		Hlayout h16= new Hlayout();
-		new Label (""+ (ocd.getCantidadTotal() * ocd.getPrecioUnitario().doubleValue())).setParent(h16);
+		new Label (""+NumberFormatUtil.format((ocd.getCantidadTotal() * ocd.getPrecioUnitario().doubleValue()),4)).setParent(h16);
 		h16.setParent(this.newListcell(editListitem));
 		
-		
+		//total de entradas
 		Hlayout hl12= new Hlayout();
-		new IREditableDoublebox(ocd.getCantidad()).setParent(hl12);
+		new Label (""+NumberFormatUtil.format(ocd.getCantidad(),2)).setParent(hl12);
 		hl12.setParent(this.newListcell(editListitem));
+		
+		//cantiadad entrada
+		Hlayout hl13= new Hlayout();
+		new IREditableDoublebox(0.0).setParent(hl13);
+		hl13.setParent(this.newListcell(editListitem));
 		
 		
 		Action action = new Action() {
