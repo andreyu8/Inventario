@@ -9,7 +9,7 @@
 		<property name="driverClass" value="org.mariadb.jdbc.Driver"/>  
 		
 		<!-- ======== Propiedades para el servidor visnav ============== -->
-	    <property name="jdbcUrl" value="jdbc:mariadb://localhost:3309/bd_inventario"/>
+	    <!-- <property name="jdbcUrl" value="jdbc:mariadb://localhost:3309/bd_inventario"/>
 		<property name="user" value="root"/>
 		<property name="password" value="4dm1n1nv3"/>
 		<property name="maxPoolSize" value="50"/>
@@ -17,11 +17,11 @@
 		<property name="minPoolSize" value="1"/>
 		<property name="maxStatements" value="200"/>
 		<property name="maxIdleTime" value="300"/>
-		<property name="acquireIncrement"  value="10"/>                        
+		<property name="acquireIncrement"  value="10"/>   -->                  
 		
 		<!-- ======== Propiedades para el servidor local ============== -->
 		
-		<!-- <property name="jdbcUrl" value="jdbc:mariadb://localhost:3306/bd_inventario"/>
+		<property name="jdbcUrl" value="jdbc:mariadb://localhost:3306/bd_inventario"/>
 		<property name="user" value="root"/>
 		<property name="password" value="admin"/>
 		<property name="maxPoolSize" value="50"/>
@@ -31,7 +31,7 @@
 		<property name="maxIdleTime" value="300"/> 
 		<property name="acquireIncrement"  value="10"/>
 		<property name="unreturnedConnectionTimeout" value="90"/> 
-		<property name="maxConnectionAge" value="120"/> -->
+		<property name="maxConnectionAge" value="120"/> 
 		
 	</bean>
 	

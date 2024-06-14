@@ -521,7 +521,7 @@ public class TransactionController {
 		double compCant = doc.getCantidadTotal() - (doc.getCantidad() + quantitybox.getValue());
 		Boolean flagUpdateOC = Boolean.FALSE; 
 		
-		if(quantitybox.getValue() > 0 && compCant >= 0) {
+		if(quantitybox.getValue() > 0.0 && compCant >= 0.0) {
 			
 			flagUpdateOC = Boolean.TRUE;
 		} else
@@ -723,6 +723,15 @@ public class TransactionController {
 		return dupicadoFlag;
 	}
 	
+	
+	public void deleteEntrada (TransactionAdapter ta, NavigationState state, Component win) {
+		this.transactionManager.deleteEntrada (ta.getMovimientos(), ta.getDetalleMovimientos(), ta.getFactura(), 
+				ta.getOrdenCompra(), ta.getDetalleOrdenCompra()); 
+		
+		state.setUri("/WEB-INF/zul/inWarehouse/main.zul");
+		state.startBreadCrumbsPathFromHome("Entrada Almacén");
+		navigationControl.changeView(win, state);
+	}
 	
 
 	@SuppressWarnings("unchecked")

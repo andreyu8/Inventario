@@ -17,10 +17,12 @@ import com.seidor.inventario.adapter.search.TransactionSearchAdapter;
 import com.seidor.inventario.adapter.search.TraspasoSearchAdapter;
 import com.seidor.inventario.constants.SystemConstants;
 import com.seidor.inventario.model.DetalleMovimiento;
+import com.seidor.inventario.model.DetalleOrdenCompra;
 import com.seidor.inventario.model.Entrada;
 import com.seidor.inventario.model.Factura;
 import com.seidor.inventario.model.Folios;
 import com.seidor.inventario.model.Movimientos;
+import com.seidor.inventario.model.OrdenCompra;
 import com.seidor.inventario.model.Producto;
 import com.seidor.inventario.model.Salida;
 import com.seidor.inventario.util.DaoUtil;
@@ -442,6 +444,74 @@ public class TransactionDAO extends HibernateDaoSupport{
 		session.flush();
 		session.close();
 		return result;
+	}
+
+	public void deleteEntrada(Movimientos movimiento, ArrayList<DetalleMovimiento> detalleMovimientos,
+			Factura factura, OrdenCompra ordenCompra, ArrayList<DetalleOrdenCompra> detalleOrdenCompra) {
+		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
+		
+		Transaction transaction = session.beginTransaction();
+		
+		Boolean flagSalida = Boolean.FALSE;
+		
+		try {
+
+			DaoUtil.prepareToDelete(movimiento);
+			session.update(movimiento);
+			
+			for (DetalleMovimiento dm : detalleMovimientos) {
+				dm.setMovimientos(movimiento);
+				DaoUtil.prepareToDelete(dm);
+				session.update(dm);
+				
+				dm.getProducto().setCantidad(dm.getProducto().getCantidad() - dm.getCantidad());
+				DaoUtil.prepareToUpdate(dm.getProducto());
+				session.update(dm.getProducto());	
+				
+				if (dm.getProducto().getCantidad() < 0)
+					flagSalida= Boolean.TRUE;
+				
+			}
+			
+			DaoUtil.prepareToDelete(factura);
+			session.update(factura);
+			
+			DaoUtil.prepareToUpdate(ordenCompra);
+			session.update(ordenCompra);
+			
+			for (DetalleOrdenCompra doc : detalleOrdenCompra) {
+				
+				for (DetalleMovimiento dm : detalleMovimientos) {
+					
+					if (doc.getProducto().getIdProducto().equals(dm.getProducto().getIdProducto())) {
+						doc.setCantidadFactura(doc.getCantidadFactura() - dm.getCantidad());
+						
+						DaoUtil.prepareToUpdate(doc);
+						session.update(doc);
+						
+						break;
+					}
+					
+				}
+				
+			}
+			
+			if (!flagSalida) {
+				transaction.commit();
+				session.flush();
+				session.close();
+			} else {
+				transaction.rollback();
+				session.close();
+			} 
+			
+			
+			
+		} catch (Exception ex) {
+			transaction.rollback();
+			session.close();
+			throw new RuntimeException(ex);
+		}	
 	}
 	
 

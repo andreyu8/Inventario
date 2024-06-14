@@ -33,8 +33,8 @@
 		</div>
 		<div class="col-md-6">
 			<div align="right" >
-				<button label="cancelar" sclass="btn btn-warning" onClick="cancel();" iconSclass="z-icon-times" />
-				<button label="aceptar" sclass="btn btn-success" onClick="update();" iconSclass="z-icon-check" />
+				<button label="Cancelar" sclass="btn btn-warning" onClick="cancel();" iconSclass="z-icon-times" />
+				<button label="Aceptar" sclass="btn btn-success" onClick="update();" iconSclass="z-icon-check" />
 			</div>
 		</div>
 	</div>
@@ -58,7 +58,7 @@
 	<div class="row subBoxAlt animated aniFadeIn" >
 		<div class="col-md-12">
 			<div align="right" >
-				<button label="Eliminar categoría" sclass="btn btn-danger" onClick="delete();" iconSclass="z-icon-trash-o" />
+				<button label="Cancelar Entrada" sclass="btn btn-danger" onClick="delete();" iconSclass="z-icon-trash-o" />
 			</div>
 		</div>
 	</div>
@@ -67,10 +67,10 @@
 		public void delete(){
 			Action deleteAction = new Action() {
 				public void execute(){
-					productController.delete(transactionEditAdapter, state, winEE);
+					transactionController.deleteEntrada(transactionEditAdapter, state, winEE);
 				}
 			};
-			NavigationControl.openModalWindowWithMessage("¿Está seguro de eliminar la entrada?", deleteAction);
+			NavigationControl.openModalWindowWithMessage("¿Está seguro de cancelar la entrada?", deleteAction);
 		}
 	</zscript>
 	

@@ -9,10 +9,12 @@ import com.seidor.inventario.adapter.search.TransactionSearchAdapter;
 import com.seidor.inventario.adapter.search.TraspasoSearchAdapter;
 import com.seidor.inventario.dao.TransactionDAO;
 import com.seidor.inventario.model.DetalleMovimiento;
+import com.seidor.inventario.model.DetalleOrdenCompra;
 import com.seidor.inventario.model.Entrada;
 import com.seidor.inventario.model.Factura;
 import com.seidor.inventario.model.Folios;
 import com.seidor.inventario.model.Movimientos;
+import com.seidor.inventario.model.OrdenCompra;
 import com.seidor.inventario.model.Producto;
 import com.seidor.inventario.model.Salida;
 
@@ -97,6 +99,11 @@ public class TransactionManager {
 
 	public Movimientos getExistOC(Integer idOrdenCompra) {
 		return this.transactionDao.getExistOC (idOrdenCompra);
+	}
+
+	public void deleteEntrada(Movimientos movimientos, ArrayList<DetalleMovimiento> detalleMovimientos, Factura factura,
+			OrdenCompra ordenCompra, ArrayList<DetalleOrdenCompra> detalleOrdenCompra) {
+		this.transactionDao.deleteEntrada (movimientos, detalleMovimientos, factura, ordenCompra, detalleOrdenCompra);
 	}
 
 
