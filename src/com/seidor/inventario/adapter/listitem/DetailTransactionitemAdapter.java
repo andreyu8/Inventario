@@ -8,8 +8,7 @@ import com.seidor.inventario.model.DetalleMovimiento;
 public class DetailTransactionitemAdapter {
 	
 	private DetalleMovimiento detalleMovimiento;
-
-
+	
 	public DetailTransactionitemAdapter(DetalleMovimiento detalleMovimiento) {
 		super();
 		this.detalleMovimiento = detalleMovimiento;
@@ -22,6 +21,8 @@ public class DetailTransactionitemAdapter {
 	public void setDetalleMovimiento(DetalleMovimiento detalleMovimiento) {
 		this.detalleMovimiento = detalleMovimiento;
 	}
+	
+	
 
 	public static ArrayList<DetailTransactionitemAdapter> getArray (ArrayList<DetalleMovimiento> array) {
 		ArrayList<DetailTransactionitemAdapter> result = new ArrayList<DetailTransactionitemAdapter>();

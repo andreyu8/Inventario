@@ -4,7 +4,7 @@
 <?component name="pagingsize" macroURI="/WEB-INF/zul/common/customcomps/pagingsize.zul" inline="true"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
-<window id="win" border="none" onOK="search();" onCreate="productController.searchProductReport(prodlb, productSearch, state, win); prepareSearchFields();" apply="org.zkoss.bind.BindComposer" >
+<window id="winRP" border="none" onOK="search();" onCreate="productController.searchProductReport(prodlb, productSearch, state, winRP); prepareSearchFields();" apply="org.zkoss.bind.BindComposer" >
 
 	
 	<zscript>
@@ -37,11 +37,11 @@
 		
 		public void search(){
 			pagingControl.resetActivePage(state);
-			navigationControl.changeView(win, state);
+			navigationControl.changeView(winRP, state);
 		}
 		
 		public void reportProduct (){
-			productController.exportProductExcel (prodlb);
+			productController.exportProductExcel (prodlb, winRP);
 		}
 		
 		

@@ -2,6 +2,7 @@ package com.seidor.inventario.controller;
 
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,27 +25,36 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.seidor.inventario.adapter.ProductAdapter;
+import com.seidor.inventario.adapter.beans.CuentasBean;
+import com.seidor.inventario.adapter.beans.DetailProductsBeans;
 import com.seidor.inventario.adapter.beans.ProductReporBean;
+import com.seidor.inventario.adapter.beans.ProductsReportBean;
 import com.seidor.inventario.adapter.beans.ProveedoresBean;
 import com.seidor.inventario.adapter.beans.ReportCostoInventario;
 import com.seidor.inventario.adapter.beans.ReportCostoInventarioGBean;
 import com.seidor.inventario.adapter.render.ProductComboitemRenderer;
 import com.seidor.inventario.adapter.render.ProductNameComboitemRenderer;
 import com.seidor.inventario.adapter.search.ProductSearchAdapter;
+import com.seidor.inventario.constants.SystemConstants;
 import com.seidor.inventario.manager.CategoryManager;
+import com.seidor.inventario.manager.DatosBancariosManager;
 import com.seidor.inventario.manager.DetailOCManager;
 import com.seidor.inventario.manager.ProductManager;
 import com.seidor.inventario.manager.WarehouseManager;
 import com.seidor.inventario.model.Almacen;
 import com.seidor.inventario.model.Categoria;
+import com.seidor.inventario.model.DatosBancarios;
 import com.seidor.inventario.model.DetalleOrdenCompra;
 import com.seidor.inventario.model.Producto;
 import com.seidor.inventario.model.UnidadMedida;
 import com.seidor.inventario.navigation.NavigationControl;
 import com.seidor.inventario.navigation.NavigationState;
 import com.seidor.inventario.navigation.NavigationStates;
-import com.seidor.inventario.util.ExportExcelFiles;
+import com.seidor.inventario.util.DateFormatUtil;
 import com.seidor.inventario.util.ReportUtil;
 import com.seidor.inventario.util.SessionUtil;
 import com.seidor.inventario.util.StringUtil;
@@ -61,6 +71,8 @@ public class ProductController {
 	private WarehouseManager warehouseManager;
 	@Autowired
 	private DetailOCManager detailOCManager;
+	@Autowired
+	private DatosBancariosManager datosBancariosManager;
 	
 	
 	public ProductManager getProductManager() {
@@ -101,6 +113,14 @@ public class ProductController {
 
 	public void setDetailOCManager(DetailOCManager detailOCManager) {
 		this.detailOCManager = detailOCManager;
+	}
+	
+	public DatosBancariosManager getDatosBancariosManager() {
+		return datosBancariosManager;
+	}
+
+	public void setDatosBancariosManager(DatosBancariosManager datosBancariosManager) {
+		this.datosBancariosManager = datosBancariosManager;
 	}
 
 	// logic search
@@ -498,6 +518,7 @@ public class ProductController {
 		return array;
 	}
 	
+		
 	
 	public void loadProduct(Combobox combo) {
 		ArrayList<Producto> products = this.productManager.getAll();
@@ -546,13 +567,76 @@ public class ProductController {
 	}
 	
 	
-	public void exportProductExcel(Listbox lisbox) throws IOException{
+	public void exportProductExcel(Listbox lisbox,  Component win) throws IOException, JSONException{
 		
 		ArrayList<Producto> products = this.productManager.getAllProduct();
-				
-		ExportExcelFiles.exportFileExcel (products);
+		
+		ArrayList<DetailProductsBeans> listPro= new ArrayList<DetailProductsBeans>();
+		ProductsReportBean reportProdtc= new ProductsReportBean();
+		DetailProductsBeans prb= null;
+		
+		for (Producto p : products) {
+			prb = new DetailProductsBeans();
+			
+			prb.setIdProducto(""+p.getIdProducto());
+			prb.setCategoria(p.getCategoria().getDescripcion() == null ? "" : p.getCategoria().getDescripcion());
+			prb.setCodigo(p.getCodigo());
+			prb.setNombre(p.getNombre().trim());
+			//prb.setNombre(p.getNombre().replaceAll("\"", "\"").replaceAll(",", " ").replaceAll("”", "\"").trim());
+			//replaceAll("[^\\w ]+", "")  System.out.println("nombre del pruducto"+prb.getIdProducto()+" "+prb.getNombre());
+			prb.setUnidadMedida(p.getUnidadMedida().getUnidadMedida() == null ? "" : p.getUnidadMedida().getUnidadMedida());
+			prb.setCantidad(p.getCantidad() == null ? ""+0.0 : ""+p.getCantidad());
+			prb.setPrecioCompra(p.getPrecioCompra() == null ? "0.0" : ""+p.getPrecioCompra());
+			prb.setAlmacen(p.getAlmacen().getAlmacen() == null ? "": p.getAlmacen().getAlmacen());
+	
+			listPro.add(prb);
+		}
+		
+		Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
+		String representacionBonita = prettyGson.toJson(listPro);
+		
+		System.out.println(representacionBonita);
+		
+		reportProdtc.setJsonListProducts(representacionBonita);
+		
+		
+		
+		exportToExcelProducts (reportProdtc, representacionBonita);
+		
+		//ExportExcelFiles.exportFileExcel (products);
 		
 	}
+	
+	
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void exportToExcelProducts(ProductsReportBean reportProdtc, String representacionBonita) {
+		HashMap<String, Object> parametters = new HashMap<String, Object>();
+		parametters.put("REPORT_TITLE", "Reporte de productos");
+		parametters.put("REPORT_DATE", DateFormatUtil.getFormatedDate(new Date(), false));
 		
+		parametters.put("ListFromJsonGeneric[jsonListProducts]", getListFromJsonGeneric(representacionBonita));
+		
+		try {
+			List dataSource = new ArrayList();
+			dataSource.add(reportProdtc);
+			String tname = "productosGeneral";
+			Media mediaReport = ReportUtil.generateReport(dataSource, "informeProductos.jasper", ReportUtil.TASK_XLS, parametters, tname);
+			org.zkoss.zul.Filedownload.save(mediaReport);
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	
+	
+	
+	public Boolean accesModifyProduct () {
+		if (SessionUtil.getLoggedUserName().equals(SystemConstants.USER_MODIFY_PRODUCT) || 
+					SessionUtil.getLoggedUserName().equals(SystemConstants.USER_ADMIN_MODIFY_PRODUCT)) 
+			return Boolean.TRUE;
+		else
+			return Boolean.FALSE;
+	}
 		
 }

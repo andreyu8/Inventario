@@ -149,7 +149,7 @@
 						<listcell label="${each.precioUnitario}" />
 						<listcell label="${each.cantidad * each.precioUnitario}" />
 						<listcell label="${each.cantidad}" />
-						<listcell label="${each.cantidadTotal - each.cantidad}" />
+						<listcell label="${each.cantidadTotal - (each.cantidad + each.cantidadTmp)}" />
 					</listitem>
 				</template>
 				<listfoot>

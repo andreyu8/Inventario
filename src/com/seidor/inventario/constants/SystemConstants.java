@@ -70,7 +70,8 @@ public class SystemConstants {
 	public static final Integer ALMACEN_TOLUCA = 1;
 	public static final Integer ALMACEN_TEPALCATES = 2;
 	
-	
-	
+	//user modify product
+	public static final String USER_MODIFY_PRODUCT = "nidi11";
+	public static final String USER_ADMIN_MODIFY_PRODUCT = "admin";
 	
 }

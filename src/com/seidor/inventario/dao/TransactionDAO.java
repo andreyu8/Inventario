@@ -146,7 +146,7 @@ public class TransactionDAO extends HibernateDaoSupport{
 	}
 
 	//se guarda la entrada
-	public void saveEntrada(Factura factura, Movimientos movimiento, ArrayList<DetalleMovimiento> listDetailTransactionENT, Folios fte, ArrayList<Entrada> listEntrada, ArrayList<Producto> listProducto) {
+	public void saveEntrada(Factura factura, Movimientos movimiento, ArrayList<DetalleMovimiento> listDetailTransactionENT, Folios fte, ArrayList<Producto> listProducto) {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		
 		Transaction transaction = session.beginTransaction();
@@ -175,13 +175,6 @@ public class TransactionDAO extends HibernateDaoSupport{
 			fte.setConsecutivo(fte.getConsecutivo()+1);
 			DaoUtil.prepareToUpdate(fte);
 			session.update(fte);
-			
-			for (Entrada e : listEntrada) {
-				e.setFactura(factura);
-				e.setMovimientos(movimiento);
-				DaoUtil.prepareToSave(e);
-				session.save(e);
-			}
 			
 			for (Producto p : listProducto) {
 				DaoUtil.prepareToUpdate(p);
@@ -228,7 +221,7 @@ public class TransactionDAO extends HibernateDaoSupport{
 	}
 
 	//save de la salida
-	public void saveSalida(Movimientos movimiento, ArrayList<DetalleMovimiento> listDetailTransactionSAL, Folios fte, ArrayList<Salida> listSalida, ArrayList<Producto> listProducto) {
+	public void saveSalida(Movimientos movimiento, ArrayList<DetalleMovimiento> listDetailTransactionSAL, Folios fte, ArrayList<Producto> listProducto) {
 		Session session = this.getHibernateTemplate().getSessionFactory().openSession();
 		
 		Transaction transaction = session.beginTransaction();
@@ -248,12 +241,6 @@ public class TransactionDAO extends HibernateDaoSupport{
 			fte.setConsecutivo(fte.getConsecutivo()+1);
 			DaoUtil.prepareToUpdate(fte);
 			session.update(fte);
-			
-			for (Salida s : listSalida) {
-				s.setMovimientos(movimiento);
-				DaoUtil.prepareToSave(s);
-				session.save(s);
-			}
 			
 			for (Producto p : listProducto) {
 				DaoUtil.prepareToUpdate(p);

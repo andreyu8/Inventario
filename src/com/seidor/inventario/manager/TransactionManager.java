@@ -61,8 +61,8 @@ public class TransactionManager {
 	}
 
 	public void saveEntrada(Factura factura, Movimientos movimiento,
-			ArrayList<DetalleMovimiento> listDetailTransactionENT, Folios fte, ArrayList<Entrada> listEntrada, ArrayList<Producto> listProducto) {
-		this.transactionDao.saveEntrada(factura, movimiento, listDetailTransactionENT, fte, listEntrada, listProducto);
+			ArrayList<DetalleMovimiento> listDetailTransactionENT, Folios fte, ArrayList<Producto> listProducto) {
+		this.transactionDao.saveEntrada(factura, movimiento, listDetailTransactionENT, fte, listProducto);
 		
 	}
 
@@ -71,8 +71,8 @@ public class TransactionManager {
 	}
 
 	public void saveSalida(Movimientos movimientos, ArrayList<DetalleMovimiento> listDetailTransactionSAL, Folios fte,
-			ArrayList<Salida> listSalida, ArrayList<Producto> listProducto) {
-		this.transactionDao.saveSalida(movimientos, listDetailTransactionSAL, fte, listSalida, listProducto);
+			ArrayList<Producto> listProducto) {
+		this.transactionDao.saveSalida(movimientos, listDetailTransactionSAL, fte, listProducto);
 	}
 
 	public Movimientos getSalida(Integer idMovimiento) {

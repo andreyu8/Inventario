@@ -8,11 +8,13 @@
 	<zscript>
 		import com.seidor.inventario.adapter.ProductAdapter;
 		import com.seidor.inventario.navigation.*;
-		
+			
 		NavigationState state = Executions.getCurrent().getArg().get("NAVSTATE");
 		
 		ProductAdapter productDetail = productController.read(state.getDetailIdentifier());
 		
+		Boolean enableModify= productController.accesModifyProduct();
+						
 		public void modify(){
 			state.setUri("/WEB-INF/zul/product/edit.zul");
 			state.appendBreadCrumbsPath("Editar");
@@ -21,6 +23,7 @@
 			state.setDetailLabels(null);
 			navigationControl.changeView(win, state);
 		}
+		
 	</zscript>
 	
 	<div class="row sectionBox animated aniFadeIn">
@@ -30,7 +33,7 @@
 			<label value="(${productDetail.producto.nombre})" style="font-size: 12px;" />
 		</div>
 		<div class="col-md-6" align="right" >
-			<button label="modificar" onClick="modify();" iconSclass="z-icon-pencil" />
+			<button label="modificar" onClick="modify();" iconSclass="z-icon-pencil" visible="${enableModify}" />
 		</div>
 	</div>
 	

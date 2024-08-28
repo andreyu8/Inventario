@@ -177,16 +177,17 @@
 				</div> -->
 			<!--  -->	
 				
-		   <div  class="col-md-12" align="right">
+		  
+		  <!-- <div  class="col-md-12" align="right">
 		  		<label value="Producto " />
 		  		<combobox onCreate="productController.loadNameProduct(self);" id="productcb" width="600px"/>
 		  
 		    	<button tooltiptext="Añadir producto" iconSclass="z-icon-plus-circle"  onClick="transactionController.addProduct(productcb, prolb);" />
 		  	
-		  	</div> 
+		  	</div> --> 
 		  	
 		  	
-		  	<!-- <div  class="col-md-12" align="right"> 	
+		  	<div  class="col-md-12" align="right"> 	
 	   			<label value="Producto " />
 				<bandbox id="pbb" autodrop="true" onChanging="purchaseOrderController.suggestsProductConstruct (winOut, plb, event.value);" width="50%" >
 					<bandpopup width="inherit" >
@@ -209,10 +210,10 @@
 					</bandpopup>
 				</bandbox>
 				<span class="input-group-btn">
-					 <button tooltiptext="Añadir producto" iconSclass="z-icon-plus-circle"  onClick="purchaseOrderController.addProductbb(pbb, plb, prolb);" /> 
+					 <button tooltiptext="Añadir producto" iconSclass="z-icon-plus-circle"  onClick="transactionController.addOutProductbb(pbb, plb, prolb);" /> 
 				</span>
 				
-		  	</div>-->
+		  	</div>
 			  		
 		  
 	        <div class="col-md-12" style="padding: 0px;" >

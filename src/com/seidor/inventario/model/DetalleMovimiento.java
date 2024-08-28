@@ -1,5 +1,5 @@
 package com.seidor.inventario.model;
-// Generated 12 abr. 2024 12:10:56 by Hibernate Tools 4.3.5.Final
+// Generated 21 jun. 2024 15:15:13 by Hibernate Tools 4.3.5.Final
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -25,6 +25,7 @@ public class DetalleMovimiento implements java.io.Serializable {
 	private Date cat;
 	private int luu;
 	private Date uat;
+	private Double cantidadTmp;
 
 	public DetalleMovimiento() {
 	}
@@ -44,7 +45,8 @@ public class DetalleMovimiento implements java.io.Serializable {
 
 	public DetalleMovimiento(DetalleOrdenCompra detalleOrdenCompra, Movimientos movimientos, Producto producto,
 			TipoMoneda tipoMoneda, Date fecha, Double cantidadTotal, double cantidad, BigDecimal precioUnitario,
-			BigDecimal precioUnitarioMxn, int estatus, boolean fdl, int cbu, Date cat, int luu, Date uat) {
+			BigDecimal precioUnitarioMxn, int estatus, boolean fdl, int cbu, Date cat, int luu, Date uat,
+			Double cantidadTmp) {
 		this.detalleOrdenCompra = detalleOrdenCompra;
 		this.movimientos = movimientos;
 		this.producto = producto;
@@ -60,6 +62,7 @@ public class DetalleMovimiento implements java.io.Serializable {
 		this.cat = cat;
 		this.luu = luu;
 		this.uat = uat;
+		this.cantidadTmp = cantidadTmp;
 	}
 
 	public Integer getIdDetalleMovimiento() {
@@ -188,6 +191,14 @@ public class DetalleMovimiento implements java.io.Serializable {
 
 	public void setUat(Date uat) {
 		this.uat = uat;
+	}
+
+	public Double getCantidadTmp() {
+		return this.cantidadTmp;
+	}
+
+	public void setCantidadTmp(Double cantidadTmp) {
+		this.cantidadTmp = cantidadTmp;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.seidor.inventario.util;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,6 +9,8 @@ import java.util.ArrayList;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.zkoss.util.media.AMedia;
+import org.zkoss.zul.Filedownload;
 
 import com.seidor.inventario.model.Producto;
 
@@ -56,26 +60,19 @@ public class ExportExcelFiles {
 	        for(Producto p: products) {
 	            Row row = sheet.createRow(rowNum++);
 
-	            row.createCell(0)
-	                    .setCellValue(p.getCodigo());
+	            row.createCell(0).setCellValue(p.getCodigo());
 
-	            row.createCell(1)
-	                    .setCellValue(p.getNombre());
+	            row.createCell(1).setCellValue(p.getNombre());
 	            
-	            row.createCell(2)
-	            		.setCellValue(p.getAlmacen().getAlmacen());
+	            row.createCell(2).setCellValue(p.getAlmacen().getAlmacen());
 	            
-	            row.createCell(3)
-	            		.setCellValue(p.getCategoria().getCategoria());
+	            row.createCell(3).setCellValue(p.getCategoria().getCategoria());
 	            
-	            row.createCell(4)
-	            		.setCellValue(p.getUnidadMedida().getDescripcion());
+	            row.createCell(4).setCellValue(p.getUnidadMedida().getDescripcion());
 	            
-	            row.createCell(5)
-	            		.setCellValue(p.getCantidad());
+	            row.createCell(5).setCellValue(p.getCantidad());
 	            
-	            row.createCell(6)
-	    				.setCellValue(NumberFormatUtil.format(p.getPrecioCompra(),2));
+	            row.createCell(6).setCellValue(""+p.getPrecioCompra());
 
 	            
 	        }
@@ -85,14 +82,12 @@ public class ExportExcelFiles {
 	            sheet.autoSizeColumn(i);
 	        }
 
-	        // Write the output to a file
-	        FileOutputStream fileOut = new FileOutputStream("productos.xlsx");
-	        workbook.write(fileOut);
-	        fileOut.close();
-			
+	        ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		    workbook.write(outByteStream);
+	      
 	    
 			//crear reporte
-		  /* ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		   /* ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
 		    workbook.write(outByteStream);
 		    byte[] outArray = outByteStream.toByteArray();
 		    
@@ -101,6 +96,7 @@ public class ExportExcelFiles {
 		    
 			outByteStream.close(); */
 			
+		
 		}
 
 }

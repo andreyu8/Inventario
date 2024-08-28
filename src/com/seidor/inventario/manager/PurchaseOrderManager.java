@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.seidor.inventario.adapter.search.PurchaseOrderSearchAdapter;
 import com.seidor.inventario.dao.PurchaseOrderDAO;
+import com.seidor.inventario.model.DetalleOrdenCompra;
 import com.seidor.inventario.model.EstatusOrdenCompra;
 import com.seidor.inventario.model.OrdenCompra;
 import com.seidor.inventario.model.TipoPago;
@@ -55,6 +56,19 @@ public class PurchaseOrderManager {
 
 	public ArrayList<OrdenCompra> getProviderExist(Integer idProveedor) {
 		return this.purchaseOrderDao.getProviderExist(idProveedor);
+	}
+
+	public void save(OrdenCompra orderCompra, ArrayList<DetalleOrdenCompra> listDE) {
+		this.purchaseOrderDao.save(orderCompra, listDE);
+	}
+
+	public void update(OrdenCompra orderCompra, ArrayList<DetalleOrdenCompra> detalleOCsave,
+			ArrayList<DetalleOrdenCompra> detalleOCupdate) {
+		this.purchaseOrderDao.update (orderCompra, detalleOCsave, detalleOCupdate);
+	}
+
+	public ArrayList<OrdenCompra> searchNew(PurchaseOrderSearchAdapter psa) {
+		return this.purchaseOrderDao.searchNew(psa);
 	}
 
 	

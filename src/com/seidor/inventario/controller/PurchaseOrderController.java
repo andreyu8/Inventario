@@ -51,6 +51,7 @@ import com.seidor.inventario.manager.ProjectManager;
 import com.seidor.inventario.manager.ProviderManager;
 import com.seidor.inventario.manager.PurchaseOrderManager;
 import com.seidor.inventario.manager.TransactionManager;
+import com.seidor.inventario.manager.UserManager;
 import com.seidor.inventario.model.Almacen;
 import com.seidor.inventario.model.Area;
 import com.seidor.inventario.model.Cliente;
@@ -69,6 +70,7 @@ import com.seidor.inventario.model.TipoMoneda;
 import com.seidor.inventario.model.TipoOrdenCompra;
 import com.seidor.inventario.model.TipoPago;
 import com.seidor.inventario.model.UnidadMedida;
+import com.seidor.inventario.model.Usuario;
 import com.seidor.inventario.navigation.NavigationControl;
 import com.seidor.inventario.navigation.NavigationState;
 import com.seidor.inventario.navigation.NavigationStates;
@@ -105,6 +107,9 @@ public class PurchaseOrderController {
 	
 	@Autowired
 	private TransactionManager transactionManager;
+	
+	@Autowired
+	private UserManager userManager;
 	
 	
 	
@@ -181,6 +186,14 @@ public class PurchaseOrderController {
 	public void setTransactionManager(TransactionManager transactionManager) {
 		this.transactionManager = transactionManager;
 	}
+	
+	public UserManager getUserManager() {
+		return userManager;
+	}
+
+	public void setUserManager(UserManager userManager) {
+		this.userManager = userManager;
+	}
 
 	//business logic 
 	public void search(Listbox lb, PurchaseOrderSearchAdapter psa, NavigationState state){
@@ -198,6 +211,23 @@ public class PurchaseOrderController {
 		ListModelList<OrdenCompra> model = new ListModelList<OrdenCompra>(lisOC);
 		lb.setModel(model);
 	}
+	
+	public void searchNew(Listbox lb, PurchaseOrderSearchAdapter psa, NavigationState state){
+		ArrayList<OrdenCompra> oc = this.purchaseOrderManager.searchNew(psa);
+		ArrayList<OrdenCompra> lisOC = new ArrayList<OrdenCompra>();
+		
+		for (OrdenCompra o: oc) {
+			ArrayList<DetalleOrdenCompra> doc = this.detailOCManager.getOC(o.getIdOrdenCompra());
+			if (doc.size() > 0)
+				o.setDescripcion(doc.get(0).getProducto().getNombre());
+			
+			lisOC.add(o);
+		}
+		
+		ListModelList<OrdenCompra> model = new ListModelList<OrdenCompra>(lisOC);
+		lb.setModel(model);
+	}
+	
 	
 
 	public void loadPurchaseOrder(Combobox combo) {
@@ -342,9 +372,20 @@ public class PurchaseOrderController {
 		if (pa.getOrderCompra().getDescripcion() == null)
 			pa.getOrderCompra().setDescripcion("-");
 		
-		this.purchaseOrderManager.save(pa.getOrderCompra());
+		if (pa.getOrderCompra().getLugarEntrega() == null)
+			pa.getOrderCompra().setLugarEntrega("");
+		
+		if (pa.getOrderCompra().getTiempoEntrega() == null)
+			pa.getOrderCompra().setTiempoEntrega("");
+		
+		if (pa.getOrderCompra().getFechaCambio() == null)
+			pa.getOrderCompra().setFechaCambio(new Date());
+		
+		if (pa.getOrderCompra().getTipoCambio() == null)
+			pa.getOrderCompra().setTipoCambio(new BigDecimal(0.0));
 		
 		
+		//this.purchaseOrderManager.save(pa.getOrderCompra());
 		
 		/*Listbox lb = (Listbox) win.getFellowIfAny("prolb");
 		ListModelList<ProductListitemAdapter> lml = (ListModelList) lb.getModel();*/
@@ -354,14 +395,15 @@ public class PurchaseOrderController {
 		Producto pe = new Producto();
 		DetalleOrdenCompra e = new DetalleOrdenCompra();
 		
+		ArrayList<DetalleOrdenCompra> listDE = new ArrayList<DetalleOrdenCompra>();
+		
 		for (Producto p : productsocl ) {
 			//ProductListitemAdapter p= (ProductListitemAdapter) lml.getElementAt(i);
 			
 			pe= new Producto();
         	e = new DetalleOrdenCompra();
         	
-        	
-			pe = productManager.getCodigo(p.getCodigo(), SessionUtil.getSucursalId());
+        	pe = productManager.getCodigo(p.getCodigo(), SessionUtil.getSucursalId());
 			System.out.println("id_producto:"+p.getCodigo());
 			
 			
@@ -380,13 +422,16 @@ public class PurchaseOrderController {
         	e.setOrdenCompra(pa.getOrderCompra());
         	
         	//suma a productos la cantidad
-        	pe.setCantidad(pe.getCantidad() + e.getCantidad());
-        	pe.setPrecioCompra(e.getPrecioUnitario());
+        	//pe.setCantidad(pe.getCantidad() + e.getCantidad());
+        	//pe.setPrecioCompra(e.getPrecioUnitario());
     		
         	
-        	detailOCManager.save(e);
-			
+        	listDE.add(e); 
+        	//detailOCManager.save(e);
 		}
+		
+		this.purchaseOrderManager.save(pa.getOrderCompra(), listDE );
+		
 		
 		SessionUtil.setSessionAttribute("listProductOC", new ArrayList<Producto>());
 		
@@ -465,11 +510,14 @@ public class PurchaseOrderController {
 					
 		pa.getOrderCompra().setFecha(new Date());
 				
-		this.purchaseOrderManager.update(pa.getOrderCompra());
+		//this.purchaseOrderManager.update(pa.getOrderCompra());
 		
 		
 		ArrayList<DetalleOrdenCompra> detalleOC = (ArrayList<DetalleOrdenCompra>) SessionUtil.getSessionAttribute("listDetailOC");
 		System.out.println("size idDetalleOC: "+detalleOC.size());
+		
+		ArrayList<DetalleOrdenCompra> detalleOCsave= new ArrayList<DetalleOrdenCompra>();
+		ArrayList<DetalleOrdenCompra> detalleOCupdate= new ArrayList<DetalleOrdenCompra>();
 		
 		for (DetalleOrdenCompra d : detalleOC ) {
 			
@@ -482,11 +530,13 @@ public class PurchaseOrderController {
 			
 			
         	if (d.getIdDetalleOc() == 0)
-        		detailOCManager.save(d);
+        		detalleOCsave.add(d);  //detailOCManager.save(d);
         	else 
-        		detailOCManager.update(d);
-        		
+        		detalleOCupdate.add(d); //detailOCManager.update(d);
 		}
+		
+		this.purchaseOrderManager.update(pa.getOrderCompra(), detalleOCsave, detalleOCupdate);
+		
 		
 		SessionUtil.setSessionAttribute("listDetailOC", new ArrayList<Producto>());
 		
@@ -728,9 +778,6 @@ public class PurchaseOrderController {
 		IREditableDoublebox precioUnitario = (IREditableDoublebox) comp.getFirstChild();
 		comp = comp.getNextSibling();
 		
-		comp = comp.getNextSibling();
-				
-		System.out.println(descriptionbox.getCombobox().getValue());
 		
 		p.setCodigo(descriptionbox.getCombobox().getValue());
 		p.setCantidad(cantidad.getValue());
@@ -745,22 +792,21 @@ public class PurchaseOrderController {
 		
 		ArrayList<Producto> listProductOC = (ArrayList<Producto>) SessionUtil.getSessionAttribute("listProductOC");
 		
-		Producto pedit = null;
-		
 		System.out.println("List productos: "+ listProductOC.size()+ " "+selectedIndex);
-		
-		if (listProductOC.size() > 0 && selectedIndex < listProductOC.size())
-		   pedit = listProductOC.get(selectedIndex);
-		
-		if (pedit == null)	
-			listProductOC.add(p);
-		else
+			
+		if (selectedIndex < listProductOC.size()) {
 			listProductOC.set(selectedIndex, p);
+			System.out.println("valor lista:"+selectedIndex +" "+ p.getCantidad());
+		} else {
+			listProductOC.add(p);
+			System.out.println("valor lista:"+selectedIndex +" "+ p.getCantidad());
+		}
 		
 		
 		SessionUtil.setSessionAttribute("listProductOC", listProductOC);
 		
 		total.setValue(getTotal (listProductOC));
+		
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -804,6 +850,7 @@ public class PurchaseOrderController {
 		IREditableDoublebox precioUnitario = (IREditableDoublebox) comp.getFirstChild();
 		comp = comp.getNextSibling();
 		
+		IREditableDoublebox subtotalDbx= (IREditableDoublebox) comp.getFirstChild();
 		comp = comp.getNextSibling();
 				
 		System.out.println(descriptionbox.getCombobox().getValue());
@@ -821,16 +868,17 @@ public class PurchaseOrderController {
 				
 		ArrayList<DetalleOrdenCompra> listDetailOC = (ArrayList<DetalleOrdenCompra>) SessionUtil.getSessionAttribute("listDetailOC");
 		
-		if (doc.getIdDetalleOc() == 0)
-			listDetailOC.add(doc);
-		else 
-		if (doc.getIdDetalleOc() > 0) {
+		if (selectedIndex < listDetailOC.size()) {
 			listDetailOC.set(selectedIndex, doc);
+			System.out.println("valor lista:"+selectedIndex +" "+ doc.getCantidad());
+		} else {
+			listDetailOC.add(doc);
+			System.out.println("valor lista:"+selectedIndex +" "+ doc.getCantidad());
 		}
 		
 		SessionUtil.setSessionAttribute("listDetailOC", listDetailOC);
 		
-				
+		subtotalDbx.getDoublebox().setValue(cantidad.getValue() * precioUnitario.getValue() );		
 		total.setValue(getTotalEdit (listDetailOC));
 	}
 
@@ -1088,7 +1136,8 @@ public class PurchaseOrderController {
 			
 			parametters.put("responsable", pBeanReport.getOrdenCompra().getEmpleado().getNombre()+" "+pBeanReport.getOrdenCompra().getEmpleado().getAPaterno()+" "+pBeanReport.getOrdenCompra().getEmpleado().getAMaterno());
 
-			parametters.put("responsableOC", SessionUtil.getEmpleadoId().getNombre().trim()+" "+SessionUtil.getEmpleadoId().getAPaterno().trim()+" "+SessionUtil.getEmpleadoId().getAMaterno().trim());
+			Usuario userCreate=  userManager.get(pBeanReport.getOrdenCompra().getCbu());
+			parametters.put("responsableOC", userCreate.getEmpleado().getNombre().trim()+" "+userCreate.getEmpleado().getAPaterno().trim()+" "+userCreate.getEmpleado().getAMaterno().trim());
 			
 			parametters.put("vendedor",pBeanReport.getProveedor().getVendedor());
 			
@@ -1289,5 +1338,6 @@ public class PurchaseOrderController {
 								
 	}
 	
+		
 	
 }

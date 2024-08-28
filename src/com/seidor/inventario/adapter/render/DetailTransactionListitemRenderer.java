@@ -70,7 +70,7 @@ public class DetailTransactionListitemRenderer  extends EditableListitemRenderer
 		
 		//total de entradas
 		Hlayout hl12= new Hlayout();
-		new Label (""+NumberFormatUtil.format(ocd.getCantidad(),2)).setParent(hl12);
+		new Label (""+NumberFormatUtil.format(ocd.getCantidadTmp(),2)).setParent(hl12);
 		hl12.setParent(this.newListcell(editListitem));
 		
 		//cantiadad entrada

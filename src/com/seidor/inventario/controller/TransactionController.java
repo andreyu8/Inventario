@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.WrongValueException;
+import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Constraint;
 import org.zkoss.zul.Div;
@@ -24,6 +25,7 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 
 import com.google.gson.Gson;
+import com.seidor.inventario.adapter.ProductAdapter;
 import com.seidor.inventario.adapter.TransactionAdapter;
 import com.seidor.inventario.adapter.beans.CuentasBean;
 import com.seidor.inventario.adapter.beans.DetailProductBean;
@@ -473,7 +475,7 @@ public class TransactionController {
 			if (doc.getCantidadFactura() < doc.getCantidad()) {
 				mv.setIdDetalleMovimiento(0);
 				mv.setCantidadTotal(doc.getCantidad());
-				mv.setCantidad(doc.getCantidadFactura());
+				mv.setCantidad(0.0);
 				mv.setPrecioUnitario(doc.getPrecioUnitario());
 				mv.setProducto(doc.getProducto());
 				mv.setFecha(new Date());
@@ -481,6 +483,7 @@ public class TransactionController {
 				mv.setDetalleOrdenCompra(doc);
 				mv.setTipoMoneda(doc.getTipoMoneda());
 				mv.setPrecioUnitarioMxn(doc.getPrecioUnitarioMxn());
+				mv.setCantidadTmp(doc.getCantidadFactura());
 				
 				lmv.add(mv);
 			}	
@@ -514,11 +517,10 @@ public class TransactionController {
 		Hlayout devCant= (Hlayout) comp.getFirstChild();
 		IREditableDoublebox quantitybox = (IREditableDoublebox) devCant.getFirstChild();
 		
-		System.out.println("cantidad a ingresar: "+quantitybox.getValue() +" cantidad: "+doc.getCantidad());
+		System.out.println("cantidad a ingresar: "+quantitybox.getValue() +" cantidad: "+doc.getCantidadTmp());
 		System.out.println("id del producto: "+doc.getProducto().getIdProducto());
 		
-		
-		double compCant = doc.getCantidadTotal() - (doc.getCantidad() + quantitybox.getValue());
+		double compCant = doc.getCantidadTotal() - (doc.getCantidadTmp() + quantitybox.getValue());
 		Boolean flagUpdateOC = Boolean.FALSE; 
 		
 		if(quantitybox.getValue() > 0.0 && compCant >= 0.0) {
@@ -534,19 +536,18 @@ public class TransactionController {
 	    	if (quantitybox.getValue() > 0) {
 				doc.setCantidad(quantitybox.getValue());
 				
-				System.out.println("Realiza entrada");
+				System.out.println("Realiza entrada"+doc.getIdDetalleMovimiento()+" "+doc.getProducto().getIdProducto() +" "+ doc.getCantidad());
 				
 				//actualizar el detalle de las movimientos
 				if (doc.getIdDetalleMovimiento() == 0) {
-					
 					//listDetailTransaction
 					ArrayList<DetalleMovimiento> listDetailTransactionENT = (ArrayList<DetalleMovimiento>) SessionUtil.getSessionAttribute("listDetailTransactionENT");
 					listDetailTransactionENT.set(selectedIndex, doc);
 					SessionUtil.setSessionAttribute("listDetailTransactionENT", listDetailTransactionENT);	
-					
 				}	
 				else {
-					transactionDetailManager.update(doc);
+					System.out.println("Realiza la actualizacion"+doc.getProducto().getIdProducto() +" "+ doc.getCantidad());
+					//transactionDetailManager.update(doc);
 				}	
 	    	}	
 			
@@ -593,51 +594,27 @@ public class TransactionController {
 		
 		ArrayList<DetalleMovimiento> listDetailTransactionENT =  (ArrayList<DetalleMovimiento>) SessionUtil.getSessionAttribute("listDetailTransactionENT");
 		
-		ArrayList<Entrada> listEntrada= new ArrayList<Entrada>();
 		ArrayList<Producto> listProducto= new ArrayList<Producto>();
-		Entrada e= new Entrada();
 		Producto p= new Producto();
 		
 		ArrayList<GroupByProyectOrdreIdBean> listProyectOrderId= this.productManager.groupByProyectOrderId(ta.getMovimientos().getOrdenCompra().getIdOrdenCompra());
 		
 		for (DetalleMovimiento doc : listDetailTransactionENT) {
 			
-			e= new Entrada();
 			p = productManager.get(doc.getProducto().getIdProducto());	
 			 
 			if (doc.getCantidad() > 0) {
-				e.setIdEntrada(0);
-				e.setCantidad(doc.getCantidad());
-				e.setEmpleado(SessionUtil.getEmpleadoId());
-				e.setFactura(ta.getFactura());
-				e.setAlmacen(doc.getProducto().getAlmacen());
-				e.setOrdenCompra(ta.getOrdenCompra());
 				System.out.println("oc id: "+ta.getOrdenCompra().getIdOrdenCompra());
-				Proyecto proyecto= new Proyecto();
-				proyecto.setIdProyecto(ta.getOrdenCompra().getProyecto().getIdProyecto());
-				e.setProyecto(proyecto);
-				e.setProducto(p);
-				Ubicacion u= new Ubicacion();
-				u.setIdUbicacion(SessionUtil.getSucursalId());
-				e.setUbicacion(u);
-				UnidadMedida um= new UnidadMedida();
-				um.setIdUnidadMedida(p.getUnidadMedida().getIdUnidadMedida());
-				e.setUnidadMedida(um);
-				e.setFecha(new Date());
-				e.setPrecioUnitario(doc.getPrecioUnitario());
-				e.setEstatus(SystemConstants.ENTRADA_POR_COMPRA);
+				System.out.println("cantidad: "+doc.getCantidad());
 				
 				p.setCantidad(p.getCantidad() + doc.getCantidad());
 				p.setPrecioCompra(doc.getPrecioUnitario());
-				
-				
-				listEntrada.add(e);
 				listProducto.add(p);
 			}
 			
 		}
 		
-		this.transactionManager.saveEntrada(ta.getFactura(), ta.getMovimientos(), listDetailTransactionENT, fte, listEntrada, agruparEntradas(listProducto, listProyectOrderId));
+		this.transactionManager.saveEntrada(ta.getFactura(), ta.getMovimientos(), listDetailTransactionENT, fte, agruparEntradas(listProducto, listProyectOrderId));
 		
 		SessionUtil.setSessionAttribute("listDetailTransactionENT", new ArrayList<DetalleMovimiento>());
 		
@@ -1024,6 +1001,40 @@ public class TransactionController {
 		lb.setModel(lml);
 		
 	}
+	
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void addOutProductbb(Bandbox bbj,  Listbox lb,  Listbox lbfinal) {
+		
+		if (bbj.getValue() != null || bbj.getValue().trim().length() > 0) {
+			
+			Producto productSelect = (Producto) lb.getSelectedItem().getValue();
+		
+			
+			DetalleMovimiento detalleMovimiento= new DetalleMovimiento();
+			
+			detalleMovimiento.setIdDetalleMovimiento(0);
+			detalleMovimiento.setProducto(productSelect);
+			detalleMovimiento.setCantidad(0.0);
+			detalleMovimiento.setCantidadTmp(productSelect.getCantidad());
+			detalleMovimiento.setCantidadTotal(productSelect.getCantidad());
+			detalleMovimiento.setPrecioUnitario(productSelect.getPrecioCompra());
+			detalleMovimiento.setPrecioUnitarioMxn(productSelect.getPrecioCompra());
+												
+			ListModelList<DetailTransactionitemAdapter> model = (ListModelList) lbfinal.getModel();
+			DetailTransactionitemAdapter adapter = new DetailTransactionitemAdapter(detalleMovimiento);
+			model.add(adapter);
+			
+			lb.setModel(new ListModelList<Producto>());
+	
+			bbj.setAttribute("recipient", null);
+			bbj.setValue("");
+			
+		}else{
+			throw new WrongValueException(bbj, "Antes debes de seleccionar un producto.");
+		}	
+								
+	}
 
 	
 	@SuppressWarnings("unchecked")
@@ -1050,7 +1061,7 @@ public class TransactionController {
 		System.out.println("id del producto: "+doc.getProducto().getIdProducto());
 		
 		
-		double compCant = doc.getCantidadTotal() - (doc.getCantidad() + quantitybox.getValue());
+		double compCant = doc.getCantidadTotal() - quantitybox.getValue();
 		Boolean flagUpdateOC = Boolean.FALSE; 
 		
 		if(compCant >= 0) {
@@ -1066,14 +1077,24 @@ public class TransactionController {
 			doc.setEstatus(SystemConstants.ESTATUS_MOVIMIENTO_ACTIVO);
 			
 			System.out.println("Realiza salida");
+			System.out.println("indice de la lista:"+selectedIndex);
 			
 			//actualizar el detalle de las movimientos
 			if (doc.getIdDetalleMovimiento() == 0) {
 				
 				//listDetailTransaction
 				ArrayList<DetalleMovimiento> listDetailTransactionSAL = (ArrayList<DetalleMovimiento>) SessionUtil.getSessionAttribute("listDetailTransactionSAL");
-				listDetailTransactionSAL.add(doc);
+				
+				if (selectedIndex < listDetailTransactionSAL.size()) {
+					listDetailTransactionSAL.set(selectedIndex, doc);
+					System.out.println("valor lista:"+selectedIndex +" "+ doc.getCantidad());
+				} else {
+					listDetailTransactionSAL.add(doc);
+					System.out.println("valor lista:"+selectedIndex +" "+ doc.getCantidad());
+				}
+				
 				SessionUtil.setSessionAttribute("listDetailTransactionSAL", listDetailTransactionSAL);	
+				
 				
 			}	
 			else {
@@ -1126,38 +1147,25 @@ public class TransactionController {
 		
 		ArrayList<DetalleMovimiento> listDetailTransactionSAL =  (ArrayList<DetalleMovimiento>) SessionUtil.getSessionAttribute("listDetailTransactionSAL");
 		
-		ArrayList<Salida> listSalida= new ArrayList<Salida>();
 		ArrayList<Producto> listProducto= new ArrayList<Producto>();
-		Salida s= new Salida();
 		Producto p= new Producto();
 		
 		for (DetalleMovimiento doc : listDetailTransactionSAL) {
 			
-			s= new Salida();
 			p = productManager.get(doc.getProducto().getIdProducto());	
 			 
-			s.setIdSalida(0);
-			s.setCantidad(doc.getCantidad());
-			s.setEmpleado(SessionUtil.getEmpleadoId());
 			Proyecto proyecto= new Proyecto();
 			proyecto.setIdProyecto(ta.getMovimientos().getProyecto().getIdProyecto());
-			s.setProyecto(proyecto);
-			s.setProducto(p);
 			UnidadMedida um= new UnidadMedida();
 			um.setIdUnidadMedida(p.getUnidadMedida().getIdUnidadMedida());
-			s.setUnidadMedida(um);
-			s.setFecha(new Date());
-			s.setTipoTrabajo(null);
-			s.setEstatus(SystemConstants.SALIDA_POR_VALE);
 			
 			p.setCantidad(p.getCantidad() - doc.getCantidad());
 			p.setPrecioCompra(doc.getPrecioUnitario());
 			
-			listSalida.add(s);
 			listProducto.add(p);
 		}
 		
-		this.transactionManager.saveSalida(ta.getMovimientos(), listDetailTransactionSAL, fte, listSalida, listProducto);
+		this.transactionManager.saveSalida(ta.getMovimientos(), listDetailTransactionSAL, fte, listProducto);
 		
 		SessionUtil.setSessionAttribute("listDetailTransactionSAL", new ArrayList<DetalleMovimiento>());
 		

@@ -94,6 +94,8 @@ public class UserController {
 		}
 		SessionUtil.setLoggedUserId(user.getIdUsuario());
 		
+		SessionUtil.setLoggedUserName(user.getUsuario());
+		
 		SessionUtil.setSucursaldUserId(user.getEmpleado().getAlmacen().getAlmacen());
 		
 		SessionUtil.setSucursalId(user.getEmpleado().getAlmacen().getIdAlmacen());

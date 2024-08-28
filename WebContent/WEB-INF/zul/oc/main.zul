@@ -4,7 +4,7 @@
 
 
 <zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native" xmlns:w="client" >
-<window id="winC" border="none" onOK="search();" onCreate="purchaseOrderController.search(catlb, orderSearch, state); prepareSearchFields();" apply="org.zkoss.bind.BindComposer" >
+<window id="winC" border="none" onOK="search();" onCreate="purchaseOrderController.searchNew(catlb, orderSearch, state); prepareSearchFields();" apply="org.zkoss.bind.BindComposer" >
 
 	
 	<zscript>
@@ -41,8 +41,13 @@
 		}
 		
 		public void show(){
-			purchaseOrderController.show(catlb, state, winC);
+		    purchaseOrderController.show(catlb, state, winC);
 		}
+		
+		public void showall() {
+			purchaseOrderController.search(catlb, orderSearch, state); prepareSearchFields();
+		}	
+		
 	</zscript>
 	
 	<div class="row sectionBox animated aniFadeIn">
@@ -53,7 +58,7 @@
 			</div>
 			<div class="col-md-4">
 				<div align="right" sclass="btn-group" style="float: right;" >
-					<button label="detalle" onClick="show();" iconSclass="z-icon-eye" />
+					<button label="Mostrar" onClick="showall();" iconSclass="z-icon-eye" />
 					<button label="nuevo" onClick="create();" iconSclass="z-icon-plus-circle" />
 				</div>
 				

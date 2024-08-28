@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 12 abr. 2024 12:10:57 by Hibernate Tools 4.3.5.Final -->
+<!-- Generated 21 jun. 2024 15:15:13 by Hibernate Tools 4.3.5.Final -->
 <hibernate-mapping>
     <class name="com.seidor.inventario.model.DetalleMovimiento" table="detalle_movimiento" catalog="bd_inventario" optimistic-lock="version">
         <id name="idDetalleMovimiento" type="java.lang.Integer">
@@ -61,6 +61,11 @@
         <property name="uat" type="timestamp">
             <column name="uat" length="19" not-null="true">
                 <comment>update at timestamp</comment>
+            </column>
+        </property>
+        <property name="cantidadTmp" type="java.lang.Double">
+            <column name="cantidad_tmp" precision="22" scale="0">
+                <comment>cantidad de entrada de la orden de compra</comment>
             </column>
         </property>
     </class>

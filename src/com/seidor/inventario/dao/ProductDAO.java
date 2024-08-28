@@ -1126,8 +1126,10 @@ public class ProductDAO extends HibernateDaoSupport{
 		criteria.setFetchMode("categoria", FetchMode.JOIN);
 		criteria.setFetchMode("unidadMedida", FetchMode.JOIN);
 		criteria.setFetchMode("almacen", FetchMode.JOIN);
+	
+		criteria.addOrder(Order.asc("codigo"));
+		//criteria.setMaxResults(100);
 		
-		criteria.addOrder(Order.asc("nombre"));
 		List<Producto> result = criteria.list();
 		session.flush();
 		session.close();

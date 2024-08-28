@@ -76,8 +76,7 @@ public class ProductEditableListitemRenderer  extends EditableListitemRenderer {
 		IREditableDoublebox catidad= new IREditableDoublebox(product.getCantidad(), "###,###,###.00", new DoubleboxMandatoryValidator());
 		catidad.setParent(this.newListcell(editListitem));
 		
-		/*Label unidadamedida= new Label((product.getUnidadMedida().getDescripcion()));
-		unidadamedida.setParent(this.newListcell(editListitem));*/
+		
 		String u = product.getUnidadMedida()!=null? product.getUnidadMedida().getDescripcion() : "";
 		IREditableCombobox unidadCombobox = new IREditableCombobox(u, unidad, new UnitMeasureComboitemRenderer(), new ComboboxMandatoryValidator());
 		unidadCombobox.setParent(this.newListcell(editListitem));
